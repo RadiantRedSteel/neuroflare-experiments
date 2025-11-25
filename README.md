@@ -1,2 +1,81 @@
 # neuroflare-experiments
- PsychoPy experiments and orchestration scripts for EEG/EMG pain flare-up research
+PsychoPy experiments and orchestration scripts for EEG/EMG pain flare-up research
+
+## Repository Layout
+```
+neuroflare-experiments/
+├─ psychopy/
+│   ├─ experiments/        # individual experiment folders
+│   │   ├─ open-closed/    # example experiment
+│   │   │   ├─ open_closed.psyexp
+│   │   │   ├─ data/       # participant data outputs
+│   │   │   └─ lib/        # experiment-specific helper code
+│   │   └─ another-experiment/
+│   │
+│   ├─ shared/             # reusable assets
+│   │   ├─ loop-templates/ # trial loop condition tables
+│   │   ├─ pictures/       # SAM images, stimuli, etc.
+│   │   └─ stimuli/        # placeholder for audio/video stimuli
+│   │
+│   ├─ scripts/            # utility scripts (e.g., data organizer)
+│   ├─ drivers/            # parallel port DLLs or hardware drivers
+│   └─ config/             # global experiment settings (YAML/JSON)
+│
+├─ analysis/               # notebooks, statistical scripts, visualization
+├─ docs/                   # IRB protocols, experiment notes, contributor guide
+└─ README.md
+```
+
+---
+
+## Getting Started
+
+1. **Clone the repo**  
+   ```bash
+   git clone https://github.com/<your-org>/neuroflare-experiments.git
+   ```
+
+2. **Install dependencies**  
+   - PsychoPy (latest stable release)  
+   - Python 3.10.19  
+   - Any hardware drivers in `psychopy/drivers/`
+   - To recreate the Conda environment: ```conda env create -f environment.yml```
+
+3. **Run an experiment**  
+   - Navigate to `psychopy/experiments/<experiment-name>/`  
+   - Open the `.psyexp` file in PsychoPy Builder  
+   - Run the experiment (ensure drivers are in the same directory if parallel port is used)
+
+---
+
+## Shared Assets
+
+- **Loop templates**: Reusable condition tables for trial structures  
+- **Pictures**: SAM images and other visual stimuli  
+- **Stimuli**: Placeholder for audio/video assets  
+- **Scripts**: Utilities for organizing data folders or batch processing outputs  
+
+---
+
+## Data Management
+
+- Each experiment writes participant data into its own `data/` folder  
+- Utility scripts in `psychopy/scripts/` can be used to reorganize or archive data across experiments  
+- Use relative paths to reference shared assets (`../shared/pictures/...`) for reproducibility
+
+---
+
+## Hardware Notes
+
+- Parallel port drivers must be in the same directory as the `.psyexp` file  
+- Alternatively, symlinks or shortcuts can be used to reference `psychopy/drivers/`  
+- Document any hardware setup in `docs/`
+
+---
+
+## Contributing
+
+- Add new experiments under `psychopy/experiments/`  
+- Place shared assets in `psychopy/shared/`  
+
+---

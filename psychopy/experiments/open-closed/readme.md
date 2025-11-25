@@ -17,3 +17,6 @@ These instructions can be found in `psychopy/open-closed/loop-templates/loopOpen
 
 This module is under active development. No participant data will be included in this repository. Please check back for updates!
 
+## Useful links
+
+[Parallel Port Issues w/ Windows 11](https://discourse.psychopy.org/t/parallel-port-issues-w-windows-11/45464/19)
