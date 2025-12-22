@@ -15,14 +15,14 @@
     <Param val="testMonitor" valType="str" updates="None" name="Monitor"/>
     <Param val="[]" valType="list" updates="None" name="Resources"/>
     <Param val="False" valType="bool" updates="None" name="Save csv file"/>
-    <Param val="True" valType="bool" updates="None" name="Save excel file"/>
+    <Param val="False" valType="bool" updates="None" name="Save excel file"/>
     <Param val="False" valType="bool" updates="None" name="Save hdf5 file"/>
     <Param val="True" valType="bool" updates="None" name="Save log file"/>
     <Param val="True" valType="bool" updates="None" name="Save psydat file"/>
     <Param val="True" valType="bool" updates="None" name="Save wide csv file"/>
     <Param val="1" valType="num" updates="None" name="Screen"/>
     <Param val="True" valType="bool" updates="None" name="Show info dlg"/>
-    <Param val="True" valType="bool" updates="None" name="Show mouse"/>
+    <Param val="False" valType="bool" updates="None" name="Show mouse"/>
     <Param val="height" valType="str" updates="None" name="Units"/>
     <Param val="" valType="str" updates="None" name="Use version"/>
     <Param val="[2560, 1440]" valType="list" updates="None" name="Window size (pixels)"/>
@@ -31,7 +31,7 @@
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
     <Param val="float" valType="str" updates="None" name="clockFormat"/>
     <Param val="{'thisRow.t': 'priority.CRITICAL', 'expName': 'priority.LOW'}" valType="dict" updates="None" name="colPriority"/>
-    <Param val="$(-0.5000, -0.5000, -0.5000)" valType="color" updates="None" name="color"/>
+    <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
     <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
     <Param val="warning" valType="code" updates="None" name="consoleLoggingLevel"/>
     <Param val="default" valType="str" updates="None" name="ecSampleRate"/>
@@ -45,16 +45,16 @@
     <Param val="False" valType="bool" updates="None" name="elSimMode"/>
     <Param val="RIGHT_EYE" valType="str" updates="None" name="elTrackEyes"/>
     <Param val="PUPIL_CR_TRACKING" valType="str" updates="None" name="elTrackingMode"/>
-    <Param val="open-closed" valType="str" updates="None" name="expName"/>
-    <Param val="1.0" valType="str" updates="None" name="expVersion"/>
+    <Param val="emotion-regulation" valType="str" updates="None" name="expName"/>
+    <Param val="0.1" valType="str" updates="None" name="expVersion"/>
     <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
     <Param val="None" valType="str" updates="None" name="eyetracker"/>
     <Param val="" valType="code" updates="None" name="frameRate"/>
     <Param val="Attempting to measure frame rate of screen, please wait..." valType="str" updates="None" name="frameRateMsg"/>
     <Param val="127.0.0.1" valType="str" updates="None" name="gpAddress"/>
     <Param val="4242" valType="num" updates="None" name="gpPort"/>
-    <Param val="ioHub" valType="str" updates="None" name="keyboardBackend"/>
-    <Param val="debug" valType="code" updates="None" name="logging level"/>
+    <Param val="PsychToolbox" valType="str" updates="None" name="keyboardBackend"/>
+    <Param val="info" valType="code" updates="None" name="logging level"/>
     <Param val="True" valType="bool" updates="None" name="measureFrameRate"/>
     <Param val="('MIDDLE_BUTTON',)" valType="list" updates="None" name="mgBlink"/>
     <Param val="CONTINUOUS" valType="str" updates="None" name="mgMove"/>
@@ -68,7 +68,7 @@
     <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
     <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
     <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
-    <Param val="1" valType="code" updates="None" name="runMode"/>
+    <Param val="0" valType="code" updates="None" name="runMode"/>
     <Param val="False" valType="bool" updates="None" name="rush"/>
     <Param val="time" valType="str" updates="None" name="sortColumns"/>
     <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
@@ -170,8 +170,8 @@
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
     </Routine>
-    <Routine name="instruction">
-      <RoutineSettingsComponent name="instruction" plugin="None">
+    <Routine name="trial">
+      <RoutineSettingsComponent name="trial" plugin="None">
         <Param val="none" valType="str" updates="None" name="backgroundFit"/>
         <Param val="" valType="str" updates="None" name="backgroundImg"/>
         <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
@@ -180,14 +180,14 @@
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="instruction" valType="code" updates="None" name="name"/>
+        <Param val="trial" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <TextComponent name="t_instruction" plugin="None">
+      <TextComponent name="text" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
         <Param val="1" valType="num" updates="constant" name="contrast"/>
@@ -197,11 +197,11 @@
         <Param val="None" valType="str" updates="constant" name="flip"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_instruction" valType="code" updates="None" name="name"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="text" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
@@ -209,47 +209,20 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="$Prompt&amp;#10;" valType="str" updates="set every repeat" name="text"/>
+        <Param val="$photo_filename" valType="str" updates="set every repeat" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
-      <TextComponent name="t_continue_2" plugin="None">
-        <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="False" valType="code" updates="constant" name="draggable"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="None" valType="str" updates="constant" name="flip"/>
-        <Param val="Arial" valType="str" updates="constant" name="font"/>
-        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_continue_2" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="constant" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press the SPACEBAR to begin" valType="str" updates="constant" name="text"/>
-        <Param val="from exp settings" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
-      </TextComponent>
-      <KeyboardComponent name="key_resp_2" plugin="None">
-        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+      <KeyboardComponent name="key_resp" plugin="None">
+        <Param val="'y','n','left','right','space'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="" valType="str" updates="None" name="deviceLabel"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
-        <Param val="key_resp_2" valType="code" updates="None" name="name"/>
+        <Param val="key_resp" valType="code" updates="None" name="name"/>
         <Param val="press" valType="str" updates="constant" name="registerOn"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
@@ -261,72 +234,7 @@
         <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
-    </Routine>
-    <Routine name="fixation">
-      <RoutineSettingsComponent name="fixation" plugin="None">
-        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
-        <Param val="" valType="str" updates="None" name="backgroundImg"/>
-        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
-        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
-        <Param val="" valType="str" updates="constant" name="desc"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="fixation" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
-      </RoutineSettingsComponent>
-      <PolygonComponent name="cross_fixation" plugin="None">
-        <Param val="center" valType="str" updates="constant" name="anchor"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="False" valType="code" updates="constant" name="draggable"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="white" valType="color" updates="constant" name="fillColor"/>
-        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
-        <Param val="white" valType="color" updates="constant" name="lineColor"/>
-        <Param val="1" valType="num" updates="constant" name="lineWidth"/>
-        <Param val="4" valType="int" updates="constant" name="nVertices"/>
-        <Param val="cross_fixation" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="constant" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="cross" valType="str" updates="None" name="shape"/>
-        <Param val="(0.15, 0.15)" valType="list" updates="constant" name="size"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="300" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="height" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="" valType="list" updates="constant" name="vertices"/>
-      </PolygonComponent>
-    </Routine>
-    <Routine name="goodbye">
-      <RoutineSettingsComponent name="goodbye" plugin="None">
-        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
-        <Param val="" valType="str" updates="None" name="backgroundImg"/>
-        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
-        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
-        <Param val="" valType="str" updates="constant" name="desc"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="goodbye" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
-      </RoutineSettingsComponent>
-      <TextComponent name="t_goodbye" plugin="None">
+      <TextComponent name="text_3" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
         <Param val="1" valType="num" updates="constant" name="contrast"/>
@@ -336,26 +244,26 @@
         <Param val="None" valType="str" updates="constant" name="flip"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_goodbye" valType="code" updates="None" name="name"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="text_3" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="(0, 0.4)" valType="list" updates="constant" name="pos"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0.0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="You have completed the trial. Thank you!" valType="str" updates="constant" name="text"/>
+        <Param val="$technique" valType="str" updates="set every repeat" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
     </Routine>
-    <Routine name="triggerStart">
-      <RoutineSettingsComponent name="triggerStart" plugin="None">
+    <Routine name="reset">
+      <RoutineSettingsComponent name="reset" plugin="None">
         <Param val="none" valType="str" updates="None" name="backgroundFit"/>
         <Param val="" valType="str" updates="None" name="backgroundImg"/>
         <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
@@ -364,65 +272,30 @@
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="triggerStart" valType="code" updates="None" name="name"/>
+        <Param val="reset" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <ParallelOutComponent name="p_port_start" plugin="None">
-        <Param val="0x0378" valType="str" updates="None" name="address"/>
+      <CodeComponent name="code_slicer" plugin="None">
+        <Param val="import random&amp;#10;import csv&amp;#10;&amp;#10;file_name = 'emotion_regulation_trials.csv'&amp;#10;&amp;#10;# Techniques and blocks&amp;#10;techniques = ['view', 'suppression', 'reappraisal', 'suppression-reappraisal']&amp;#10;block_ids = ['block1', 'block2', 'block3', 'block4']&amp;#10;&amp;#10;# Photo sets per block&amp;#10;photo_sets = {&amp;#10;    'block1': list(range(1001, 1041)),&amp;#10;    'block2': list(range(2001, 2041)),&amp;#10;    'block3': list(range(3001, 3041)),&amp;#10;    'block4': list(range(4001, 4041)),&amp;#10;}&amp;#10;&amp;#10;# Randomly assign techniques to blocks&amp;#10;random.shuffle(techniques)&amp;#10;block_to_technique = dict(zip(block_ids, techniques))&amp;#10;&amp;#10;# Randomize block order&amp;#10;block_order = block_ids.copy()&amp;#10;random.shuffle(block_order)&amp;#10;&amp;#10;# Build trial list&amp;#10;trials = []&amp;#10;trial_number = 1&amp;#10;&amp;#10;for block in block_order:&amp;#10;    technique = block_to_technique[block]&amp;#10;    photos = photo_sets[block].copy()&amp;#10;    random.shuffle(photos)&amp;#10;    &amp;#10;    for photo_id in photos:&amp;#10;        trials.append({&amp;#10;            'trial_number': trial_number,&amp;#10;            'block_id': block,&amp;#10;            'technique': technique,&amp;#10;            'photo_filename': f&quot;{photo_id}.jpg&quot;&amp;#10;        })&amp;#10;        trial_number += 1&amp;#10;&amp;#10;# Save to CSV&amp;#10;with open(file_name, 'w', newline='') as f:&amp;#10;    writer = csv.DictWriter(f, fieldnames=trials[0].keys())&amp;#10;    writer.writeheader()&amp;#10;    writer.writerows(trials)&amp;#10;&amp;#10;print(f&quot;Saved randomized trial file: {file_name}&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="&amp;#10;        // add-on: list(s: string): string[]&amp;#10;        function list(s) {&amp;#10;            // if s is a string, we return a list of its characters&amp;#10;            if (typeof s === 'string')&amp;#10;                return s.split('');&amp;#10;            else&amp;#10;                // otherwise we return s:&amp;#10;                return s;&amp;#10;        }&amp;#10;&amp;#10;        rows = [list(util.range(1001, 1041))];&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# Initialize slice indices&amp;#10;start = 0&amp;#10;end = 40&amp;#10;&amp;#10;# Store for logging&amp;#10;thisExp.addData('block_order', block_order)&amp;#10;thisExp.addData('block_to_technique', block_to_technique)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="# Define slice for current block&amp;#10;row_section = f&quot;{start}:{end}&quot;&amp;#10;&amp;#10;# Log which slice was used&amp;#10;thisExp.addData('row_section', row_section)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="# Advance slice for next block&amp;#10;start += 40&amp;#10;end += 40&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="p_port_start" valType="code" updates="None" name="name"/>
-        <Param val="EIO" valType="str" updates="None" name="register"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="1" valType="code" updates="None" name="startData"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
-        <Param val="0" valType="code" updates="None" name="stopData"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1.0" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="constant" name="syncScreen"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-      </ParallelOutComponent>
-    </Routine>
-    <Routine name="triggerStop">
-      <RoutineSettingsComponent name="triggerStop" plugin="None">
-        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
-        <Param val="" valType="str" updates="None" name="backgroundImg"/>
-        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
-        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
-        <Param val="" valType="str" updates="constant" name="desc"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="triggerStop" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
-      </RoutineSettingsComponent>
-      <ParallelOutComponent name="p_port_stop" plugin="None">
-        <Param val="0x0378" valType="str" updates="None" name="address"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="p_port_stop" valType="code" updates="None" name="name"/>
-        <Param val="EIO" valType="str" updates="None" name="register"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="2" valType="code" updates="None" name="startData"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
-        <Param val="0" valType="code" updates="None" name="stopData"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1.0" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="constant" name="syncScreen"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-      </ParallelOutComponent>
+        <Param val="code_slicer" valType="code" updates="None" name="name"/>
+      </CodeComponent>
     </Routine>
     <Routine name="stateMeasure">
       <RoutineSettingsComponent name="stateMeasure" plugin="None">
@@ -690,14 +563,198 @@
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
     </Routine>
+    <Routine name="fixation">
+      <RoutineSettingsComponent name="fixation" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="fixation" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="0.3" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <PolygonComponent name="cross_fixation" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="white" valType="color" updates="constant" name="fillColor"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="white" valType="color" updates="constant" name="lineColor"/>
+        <Param val="1" valType="num" updates="constant" name="lineWidth"/>
+        <Param val="4" valType="int" updates="constant" name="nVertices"/>
+        <Param val="cross_fixation" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="cross" valType="str" updates="None" name="shape"/>
+        <Param val="(0.15, 0.15)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="0.3" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="list" updates="constant" name="vertices"/>
+      </PolygonComponent>
+    </Routine>
+    <Routine name="instruction">
+      <RoutineSettingsComponent name="instruction" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="instruction" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_instruction" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_instruction" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$Prompt&amp;#10;" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_continue_2" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_continue_2" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to begin" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="" valType="str" updates="None" name="deviceLabel"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_2" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="goodbye">
+      <RoutineSettingsComponent name="goodbye" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="goodbye" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_goodbye" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_goodbye" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="You have completed the trial. Thank you!" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
   </Routines>
   <Flow>
     <LoopInitiator loopType="TrialHandler" name="intro_prompts">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
-      <Param name="conditions" updates="None" val="[{'Message': 'Welcome to the Open-Closed Eyes Experiment!\n\nThis is designed for the Wireless EEG and EMG devices. '}, {'Message': 'Please relax and remain still during the experiment while we record your baseline brain activity.'}, {'Message': 'Follow the on-screen instructions to open or close your eyes as prompted.\n\nWe will do this twice, with each round lasting 5 minutes.'}, {'Message': 'During the eyes-open section,\nlook steadily at the cross mark in the center of the screen.'}, {'Message': &quot;For the eyes-closed section,\nyou'll close your eyes for the given duration.\n\nPlease avoid falling asleep!&quot;}, {'Message': 'The trial will begin on the following screen.\n\nPlease let us know if you have any remaining questions.'}]" valType="str"/>
-      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopOpenClosedIntro.xlsx" valType="file"/>
+      <Param name="conditions" updates="None" val="[{'Message': 'Picture Viewing Task\n-Neutral or Unpleasant-'}, {'Message': 'You will see photograph series of pictures that represent a lot of different events that occur in life.'}, {'Message': 'Pictures show unpleasant events. We will do a practice trial before the actual trial. You can let the experimenter know if you want to stop anytime during this trial. '}]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="loopEmotionRegulationIntro.xlsx" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="num"/>
       <Param name="name" updates="None" val="intro_prompts" valType="code"/>
@@ -706,7 +763,7 @@
     <Routine name="welcome"/>
     <LoopTerminator name="intro_prompts"/>
     <LoopInitiator loopType="TrialHandler" name="state_measure_pretrial">
-      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="Selected rows" updates="None" val="0:7" valType="str"/>
       <Param name="conditions" updates="None" val="[{'rating_type': 'Generic', 'rating_category': 'Fatigue', 'rating_min_label': 'No fatigue at all', 'rating_max_label': 'As bad as you can imagine', 'picture_path': None, 'rating_message': 'Rate your current fatigue level'}, {'rating_type': 'Generic', 'rating_category': 'Sleepiness', 'rating_min_label': 'Not at all sleepy', 'rating_max_label': 'As bad as you can imagine', 'picture_path': None, 'rating_message': 'Rate your current sleepiness level'}, {'rating_type': 'Generic', 'rating_category': 'Pain', 'rating_min_label': 'No pain', 'rating_max_label': 'Worst possible pain', 'picture_path': None, 'rating_message': 'Rate your current pain level'}, {'rating_type': 'Generic', 'rating_category': 'Pain Unpleasantness', 'rating_min_label': 'Not at all unpleasant pain', 'rating_max_label': 'Worst possible unpleasant pain', 'picture_path': None, 'rating_message': 'Rate your current pain unpleasantness level'}, {'rating_type': 'SAM', 'rating_category': 'Valence', 'rating_min_label': 'Pleasant', 'rating_max_label': 'Unpleasant', 'picture_path': '../../shared/pictures/sam-valence.png', 'rating_message': 'Rate how pleasant or unpleasant you feel'}, {'rating_type': 'SAM', 'rating_category': 'Arousal', 'rating_min_label': 'Calm', 'rating_max_label': 'Excited', 'picture_path': '../../shared/pictures/sam-arousal.png', 'rating_message': 'Rate how calm or excited you feel'}, {'rating_type': 'SAM', 'rating_category': 'Dominance', 'rating_min_label': 'Dominated', 'rating_max_label': 'In Control', 'picture_path': '../../shared/pictures/sam-dominance.png', 'rating_message': 'Rate how dominated or in control you feel'}]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.xlsx" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
@@ -718,23 +775,35 @@
     </LoopInitiator>
     <Routine name="stateMeasure"/>
     <LoopTerminator name="state_measure_pretrial"/>
-    <LoopInitiator loopType="TrialHandler" name="openclosed_trials">
+    <Routine name="instruction"/>
+    <LoopInitiator loopType="TrialHandler" name="repeat">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
-      <Param name="conditions" updates="None" val="[{'Category': 'Open-Eyes', 'Prompt': 'Look at the + mark and stay still for 5 minutes.'}, {'Category': 'Closed-Eyes', 'Prompt': 'Close your eyes and stay still for 5 minutes.'}]" valType="str"/>
-      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopOpenClosedTrial.xlsx" valType="file"/>
+      <Param name="conditions" updates="None" val="[{'blocka_id': 1}, {'blocka_id': 2}, {'blocka_id': 3}, {'blocka_id': 4}]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="blocks.xlsx" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="isTrials" updates="None" val="True" valType="bool"/>
-      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="num"/>
-      <Param name="name" updates="None" val="openclosed_trials" valType="code"/>
+      <Param name="name" updates="None" val="repeat" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
-    <Routine name="instruction"/>
-    <Routine name="triggerStart"/>
+    <Routine name="reset"/>
+    <LoopInitiator loopType="TrialHandler" name="view_photos">
+      <Param name="Selected rows" updates="None" val="$row_section" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('trial_number', np.int64(1)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3019.jpg')]), OrderedDict([('trial_number', np.int64(2)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3032.jpg')]), OrderedDict([('trial_number', np.int64(3)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3022.jpg')]), OrderedDict([('trial_number', np.int64(4)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3026.jpg')]), OrderedDict([('trial_number', np.int64(5)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3036.jpg')]), OrderedDict([('trial_number', np.int64(6)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3021.jpg')]), OrderedDict([('trial_number', np.int64(7)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3025.jpg')]), OrderedDict([('trial_number', np.int64(8)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3037.jpg')]), OrderedDict([('trial_number', np.int64(9)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3016.jpg')]), OrderedDict([('trial_number', np.int64(10)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3008.jpg')]), OrderedDict([('trial_number', np.int64(11)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3035.jpg')]), OrderedDict([('trial_number', np.int64(12)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3012.jpg')]), OrderedDict([('trial_number', np.int64(13)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3034.jpg')]), OrderedDict([('trial_number', np.int64(14)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3011.jpg')]), OrderedDict([('trial_number', np.int64(15)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3009.jpg')]), OrderedDict([('trial_number', np.int64(16)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3013.jpg')]), OrderedDict([('trial_number', np.int64(17)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3003.jpg')]), OrderedDict([('trial_number', np.int64(18)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3040.jpg')]), OrderedDict([('trial_number', np.int64(19)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3023.jpg')]), OrderedDict([('trial_number', np.int64(20)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3029.jpg')]), OrderedDict([('trial_number', np.int64(21)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3033.jpg')]), OrderedDict([('trial_number', np.int64(22)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3006.jpg')]), OrderedDict([('trial_number', np.int64(23)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3020.jpg')]), OrderedDict([('trial_number', np.int64(24)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3028.jpg')]), OrderedDict([('trial_number', np.int64(25)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3031.jpg')]), OrderedDict([('trial_number', np.int64(26)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3039.jpg')]), OrderedDict([('trial_number', np.int64(27)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3024.jpg')]), OrderedDict([('trial_number', np.int64(28)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3027.jpg')]), OrderedDict([('trial_number', np.int64(29)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3038.jpg')]), OrderedDict([('trial_number', np.int64(30)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3002.jpg')]), OrderedDict([('trial_number', np.int64(31)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3030.jpg')]), OrderedDict([('trial_number', np.int64(32)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3010.jpg')]), OrderedDict([('trial_number', np.int64(33)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3015.jpg')]), OrderedDict([('trial_number', np.int64(34)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3001.jpg')]), OrderedDict([('trial_number', np.int64(35)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3017.jpg')]), OrderedDict([('trial_number', np.int64(36)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3018.jpg')]), OrderedDict([('trial_number', np.int64(37)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3004.jpg')]), OrderedDict([('trial_number', np.int64(38)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3007.jpg')]), OrderedDict([('trial_number', np.int64(39)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3005.jpg')]), OrderedDict([('trial_number', np.int64(40)), ('block_id', 'block3'), ('technique', 'suppression-reappraisal'), ('photo_filename', '3014.jpg')]), OrderedDict([('trial_number', np.int64(41)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2009.jpg')]), OrderedDict([('trial_number', np.int64(42)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2015.jpg')]), OrderedDict([('trial_number', np.int64(43)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2025.jpg')]), OrderedDict([('trial_number', np.int64(44)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2004.jpg')]), OrderedDict([('trial_number', np.int64(45)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2032.jpg')]), OrderedDict([('trial_number', np.int64(46)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2029.jpg')]), OrderedDict([('trial_number', np.int64(47)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2008.jpg')]), OrderedDict([('trial_number', np.int64(48)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2031.jpg')]), OrderedDict([('trial_number', np.int64(49)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2001.jpg')]), OrderedDict([('trial_number', np.int64(50)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2027.jpg')]), OrderedDict([('trial_number', np.int64(51)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2023.jpg')]), OrderedDict([('trial_number', np.int64(52)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2007.jpg')]), OrderedDict([('trial_number', np.int64(53)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2021.jpg')]), OrderedDict([('trial_number', np.int64(54)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2024.jpg')]), OrderedDict([('trial_number', np.int64(55)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2017.jpg')]), OrderedDict([('trial_number', np.int64(56)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2040.jpg')]), OrderedDict([('trial_number', np.int64(57)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2019.jpg')]), OrderedDict([('trial_number', np.int64(58)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2011.jpg')]), OrderedDict([('trial_number', np.int64(59)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2039.jpg')]), OrderedDict([('trial_number', np.int64(60)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2038.jpg')]), OrderedDict([('trial_number', np.int64(61)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2005.jpg')]), OrderedDict([('trial_number', np.int64(62)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2022.jpg')]), OrderedDict([('trial_number', np.int64(63)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2018.jpg')]), OrderedDict([('trial_number', np.int64(64)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2035.jpg')]), OrderedDict([('trial_number', np.int64(65)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2034.jpg')]), OrderedDict([('trial_number', np.int64(66)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2016.jpg')]), OrderedDict([('trial_number', np.int64(67)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2003.jpg')]), OrderedDict([('trial_number', np.int64(68)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2028.jpg')]), OrderedDict([('trial_number', np.int64(69)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2002.jpg')]), OrderedDict([('trial_number', np.int64(70)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2013.jpg')]), OrderedDict([('trial_number', np.int64(71)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2030.jpg')]), OrderedDict([('trial_number', np.int64(72)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2036.jpg')]), OrderedDict([('trial_number', np.int64(73)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2012.jpg')]), OrderedDict([('trial_number', np.int64(74)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2026.jpg')]), OrderedDict([('trial_number', np.int64(75)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2014.jpg')]), OrderedDict([('trial_number', np.int64(76)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2020.jpg')]), OrderedDict([('trial_number', np.int64(77)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2033.jpg')]), OrderedDict([('trial_number', np.int64(78)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2010.jpg')]), OrderedDict([('trial_number', np.int64(79)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2037.jpg')]), OrderedDict([('trial_number', np.int64(80)), ('block_id', 'block2'), ('technique', 'view'), ('photo_filename', '2006.jpg')]), OrderedDict([('trial_number', np.int64(81)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1007.jpg')]), OrderedDict([('trial_number', np.int64(82)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1028.jpg')]), OrderedDict([('trial_number', np.int64(83)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1018.jpg')]), OrderedDict([('trial_number', np.int64(84)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1001.jpg')]), OrderedDict([('trial_number', np.int64(85)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1021.jpg')]), OrderedDict([('trial_number', np.int64(86)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1033.jpg')]), OrderedDict([('trial_number', np.int64(87)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1030.jpg')]), OrderedDict([('trial_number', np.int64(88)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1037.jpg')]), OrderedDict([('trial_number', np.int64(89)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1027.jpg')]), OrderedDict([('trial_number', np.int64(90)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1026.jpg')]), OrderedDict([('trial_number', np.int64(91)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1029.jpg')]), OrderedDict([('trial_number', np.int64(92)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1039.jpg')]), OrderedDict([('trial_number', np.int64(93)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1022.jpg')]), OrderedDict([('trial_number', np.int64(94)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1032.jpg')]), OrderedDict([('trial_number', np.int64(95)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1006.jpg')]), OrderedDict([('trial_number', np.int64(96)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1012.jpg')]), OrderedDict([('trial_number', np.int64(97)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1019.jpg')]), OrderedDict([('trial_number', np.int64(98)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1025.jpg')]), OrderedDict([('trial_number', np.int64(99)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1014.jpg')]), OrderedDict([('trial_number', np.int64(100)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1015.jpg')]), OrderedDict([('trial_number', np.int64(101)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1009.jpg')]), OrderedDict([('trial_number', np.int64(102)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1034.jpg')]), OrderedDict([('trial_number', np.int64(103)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1035.jpg')]), OrderedDict([('trial_number', np.int64(104)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1020.jpg')]), OrderedDict([('trial_number', np.int64(105)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1003.jpg')]), OrderedDict([('trial_number', np.int64(106)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1010.jpg')]), OrderedDict([('trial_number', np.int64(107)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1016.jpg')]), OrderedDict([('trial_number', np.int64(108)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1005.jpg')]), OrderedDict([('trial_number', np.int64(109)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1002.jpg')]), OrderedDict([('trial_number', np.int64(110)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1024.jpg')]), OrderedDict([('trial_number', np.int64(111)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1023.jpg')]), OrderedDict([('trial_number', np.int64(112)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1004.jpg')]), OrderedDict([('trial_number', np.int64(113)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1008.jpg')]), OrderedDict([('trial_number', np.int64(114)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1031.jpg')]), OrderedDict([('trial_number', np.int64(115)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1040.jpg')]), OrderedDict([('trial_number', np.int64(116)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1036.jpg')]), OrderedDict([('trial_number', np.int64(117)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1013.jpg')]), OrderedDict([('trial_number', np.int64(118)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1011.jpg')]), OrderedDict([('trial_number', np.int64(119)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1038.jpg')]), OrderedDict([('trial_number', np.int64(120)), ('block_id', 'block1'), ('technique', 'reappraisal'), ('photo_filename', '1017.jpg')]), OrderedDict([('trial_number', np.int64(121)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4030.jpg')]), OrderedDict([('trial_number', np.int64(122)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4039.jpg')]), OrderedDict([('trial_number', np.int64(123)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4024.jpg')]), OrderedDict([('trial_number', np.int64(124)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4027.jpg')]), OrderedDict([('trial_number', np.int64(125)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4004.jpg')]), OrderedDict([('trial_number', np.int64(126)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4038.jpg')]), OrderedDict([('trial_number', np.int64(127)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4010.jpg')]), OrderedDict([('trial_number', np.int64(128)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4034.jpg')]), OrderedDict([('trial_number', np.int64(129)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4029.jpg')]), OrderedDict([('trial_number', np.int64(130)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4018.jpg')]), OrderedDict([('trial_number', np.int64(131)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4011.jpg')]), OrderedDict([('trial_number', np.int64(132)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4031.jpg')]), OrderedDict([('trial_number', np.int64(133)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4036.jpg')]), OrderedDict([('trial_number', np.int64(134)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4022.jpg')]), OrderedDict([('trial_number', np.int64(135)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4015.jpg')]), OrderedDict([('trial_number', np.int64(136)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4020.jpg')]), OrderedDict([('trial_number', np.int64(137)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4005.jpg')]), OrderedDict([('trial_number', np.int64(138)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4017.jpg')]), OrderedDict([('trial_number', np.int64(139)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4026.jpg')]), OrderedDict([('trial_number', np.int64(140)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4014.jpg')]), OrderedDict([('trial_number', np.int64(141)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4025.jpg')]), OrderedDict([('trial_number', np.int64(142)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4019.jpg')]), OrderedDict([('trial_number', np.int64(143)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4003.jpg')]), OrderedDict([('trial_number', np.int64(144)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4040.jpg')]), OrderedDict([('trial_number', np.int64(145)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4013.jpg')]), OrderedDict([('trial_number', np.int64(146)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4006.jpg')]), OrderedDict([('trial_number', np.int64(147)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4035.jpg')]), OrderedDict([('trial_number', np.int64(148)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4012.jpg')]), OrderedDict([('trial_number', np.int64(149)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4033.jpg')]), OrderedDict([('trial_number', np.int64(150)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4037.jpg')]), OrderedDict([('trial_number', np.int64(151)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4032.jpg')]), OrderedDict([('trial_number', np.int64(152)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4001.jpg')]), OrderedDict([('trial_number', np.int64(153)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4009.jpg')]), OrderedDict([('trial_number', np.int64(154)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4021.jpg')]), OrderedDict([('trial_number', np.int64(155)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4023.jpg')]), OrderedDict([('trial_number', np.int64(156)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4002.jpg')]), OrderedDict([('trial_number', np.int64(157)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4008.jpg')]), OrderedDict([('trial_number', np.int64(158)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4016.jpg')]), OrderedDict([('trial_number', np.int64(159)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4028.jpg')]), OrderedDict([('trial_number', np.int64(160)), ('block_id', 'block4'), ('technique', 'suppression'), ('photo_filename', '4007.jpg')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="emotion_regulation_trials.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="view_photos" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
     <Routine name="fixation"/>
-    <Routine name="triggerStop"/>
+    <Routine name="trial"/>
+    <LoopTerminator name="view_photos"/>
     <LoopInitiator loopType="TrialHandler" name="state_measure_trials">
-      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="Selected rows" updates="None" val="0:7" valType="str"/>
       <Param name="conditions" updates="None" val="[{'rating_type': 'Generic', 'rating_category': 'Fatigue', 'rating_min_label': 'No fatigue at all', 'rating_max_label': 'As bad as you can imagine', 'picture_path': None, 'rating_message': 'Rate your current fatigue level'}, {'rating_type': 'Generic', 'rating_category': 'Sleepiness', 'rating_min_label': 'Not at all sleepy', 'rating_max_label': 'As bad as you can imagine', 'picture_path': None, 'rating_message': 'Rate your current sleepiness level'}, {'rating_type': 'Generic', 'rating_category': 'Pain', 'rating_min_label': 'No pain', 'rating_max_label': 'Worst possible pain', 'picture_path': None, 'rating_message': 'Rate your current pain level'}, {'rating_type': 'Generic', 'rating_category': 'Pain Unpleasantness', 'rating_min_label': 'Not at all unpleasant pain', 'rating_max_label': 'Worst possible unpleasant pain', 'picture_path': None, 'rating_message': 'Rate your current pain unpleasantness level'}, {'rating_type': 'SAM', 'rating_category': 'Valence', 'rating_min_label': 'Pleasant', 'rating_max_label': 'Unpleasant', 'picture_path': '../../shared/pictures/sam-valence.png', 'rating_message': 'Rate how pleasant or unpleasant you feel'}, {'rating_type': 'SAM', 'rating_category': 'Arousal', 'rating_min_label': 'Calm', 'rating_max_label': 'Excited', 'picture_path': '../../shared/pictures/sam-arousal.png', 'rating_message': 'Rate how calm or excited you feel'}, {'rating_type': 'SAM', 'rating_category': 'Dominance', 'rating_min_label': 'Dominated', 'rating_max_label': 'In Control', 'picture_path': '../../shared/pictures/sam-dominance.png', 'rating_message': 'Rate how dominated or in control you feel'}]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.xlsx" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
@@ -746,7 +815,7 @@
     </LoopInitiator>
     <Routine name="stateMeasure"/>
     <LoopTerminator name="state_measure_trials"/>
-    <LoopTerminator name="openclosed_trials"/>
+    <LoopTerminator name="repeat"/>
     <Routine name="goodbye"/>
   </Flow>
 </PsychoPy2experiment>

@@ -1,0 +1,141 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="24.8.2">
+  <diagram name="Page-1" id="dQhKgTwf6K6N6-B02RhQ">
+    <mxGraphModel dx="1185" dy="651" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-1" value="Block One&lt;div&gt;1111,1112,....&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="174" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-2" value="Block Two&lt;div&gt;2000,2001,...&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="278" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-3" value="Block Three&lt;div&gt;3000,3001,...&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="382" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-4" value="Block Four&lt;div&gt;4000,4001,...&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="486" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-6" target="zQfZ8yclUwZBuZlOnzMj-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-6" value="Viewing&lt;div&gt;(No Emotion Regulation)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="152.5" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-7" value="All four techniques will be uniquely shown in the experiment, randomly assigned to a block" style="rounded=0;whiteSpace=wrap;html=1;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="280" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-9" target="zQfZ8yclUwZBuZlOnzMj-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-9" value="Cognitive&lt;div&gt;Reappraisal&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375.5" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-11" target="zQfZ8yclUwZBuZlOnzMj-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-11" value="Suppression" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="264.5" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-13" target="zQfZ8yclUwZBuZlOnzMj-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-13" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Supression &amp;amp; Reappraisal&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="487.5" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-14" value="All four blocks (each contain 40 photos) will be uniquely shown in the experiment, in a random order" style="rounded=0;whiteSpace=wrap;html=1;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="380" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-19" target="zQfZ8yclUwZBuZlOnzMj-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-19" target="zQfZ8yclUwZBuZlOnzMj-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-19" target="zQfZ8yclUwZBuZlOnzMj-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-19" target="zQfZ8yclUwZBuZlOnzMj-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-19" value="Randomize" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="325" y="380" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-20" value="The photos within each block are in a random order" style="rounded=0;whiteSpace=wrap;html=1;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="490" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-21" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Emotion Regulation Task&lt;/h1&gt;&lt;p style=&quot;margin:0in;text-indent:.5in&quot;&gt;&lt;span style=&quot;font-size: 14.6667px;&quot;&gt;This experiment will use 208 pictures (40 neutral and 168 unpleasant) from the International Affective Picture System (IAPS). Participants will be asked to view the 40 neutral pictures without thinking too much about unrelated things (neutral-view). When viewing 160 unpleasant pictures, they will be asked to view the pictures without using any emotion regulation strategies (unpleasant-view) and with using emotion suppression (unpleasant-suppression), cognitive reappraisal (unpleasant-reappraisal), and both (unpleasant-suppression-reappraisal). First, participants will practice the emotion regulation strategy with 8 unpleasant pictures. Then, they will be asked to look at a fixation cross for 300 ms, followed by a cue (emotion regulation strategies) for 1000 ms, a delay of 500-1500 ms, a picture presentation for 4000 ms on a gray background, and a blank screen for 1000 ms. After each block, they will rate their mood state on a 7-point scale (1: neutral, non-emotional-7: extremely unpleasant) and the degree of success on the task on the same scale (1: not at all successful to 7: completely successful).&amp;nbsp;&lt;/span&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="830" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-22" value="Randomization Diagram" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="110" y="240" width="520" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-24" target="zQfZ8yclUwZBuZlOnzMj-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-24" value="Introduction" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="88.75" y="620" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-25" target="zQfZ8yclUwZBuZlOnzMj-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-25" value="40 Neutral Photos&lt;div&gt;Random Order&lt;/div&gt;&lt;div&gt;&quot;Just View&quot;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="368.75" y="620" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-27" target="zQfZ8yclUwZBuZlOnzMj-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-27" value="Neutral Photos&lt;div&gt;Instruction&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="228.75" y="620" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-34" value="5 State Measure: Pain, Pain Unpleasantness, SAM" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="511.25" y="620" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-39" target="zQfZ8yclUwZBuZlOnzMj-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-39" value="8 Unpleasant Photos&lt;div&gt;(UP)&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Instruction&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="88.75" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-40" target="zQfZ8yclUwZBuZlOnzMj-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-40" value="8 UP&lt;div&gt;Fixed Order&lt;/div&gt;&lt;div&gt;&quot;Just View&quot;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="228.75" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-42" value="8 UP Complete&lt;div&gt;Continue or Stop?&lt;br&gt;&lt;div&gt;Instruction&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="368.75" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-43" target="zQfZ8yclUwZBuZlOnzMj-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-43" value="Emotion Regulation&lt;div&gt;(ER)&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;Instruction&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="88.75" y="780" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-44" target="zQfZ8yclUwZBuZlOnzMj-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-44" value="4 Blocks of U.P.&lt;div&gt;Instruction&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="228.75" y="780" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-47" target="zQfZ8yclUwZBuZlOnzMj-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-47" value="40 UP&lt;div&gt;Random Order&lt;/div&gt;&lt;div&gt;Random ER&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="368.75" y="780" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-51" value="Repeat 4x" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="zQfZ8yclUwZBuZlOnzMj-49" target="zQfZ8yclUwZBuZlOnzMj-44">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="870" />
+              <mxPoint x="289" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zQfZ8yclUwZBuZlOnzMj-49" value="6 State Measure: ER Success, Pain, Pain Unpleasantness, SAM" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="511.25" y="780" width="140" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
