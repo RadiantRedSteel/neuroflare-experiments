@@ -20,7 +20,7 @@ The experiment progresses in **five phases**:
 
 ---
 
-# Unpleasant Trials
+## Unpleasant Trials
 
 The section progresses in **four blocks**. Each block consists of:
 
@@ -47,7 +47,7 @@ This experiment uses a master condition file of 160 trials that is sliced into f
 
 ---
 
-# Code Slicer Properties
+## Code Slicer Properties
 
 The `code_slicer` handles randomization and trial slicing. It lives in the **reset routine**, where it updates the `row_section` variable to select the correct 40‑trial slice from the master condition file. This ensures each block uses a unique randomized subset of trials, while also logging block order and technique assignment for reproducibility.
 

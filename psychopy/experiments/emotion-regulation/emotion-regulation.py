@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.1.1),
-    on December 30, 2025, at 01:27
+    on December 29, 2025, at 22:22
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -225,7 +225,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.1.1'
 expName = 'emotion-regulation'  # from the Builder filename that created this script
-expVersion = '0.3'
+expVersion = '0.1'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -317,7 +317,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\emotion-regulation\\emotion-regulation_lastrun.py',
+        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\emotion-regulation\\emotion-regulation.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -621,6 +621,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     key_resp_welcome = keyboard.Keyboard(deviceName='key_resp_welcome')
     
     # --- Initialize components for Routine "stateMeasure" ---
+    slider_SAM = visual.Slider(win=win, name='slider_SAM',
+        startValue=None, size=1.0, pos=[0,0], units=win.units,
+        labels=[1, 2, 3, 4, 5, 6, 7, 8, 9],ticks=None, granularity=1,
+        style='radio', styleTweaks=(), opacity=None,
+        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
+        font='Noto Sans', labelHeight=0.05,
+        flip=False, ori=0.0, depth=0, readOnly=False)
     image_SAM = visual.ImageStim(
         win=win,
         name='image_SAM', units='height', 
@@ -628,22 +635,31 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=[0,0], draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     t_sm_message = visual.TextStim(win=win, name='t_sm_message',
         text='',
         font='Arial',
         pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_80, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
-    t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
+        depth=-2.0);
+    t_continue_sm = visual.TextStim(win=win, name='t_continue_sm',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_80, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-2.0);
+        depth=-3.0);
     # Run 'Begin Experiment' code from code_sm_helper
+    # Prepare logging
+    #sm_run_id = datetime.now().isoformat(timespec='seconds')
+    #sm_run_id = "hello"
+    #sm_out_path = Path(__file__).resolve().parent / "data" / "state_measure_responses.csv"
+    #sm_out_path.parent.mkdir(parents=True, exist_ok=True)
+    sm_results = []
+    sm_index = 0
+    
+    
     # --- Helper functions for dynamic slider configuration ---
     def parse_tick_values(raw):
         # If PsychoPy already parsed it into a list, just return it
@@ -827,24 +843,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         texRes=128.0, interpolate=True, depth=-1.0)
     # Run 'Begin Experiment' code from code_IASP_helper
     # Image aspect ratio (width / height)
-    iasp_img_aspect = 1024 / 768  # = 1.3333
+    img_aspect = 1024 / 768  # = 1.3333
+    
+    # Window aspect ratio (width / height)
+    screen_width, screen_height = win.size
+    win_aspect = screen_width / screen_height  # width / height
     
     # If the window is wider than the image, height is the limiting factor
-    if aspect >= iasp_img_aspect:
+    if win_aspect >= img_aspect:
         # Height fills the screen (minus a small margin if you want)
-        iasp_comp_img_size_height = 1.0
-        iasp_comp_img_size_width = iasp_comp_img_size_height * aspect
+        img_height = 1.0
+        img_width = img_height * img_aspect
     else:
         # Width fills the screen
-        iasp_comp_img_size_width = aspect
-        iasp_comp_img_size_height = iasp_comp_img_size_width / aspect
+        img_width = win_aspect
+        img_height = img_width / img_aspect
     
     # If you want a little breathing room around the image:
-    #iasp_margin = 0.05  # 5% margin
-    #iasp_comp_img_height *= (1 - iasp_margin)
-    #iasp_comp_img_width  *= (1 - iasp_margin)
+    #margin = 0.05  # 5% margin
+    #img_height *= (1 - margin)
+    #img_width  *= (1 - margin)
     
     # --- Initialize components for Routine "stateMeasure" ---
+    slider_SAM = visual.Slider(win=win, name='slider_SAM',
+        startValue=None, size=1.0, pos=[0,0], units=win.units,
+        labels=[1, 2, 3, 4, 5, 6, 7, 8, 9],ticks=None, granularity=1,
+        style='radio', styleTweaks=(), opacity=None,
+        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
+        font='Noto Sans', labelHeight=0.05,
+        flip=False, ori=0.0, depth=0, readOnly=False)
     image_SAM = visual.ImageStim(
         win=win,
         name='image_SAM', units='height', 
@@ -852,22 +879,31 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=[0,0], draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=0.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     t_sm_message = visual.TextStim(win=win, name='t_sm_message',
         text='',
         font='Arial',
         pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_80, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
-    t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
+        depth=-2.0);
+    t_continue_sm = visual.TextStim(win=win, name='t_continue_sm',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_80, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-2.0);
+        depth=-3.0);
     # Run 'Begin Experiment' code from code_sm_helper
+    # Prepare logging
+    #sm_run_id = datetime.now().isoformat(timespec='seconds')
+    #sm_run_id = "hello"
+    #sm_out_path = Path(__file__).resolve().parent / "data" / "state_measure_responses.csv"
+    #sm_out_path.parent.mkdir(parents=True, exist_ok=True)
+    sm_results = []
+    sm_index = 0
+    
+    
     # --- Helper functions for dynamic slider configuration ---
     def parse_tick_values(raw):
         # If PsychoPy already parsed it into a list, just return it
@@ -1115,7 +1151,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopEmotionRegulationIntro.csv'), 
+        trialList=data.importConditions('loopEmotionRegulationIntro.xlsx'), 
         seed=None, 
     )
     thisExp.addLoop(intro_prompts)  # add the loop to the experiment
@@ -1325,7 +1361,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='0:7'
+        selection='0:8'
     )
     , 
         seed=None, 
@@ -1358,17 +1394,26 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+            components=[slider_SAM, image_SAM, t_sm_message, t_continue_sm, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
+        slider_SAM.reset()
+        slider_SAM.setPos((0, sm_sam_comp_slider_pos_y))
+        slider_SAM.setSize((sm_sam_comp_slider_width, sm_sam_comp_slider_size_height))
         image_SAM.setPos((0, sm_sam_comp_img_pos_y))
         image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
         image_SAM.setImage(picture_path)
         t_sm_message.setText(rating_message)
         # Run 'Begin Routine' code from code_sm_helper
         allowContinue = False
+        
+        # Destroy previous slider if it exists
+        try:
+            slider_generic = None
+        except:
+            pass
         
         # Parse tick values from the condition file
         print(f"ROW: {rating_category}, {rating_type}")
@@ -1469,6 +1514,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
+            # *slider_SAM* updates
+            
+            # if slider_SAM is starting this frame...
+            if slider_SAM.status == NOT_STARTED and rating_type == 'SAM':
+                # keep track of start time/frame for later
+                slider_SAM.frameNStart = frameN  # exact frame index
+                slider_SAM.tStart = t  # local t and not account for scr refresh
+                slider_SAM.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(slider_SAM, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'slider_SAM.started')
+                # update status
+                slider_SAM.status = STARTED
+                slider_SAM.setAutoDraw(True)
+            
+            # if slider_SAM is active this frame...
+            if slider_SAM.status == STARTED:
+                # update params
+                pass
+            
+            # if slider_SAM is stopping this frame...
+            if slider_SAM.status == STARTED:
+                if bool(rating_type != 'SAM'):
+                    # keep track of stop time/frame for later
+                    slider_SAM.tStop = t  # not accounting for scr refresh
+                    slider_SAM.tStopRefresh = tThisFlipGlobal  # on global time
+                    slider_SAM.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'slider_SAM.stopped')
+                    # update status
+                    slider_SAM.status = FINISHED
+                    slider_SAM.setAutoDraw(False)
+            
             # *image_SAM* updates
             
             # if image_SAM is starting this frame...
@@ -1478,6 +1556,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 image_SAM.tStart = t  # local t and not account for scr refresh
                 image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'image_SAM.started')
                 # update status
                 image_SAM.status = STARTED
                 image_SAM.setAutoDraw(True)
@@ -1496,6 +1576,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t_sm_message.tStart = t  # local t and not account for scr refresh
                 t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 't_sm_message.started')
                 # update status
                 t_sm_message.status = STARTED
                 t_sm_message.setAutoDraw(True)
@@ -1505,21 +1587,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update params
                 pass
             
-            # *t_sm_continue* updates
+            # *t_continue_sm* updates
             
-            # if t_sm_continue is starting this frame...
-            if t_sm_continue.status == NOT_STARTED and allowContinue == True:
+            # if t_continue_sm is starting this frame...
+            if t_continue_sm.status == NOT_STARTED and allowContinue == True:
                 # keep track of start time/frame for later
-                t_sm_continue.frameNStart = frameN  # exact frame index
-                t_sm_continue.tStart = t  # local t and not account for scr refresh
-                t_sm_continue.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_sm_continue, 'tStartRefresh')  # time at next scr refresh
+                t_continue_sm.frameNStart = frameN  # exact frame index
+                t_continue_sm.tStart = t  # local t and not account for scr refresh
+                t_continue_sm.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_continue_sm, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 't_continue_sm.started')
                 # update status
-                t_sm_continue.status = STARTED
-                t_sm_continue.setAutoDraw(True)
+                t_continue_sm.status = STARTED
+                t_continue_sm.setAutoDraw(True)
             
-            # if t_sm_continue is active this frame...
-            if t_sm_continue.status == STARTED:
+            # if t_continue_sm is active this frame...
+            if t_continue_sm.status == STARTED:
                 # update params
                 pass
             # Run 'Each Frame' code from code_sm_helper
@@ -1543,6 +1627,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_sm.tStart = t  # local t and not account for scr refresh
                 key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'key_resp_sm.started')
                 # update status
                 key_resp_sm.status = STARTED
                 # keyboard checking is just starting
@@ -1598,15 +1684,49 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStop = globalClock.getTime(format='float')
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
+        state_measure_pretrial.addData('slider_SAM.response', slider_SAM.getRating())
+        state_measure_pretrial.addData('slider_SAM.rt', slider_SAM.getRT())
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating_rt', sm_slider.getRT())
+        thisExp.addData('rating', sm_slider.getRating())
+        
+        #response_time = trial_clock.getTime()
+        sm_results.append({
+            #'run_id': run_id,
+            'trial_index': sm_index,
+            'rating_type': rating_type,
+            'rating_category': rating_category,
+            'rating': sm_slider.rating,
+            #'response_time_s': response_time,
+            #'timestamp': datetime.now().isoformat(timespec='seconds'),
+            #'rating_message': rating_message,
+            #'rating_min_label': rating_min_label,
+            #'rating_max_label': rating_max_label,
+            'tick_values': tick_values,
+            'granularity': granularity,
+            'style': style.lower()
+        })
+        
+        print()
+        print(sm_results)
+        print()
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            print(filename)
+        except:
+            print("Could not find filename")
+        
+        if sm_results:
+            df_out = pd.DataFrame(results)
+            write_header = not out_path.exists()
+            df_out.to_csv(out_path, mode='a', header=write_header, index=False)
+            print(f"Saved {len(results)} ratings to {out_path}")
+        
+        try:
+            print(f"{rating_category}: {sm_slider.rating}")
         except:
             print("Error printing rating")
+        
+        sm_index += 1
         # check responses
         if key_resp_sm.keys in ['', [], None]:  # No response was made
             key_resp_sm.keys = None
@@ -1816,7 +1936,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('blocks.csv'), 
+        trialList=data.importConditions('blocks.xlsx'), 
         seed=None, 
     )
     thisExp.addLoop(repeat)  # add the loop to the experiment
@@ -1992,10 +2112,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             emotionRegulationCue.status = STARTED
             thisExp.addData('emotionRegulationCue.started', emotionRegulationCue.tStart)
             emotionRegulationCue.maxDuration = None
-            win.color = [-1.0000, -1.0000, -1.0000]
-            win.colorSpace = 'rgb'
-            win.backgroundImage = ''
-            win.backgroundFit = 'none'
             # keep track of which components have finished
             emotionRegulationCueComponents = emotionRegulationCue.components
             for thisComponent in emotionRegulationCue.components:
@@ -2164,7 +2280,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             emotionRegulationCue.tStop = globalClock.getTime(format='float')
             emotionRegulationCue.tStopRefresh = tThisFlipGlobal
             thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
-            setupWindow(expInfo=expInfo, win=win)
             # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             
@@ -2181,7 +2296,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             key_resp.keys = []
             key_resp.rt = []
             _key_resp_allKeys = []
-            image_IASP.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
+            image_IASP.setSize([img_width, img_height])
             image_IASP.setImage(photo_filename)
             # store start times for trial
             trial.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -2189,10 +2304,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             trial.status = STARTED
             thisExp.addData('trial.started', trial.tStart)
             trial.maxDuration = 5
-            win.color = [-1.0000, -1.0000, -1.0000]
-            win.colorSpace = 'rgb'
-            win.backgroundImage = ''
-            win.backgroundFit = 'none'
             # keep track of which components have finished
             trialComponents = trial.components
             for thisComponent in trial.components:
@@ -2339,7 +2450,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             trial.tStop = globalClock.getTime(format='float')
             trial.tStopRefresh = tThisFlipGlobal
             thisExp.addData('trial.stopped', trial.tStop)
-            setupWindow(expInfo=expInfo, win=win)
             # check responses
             if key_resp.keys in ['', [], None]:  # No response was made
                 key_resp.keys = None
@@ -2393,8 +2503,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             extraInfo=expInfo, 
             originPath=-1, 
             trialList=data.importConditions(
-            '../../shared/loop-templates/loopStateMeasure.csv', 
-            selection='[7, 2, 3, 4, 5, 6]'
+            '../../shared/loop-templates/loopStateMeasure.xlsx', 
+            selection='0:7'
         )
         , 
             seed=None, 
@@ -2427,17 +2537,26 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+                components=[slider_SAM, image_SAM, t_sm_message, t_continue_sm, key_resp_sm],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
+            slider_SAM.reset()
+            slider_SAM.setPos((0, sm_sam_comp_slider_pos_y))
+            slider_SAM.setSize((sm_sam_comp_slider_width, sm_sam_comp_slider_size_height))
             image_SAM.setPos((0, sm_sam_comp_img_pos_y))
             image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
             image_SAM.setImage(picture_path)
             t_sm_message.setText(rating_message)
             # Run 'Begin Routine' code from code_sm_helper
             allowContinue = False
+            
+            # Destroy previous slider if it exists
+            try:
+                slider_generic = None
+            except:
+                pass
             
             # Parse tick values from the condition file
             print(f"ROW: {rating_category}, {rating_type}")
@@ -2538,6 +2657,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
                 
+                # *slider_SAM* updates
+                
+                # if slider_SAM is starting this frame...
+                if slider_SAM.status == NOT_STARTED and rating_type == 'SAM':
+                    # keep track of start time/frame for later
+                    slider_SAM.frameNStart = frameN  # exact frame index
+                    slider_SAM.tStart = t  # local t and not account for scr refresh
+                    slider_SAM.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(slider_SAM, 'tStartRefresh')  # time at next scr refresh
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'slider_SAM.started')
+                    # update status
+                    slider_SAM.status = STARTED
+                    slider_SAM.setAutoDraw(True)
+                
+                # if slider_SAM is active this frame...
+                if slider_SAM.status == STARTED:
+                    # update params
+                    pass
+                
+                # if slider_SAM is stopping this frame...
+                if slider_SAM.status == STARTED:
+                    if bool(rating_type != 'SAM'):
+                        # keep track of stop time/frame for later
+                        slider_SAM.tStop = t  # not accounting for scr refresh
+                        slider_SAM.tStopRefresh = tThisFlipGlobal  # on global time
+                        slider_SAM.frameNStop = frameN  # exact frame index
+                        # add timestamp to datafile
+                        thisExp.timestampOnFlip(win, 'slider_SAM.stopped')
+                        # update status
+                        slider_SAM.status = FINISHED
+                        slider_SAM.setAutoDraw(False)
+                
                 # *image_SAM* updates
                 
                 # if image_SAM is starting this frame...
@@ -2547,6 +2699,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_SAM.tStart = t  # local t and not account for scr refresh
                     image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'image_SAM.started')
                     # update status
                     image_SAM.status = STARTED
                     image_SAM.setAutoDraw(True)
@@ -2565,6 +2719,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     t_sm_message.tStart = t  # local t and not account for scr refresh
                     t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 't_sm_message.started')
                     # update status
                     t_sm_message.status = STARTED
                     t_sm_message.setAutoDraw(True)
@@ -2574,21 +2730,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update params
                     pass
                 
-                # *t_sm_continue* updates
+                # *t_continue_sm* updates
                 
-                # if t_sm_continue is starting this frame...
-                if t_sm_continue.status == NOT_STARTED and allowContinue == True:
+                # if t_continue_sm is starting this frame...
+                if t_continue_sm.status == NOT_STARTED and allowContinue == True:
                     # keep track of start time/frame for later
-                    t_sm_continue.frameNStart = frameN  # exact frame index
-                    t_sm_continue.tStart = t  # local t and not account for scr refresh
-                    t_sm_continue.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_sm_continue, 'tStartRefresh')  # time at next scr refresh
+                    t_continue_sm.frameNStart = frameN  # exact frame index
+                    t_continue_sm.tStart = t  # local t and not account for scr refresh
+                    t_continue_sm.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(t_continue_sm, 'tStartRefresh')  # time at next scr refresh
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 't_continue_sm.started')
                     # update status
-                    t_sm_continue.status = STARTED
-                    t_sm_continue.setAutoDraw(True)
+                    t_continue_sm.status = STARTED
+                    t_continue_sm.setAutoDraw(True)
                 
-                # if t_sm_continue is active this frame...
-                if t_sm_continue.status == STARTED:
+                # if t_continue_sm is active this frame...
+                if t_continue_sm.status == STARTED:
                     # update params
                     pass
                 # Run 'Each Frame' code from code_sm_helper
@@ -2612,6 +2770,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.tStart = t  # local t and not account for scr refresh
                     key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'key_resp_sm.started')
                     # update status
                     key_resp_sm.status = STARTED
                     # keyboard checking is just starting
@@ -2667,15 +2827,49 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStop = globalClock.getTime(format='float')
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
+            state_measure_trials.addData('slider_SAM.response', slider_SAM.getRating())
+            state_measure_trials.addData('slider_SAM.rt', slider_SAM.getRT())
             # Run 'End Routine' code from code_sm_helper
-            #thisExp.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating_rt', sm_slider.getRT())
+            thisExp.addData('rating', sm_slider.getRating())
+            
+            #response_time = trial_clock.getTime()
+            sm_results.append({
+                #'run_id': run_id,
+                'trial_index': sm_index,
+                'rating_type': rating_type,
+                'rating_category': rating_category,
+                'rating': sm_slider.rating,
+                #'response_time_s': response_time,
+                #'timestamp': datetime.now().isoformat(timespec='seconds'),
+                #'rating_message': rating_message,
+                #'rating_min_label': rating_min_label,
+                #'rating_max_label': rating_max_label,
+                'tick_values': tick_values,
+                'granularity': granularity,
+                'style': style.lower()
+            })
+            
+            print()
+            print(sm_results)
+            print()
             
             try:
-                print(f"{rating_category}: {sm_slider.getRating()}")
+                print(filename)
+            except:
+                print("Could not find filename")
+            
+            if sm_results:
+                df_out = pd.DataFrame(results)
+                write_header = not out_path.exists()
+                df_out.to_csv(out_path, mode='a', header=write_header, index=False)
+                print(f"Saved {len(results)} ratings to {out_path}")
+            
+            try:
+                print(f"{rating_category}: {sm_slider.rating}")
             except:
                 print("Error printing rating")
+            
+            sm_index += 1
             # check responses
             if key_resp_sm.keys in ['', [], None]:  # No response was made
                 key_resp_sm.keys = None
