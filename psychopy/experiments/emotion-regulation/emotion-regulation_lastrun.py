@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on December 31, 2025, at 02:07
+    on December 31, 2025, at 20:24
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -2346,7 +2346,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='[7, 2, 3, 4, 5, 6]'
+        selection='[2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
@@ -3271,7 +3271,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='[7, 2, 3, 4, 5, 6]'
+        selection='[2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 

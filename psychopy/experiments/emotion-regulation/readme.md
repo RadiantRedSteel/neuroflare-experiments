@@ -1,35 +1,97 @@
-# Trial Flow
-
-The experiment progresses in **five phases**:
-
-1. **Neutral block**: 40 neutral photos, randomized order, with “Just View” cue.  
-2. **Practice block**: 8 unpleasant photos, fixed set, strategy is *just view*.  
-3. **Main blocks**: 4 × 40 unpleasant photos, each block randomly assigned one strategy (*view*, *suppression*, *reappraisal*, *suppression+reappraisal*). Both block order and photo order randomized.  
-4. **State measures**: After each block, participants complete ratings (7‑state measure, SAM for neutral, plus pain ratings).  
-5. **Goodbye routine**: End of experiment.
+# Emotion‑Regulation Task
+A PsychoPy experiment for unpleasant‑image viewing with block‑wise emotion‑regulation strategies.
 
 ---
 
-## Per‑Trial Flow
+## Overview
 
-- **Unpleasant trials**:  
-  Cross (300 ms) → Cue (1000 ms) → Delay (500–1500 ms) → Photo (4000 ms) → Blank (1000 ms)
+This experiment presents neutral and unpleasant images while participants use different emotion‑regulation strategies. Three condition files drive the randomization of the task: one for the neutral block, one for the practice block, and one for the unpleasant trials. All three are generated at the start of the experiment. The neutral and practice files require minimal randomization (primarily photo order), while the unpleasant‑trial file contains 160 photos that require full randomization and structured slicing.
 
-- **Neutral trials**:  
-  Cross (300 ms) → Cue “Just View” (1000 ms) → Photo (4000 ms) → Blank (1000 ms)
+The 160 unpleasant photos are divided into four sets of 40, each dedicated to a specific block (1–4). Details about block‑to‑photo associations can be found in `docs/emotion_regulation_block_association.xlsx`. Within each block, the photos are randomized, and each block is assigned a randomly selected emotion‑regulation strategy.
+
+Before each unpleasant block, the reset routine updates the slice indices and displays the appropriate strategy‑specific instructions.
+
+Throughout the experiment, several state‑measure routines are used to assess how the participant is feeling at different stages.
+
+A parallel‑port trigger is sent to the EEG/EMG system for the full duration of each `image_iasp` presentation.
 
 ---
 
-## Unpleasant Trials
+# Experiment Phases
 
-The section progresses in **four blocks**. Each block consists of:
+The experiment progresses in three trial phases:
 
-```
-[ reset ] → [ trial (progresses 40 rows at a time) ] → [ state_measure ]
-```
+- **Neutral block**:
+  40 neutral photos, randomized order, strategy = *view*.
 
-This sequence repeats **×4**, covering all 160 randomized trials.
+- **Practice block**:
+  8 unpleasant photos, randomized order, strategy = *view*.
 
+- **Main unpleasant blocks**:
+  4 × 40 unpleasant photos.
+  Each block is randomly assigned one strategy:
+  *view*, *suppression*, *reappraisal*, *suppression+reappraisal*.
+  Block order and photo order are randomized.
+
+---
+
+# Per‑Trial Flow
+
+Cross (300 ms) → Cue (1000 ms) → Delay (500–1500 ms) → Photo (4000 ms) → Blank (1000 ms)
+
+---
+
+# State Measures
+
+The experiment uses three distinct state‑measure configurations, depending on the phase.
+
+### Pre‑Trial Baseline
+Collected once at the start of the experiment.
+Includes 7 ratings:
+
+- Fatigue
+- Sleepiness
+- Pain
+- Pain Unpleasantness
+- SAM Valence
+- SAM Arousal
+- SAM Dominance
+
+### Neutral + Practice State Measure
+Used after the neutral block.
+(The practice block currently includes a state measure, though this may change in future updates.)
+Includes:
+
+- Pain
+- Pain Unpleasantness
+- SAM Valence
+- SAM Arousal
+- SAM Dominance
+
+### Unpleasant Block State Measure
+Used after each unpleasant block.
+Includes:
+
+- Emotion‑Regulation Success
+- Pain
+- Pain Unpleasantness
+- SAM Valence
+- SAM Arousal
+- SAM Dominance
+
+These configurations are implemented as separate routines to keep the logic modular and ensure each block receives the correct set of ratings.
+
+---
+
+# Main Unpleasant Trial Structure
+
+The unpleasant section progresses in four blocks, each containing 40 trials. Before each block, the reset routine:
+
+- updates the slice indices (`row_section`)
+- retrieves the strategy assigned to that block
+- displays a strategy‑specific instruction screen
+
+Each block follows:
 ```txt
 Trial Flow (4 blocks total):
 
@@ -43,95 +105,50 @@ Trial Flow (4 blocks total):
                      repeated ×4
 ```
 
-This experiment uses a master condition file of 160 trials that is sliced into four sequential blocks of 40. At the start of each block, the reset routine updates the slice indices (row_section), ensuring that only the correct subset of rows is fed into the inner loop. The trial routine then presents each photo stimulus with its assigned emotion regulation technique, while the state_measure routine follows to collect participant ratings. This design keeps the Builder flow modular while guaranteeing randomized block order, randomized photo order within each block, and reproducible logging of the exact slice used per participant.
+This design ensures:
+
+- randomized block order
+- randomized photo order within each block
+- correct strategy assignment per block
+- reproducible logging of slice indices
 
 ---
 
-## Code Slicer Properties
+# Routines Overview
 
-The `code_slicer` handles randomization and trial slicing. It lives in the **reset routine**, where it updates the `row_section` variable to select the correct 40‑trial slice from the master condition file. This ensures each block uses a unique randomized subset of trials, while also logging block order and technique assignment for reproducibility.
-
-### Before Experiment
-```python
-import random
-import csv
-
-file_name = 'emotion_regulation_trials.csv'
-
-# Techniques and blocks
-techniques = ['view', 'suppression', 'reappraisal', 'suppression-reappraisal']
-block_ids = ['block1', 'block2', 'block3', 'block4']
-
-# Photo sets per block
-photo_sets = {
-    'block1': list(range(1001, 1041)),
-    'block2': list(range(2001, 2041)),
-    'block3': list(range(3001, 3041)),
-    'block4': list(range(4001, 4041)),
-}
-
-# Randomize techniques and block order
-random.shuffle(techniques)
-block_to_technique = dict(zip(block_ids, techniques))
-block_order = block_ids.copy()
-random.shuffle(block_order)
-
-# Build trial list
-trials = []
-trial_number = 1
-for block in block_order:
-    technique = block_to_technique[block]
-    photos = photo_sets[block].copy()
-    random.shuffle(photos)
-    for photo_id in photos:
-        trials.append({
-            'trial_number': trial_number,
-            'block_id': block,
-            'technique': technique,
-            'photo_filename': f"{photo_id}.jpg"
-        })
-        trial_number += 1
-
-# Save randomized trial file
-with open(file_name, 'w', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=trials[0].keys())
-    writer.writeheader()
-    writer.writerows(trials)
-
-print(f"Saved randomized trial file: {file_name}")
-```
+- `experimentSetup` — global scaling, layout, and helper initialization
+- `welcome` — introduction to the experiment
+- `instructionNeutral` — neutral‑block instructions
+- `instructionPractice` — practice‑block instructions
+- `instructionNegative` — main unpleasant‑block instructions
+- `reset` — updates slice indices and displays strategy‑specific instructions
+- `emotionRegulationCue` — handles the full per‑trial cue sequence
+- `iaspView` — presents each image
+- `stateMeasure` — collects ratings using the appropriate configuration
+- `goodbye` — end screen
 
 ---
 
-### Begin Experiment
-```python
-# Initialize slice indices
-start = 0
-end = 40
+# Parallel‑Port Trigger
 
-# Store for logging
-thisExp.addData('block_order', block_order)
-thisExp.addData('block_to_technique', block_to_technique)
-```
+A p_port trigger is sent whenever `image_iasp` is displayed (for its entire duration).
+This allows synchronization with external hardware during stimulus presentation.
 
 ---
 
-### Begin Routine
-```python
-# Define slice for current block
-row_section = f"{start}:{end}"
+# Logging
 
-# Log which slice was used
-thisExp.addData('row_section', row_section)
-```
+Logging has been streamlined by:
 
----
+- disabling unnecessary onset/offset timestamps
+- adding descriptive comments to routines and code components
+- ensuring ratings are properly saved
 
-### End Routine
-```python
-# Advance slice for next block
-start += 40
-end += 40
-```
+Future improvements will focus on:
+
+- final wording polish
+- text formatting
+- debug checks
+- verifying the trigger address
 
 ---
