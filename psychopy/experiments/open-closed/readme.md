@@ -1,6 +1,6 @@
 # Open–Closed Eyes Experiment
 
-This module is part of the `neuroflare-experiments` repository and is designed to support EEG/EMG-based research on visual attention and baseline brain activity. It is currently a **work in progress** and will be updated as triggers, stimuli, and mood evaluation loops are finalized.
+This module is part of the `neuroflare-experiments` repository and is designed to support EEG/EMG-based research on visual attention and baseline brain activity.
 
 ## Overview
 
@@ -9,9 +9,7 @@ These instructions can be found in `psychopy/open-closed/loop-templates/loopOpen
 
 ## TODO:
 
-- Implement two rounds of 5‑minute eyes‑open and eyes‑closed trials  
-- Add EEG/EMG trigger orchestration  
-- Develop mood evaluation loop (pre‑ and post‑trial)  
+- Verify EEG/EMG trigger orchestration  
 
 ## Note
 

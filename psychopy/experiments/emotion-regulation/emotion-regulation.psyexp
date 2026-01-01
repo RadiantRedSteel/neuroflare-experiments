@@ -1,0 +1,1224 @@
+﻿<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="2025.2.3">
+  <Settings>
+    <Param val="ptb" valType="str" updates="None" name="Audio lib"/>
+    <Param val="" valType="str" updates="None" name="Completed URL"/>
+    <Param val="auto" valType="str" updates="None" name="Data file delimiter"/>
+    <Param val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None" name="Data filename"/>
+    <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
+    <Param val="Thank you for your patience." valType="str" updates="None" name="End Message"/>
+    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '001'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="True" valType="bool" updates="None" name="Force stereo"/>
+    <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
+    <Param val="" valType="str" updates="None" name="HTML path"/>
+    <Param val="" valType="str" updates="None" name="Incomplete URL"/>
+    <Param val="testMonitor" valType="str" updates="None" name="Monitor"/>
+    <Param val="[]" valType="list" updates="None" name="Resources"/>
+    <Param val="False" valType="bool" updates="None" name="Save csv file"/>
+    <Param val="True" valType="bool" updates="None" name="Save excel file"/>
+    <Param val="False" valType="bool" updates="None" name="Save hdf5 file"/>
+    <Param val="True" valType="bool" updates="None" name="Save log file"/>
+    <Param val="True" valType="bool" updates="None" name="Save psydat file"/>
+    <Param val="True" valType="bool" updates="None" name="Save wide csv file"/>
+    <Param val="1" valType="num" updates="None" name="Screen"/>
+    <Param val="True" valType="bool" updates="None" name="Show info dlg"/>
+    <Param val="False" valType="bool" updates="None" name="Show mouse"/>
+    <Param val="height" valType="str" updates="None" name="Units"/>
+    <Param val="" valType="str" updates="None" name="Use version"/>
+    <Param val="[2560, 1440]" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+    <Param val="" valType="str" updates="None" name="backgroundImg"/>
+    <Param val="avg" valType="str" updates="None" name="blendMode"/>
+    <Param val="float" valType="str" updates="None" name="clockFormat"/>
+    <Param val="{'thisRow.t': 'priority.CRITICAL', 'expName': 'priority.LOW'}" valType="dict" updates="None" name="colPriority"/>
+    <Param val="-0.5000, -0.5000, -0.5000" valType="color" updates="None" name="color"/>
+    <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+    <Param val="warning" valType="code" updates="None" name="consoleLoggingLevel"/>
+    <Param val="default" valType="str" updates="None" name="ecSampleRate"/>
+    <Param val="100.1.1.1" valType="str" updates="None" name="elAddress"/>
+    <Param val="FILTER_LEVEL_2" valType="str" updates="None" name="elDataFiltering"/>
+    <Param val="FILTER_LEVEL_OFF" valType="str" updates="None" name="elLiveFiltering"/>
+    <Param val="EYELINK 1000 DESKTOP" valType="str" updates="None" name="elModel"/>
+    <Param val="ELLIPSE_FIT" valType="str" updates="None" name="elPupilAlgorithm"/>
+    <Param val="PUPIL_AREA" valType="str" updates="None" name="elPupilMeasure"/>
+    <Param val="1000" valType="num" updates="None" name="elSampleRate"/>
+    <Param val="False" valType="bool" updates="None" name="elSimMode"/>
+    <Param val="RIGHT_EYE" valType="str" updates="None" name="elTrackEyes"/>
+    <Param val="PUPIL_CR_TRACKING" valType="str" updates="None" name="elTrackingMode"/>
+    <Param val="emotion-regulation" valType="str" updates="None" name="expName"/>
+    <Param val="0.5" valType="str" updates="None" name="expVersion"/>
+    <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
+    <Param val="None" valType="str" updates="None" name="eyetracker"/>
+    <Param val="" valType="code" updates="None" name="frameRate"/>
+    <Param val="Attempting to measure frame rate of screen, please wait..." valType="str" updates="None" name="frameRateMsg"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="gpAddress"/>
+    <Param val="4242" valType="num" updates="None" name="gpPort"/>
+    <Param val="PsychToolbox" valType="str" updates="None" name="keyboardBackend"/>
+    <Param val="info" valType="code" updates="None" name="logging level"/>
+    <Param val="True" valType="bool" updates="None" name="measureFrameRate"/>
+    <Param val="['MIDDLE_BUTTON']" valType="list" updates="None" name="mgBlink"/>
+    <Param val="CONTINUOUS" valType="str" updates="None" name="mgMove"/>
+    <Param val="0.5" valType="num" updates="None" name="mgSaccade"/>
+    <Param val="neon.local" valType="str" updates="None" name="plCompanionAddress"/>
+    <Param val="8080" valType="num" updates="None" name="plCompanionPort"/>
+    <Param val="0.6" valType="num" updates="None" name="plConfidenceThreshold"/>
+    <Param val="" valType="str" updates="None" name="plPupilCaptureRecordingLocation"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="plPupilRemoteAddress"/>
+    <Param val="50020" valType="num" updates="None" name="plPupilRemotePort"/>
+    <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
+    <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
+    <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
+    <Param val="0" valType="code" updates="None" name="runMode"/>
+    <Param val="False" valType="bool" updates="None" name="rush"/>
+    <Param val="time" valType="str" updates="None" name="sortColumns"/>
+    <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
+    <Param val="" valType="str" updates="None" name="tbModel"/>
+    <Param val="60" valType="num" updates="None" name="tbSampleRate"/>
+    <Param val="" valType="str" updates="None" name="tbSerialNo"/>
+    <Param val="pyglet" valType="str" updates="None" name="winBackend"/>
+  </Settings>
+  <Routines>
+    <Routine name="experimentSetup">
+      <RoutineSettingsComponent name="experimentSetup" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="This routine contains all Before Experiment and Begin Experiment code components used across the entire study.&amp;#10;It centralizes global variables, screen geometry, scaling logic, and shared helper functions so that all other routines operate within a consistent coordinate system and configuration.&amp;#10;&amp;#10;Because these variables are referenced throughout the experiment, changes should be made cautiously and with awareness of downstream effects.&amp;#10;This routine must appear before any trial‑based routines in the experiment flow." valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="experimentSetup" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="code_experiment_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_experiment_setup&amp;#10;# Global screen geometry and shared layout variables.&amp;#10;#&amp;#10;# Computes window aspect ratio and establishes a unified&amp;#10;# coordinate system in 'height' units so all routines scale&amp;#10;# consistently across monitors.&amp;#10;#&amp;#10;# Also defines shared wrap-width values for text components.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# ============================================================&amp;#10;# =============== GLOBAL SCREEN GEOMETRY =====================&amp;#10;# ============================================================&amp;#10;# Centralized screen geometry so all routines share the same coordinate system&amp;#10;&amp;#10;screen_width, screen_height = win.size&amp;#10;aspect = screen_width / screen_height  # width / height&amp;#10;&amp;#10;# In 'height' units:&amp;#10;# - Full screen height = 1.0&amp;#10;# - Full screen width  = aspect&amp;#10;leftEdge = -aspect / 2&amp;#10;rightEdge = aspect / 2&amp;#10;topEdge = 0.5&amp;#10;bottomEdge = -0.5&amp;#10;&amp;#10;# Wrap width as a percentage of screen width&amp;#10;aspect80 = aspect * 0.80 # 80% of screen width&amp;#10;aspect20 = aspect * 0.20  # 20% of screen width&amp;#10;comp_wrap_width_body = aspect80&amp;#10;comp_wrap_width_header = aspect80&amp;#10;comp_wrap_width_continue = aspect80 &amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="[screen_width, screen_height] = psychoJS.window.size;&amp;#10;aspect = (screen_width / screen_height);&amp;#10;leftEdge = ((- aspect) / 2);&amp;#10;rightEdge = (aspect / 2);&amp;#10;topEdge = 0.5;&amp;#10;bottomEdge = (- 0.5);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_experiment_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="code_state_measure_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_state_measure_setup&amp;#10;# Global setup logic for the stateMeasure routine.&amp;#10;#&amp;#10;# Handles scaling rules, slider configuration helpers, and&amp;#10;# shared variables needed to dynamically construct rating&amp;#10;# scales based on loop parameters.&amp;#10;#&amp;#10;# The stateMeasure routine depends on this setup code to&amp;#10;# size components correctly and interpret SAM/text settings.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# --- Helper functions for dynamic slider configuration ---&amp;#10;def parse_tick_values(raw):&amp;#10;    # If PsychoPy already parsed it into a list, just return it&amp;#10;    if isinstance(raw, list):&amp;#10;        return raw&amp;#10;    # Otherwise assume it's a comma-separated string&amp;#10;    return [int(x.strip()) for x in raw.split(',')]&amp;#10;&amp;#10;# ===============================================================&amp;#10;# ============== STATE-MEASURE SPECIFIC GEOMETRY ================&amp;#10;# ===============================================================&amp;#10;&amp;#10;def sm_compute_tick_positions(tick_values, rating_type):&amp;#10;    &quot;&quot;&quot;&amp;#10;    Compute slider size, slider position, and min/max label positions&amp;#10;    for both SAM and Generic rating types.&amp;#10;    &quot;&quot;&quot;&amp;#10;&amp;#10;    if rating_type == &quot;SAM&quot;:&amp;#10;        # SAM uses the precomputed geometry&amp;#10;        slider_size = (sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)&amp;#10;        slider_pos  = (0, sm_sam_comp_slider_pos_y)&amp;#10;&amp;#10;        # Tick positions already computed globally&amp;#10;        tick_positions = sm_sam_tick_positions&amp;#10;&amp;#10;        label_min_pos = (tick_positions[0],  sm_sam_comp_label_pos_y)&amp;#10;        label_max_pos = (tick_positions[-1], sm_sam_comp_label_pos_y)&amp;#10;&amp;#10;    else:&amp;#10;        # Generic slider: evenly spaced ticks across the slider width&amp;#10;        slider_size = (sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height)&amp;#10;        slider_pos  = (0, sm_gen_comp_slider_pos_y)&amp;#10;&amp;#10;        # Compute generic tick positions dynamically&amp;#10;        num_ticks = len(tick_values)&amp;#10;        half_width = sm_gen_comp_slider_size_width / 2&amp;#10;&amp;#10;        # Even spacing across the width&amp;#10;        tick_positions = [&amp;#10;            -half_width + (i / (num_ticks - 1)) * sm_gen_comp_slider_size_width&amp;#10;            for i in range(num_ticks)&amp;#10;        ]&amp;#10;&amp;#10;        # Labels sit below the slider&amp;#10;        label_min_pos = (tick_positions[0],  sm_gen_comp_label_pos_y)&amp;#10;        label_max_pos = (tick_positions[-1], sm_gen_comp_label_pos_y)&amp;#10;&amp;#10;    return {&amp;#10;        &quot;slider_size&quot;: slider_size,&amp;#10;        &quot;slider_pos&quot;: slider_pos,&amp;#10;        &quot;tick_positions&quot;: tick_positions,&amp;#10;        &quot;label_min_pos&quot;: label_min_pos,&amp;#10;        &quot;label_max_pos&quot;: label_max_pos&amp;#10;    }&amp;#10;&amp;#10;# ===============================================================&amp;#10;# =================== GEN SPECIFIC GEOMETRY =====================&amp;#10;# ===============================================================&amp;#10;&amp;#10;# --- Generic Slider Scaling ---&amp;#10;# Full-width slider across screen&amp;#10;# Generic slider (used when rating_type != &quot;SAM&quot;)&amp;#10;&amp;#10;# Slider layout (height units)&amp;#10;sm_gen_comp_slider_size_width  = aspect * 0.6  # 60% of screen width&amp;#10;sm_gen_comp_slider_size_height = 0.1           # slider thickness/height&amp;#10;sm_gen_comp_slider_pos_y       = 0             # vertical position of the slider center&amp;#10;&amp;#10;# Label Min/Max layout&amp;#10;sm_gen_comp_label_pos_y = sm_gen_comp_slider_pos_y - 0.2&amp;#10;&amp;#10;# ===============================================================&amp;#10;# =================== SAM SPECIFIC GEOMETRY =====================&amp;#10;# ===============================================================&amp;#10;&amp;#10;# --- SAM image geometry (pixels) ---&amp;#10;sm_sam_img_px_width  = 1168&amp;#10;sm_sam_img_px_height = 231&amp;#10;sm_sam_img_aspect    = sm_sam_img_px_width / sm_sam_img_px_height  # ≈ 5.056&amp;#10;&amp;#10;# Pictogram/gap geometry (pixels)&amp;#10;# Note: there are 5 pictograms and 4 gaps spanning the full image width&amp;#10;sm_sam_pictogram_px_width     = 215&amp;#10;sm_sam_pictogram_gap_px_width = 23&amp;#10;&amp;#10;# --- Layout decisions (height units) ---&amp;#10;sm_sam_comp_img_size_height = 0.25                                             # 25% of screen height&amp;#10;sm_sam_comp_img_size_width  = sm_sam_comp_img_size_height * sm_sam_img_aspect  # scaled width based on aspect&amp;#10;sm_sam_comp_img_pos_y       = 0.1                                              # vertical position of the image&amp;#10;&amp;#10;# Message Layout&amp;#10;sm_sam_comp_message_pos_y = sm_sam_comp_img_pos_y + 0.2&amp;#10;&amp;#10;# Slider layout (height units)&amp;#10;sm_sam_comp_slider_pos_y       = -0.09      # vertical position of the slider center&amp;#10;sm_sam_comp_slider_size_height = 0.06       # slider thickness/height&amp;#10;sm_sam_slider_px_width    = sm_sam_img_px_width - 215&amp;#10;sm_sam_comp_slider_width  = sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width)&amp;#10;&amp;#10;# Scale factor: px -&gt; 'height' units within the image width&amp;#10;sm_sam_scale_factor = sm_sam_comp_img_size_width / sm_sam_img_px_width&amp;#10;&amp;#10;sm_sam_pictogram_w  = sm_sam_pictogram_px_width * sm_sam_scale_factor&amp;#10;sm_sam_gap_w        = sm_sam_pictogram_gap_px_width * sm_sam_scale_factor&amp;#10;&amp;#10;# --- Compute 9 tick x-positions aligned to pictograms ---&amp;#10;sm_sam_tick_positions = []&amp;#10;sm_sam_tick_x = -sm_sam_comp_img_size_width / 2 + sm_sam_pictogram_w / 2&amp;#10;&amp;#10;for i in range(9):&amp;#10;    sm_sam_tick_positions.append(sm_sam_tick_x)&amp;#10;    if i % 2 == 0:&amp;#10;        sm_sam_tick_x += sm_sam_pictogram_w / 2 + sm_sam_gap_w / 2&amp;#10;    else:&amp;#10;        sm_sam_tick_x += sm_sam_gap_w / 2 + sm_sam_pictogram_w / 2&amp;#10;&amp;#10;# Label Min/Max layout&amp;#10;sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="function parse_tick_values(raw) {&amp;#10;    if ((raw instanceof list)) {&amp;#10;        return raw;&amp;#10;    }&amp;#10;    return function () {&amp;#10;    var _pj_a = [], _pj_b = raw.split(&quot;,&quot;);&amp;#10;    for (var _pj_c = 0, _pj_d = _pj_b.length; (_pj_c &lt; _pj_d); _pj_c += 1) {&amp;#10;        var x = _pj_b[_pj_c];&amp;#10;        _pj_a.push(Number.parseInt(x.strip()));&amp;#10;    }&amp;#10;    return _pj_a;&amp;#10;}&amp;#10;.call(this);&amp;#10;}&amp;#10;function sm_compute_tick_positions(tick_values, rating_type) {&amp;#10;    /*&amp;#10;    Compute slider size, slider position, and min/max label positions&amp;#10;    for both SAM and Generic rating types.&amp;#10;    */&amp;#10;    var half_width, label_max_pos, label_min_pos, num_ticks, slider_pos, slider_size, tick_positions;&amp;#10;    if ((rating_type === &quot;SAM&quot;)) {&amp;#10;        slider_size = [sm_sam_comp_slider_width, sm_sam_comp_slider_size_height];&amp;#10;        slider_pos = [0, sm_sam_comp_slider_pos_y];&amp;#10;        tick_positions = sm_sam_tick_positions;&amp;#10;        label_min_pos = [tick_positions[0], sm_sam_comp_label_pos_y];&amp;#10;        label_max_pos = [tick_positions.slice((- 1))[0], sm_sam_comp_label_pos_y];&amp;#10;    } else {&amp;#10;        slider_size = [sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height];&amp;#10;        slider_pos = [0, sm_gen_comp_slider_pos_y];&amp;#10;        num_ticks = tick_values.length;&amp;#10;        half_width = (sm_gen_comp_slider_size_width / 2);&amp;#10;        tick_positions = function () {&amp;#10;    var _pj_a = [], _pj_b = util.range(num_ticks);&amp;#10;    for (var _pj_c = 0, _pj_d = _pj_b.length; (_pj_c &lt; _pj_d); _pj_c += 1) {&amp;#10;        var i = _pj_b[_pj_c];&amp;#10;        _pj_a.push(((- half_width) + ((i / (num_ticks - 1)) * sm_gen_comp_slider_size_width)));&amp;#10;    }&amp;#10;    return _pj_a;&amp;#10;}&amp;#10;.call(this);&amp;#10;        label_min_pos = [tick_positions[0], sm_gen_comp_label_pos_y];&amp;#10;        label_max_pos = [tick_positions.slice((- 1))[0], sm_gen_comp_label_pos_y];&amp;#10;    }&amp;#10;    return {&quot;slider_size&quot;: slider_size, &quot;slider_pos&quot;: slider_pos, &quot;tick_positions&quot;: tick_positions, &quot;label_min_pos&quot;: label_min_pos, &quot;label_max_pos&quot;: label_max_pos};&amp;#10;}&amp;#10;sm_gen_comp_slider_size_width = (aspect * 0.6);&amp;#10;sm_gen_comp_slider_size_height = 0.1;&amp;#10;sm_gen_comp_slider_pos_y = 0;&amp;#10;sm_gen_comp_label_pos_y = (sm_gen_comp_slider_pos_y - 0.2);&amp;#10;sm_sam_img_px_width = 1168;&amp;#10;sm_sam_img_px_height = 231;&amp;#10;sm_sam_img_aspect = (sm_sam_img_px_width / sm_sam_img_px_height);&amp;#10;sm_sam_pictogram_px_width = 215;&amp;#10;sm_sam_pictogram_gap_px_width = 23;&amp;#10;sm_sam_comp_img_size_height = 0.25;&amp;#10;sm_sam_comp_img_size_width = (sm_sam_comp_img_size_height * sm_sam_img_aspect);&amp;#10;sm_sam_comp_img_pos_y = 0.1;&amp;#10;sm_sam_comp_message_pos_y = (sm_sam_comp_img_pos_y + 0.2);&amp;#10;sm_sam_comp_slider_pos_y = (- 0.09);&amp;#10;sm_sam_comp_slider_size_height = 0.06;&amp;#10;sm_sam_slider_px_width = (sm_sam_img_px_width - 215);&amp;#10;sm_sam_comp_slider_width = (sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width));&amp;#10;sm_sam_scale_factor = (sm_sam_comp_img_size_width / sm_sam_img_px_width);&amp;#10;sm_sam_pictogram_w = (sm_sam_pictogram_px_width * sm_sam_scale_factor);&amp;#10;sm_sam_gap_w = (sm_sam_pictogram_gap_px_width * sm_sam_scale_factor);&amp;#10;sm_sam_tick_positions = [];&amp;#10;sm_sam_tick_x = (((- sm_sam_comp_img_size_width) / 2) + (sm_sam_pictogram_w / 2));&amp;#10;for (var i, _pj_c = 0, _pj_a = util.range(9), _pj_b = _pj_a.length; (_pj_c &lt; _pj_b); _pj_c += 1) {&amp;#10;    i = _pj_a[_pj_c];&amp;#10;    sm_sam_tick_positions.push(sm_sam_tick_x);&amp;#10;    if (((i % 2) === 0)) {&amp;#10;        sm_sam_tick_x += ((sm_sam_pictogram_w / 2) + (sm_sam_gap_w / 2));&amp;#10;    } else {&amp;#10;        sm_sam_tick_x += ((sm_sam_gap_w / 2) + (sm_sam_pictogram_w / 2));&amp;#10;    }&amp;#10;}&amp;#10;sm_sam_comp_label_pos_y = (sm_sam_comp_slider_pos_y - 0.15);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_state_measure_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="code_iasp_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_iasp_setup&amp;#10;# Computes on-screen size for IASP images based on the window's&amp;#10;# aspect ratio. Preserves the original 4:3 image ratio and scales&amp;#10;# to the largest size that fits without distortion.&amp;#10;#&amp;#10;# Used by iaspView to size the image consistently across monitors.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# Image aspect ratio (width / height)&amp;#10;iasp_img_aspect = 1024 / 768  # = 1.3333&amp;#10;&amp;#10;# If the window is wider than the image, height is the limiting factor&amp;#10;if aspect &gt;= iasp_img_aspect:&amp;#10;    # Height fills the screen (minus a small margin if you want)&amp;#10;    iasp_comp_img_size_height = 1.0&amp;#10;    iasp_comp_img_size_width = iasp_comp_img_size_height * aspect&amp;#10;else:&amp;#10;    # Width fills the screen&amp;#10;    iasp_comp_img_size_width = aspect&amp;#10;    iasp_comp_img_size_height = iasp_comp_img_size_width / aspect&amp;#10;&amp;#10;# If you want a little breathing room around the image:&amp;#10;#iasp_margin = 0.05  # 5% margin&amp;#10;#iasp_comp_img_height *= (1 - iasp_margin)&amp;#10;#iasp_comp_img_width  *= (1 - iasp_margin)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="iasp_img_aspect = (1024 / 768);&amp;#10;if ((aspect &gt;= iasp_img_aspect)) {&amp;#10;    iasp_comp_img_size_height = 1.0;&amp;#10;    iasp_comp_img_size_width = (iasp_comp_img_size_height * aspect);&amp;#10;} else {&amp;#10;    iasp_comp_img_size_width = aspect;&amp;#10;    iasp_comp_img_size_height = (iasp_comp_img_size_width / aspect);&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_iasp_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="code_iasp_block_randomizer" plugin="None">
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_iasp_block_randomizer&amp;#10;#&amp;#10;# Generates all trial CSV files used by the experiment:&amp;#10;#   - emotion_regulation_unpleasant_trials.csv&amp;#10;#   - emotion_regulation_neutral_trials.csv&amp;#10;#   - emotion_regulation_practice_trials.csv&amp;#10;#&amp;#10;# Performs the following:&amp;#10;#   • Checks for missing or extra IASP images&amp;#10;#   • Randomizes technique assignment to blocks&amp;#10;#   • Randomizes block order&amp;#10;#   • Randomizes photo order within each block&amp;#10;#   • Inserts placeholder images if needed&amp;#10;#&amp;#10;# This code runs once before the experiment begins and writes&amp;#10;# fully randomized trial files that the main loops will read.&amp;#10;#&amp;#10;# IMPORTANT:&amp;#10;#   This component does NOT slice or select trials during the&amp;#10;#   experiment. It only creates the CSVs.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;import random&amp;#10;import csv&amp;#10;import os&amp;#10;&amp;#10;placeholder_filename = 'IASP/placeholder.jpg'&amp;#10;&amp;#10;# Fallback: if placeholder image is absent, use empty string to avoid PsychoPy crash&amp;#10;if not os.path.exists(placeholder_filename):&amp;#10;    print(&quot;Warning: placeholder image not found; using empty string to avoid crash.&quot;)&amp;#10;    placeholder_filename = ''&amp;#10;&amp;#10;# Techniques and blocks&amp;#10;techniques = ['View', 'Suppress', 'Reappraise', 'Suppress and Reappraise']&amp;#10;block_ids = ['block1', 'block2', 'block3', 'block4']&amp;#10;&amp;#10;# Photo sets per block&amp;#10;photo_sets = {&amp;#10;    'block1': [1019, 1040, 1070, 1110, 1201, 1321, 2130, 2691, 2700, 2751, 2811, 3016, 3215, 3301, 5920, 6010, 6242, 6311, 6370, 6800, 6940, 8485, 9041, 9180, 9230, 9300, 9340, 9404, 9410, 9419, 9425, 9430, 9471, 9561, 9584, 9611, 9635, 9900, 9910, 9920],&amp;#10;    'block2': [1022, 1050, 1080, 1111, 1274, 1302, 2120, 2683, 2695, 2705, 2800, 3005, 3181, 3300, 4621, 5973, 6241, 6260, 6315, 6571, 6840, 8480, 9040, 9140, 9220, 9270, 9330, 9373, 9411, 9420, 9426, 9440, 9480, 9570, 9592, 9620, 9700, 9901, 9911, 9921],&amp;#10;    'block3': [1026, 1051, 1090, 1114, 1275, 1301, 2095, 2220, 2694, 2704, 2799, 3001, 3110, 3230, 3530, 5971, 6212, 6250, 6313, 6560, 6383, 8231, 9001, 9120, 9210, 9254, 9320, 9342, 9409, 9417, 9423, 9429, 9470, 9520, 9582, 9600, 9630, 9830, 9903, 9913],&amp;#10;    'block4': [1030, 1052, 1101, 1200, 1300, 1932, 2205, 2692, 2703, 2795, 2900, 3030, 3225, 3500, 5950, 6200, 6243, 6312, 6550, 6821, 8230, 9000, 9050, 9181, 9250, 9301, 9341, 9405, 9415, 9421, 9427, 9452, 9490, 9571, 9594, 9622, 9810, 9902, 9912, 9925],&amp;#10;}&amp;#10;&amp;#10;block_neutral = [2272, 2383, 2393, 2396, 2397, 2435, 2480, 2514, 2518, 2575, 2580, 2593, 2594, 2870, 2880, 2980, 5395, 5455, 5471, 5520, 5740, 7002, 7004, 7036, 7037, 7041, 7130, 7140, 7205, 7217, 7491, 7493, 7495, 7496, 7504, 7546, 7550, 7640, 7705, 8221]&amp;#10;block_practice = [1205, 3103, 3180, 3213, 3220, 3280, 5970, 6190]&amp;#10;&amp;#10;all_sets = list(photo_sets.values()) + [block_neutral, block_practice]&amp;#10;&amp;#10;# Check to see if any photos are missing&amp;#10;def check_missing_photos(photo_id: str) -&gt; bool:&amp;#10;    return not os.path.exists(f&quot;IASP/{photo_id}.jpg&quot;)&amp;#10;&amp;#10;missing_list = [&amp;#10;    photo_id&amp;#10;    for block in all_sets&amp;#10;    for photo_id in block&amp;#10;    if check_missing_photos(photo_id)&amp;#10;]&amp;#10;&amp;#10;missing_set = set(missing_list)&amp;#10;&amp;#10;if missing_list:&amp;#10;    print(f&quot;Missing stimuli: {len(missing_set)}&quot;)&amp;#10;    print(&quot;Names:&quot;, sorted(missing_set))&amp;#10;else:&amp;#10;    print(&quot;All IASP files found.&quot;)&amp;#10;&amp;#10;# ----------------------------------------------------------&amp;#10;# Check for extra files in IASP/ that are not referenced in any block&amp;#10;def _collect_image_ids(folder: str) -&gt; set[int]:&amp;#10;    ids = set()&amp;#10;    try:&amp;#10;        for name in os.listdir(folder):&amp;#10;            lower = name.lower()&amp;#10;            if lower.endswith(('.jpg', '.jpeg')):&amp;#10;                stem, _ = os.path.splitext(name)&amp;#10;                if stem.lower() == 'placeholder':&amp;#10;                    continue&amp;#10;                if stem.isdigit():&amp;#10;                    ids.add(int(stem))&amp;#10;    except FileNotFoundError:&amp;#10;        pass&amp;#10;    return ids&amp;#10;&amp;#10;iasp_folder = 'IASP'&amp;#10;available_ids = _collect_image_ids(iasp_folder)&amp;#10;expected_ids = {pid for block in all_sets for pid in block}&amp;#10;extra_ids = sorted(available_ids - expected_ids)&amp;#10;&amp;#10;if not os.path.isdir(iasp_folder):&amp;#10;    print(&quot;IASP folder not found; skipping extra-file check.&quot;)&amp;#10;elif extra_ids:&amp;#10;    print(f&quot;Extra stimuli in IASP not used: {len(extra_ids)}&quot;)&amp;#10;    print(&quot;Names:&quot;, extra_ids)&amp;#10;else:&amp;#10;    print(&quot;No extra stimuli in IASP source folder.&quot;)&amp;#10;&amp;#10;# ----------------------------------------------------------&amp;#10;# Create negative blocks trials file&amp;#10;# Randomly assign techniques to blocks&amp;#10;negative_file_name = 'emotion_regulation_unpleasant_trials.csv'&amp;#10;&amp;#10;random.shuffle(techniques)&amp;#10;block_to_technique = dict(zip(block_ids, techniques))&amp;#10;negative_trials_technique_order = [] # Referenced in reset routine&amp;#10;&amp;#10;# Randomize block order&amp;#10;block_order = block_ids.copy()&amp;#10;random.shuffle(block_order)&amp;#10;&amp;#10;# Build trial list&amp;#10;negative_trials = []&amp;#10;negative_trial_number = 1&amp;#10;&amp;#10;for block in block_order:&amp;#10;    technique = block_to_technique[block]&amp;#10;    negative_trials_technique_order.append(technique)&amp;#10;    photos = photo_sets[block].copy()&amp;#10;    random.shuffle(photos)&amp;#10;    &amp;#10;    for photo_id in photos:&amp;#10;        if photo_id in missing_set:&amp;#10;            photo_path = placeholder_filename&amp;#10;        else:&amp;#10;            photo_path = f&quot;IASP/{photo_id}.jpg&quot;&amp;#10;&amp;#10;        negative_trials.append({&amp;#10;            'trial_number': negative_trial_number,&amp;#10;            'block_id': block,&amp;#10;            'technique': technique,&amp;#10;            'photo_filename': photo_path&amp;#10;        })&amp;#10;        negative_trial_number += 1&amp;#10;&amp;#10;# Save to CSV&amp;#10;with open(negative_file_name, 'w', newline='') as f:&amp;#10;    writer = csv.DictWriter(f, fieldnames=negative_trials[0].keys())&amp;#10;    writer.writeheader()&amp;#10;    writer.writerows(negative_trials)&amp;#10;&amp;#10;print(f&quot;Saved randomized trial file: {negative_file_name}&quot;)&amp;#10;&amp;#10;# ----------------------------------------------------------&amp;#10;# Create block_neutral trials file&amp;#10;neutral_file_name = 'emotion_regulation_neutral_trials.csv'&amp;#10;neutral_trials = []&amp;#10;neutral_trial_number = 1&amp;#10;&amp;#10;# Randomize photo order&amp;#10;neutral_photos = block_neutral.copy()&amp;#10;random.shuffle(neutral_photos)&amp;#10;&amp;#10;for photo_id in neutral_photos:&amp;#10;    if photo_id in missing_set:&amp;#10;        photo_path = placeholder_filename&amp;#10;    else:&amp;#10;        photo_path = f&quot;IASP/{photo_id}.jpg&quot;&amp;#10;&amp;#10;    neutral_trials.append({&amp;#10;        'trial_number': neutral_trial_number,&amp;#10;        'block_id': 'block_neutral',&amp;#10;        'technique': 'View',&amp;#10;        'photo_filename': photo_path&amp;#10;    })&amp;#10;    neutral_trial_number += 1&amp;#10;&amp;#10;# Save block_neutral to CSV&amp;#10;with open(neutral_file_name, 'w', newline='') as f:&amp;#10;    writer = csv.DictWriter(f, fieldnames=neutral_trials[0].keys())&amp;#10;    writer.writeheader()&amp;#10;    writer.writerows(neutral_trials)&amp;#10;&amp;#10;print(f&quot;Saved randomized trial file: {neutral_file_name}&quot;)&amp;#10;&amp;#10;# ----------------------------------------------------------&amp;#10;# Create block_practice trials file&amp;#10;practice_file_name = 'emotion_regulation_practice_trials.csv'&amp;#10;practice_trials = []&amp;#10;practice_trial_number = 1&amp;#10;&amp;#10;# Randomize photo order&amp;#10;practice_photos = block_practice.copy()&amp;#10;random.shuffle(practice_photos)&amp;#10;&amp;#10;for photo_id in practice_photos:&amp;#10;    if photo_id in missing_set:&amp;#10;        photo_path = placeholder_filename&amp;#10;    else:&amp;#10;        photo_path = f&quot;IASP/{photo_id}.jpg&quot;&amp;#10;&amp;#10;    practice_trials.append({&amp;#10;        'trial_number': practice_trial_number,&amp;#10;        'block_id': 'block_practice',&amp;#10;        'technique': 'View',&amp;#10;        'photo_filename': photo_path&amp;#10;    })&amp;#10;    practice_trial_number += 1&amp;#10;&amp;#10;# Save block_practice to CSV&amp;#10;with open(practice_file_name, 'w', newline='') as f:&amp;#10;    writer = csv.DictWriter(f, fieldnames=practice_trials[0].keys())&amp;#10;    writer.writeheader()&amp;#10;    writer.writerows(practice_trials)&amp;#10;&amp;#10;print(f&quot;Saved randomized trial file: {practice_file_name}&quot;)" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="/* Syntax Error: Fix Python code */" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# Initialize slice indices&amp;#10;start = 0&amp;#10;end = 40&amp;#10;&amp;#10;# Store for logging&amp;#10;thisExp.addData('block_order', block_order)&amp;#10;thisExp.addData('block_to_technique', block_to_technique)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_iasp_block_randomizer" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="welcome">
+      <RoutineSettingsComponent name="welcome" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="welcome" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_welcome_body" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_welcome_body" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$Message" valType="str" updates="set every repeat" name="text"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_welcome_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_welcome_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to continue" valType="str" updates="constant" name="text"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_welcome" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_welcome" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="stateMeasure">
+      <RoutineSettingsComponent name="stateMeasure" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="This routine presents a rating scale that adapts based on parameters supplied by the surrounding loop.&amp;#10;To use it, place stateMeasure inside a loop whose conditions file includes the following columns:&amp;#10;- rating_type&amp;#10;- rating_category&amp;#10;- rating_message&amp;#10;- rating_min_label&amp;#10;- rating_max_label&amp;#10;- picture_path (SAM only; expects a 1168×231 image)&amp;#10;- tick_values&amp;#10;- granularity&amp;#10;- style&amp;#10;The routine reads these values on each iteration and configures the slider dynamically.&amp;#10;The experiment must include the code_state_measure_setup component, which handles global setup and shared logic." valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="stateMeasure" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="code_sm_helper" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="[screen_width, screen_height] = psychoJS.window.size;&amp;#10;aspect = (screen_width / screen_height);&amp;#10;leftEdge = ((- aspect) / 2);&amp;#10;rightEdge = (aspect / 2);&amp;#10;topEdge = 0.5;&amp;#10;bottomEdge = (- 0.5);&amp;#10;sam_aspect = (2200 / 264);&amp;#10;sam_height = 0.2;&amp;#10;sam_width = (sam_height * sam_aspect);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="allowContinue = False&amp;#10;&amp;#10;# Parse tick values from the condition file&amp;#10;print(f&quot;ROW: {rating_category}, {rating_type}&quot;)&amp;#10;tick_values_parsed = parse_tick_values(tick_values)&amp;#10;print(tick_values_parsed)&amp;#10;&amp;#10;# Compute geometry based on rating type&amp;#10;sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)&amp;#10;&amp;#10;sm_comp_slider_size = sm_geometry[&quot;slider_size&quot;]&amp;#10;sm_comp_slider_pos  = sm_geometry[&quot;slider_pos&quot;]&amp;#10;sm_comp_label_min_pos = sm_geometry[&quot;label_min_pos&quot;]&amp;#10;sm_comp_label_max_pos = sm_geometry[&quot;label_max_pos&quot;]&amp;#10;&amp;#10;t_sm_label_min = visual.TextStim(&amp;#10;    win=win,&amp;#10;    text=rating_min_label,&amp;#10;    pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),&amp;#10;    wrapWidth=aspect20,&amp;#10;    anchorVert='top',&amp;#10;    height=0.05,&amp;#10;    color='white',&amp;#10;    font='Noto Sans'&amp;#10;)&amp;#10;&amp;#10;t_sm_label_max = visual.TextStim(&amp;#10;    win=win,&amp;#10;    text=rating_max_label,&amp;#10;    pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),&amp;#10;    wrapWidth=aspect20,&amp;#10;    anchorVert='top',&amp;#10;    height=0.05,&amp;#10;    color='white',&amp;#10;    font='Noto Sans'&amp;#10;)&amp;#10;&amp;#10;#t_label_min.setPos(sm_comp_label_min_pos)&amp;#10;#t_label_max.setPos(sm_comp_label_max_pos)&amp;#10;&amp;#10;# --- Create a fresh slider for this trial ---&amp;#10;sm_slider = visual.Slider(&amp;#10;    win=win,&amp;#10;    ticks=tick_values_parsed,&amp;#10;    labels=tick_values_parsed,&amp;#10;    granularity=granularity,&amp;#10;    style=style.lower(),&amp;#10;    pos=sm_comp_slider_pos,&amp;#10;    size=sm_comp_slider_size,&amp;#10;    labelHeight=0.05,&amp;#10;    colorSpace='rgb',&amp;#10;    markerColor='Red',&amp;#10;    lineColor='White',&amp;#10;    labelColor='LightGray',&amp;#10;    font='Noto Sans'&amp;#10;)&amp;#10;&amp;#10;# --- SAM image logic ---&amp;#10;if rating_type == 'SAM':&amp;#10;    image_SAM.setImage(picture_path)&amp;#10;    image_SAM.setAutoDraw(True)&amp;#10;else:&amp;#10;    image_SAM.setAutoDraw(False)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="# Draw state measure components&amp;#10;sm_slider.draw()&amp;#10;t_sm_label_min.draw()&amp;#10;t_sm_label_max.draw()&amp;#10;&amp;#10;# If rated, allow spacebar to end the routine&amp;#10;if sm_slider.getRating() is not None:&amp;#10;    allowContinue = True&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="#thisExp.addData('rating', sm_slider.getRating())&amp;#10;currentLoop.addData('rating', sm_slider.getRating())&amp;#10;currentLoop.addData('rating_rt', sm_slider.getRT())&amp;#10;&amp;#10;try:&amp;#10;    print(f&quot;{rating_category}: {sm_slider.getRating()}&quot;)&amp;#10;except:&amp;#10;    print(&quot;Error printing rating&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_sm_helper" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <SliderComponent name="slider_generic" plugin="None">
+        <Param val="White" valType="color" updates="constant" name="borderColor"/>
+        <Param val="LightGray" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="True" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="Red" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flip"/>
+        <Param val="Noto Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="1" valType="num" updates="constant" name="granularity"/>
+        <Param val="" valType="code" updates="None" name="initVal"/>
+        <Param val="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10" valType="list" updates="constant" name="labels"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="slider_generic" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="set every repeat" name="pos"/>
+        <Param val="False" valType="bool" updates="constant" name="readOnly"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(slider_gen_width, 0.1)" valType="list" updates="set every repeat" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="$rating_type == 'Generic'" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="stopType"/>
+        <Param val="$rating_type != 'Generic'" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeHistory"/>
+        <Param val="True" valType="bool" updates="constant" name="storeRating"/>
+        <Param val="True" valType="bool" updates="constant" name="storeRatingTime"/>
+        <Param val="()" valType="list" updates="constant" name="styleTweaks"/>
+        <Param val="rating" valType="str" updates="constant" name="styles"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10" valType="list" updates="constant" name="ticks"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+      </SliderComponent>
+      <SliderComponent name="slider_SAM" plugin="None">
+        <Param val="White" valType="color" updates="constant" name="borderColor"/>
+        <Param val="LightGray" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="True" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="Red" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flip"/>
+        <Param val="Noto Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="1" valType="num" updates="constant" name="granularity"/>
+        <Param val="" valType="code" updates="None" name="initVal"/>
+        <Param val="1, 2, 3, 4, 5, 6, 7, 8, 9" valType="list" updates="constant" name="labels"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="slider_SAM" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, sm_sam_comp_slider_pos_y)" valType="list" updates="set every repeat" name="pos"/>
+        <Param val="False" valType="bool" updates="constant" name="readOnly"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)" valType="list" updates="set every repeat" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="$rating_type == 'SAM'" valType="code" updates="None" name="startVal"/>
+        <Param val="condition" valType="str" updates="None" name="stopType"/>
+        <Param val="$rating_type != 'SAM'" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeHistory"/>
+        <Param val="True" valType="bool" updates="constant" name="storeRating"/>
+        <Param val="True" valType="bool" updates="constant" name="storeRatingTime"/>
+        <Param val="()" valType="list" updates="constant" name="styleTweaks"/>
+        <Param val="radio" valType="str" updates="constant" name="styles"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="(1, 2, 3, 4, 5, 6, 7, 8, 9)" valType="list" updates="constant" name="ticks"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+      </SliderComponent>
+      <ImageComponent name="image_SAM" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$picture_path" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_SAM" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, sm_sam_comp_img_pos_y)" valType="list" updates="set every repeat" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(sm_sam_comp_img_size_width, sm_sam_comp_img_size_height)" valType="list" updates="set every repeat" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+      </ImageComponent>
+      <TextComponent name="t_sm_message" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_sm_message" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, .35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$rating_message" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_header" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_sm_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_sm_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="$allowContinue == True" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to continue" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_sm" plugin="None">
+        <Param val="'space'" valType="list" updates="set every repeat" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_sm" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="$allowContinue == True" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="instructionNeutral">
+      <RoutineSettingsComponent name="instructionNeutral" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="instructionNeutral" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_neutral_instruction" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_neutral_instruction" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="First, you will just view neutral pictures. &amp;#10;&amp;#10;Look at the picture naturally without trying to change your thoughts or feelings. Avoid thinking about unrelated topics." valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_neutral_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_neutral_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to begin" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_neutral" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_neutral" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="instructionUnpleasant">
+      <RoutineSettingsComponent name="instructionUnpleasant" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="instructionUnpleasant" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_unpleasant_instruction" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_unpleasant_instruction" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Next, you will begin the main set of unpleasant picture trials.&amp;#10;&amp;#10;If at any point you would like to stop, please let the experimenter know." valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_unpleasant_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_unpleasant_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Otherwise, press the SPACEBAR to begin the emotion regulation tasks" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_unpleasant" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_unpleasant" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="reset">
+      <RoutineSettingsComponent name="reset" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="Prepares participants for the upcoming block by displaying emotion regulation instructions and advancing the trial slice.&amp;#10;This routine:&amp;#10;- Shows task instructions before each block&amp;#10;- Uses code_slicer_helper to select the next 40-trial slice&amp;#10;- Can be extended to display block-specific strategy guidance&amp;#10;If dynamic instructions are enabled, the routine can show tailored guidance based on the current emotion regulation strategy (e.g., Suppress, Reappraise).&amp;#10;To support this, the current technique must be accessible from the loop or stored globally during block setup." valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="reset" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="code_slicer_helper" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="&amp;#10;        // add-on: list(s: string): string[]&amp;#10;        function list(s) {&amp;#10;            // if s is a string, we return a list of its characters&amp;#10;            if (typeof s === 'string')&amp;#10;                return s.split('');&amp;#10;            else&amp;#10;                // otherwise we return s:&amp;#10;                return s;&amp;#10;        }&amp;#10;&amp;#10;        rows = [list(util.range(1001, 1041))];&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="reset_routine_counter = 0&amp;#10;just_view_text = &quot;Just View\n\nSimply look at the picture as it appears.\nDo not try to change your feelings or reactions.\nLet your natural response happen and just observe.&quot;&amp;#10;suppress_text = &quot;Suppress Emotion\n\nTry not to feel the unpleasant emotions the picture might bring up.\nYou can push the feelings down, ignore them, or keep a neutral expression.\nFocus on staying calm and steady.&quot;&amp;#10;reappraise_text = &quot;Reappraise\n\nChange the way you think about the picture so it feels less unpleasant.\nYou might imagine the situation has a neutral or positive outcome, that it is staged or not real, or that the people are safe afterward.&quot;&amp;#10;suppress_and_reappraise_text = &quot;Suppress and Reappraise\n\nUse both strategies at the same time.\nFirst reinterpret the picture to make it feel less unpleasant.\nAt the same time, try not to show or feel the unpleasant emotion.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_slicer_helper&amp;#10;#&amp;#10;# Selects the current 40 trial slice from the pre-randomized&amp;#10;# CSV file. The surrounding loop uses this slice to determine&amp;#10;# which trials to run for the current block.&amp;#10;#&amp;#10;# Begin Routine:&amp;#10;#   • Builds a &quot;start:end&quot; slice string (e.g., &quot;0:40&quot;)&amp;#10;#   • Logs the slice to the data file for analysis&amp;#10;#&amp;#10;# End Routine:&amp;#10;#   • Advances start/end by 40 to move to the next block&amp;#10;#&amp;#10;# This component does NOT randomize trials. It only selects&amp;#10;# which portion of the CSV to use on each loop iteration.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# Define slice for current block&amp;#10;row_section = f&quot;{start}:{end}&quot;&amp;#10;print(row_section)&amp;#10;&amp;#10;# Log which slice was used&amp;#10;#currentLoop.addData('row_section', row_section)&amp;#10;&amp;#10;# Change current emotion regulation strategy text&amp;#10;current_technique = negative_trials_technique_order[reset_routine_counter]&amp;#10;t_reset_instruction_text = &quot;&quot;&amp;#10;&amp;#10;if current_technique == &quot;View&quot;:&amp;#10;    t_reset_instruction_text = just_view_text&amp;#10;elif current_technique == &quot;Suppress&quot;:&amp;#10;    t_reset_instruction_text = suppress_text&amp;#10;elif current_technique == &quot;Reappraise&quot;:&amp;#10;    t_reset_instruction_text = reappraise_text&amp;#10;elif current_technique == &quot;Suppress and Reappraise&quot;:&amp;#10;    t_reset_instruction_text = suppress_and_reappraise_text&amp;#10;else:&amp;#10;    t_reset_instruction_text = &quot;Unknown technique. Please contact the experimenter.&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="# Advance slice for next block&amp;#10;start += 40&amp;#10;end += 40&amp;#10;&amp;#10;if reset_routine_counter &lt; len(negative_trials_technique_order):&amp;#10;    reset_routine_counter += 1" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_slicer_helper" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <TextComponent name="t_reset_instruction" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_reset_instruction" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$t_reset_instruction_text" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_reset_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_reset_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to begin" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_reset" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_reset" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="emotionRegulationCue">
+      <RoutineSettingsComponent name="emotionRegulationCue" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="This routine presents the regulation cue for the current trial.&amp;#10;It must be paired with iaspView inside the same loop.&amp;#10;The loop’s conditions file must include the following columns:&amp;#10;- trial_number&amp;#10;- block_id&amp;#10;- technique (required by this routine)&amp;#10;- photo_filename&amp;#10;The routine displays a fixation cross, followed by the regulation cue text, and then a variable blank delay.&amp;#10;The delay duration is randomized between 0.5–1.5 seconds using the code_delay_calculator component.&amp;#10;&amp;#10;This routine does not handle trial order randomization; it only reads values supplied by the loop." valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="emotionRegulationCue" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="code_delay_calculator" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="delay;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="# Gives a random float between 0.5 and 1.5 seconds (i.e., 500–1500 ms)&amp;#10;# Used for t_blank_delayer&amp;#10;delay_time = random.uniform(0.5, 1.5)&amp;#10;currentLoop.addData('delay_time', delay_time)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_delay_calculator" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <PolygonComponent name="cross_fixation" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="white" valType="color" updates="constant" name="fillColor"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="white" valType="color" updates="constant" name="lineColor"/>
+        <Param val="1" valType="num" updates="constant" name="lineWidth"/>
+        <Param val="4" valType="int" updates="constant" name="nVertices"/>
+        <Param val="cross_fixation" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="cross" valType="str" updates="None" name="shape"/>
+        <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="0.3" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="list" updates="constant" name="vertices"/>
+      </PolygonComponent>
+      <TextComponent name="t_emotion_regulation_cue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.14" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_emotion_regulation_cue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.3" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$technique" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_blank_delayer" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_blank_delayer" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="1.3" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="$delay_time" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="iaspView">
+      <RoutineSettingsComponent name="iaspView" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="This routine presents the IASP image for the current trial and (optionally) sends the corresponding trigger.&amp;#10;It must be paired with emotionRegulationCue inside the same loop.&amp;#10;The loop’s conditions file must include the following columns:&amp;#10;- trial_number&amp;#10;- block_id&amp;#10;- technique&amp;#10;- photo_filename (required by this routine)&amp;#10;The routine displays the trial’s image for a fixed duration and uses the p_port_iasp component to send a trigger aligned to image onset and offset (if available).&amp;#10;Trigger behavior depends on the parallel‑port setup.&amp;#10;&amp;#10;This routine does not perform any randomization; it simply uses the values provided by the loop.&amp;#10;" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="iaspView" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="5" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <KeyboardComponent name="key_resp_iasp_debug" plugin="None">
+        <Param val="'right'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="True" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_iasp_debug" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="5" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+      <ImageComponent name="image_iasp" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$photo_filename" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_iasp" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="[iasp_comp_img_size_width, iasp_comp_img_size_height]" valType="list" updates="set every repeat" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+      </ImageComponent>
+      <ParallelOutComponent name="p_port_iasp" plugin="None">
+        <Param val="0x0378" valType="str" updates="None" name="address"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="4" valType="code" updates="None" name="durationEstim"/>
+        <Param val="p_port_iasp" valType="code" updates="None" name="name"/>
+        <Param val="EIO" valType="str" updates="None" name="register"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="1" valType="code" updates="None" name="startData"/>
+        <Param val="0" valType="code" updates="None" name="startEstim"/>
+        <Param val="condition" valType="str" updates="None" name="startType"/>
+        <Param val="$image_IASP.status == STARTED" valType="code" updates="None" name="startVal"/>
+        <Param val="0" valType="code" updates="None" name="stopData"/>
+        <Param val="condition" valType="str" updates="None" name="stopType"/>
+        <Param val="$image_iasp.status == STOPPED" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreen"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+      </ParallelOutComponent>
+    </Routine>
+    <Routine name="goodbye">
+      <RoutineSettingsComponent name="goodbye" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="goodbye" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_goodbye" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_goodbye" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="You have completed the trial. Thank you!" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="instructionPractice">
+      <RoutineSettingsComponent name="instructionPractice" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="instructionPractice" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <TextComponent name="t_practice_instruction" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_practice_instruction" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Next, you will see examples of unpleasant pictures. &amp;#10;&amp;#10;Look at the picture naturally without trying to change your thoughts or feelings. Avoid thinking about unrelated topics.&amp;#10;" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_practice_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_practice_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press the SPACEBAR to begin" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_practice" plugin="None">
+        <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="key_resp_practice" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="experimentSetup"/>
+    <LoopInitiator loopType="TrialHandler" name="intro_prompts">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('Message', 'Emotion Regulation\nPicture Viewing Task\n-Neutral or Unpleasant-')]), OrderedDict([('Message', 'You will see series of pictures that represent a lot of different events that occur in life.')]), OrderedDict([('Message', 'Pictures will show unpleasant events. We will do a neutral and practice trial before the actual run. Please let the experimenter know if you want to stop.')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="loopEmotionRegulationIntro.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="intro_prompts" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="welcome"/>
+    <LoopTerminator name="intro_prompts"/>
+    <LoopInitiator loopType="TrialHandler" name="state_measure_pretrial">
+      <Param name="Selected rows" updates="None" val="0:7" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Fatigue'), ('rating_message', 'Rate your current fatigue level'), ('rating_min_label', 'No fatigue at all'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Sleepiness'), ('rating_message', 'Rate your current sleepiness level'), ('rating_min_label', 'Not at all sleepy'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain'), ('rating_message', 'Rate your current pain level'), ('rating_min_label', 'No pain'), ('rating_max_label', 'Worst possible pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain Unpleasantness'), ('rating_message', 'Rate your current pain unpleasantness level'), ('rating_min_label', 'Not at all unpleasant pain'), ('rating_max_label', 'Worst possible unpleasant pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Valence'), ('rating_message', 'Rate how pleasant or unpleasant you feel'), ('rating_min_label', 'Pleasant'), ('rating_max_label', 'Unpleasant'), ('picture_path', '../../shared/pictures/sam-valence.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Arousal'), ('rating_message', 'Rate how calm or excited you feel'), ('rating_min_label', 'Calm'), ('rating_max_label', 'Excited'), ('picture_path', '../../shared/pictures/sam-arousal.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Dominance'), ('rating_message', 'Rate how dominated or in control you feel'), ('rating_min_label', 'Dominated'), ('rating_max_label', 'In Control'), ('picture_path', '../../shared/pictures/sam-dominance.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Emotion Regulation'), ('rating_message', 'Rate how successful you were in doing the emotion regulation tasks'), ('rating_min_label', 'Not at all successful'), ('rating_max_label', 'Completely successful'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7'), ('granularity', np.int64(1)), ('style', 'rating')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="state_measure_pretrial" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="stateMeasure"/>
+    <LoopTerminator name="state_measure_pretrial"/>
+    <Routine name="instructionNeutral"/>
+    <LoopInitiator loopType="TrialHandler" name="iasp_neutral_trials">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('trial_number', np.int64(1)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7496.jpg')]), OrderedDict([('trial_number', np.int64(2)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2396.jpg')]), OrderedDict([('trial_number', np.int64(3)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7002.jpg')]), OrderedDict([('trial_number', np.int64(4)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2580.jpg')]), OrderedDict([('trial_number', np.int64(5)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/5395.jpg')]), OrderedDict([('trial_number', np.int64(6)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/5740.jpg')]), OrderedDict([('trial_number', np.int64(7)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2980.jpg')]), OrderedDict([('trial_number', np.int64(8)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2514.jpg')]), OrderedDict([('trial_number', np.int64(9)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7205.jpg')]), OrderedDict([('trial_number', np.int64(10)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2575.jpg')]), OrderedDict([('trial_number', np.int64(11)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/5455.jpg')]), OrderedDict([('trial_number', np.int64(12)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7640.jpg')]), OrderedDict([('trial_number', np.int64(13)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7037.jpg')]), OrderedDict([('trial_number', np.int64(14)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7493.jpg')]), OrderedDict([('trial_number', np.int64(15)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7041.jpg')]), OrderedDict([('trial_number', np.int64(16)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2594.jpg')]), OrderedDict([('trial_number', np.int64(17)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2880.jpg')]), OrderedDict([('trial_number', np.int64(18)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7705.jpg')]), OrderedDict([('trial_number', np.int64(19)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7217.jpg')]), OrderedDict([('trial_number', np.int64(20)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2870.jpg')]), OrderedDict([('trial_number', np.int64(21)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2393.jpg')]), OrderedDict([('trial_number', np.int64(22)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7140.jpg')]), OrderedDict([('trial_number', np.int64(23)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2397.jpg')]), OrderedDict([('trial_number', np.int64(24)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2480.jpg')]), OrderedDict([('trial_number', np.int64(25)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7546.jpg')]), OrderedDict([('trial_number', np.int64(26)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2518.jpg')]), OrderedDict([('trial_number', np.int64(27)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2383.jpg')]), OrderedDict([('trial_number', np.int64(28)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7004.jpg')]), OrderedDict([('trial_number', np.int64(29)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/5520.jpg')]), OrderedDict([('trial_number', np.int64(30)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2593.jpg')]), OrderedDict([('trial_number', np.int64(31)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/8221.jpg')]), OrderedDict([('trial_number', np.int64(32)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2435.jpg')]), OrderedDict([('trial_number', np.int64(33)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7550.jpg')]), OrderedDict([('trial_number', np.int64(34)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/5471.jpg')]), OrderedDict([('trial_number', np.int64(35)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7130.jpg')]), OrderedDict([('trial_number', np.int64(36)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7491.jpg')]), OrderedDict([('trial_number', np.int64(37)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/2272.jpg')]), OrderedDict([('trial_number', np.int64(38)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7504.jpg')]), OrderedDict([('trial_number', np.int64(39)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7036.jpg')]), OrderedDict([('trial_number', np.int64(40)), ('block_id', 'block_neutral'), ('technique', 'view'), ('photo_filename', 'IASP/7495.jpg')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="emotion_regulation_neutral_trials.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="iasp_neutral_trials" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="emotionRegulationCue"/>
+    <Routine name="iaspView"/>
+    <LoopTerminator name="iasp_neutral_trials"/>
+    <LoopInitiator loopType="TrialHandler" name="state_measure_neutral">
+      <Param name="Selected rows" updates="None" val="[2, 3, 4, 5, 6]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Fatigue'), ('rating_message', 'Rate your current fatigue level'), ('rating_min_label', 'No fatigue at all'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Sleepiness'), ('rating_message', 'Rate your current sleepiness level'), ('rating_min_label', 'Not at all sleepy'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain'), ('rating_message', 'Rate your current pain level'), ('rating_min_label', 'No pain'), ('rating_max_label', 'Worst possible pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain Unpleasantness'), ('rating_message', 'Rate your current pain unpleasantness level'), ('rating_min_label', 'Not at all unpleasant pain'), ('rating_max_label', 'Worst possible unpleasant pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Valence'), ('rating_message', 'Rate how pleasant or unpleasant you feel'), ('rating_min_label', 'Pleasant'), ('rating_max_label', 'Unpleasant'), ('picture_path', '../../shared/pictures/sam-valence.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Arousal'), ('rating_message', 'Rate how calm or excited you feel'), ('rating_min_label', 'Calm'), ('rating_max_label', 'Excited'), ('picture_path', '../../shared/pictures/sam-arousal.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Dominance'), ('rating_message', 'Rate how dominated or in control you feel'), ('rating_min_label', 'Dominated'), ('rating_max_label', 'In Control'), ('picture_path', '../../shared/pictures/sam-dominance.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Emotion Regulation'), ('rating_message', 'Rate how successful you were in doing the emotion regulation tasks'), ('rating_min_label', 'Not at all successful'), ('rating_max_label', 'Completely successful'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7'), ('granularity', np.int64(1)), ('style', 'rating')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="state_measure_neutral" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="stateMeasure"/>
+    <LoopTerminator name="state_measure_neutral"/>
+    <Routine name="instructionPractice"/>
+    <LoopInitiator loopType="TrialHandler" name="iasp_practice_trials">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('trial_number', np.int64(1)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/3180.jpg')]), OrderedDict([('trial_number', np.int64(2)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/3220.jpg')]), OrderedDict([('trial_number', np.int64(3)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/3103.jpg')]), OrderedDict([('trial_number', np.int64(4)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/3280.jpg')]), OrderedDict([('trial_number', np.int64(5)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/3213.jpg')]), OrderedDict([('trial_number', np.int64(6)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/6190.jpg')]), OrderedDict([('trial_number', np.int64(7)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/5970.jpg')]), OrderedDict([('trial_number', np.int64(8)), ('block_id', 'block_practice'), ('technique', 'view'), ('photo_filename', 'IASP/1205.jpg')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="emotion_regulation_practice_trials.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="iasp_practice_trials" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="emotionRegulationCue"/>
+    <Routine name="iaspView"/>
+    <LoopTerminator name="iasp_practice_trials"/>
+    <LoopInitiator loopType="TrialHandler" name="state_measure_practice">
+      <Param name="Selected rows" updates="None" val="[2, 3, 4, 5, 6]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Fatigue'), ('rating_message', 'Rate your current fatigue level'), ('rating_min_label', 'No fatigue at all'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Sleepiness'), ('rating_message', 'Rate your current sleepiness level'), ('rating_min_label', 'Not at all sleepy'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain'), ('rating_message', 'Rate your current pain level'), ('rating_min_label', 'No pain'), ('rating_max_label', 'Worst possible pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain Unpleasantness'), ('rating_message', 'Rate your current pain unpleasantness level'), ('rating_min_label', 'Not at all unpleasant pain'), ('rating_max_label', 'Worst possible unpleasant pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Valence'), ('rating_message', 'Rate how pleasant or unpleasant you feel'), ('rating_min_label', 'Pleasant'), ('rating_max_label', 'Unpleasant'), ('picture_path', '../../shared/pictures/sam-valence.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Arousal'), ('rating_message', 'Rate how calm or excited you feel'), ('rating_min_label', 'Calm'), ('rating_max_label', 'Excited'), ('picture_path', '../../shared/pictures/sam-arousal.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Dominance'), ('rating_message', 'Rate how dominated or in control you feel'), ('rating_min_label', 'Dominated'), ('rating_max_label', 'In Control'), ('picture_path', '../../shared/pictures/sam-dominance.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Emotion Regulation'), ('rating_message', 'Rate how successful you were in doing the emotion regulation tasks'), ('rating_min_label', 'Not at all successful'), ('rating_max_label', 'Completely successful'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7'), ('granularity', np.int64(1)), ('style', 'rating')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="state_measure_practice" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="stateMeasure"/>
+    <LoopTerminator name="state_measure_practice"/>
+    <Routine name="instructionUnpleasant"/>
+    <LoopInitiator loopType="TrialHandler" name="block_loop">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('current_slice', np.int64(1))]), OrderedDict([('current_slice', np.int64(2))]), OrderedDict([('current_slice', np.int64(3))]), OrderedDict([('current_slice', np.int64(4))])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="current_slice.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="block_loop" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="reset"/>
+    <LoopInitiator loopType="TrialHandler" name="iasp_unpleasant_trials">
+      <Param name="Selected rows" updates="None" val="$row_section" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('trial_number', np.int64(1)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9181.jpg')]), OrderedDict([('trial_number', np.int64(2)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/6821.jpg')]), OrderedDict([('trial_number', np.int64(3)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/2703.jpg')]), OrderedDict([('trial_number', np.int64(4)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/2692.jpg')]), OrderedDict([('trial_number', np.int64(5)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9050.jpg')]), OrderedDict([('trial_number', np.int64(6)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/3225.jpg')]), OrderedDict([('trial_number', np.int64(7)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9405.jpg')]), OrderedDict([('trial_number', np.int64(8)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9341.jpg')]), OrderedDict([('trial_number', np.int64(9)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9912.jpg')]), OrderedDict([('trial_number', np.int64(10)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9301.jpg')]), OrderedDict([('trial_number', np.int64(11)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1300.jpg')]), OrderedDict([('trial_number', np.int64(12)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9925.jpg')]), OrderedDict([('trial_number', np.int64(13)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9594.jpg')]), OrderedDict([('trial_number', np.int64(14)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9421.jpg')]), OrderedDict([('trial_number', np.int64(15)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9000.jpg')]), OrderedDict([('trial_number', np.int64(16)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/6312.jpg')]), OrderedDict([('trial_number', np.int64(17)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1101.jpg')]), OrderedDict([('trial_number', np.int64(18)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/6550.jpg')]), OrderedDict([('trial_number', np.int64(19)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/2900.jpg')]), OrderedDict([('trial_number', np.int64(20)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9427.jpg')]), OrderedDict([('trial_number', np.int64(21)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1030.jpg')]), OrderedDict([('trial_number', np.int64(22)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/6200.jpg')]), OrderedDict([('trial_number', np.int64(23)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1200.jpg')]), OrderedDict([('trial_number', np.int64(24)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/6243.jpg')]), OrderedDict([('trial_number', np.int64(25)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1052.jpg')]), OrderedDict([('trial_number', np.int64(26)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9622.jpg')]), OrderedDict([('trial_number', np.int64(27)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/8230.jpg')]), OrderedDict([('trial_number', np.int64(28)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/3030.jpg')]), OrderedDict([('trial_number', np.int64(29)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/2795.jpg')]), OrderedDict([('trial_number', np.int64(30)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/1932.jpg')]), OrderedDict([('trial_number', np.int64(31)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/2205.jpg')]), OrderedDict([('trial_number', np.int64(32)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9571.jpg')]), OrderedDict([('trial_number', np.int64(33)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9415.jpg')]), OrderedDict([('trial_number', np.int64(34)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9452.jpg')]), OrderedDict([('trial_number', np.int64(35)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/5950.jpg')]), OrderedDict([('trial_number', np.int64(36)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9810.jpg')]), OrderedDict([('trial_number', np.int64(37)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9490.jpg')]), OrderedDict([('trial_number', np.int64(38)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/3500.jpg')]), OrderedDict([('trial_number', np.int64(39)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9250.jpg')]), OrderedDict([('trial_number', np.int64(40)), ('block_id', 'block4'), ('technique', 'Reappraise'), ('photo_filename', 'IASP/9902.jpg')]), OrderedDict([('trial_number', np.int64(41)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9270.jpg')]), OrderedDict([('trial_number', np.int64(42)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/3300.jpg')]), OrderedDict([('trial_number', np.int64(43)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1080.jpg')]), OrderedDict([('trial_number', np.int64(44)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9911.jpg')]), OrderedDict([('trial_number', np.int64(45)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9440.jpg')]), OrderedDict([('trial_number', np.int64(46)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9330.jpg')]), OrderedDict([('trial_number', np.int64(47)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/6260.jpg')]), OrderedDict([('trial_number', np.int64(48)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1274.jpg')]), OrderedDict([('trial_number', np.int64(49)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9411.jpg')]), OrderedDict([('trial_number', np.int64(50)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9480.jpg')]), OrderedDict([('trial_number', np.int64(51)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/8480.jpg')]), OrderedDict([('trial_number', np.int64(52)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9040.jpg')]), OrderedDict([('trial_number', np.int64(53)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1302.jpg')]), OrderedDict([('trial_number', np.int64(54)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9700.jpg')]), OrderedDict([('trial_number', np.int64(55)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/2683.jpg')]), OrderedDict([('trial_number', np.int64(56)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9620.jpg')]), OrderedDict([('trial_number', np.int64(57)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/5973.jpg')]), OrderedDict([('trial_number', np.int64(58)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9592.jpg')]), OrderedDict([('trial_number', np.int64(59)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9420.jpg')]), OrderedDict([('trial_number', np.int64(60)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/6241.jpg')]), OrderedDict([('trial_number', np.int64(61)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/6571.jpg')]), OrderedDict([('trial_number', np.int64(62)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1111.jpg')]), OrderedDict([('trial_number', np.int64(63)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/2695.jpg')]), OrderedDict([('trial_number', np.int64(64)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/2800.jpg')]), OrderedDict([('trial_number', np.int64(65)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9140.jpg')]), OrderedDict([('trial_number', np.int64(66)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9426.jpg')]), OrderedDict([('trial_number', np.int64(67)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/2705.jpg')]), OrderedDict([('trial_number', np.int64(68)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/6315.jpg')]), OrderedDict([('trial_number', np.int64(69)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9901.jpg')]), OrderedDict([('trial_number', np.int64(70)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/2120.jpg')]), OrderedDict([('trial_number', np.int64(71)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9220.jpg')]), OrderedDict([('trial_number', np.int64(72)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1022.jpg')]), OrderedDict([('trial_number', np.int64(73)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/6840.jpg')]), OrderedDict([('trial_number', np.int64(74)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/4621.jpg')]), OrderedDict([('trial_number', np.int64(75)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9570.jpg')]), OrderedDict([('trial_number', np.int64(76)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/3005.jpg')]), OrderedDict([('trial_number', np.int64(77)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9921.jpg')]), OrderedDict([('trial_number', np.int64(78)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/9373.jpg')]), OrderedDict([('trial_number', np.int64(79)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/3181.jpg')]), OrderedDict([('trial_number', np.int64(80)), ('block_id', 'block2'), ('technique', 'Suppress'), ('photo_filename', 'IASP/1050.jpg')]), OrderedDict([('trial_number', np.int64(81)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9410.jpg')]), OrderedDict([('trial_number', np.int64(82)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1019.jpg')]), OrderedDict([('trial_number', np.int64(83)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1110.jpg')]), OrderedDict([('trial_number', np.int64(84)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/3301.jpg')]), OrderedDict([('trial_number', np.int64(85)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9561.jpg')]), OrderedDict([('trial_number', np.int64(86)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9180.jpg')]), OrderedDict([('trial_number', np.int64(87)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/2700.jpg')]), OrderedDict([('trial_number', np.int64(88)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/5920.jpg')]), OrderedDict([('trial_number', np.int64(89)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9611.jpg')]), OrderedDict([('trial_number', np.int64(90)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/8485.jpg')]), OrderedDict([('trial_number', np.int64(91)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9230.jpg')]), OrderedDict([('trial_number', np.int64(92)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6940.jpg')]), OrderedDict([('trial_number', np.int64(93)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9340.jpg')]), OrderedDict([('trial_number', np.int64(94)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6370.jpg')]), OrderedDict([('trial_number', np.int64(95)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1040.jpg')]), OrderedDict([('trial_number', np.int64(96)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1201.jpg')]), OrderedDict([('trial_number', np.int64(97)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1070.jpg')]), OrderedDict([('trial_number', np.int64(98)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9900.jpg')]), OrderedDict([('trial_number', np.int64(99)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/1321.jpg')]), OrderedDict([('trial_number', np.int64(100)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9041.jpg')]), OrderedDict([('trial_number', np.int64(101)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9635.jpg')]), OrderedDict([('trial_number', np.int64(102)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/2751.jpg')]), OrderedDict([('trial_number', np.int64(103)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/2811.jpg')]), OrderedDict([('trial_number', np.int64(104)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/3215.jpg')]), OrderedDict([('trial_number', np.int64(105)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9419.jpg')]), OrderedDict([('trial_number', np.int64(106)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6311.jpg')]), OrderedDict([('trial_number', np.int64(107)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9471.jpg')]), OrderedDict([('trial_number', np.int64(108)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/3016.jpg')]), OrderedDict([('trial_number', np.int64(109)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6242.jpg')]), OrderedDict([('trial_number', np.int64(110)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9404.jpg')]), OrderedDict([('trial_number', np.int64(111)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9300.jpg')]), OrderedDict([('trial_number', np.int64(112)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6010.jpg')]), OrderedDict([('trial_number', np.int64(113)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/6800.jpg')]), OrderedDict([('trial_number', np.int64(114)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9430.jpg')]), OrderedDict([('trial_number', np.int64(115)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/2130.jpg')]), OrderedDict([('trial_number', np.int64(116)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9910.jpg')]), OrderedDict([('trial_number', np.int64(117)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/2691.jpg')]), OrderedDict([('trial_number', np.int64(118)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9584.jpg')]), OrderedDict([('trial_number', np.int64(119)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9920.jpg')]), OrderedDict([('trial_number', np.int64(120)), ('block_id', 'block1'), ('technique', 'View'), ('photo_filename', 'IASP/9425.jpg')]), OrderedDict([('trial_number', np.int64(121)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/5971.jpg')]), OrderedDict([('trial_number', np.int64(122)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9417.jpg')]), OrderedDict([('trial_number', np.int64(123)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/8231.jpg')]), OrderedDict([('trial_number', np.int64(124)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9903.jpg')]), OrderedDict([('trial_number', np.int64(125)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9582.jpg')]), OrderedDict([('trial_number', np.int64(126)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9520.jpg')]), OrderedDict([('trial_number', np.int64(127)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9120.jpg')]), OrderedDict([('trial_number', np.int64(128)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/3110.jpg')]), OrderedDict([('trial_number', np.int64(129)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/6560.jpg')]), OrderedDict([('trial_number', np.int64(130)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1275.jpg')]), OrderedDict([('trial_number', np.int64(131)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/2095.jpg')]), OrderedDict([('trial_number', np.int64(132)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9470.jpg')]), OrderedDict([('trial_number', np.int64(133)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/6212.jpg')]), OrderedDict([('trial_number', np.int64(134)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9630.jpg')]), OrderedDict([('trial_number', np.int64(135)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1026.jpg')]), OrderedDict([('trial_number', np.int64(136)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9409.jpg')]), OrderedDict([('trial_number', np.int64(137)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9423.jpg')]), OrderedDict([('trial_number', np.int64(138)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1051.jpg')]), OrderedDict([('trial_number', np.int64(139)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/3230.jpg')]), OrderedDict([('trial_number', np.int64(140)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/2220.jpg')]), OrderedDict([('trial_number', np.int64(141)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/6250.jpg')]), OrderedDict([('trial_number', np.int64(142)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9254.jpg')]), OrderedDict([('trial_number', np.int64(143)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/2704.jpg')]), OrderedDict([('trial_number', np.int64(144)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9830.jpg')]), OrderedDict([('trial_number', np.int64(145)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9001.jpg')]), OrderedDict([('trial_number', np.int64(146)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9320.jpg')]), OrderedDict([('trial_number', np.int64(147)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/6313.jpg')]), OrderedDict([('trial_number', np.int64(148)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9600.jpg')]), OrderedDict([('trial_number', np.int64(149)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/2799.jpg')]), OrderedDict([('trial_number', np.int64(150)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1114.jpg')]), OrderedDict([('trial_number', np.int64(151)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1301.jpg')]), OrderedDict([('trial_number', np.int64(152)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9210.jpg')]), OrderedDict([('trial_number', np.int64(153)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9913.jpg')]), OrderedDict([('trial_number', np.int64(154)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/2694.jpg')]), OrderedDict([('trial_number', np.int64(155)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/3001.jpg')]), OrderedDict([('trial_number', np.int64(156)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9429.jpg')]), OrderedDict([('trial_number', np.int64(157)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/6383.jpg')]), OrderedDict([('trial_number', np.int64(158)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/9342.jpg')]), OrderedDict([('trial_number', np.int64(159)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/3530.jpg')]), OrderedDict([('trial_number', np.int64(160)), ('block_id', 'block3'), ('technique', 'Suppress and Reappraise'), ('photo_filename', 'IASP/1090.jpg')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="emotion_regulation_unpleasant_trials.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="iasp_unpleasant_trials" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="emotionRegulationCue"/>
+    <Routine name="iaspView"/>
+    <LoopTerminator name="iasp_unpleasant_trials"/>
+    <LoopInitiator loopType="TrialHandler" name="state_measure_unpleasant">
+      <Param name="Selected rows" updates="None" val="[7, 2, 3, 4, 5, 6]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Fatigue'), ('rating_message', 'Rate your current fatigue level'), ('rating_min_label', 'No fatigue at all'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Sleepiness'), ('rating_message', 'Rate your current sleepiness level'), ('rating_min_label', 'Not at all sleepy'), ('rating_max_label', 'As bad as you can imagine'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain'), ('rating_message', 'Rate your current pain level'), ('rating_min_label', 'No pain'), ('rating_max_label', 'Worst possible pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Pain Unpleasantness'), ('rating_message', 'Rate your current pain unpleasantness level'), ('rating_min_label', 'Not at all unpleasant pain'), ('rating_max_label', 'Worst possible unpleasant pain'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), ('granularity', np.int64(1)), ('style', 'rating')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Valence'), ('rating_message', 'Rate how pleasant or unpleasant you feel'), ('rating_min_label', 'Pleasant'), ('rating_max_label', 'Unpleasant'), ('picture_path', '../../shared/pictures/sam-valence.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Arousal'), ('rating_message', 'Rate how calm or excited you feel'), ('rating_min_label', 'Calm'), ('rating_max_label', 'Excited'), ('picture_path', '../../shared/pictures/sam-arousal.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'SAM'), ('rating_category', 'Dominance'), ('rating_message', 'Rate how dominated or in control you feel'), ('rating_min_label', 'Dominated'), ('rating_max_label', 'In Control'), ('picture_path', '../../shared/pictures/sam-dominance.png'), ('tick_values', '1, 2, 3, 4, 5, 6, 7, 8, 9'), ('granularity', np.int64(1)), ('style', 'radio')]), OrderedDict([('rating_type', 'Generic'), ('rating_category', 'Emotion Regulation'), ('rating_message', 'Rate how successful you were in doing the emotion regulation tasks'), ('rating_min_label', 'Not at all successful'), ('rating_max_label', 'Completely successful'), ('picture_path', None), ('tick_values', '0, 1, 2, 3, 4, 5, 6, 7'), ('granularity', np.int64(1)), ('style', 'rating')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="state_measure_unpleasant" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="stateMeasure"/>
+    <LoopTerminator name="state_measure_unpleasant"/>
+    <LoopTerminator name="block_loop"/>
+    <Routine name="goodbye"/>
+  </Flow>
+</PsychoPy2experiment>
