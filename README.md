@@ -8,8 +8,7 @@ neuroflare-experiments/
 │   ├─ experiments/        # individual experiment folders
 │   │   ├─ open-closed/    # example experiment
 │   │   │   ├─ open_closed.psyexp
-│   │   │   ├─ data/       # participant data outputs
-│   │   │   └─ lib/        # experiment-specific helper code
+│   │   │   └─ data/       # participant data outputs
 │   │   └─ another-experiment/
 │   │
 │   ├─ shared/             # reusable assets
@@ -28,11 +27,30 @@ neuroflare-experiments/
 
 ---
 
+## Current Experiments
+
+### **Open‑Closed**
+A minimal visual‑attention experiment used for baseline recordings and workflow validation. Participants alternate between looking at a fixation cross for five minutes and resting with no visual target for five minutes. A secondary version will extend this to two full cycles.
+
+Location:
+`psychopy/experiments/open-closed/`
+
+---
+
+### **Emotion‑Regulation**
+A full experimental task involving neutral and unpleasant images, block‑wise emotion‑regulation strategies, randomized trial slicing, and multiple state‑measure routines.
+Includes parallel‑port triggers for EEG/EMG synchronization and dynamically generated condition files.
+
+Location:
+`psychopy/experiments/emotion-regulation/`
+
+---
+
 ## Getting Started
 
 1. **Clone the repo**  
    ```bash
-   git clone https://github.com/<your-org>/neuroflare-experiments.git
+   git clone https://github.com/RadiantRedSteel/neuroflare-experiments.git
    ```
 
 2. **Install dependencies**  
@@ -41,10 +59,11 @@ neuroflare-experiments/
    - Any hardware drivers in `psychopy/drivers/`
    - To recreate the Conda environment: ```conda env create -f environment.yml```
 
-3. **Run an experiment**  
-   - Navigate to `psychopy/experiments/<experiment-name>/`  
-   - Open the `.psyexp` file in PsychoPy Builder  
-   - Run the experiment (ensure drivers are in the same directory if parallel port is used)
+3. **Run an experiment**
+   - Navigate to `psychopy/experiments/<experiment-name>/`
+   - Open the `.psyexp` file in PsychoPy Builder
+   - Ensure any required drivers (e.g., parallel port DLLs) are present
+   - Run the experiment from Builder
 
 ---
 
@@ -69,7 +88,7 @@ neuroflare-experiments/
 
 - Parallel port drivers must be in the same directory as the `.psyexp` file  
 - Alternatively, symlinks or shortcuts can be used to reference `psychopy/drivers/`  
-- Document any hardware setup in `docs/`
+- Document any hardware setup or program notes in `docs/`
 
 ---
 
@@ -79,3 +98,5 @@ neuroflare-experiments/
 - Place shared assets in `psychopy/shared/`  
 
 ---
+
+Tested with PsychoPy Builder v2025.2.3beta
