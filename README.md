@@ -35,8 +35,6 @@ A minimal visual‑attention experiment used for baseline recordings and workflo
 Location:
 `psychopy/experiments/open-closed/`
 
----
-
 ### **Emotion‑Regulation**
 A full experimental task involving neutral and unpleasant images, block‑wise emotion‑regulation strategies, randomized trial slicing, and multiple state‑measure routines.
 Includes parallel‑port triggers for EEG/EMG synchronization and dynamically generated condition files.
@@ -44,10 +42,7 @@ Includes parallel‑port triggers for EEG/EMG synchronization and dynamically ge
 Location:
 `psychopy/experiments/emotion-regulation/`
 
----
-
 ## Getting Started
-
 1. **Clone the repo**  
    ```bash
    git clone https://github.com/RadiantRedSteel/neuroflare-experiments.git
@@ -65,38 +60,29 @@ Location:
    - Ensure any required drivers (e.g., parallel port DLLs) are present
    - Run the experiment from Builder
 
----
-
 ## Shared Assets
-
 - **Loop templates**: Reusable condition tables for trial structures  
 - **Pictures**: SAM images and other visual stimuli  
 - **Stimuli**: Placeholder for audio/video assets  
 - **Scripts**: Utilities for organizing data folders or batch processing outputs  
 
----
-
 ## Data Management
-
 - Each experiment writes participant data into its own `data/` folder  
 - Utility scripts in `psychopy/scripts/` can be used to reorganize or archive data across experiments  
 - Use relative paths to reference shared assets (`../shared/pictures/...`) for reproducibility
 
----
-
 ## Hardware Notes
-
 - Parallel port drivers must be in the same directory as the `.psyexp` file  
 - Alternatively, symlinks or shortcuts can be used to reference `psychopy/drivers/`  
 - Document any hardware setup or program notes in `docs/`
 
----
-
 ## Contributing
-
 - Add new experiments under `psychopy/experiments/`  
 - Place shared assets in `psychopy/shared/`  
 
+## Useful Links
+[Parallel Port Issues w/ Windows 11](https://discourse.psychopy.org/t/parallel-port-issues-w-windows-11/45464/19)
+
 ---
 
-Tested with PsychoPy Builder v2025.2.3beta
+*Experiments tested with PsychoPy Builder v2025.2.3beta*

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on December 31, 2025, at 20:24
+    on January 02, 2026, at 00:03
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -380,7 +380,7 @@ def setupLogging(filename):
         )
     else:
         logFile.setLevel(
-            logging.getLevel('info')
+            logging.getLevel('debug')
         )
     
     return logFile
@@ -1132,7 +1132,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     experimentSetup.tStart = globalClock.getTime(format='float')
     experimentSetup.status = STARTED
-    thisExp.addData('experimentSetup.started', experimentSetup.tStart)
     experimentSetup.maxDuration = None
     # keep track of which components have finished
     experimentSetupComponents = experimentSetup.components
@@ -1200,7 +1199,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for experimentSetup
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
-    thisExp.addData('experimentSetup.stopped', experimentSetup.tStop)
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1386,13 +1384,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         welcome.tStop = globalClock.getTime(format='float')
         welcome.tStopRefresh = tThisFlipGlobal
         thisExp.addData('welcome.stopped', welcome.tStop)
-        # check responses
-        if key_resp_welcome.keys in ['', [], None]:  # No response was made
-            key_resp_welcome.keys = None
-        intro_prompts.addData('key_resp_welcome.keys',key_resp_welcome.keys)
-        if key_resp_welcome.keys != None:  # we had a response
-            intro_prompts.addData('key_resp_welcome.rt', key_resp_welcome.rt)
-            intro_prompts.addData('key_resp_welcome.duration', key_resp_welcome.duration)
         # the Routine "welcome" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisIntro_prompt as finished
@@ -1464,9 +1455,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -1700,21 +1696,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_pretrial.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_pretrial.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_pretrial.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1897,13 +1885,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionNeutral.tStop = globalClock.getTime(format='float')
     instructionNeutral.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionNeutral.stopped', instructionNeutral.tStop)
-    # check responses
-    if key_resp_neutral.keys in ['', [], None]:  # No response was made
-        key_resp_neutral.keys = None
-    thisExp.addData('key_resp_neutral.keys',key_resp_neutral.keys)
-    if key_resp_neutral.keys != None:  # we had a response
-        thisExp.addData('key_resp_neutral.rt', key_resp_neutral.rt)
-        thisExp.addData('key_resp_neutral.duration', key_resp_neutral.duration)
     thisExp.nextEntry()
     # the Routine "instructionNeutral" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -2389,9 +2370,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -2625,21 +2611,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_neutral.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_neutral.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_neutral.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_neutral as finished
@@ -2822,13 +2800,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionPractice.tStop = globalClock.getTime(format='float')
     instructionPractice.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionPractice.stopped', instructionPractice.tStop)
-    # check responses
-    if key_resp_practice.keys in ['', [], None]:  # No response was made
-        key_resp_practice.keys = None
-    thisExp.addData('key_resp_practice.keys',key_resp_practice.keys)
-    if key_resp_practice.keys != None:  # we had a response
-        thisExp.addData('key_resp_practice.rt', key_resp_practice.rt)
-        thisExp.addData('key_resp_practice.duration', key_resp_practice.duration)
     thisExp.nextEntry()
     # the Routine "instructionPractice" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -3314,9 +3285,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -3550,21 +3526,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_practice.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_practice.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_practice.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_practice as finished
@@ -3747,13 +3715,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionUnpleasant.tStop = globalClock.getTime(format='float')
     instructionUnpleasant.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionUnpleasant.stopped', instructionUnpleasant.tStop)
-    # check responses
-    if key_resp_unpleasant.keys in ['', [], None]:  # No response was made
-        key_resp_unpleasant.keys = None
-    thisExp.addData('key_resp_unpleasant.keys',key_resp_unpleasant.keys)
-    if key_resp_unpleasant.keys != None:  # we had a response
-        thisExp.addData('key_resp_unpleasant.rt', key_resp_unpleasant.rt)
-        thisExp.addData('key_resp_unpleasant.duration', key_resp_unpleasant.duration)
     thisExp.nextEntry()
     # the Routine "instructionUnpleasant" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -3986,13 +3947,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         
         if reset_routine_counter < len(negative_trials_technique_order):
             reset_routine_counter += 1
-        # check responses
-        if key_resp_reset.keys in ['', [], None]:  # No response was made
-            key_resp_reset.keys = None
-        block_loop.addData('key_resp_reset.keys',key_resp_reset.keys)
-        if key_resp_reset.keys != None:  # we had a response
-            block_loop.addData('key_resp_reset.rt', key_resp_reset.rt)
-            block_loop.addData('key_resp_reset.duration', key_resp_reset.duration)
         # the Routine "reset" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -4481,9 +4435,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             allowContinue = False
             
             # Parse tick values from the condition file
-            print(f"ROW: {rating_category}, {rating_type}")
             tick_values_parsed = parse_tick_values(tick_values)
-            print(tick_values_parsed)
+            
+            try:
+                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+                logging.debug(f"State-measure tick values: {tick_values_parsed}")
+            except:
+                logging.error("Error printing current state measure row.")
             
             # Compute geometry based on rating type
             sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -4717,21 +4676,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            #thisExp.addData('rating', sm_slider.getRating())
             currentLoop.addData('rating', sm_slider.getRating())
             currentLoop.addData('rating_rt', sm_slider.getRT())
             
             try:
-                print(f"{rating_category}: {sm_slider.getRating()}")
+                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
             except:
-                print("Error printing rating")
-            # check responses
-            if key_resp_sm.keys in ['', [], None]:  # No response was made
-                key_resp_sm.keys = None
-            state_measure_unpleasant.addData('key_resp_sm.keys',key_resp_sm.keys)
-            if key_resp_sm.keys != None:  # we had a response
-                state_measure_unpleasant.addData('key_resp_sm.rt', key_resp_sm.rt)
-                state_measure_unpleasant.addData('key_resp_sm.duration', key_resp_sm.duration)
+                logging.error("Error printing state-measure rating")
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_unpleasant as finished

@@ -1,20 +1,33 @@
 # Open–Closed Eyes Experiment
-
-This module is part of the `neuroflare-experiments` repository and is designed to support EEG/EMG-based research on visual attention and baseline brain activity.
+A PsychoPy experiment for alternating eye-state trials with EEG/EMG monitoring.
 
 ## Overview
+This experiment presents two blocks — one with eyes open and one with eyes closed — to establish a baseline for EEG/EMG recording. It is designed for use with a wireless EEG system and standard EMG monitoring device. Participants receive instructions and complete timed fixation trials while alternating eye states.
 
-The Open–Closed Eyes Experiment is built using PsychoPy and intended for use with a **wireless EEG system and standard EMG monitoring device**. Participants are guided through a series of instructions and timed trials involving alternating eye states.  
-These instructions can be found in `psychopy/open-closed/loop-templates/loopOpenClosedIntro.xlsx`.
+The experiment uses a randomized loop to determine block order and includes state-measure assessments before and after each block. A parallel-port trigger is sent during each fixation period to synchronize with external hardware.
 
-## TODO:
+# State Measures
+All state-measure routines use the same configuration.
+- Fatigue
+- Sleepiness
+- Pain
+- Pain Unpleasantness
+- SAM Valence
+- SAM Arousal
+- SAM Dominance
 
-- Verify EEG/EMG trigger orchestration  
+These are collected three times: once before trials and once after each block.
 
-## Note
+# Routines Overview
+- `experimentSetup` — initializes screen geometry, wrapWidth logic, and state-measure parameters
+- `welcome` — introduces the experiment
+- `instruction` — displays the block-specific prompt from the condition file
+- `fixation` — displays a fixation cross for 5 minutes with a parallel-port trigger
+- `stateMeasure` — collects ratings using the standard configuration
+- `goodbye` — end screen with a 4-second exit delay
 
-This module is under active development. No participant data will be included in this repository. Please check back for updates!
+# Parallel‑Port Trigger
+A p_port trigger is sent for the full duration of the `cross_fixation` display in each block. This allows synchronization with EEG/EMG hardware.
 
-## Useful links
-
-[Parallel Port Issues w/ Windows 11](https://discourse.psychopy.org/t/parallel-port-issues-w-windows-11/45464/19)
+# Future Improvements
+- Incorporate eye tracking to verify gaze compliance during the fixation period.

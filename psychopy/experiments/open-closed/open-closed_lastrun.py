@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2025.1.1),
-    on December 04, 2025, at 23:05
+This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
+    on January 02, 2026, at 00:05
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -16,7 +16,6 @@ from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
 plugins.activatePlugins()
-prefs.hardware['audioLib'] = 'ptb'
 from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, parallel
 from psychopy.tools import environmenttools
 from psychopy.constants import (
@@ -40,7 +39,7 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2025.1.1'
+psychopyVersion = '2025.2.3'
 expName = 'open-closed'  # from the Builder filename that created this script
 expVersion = '1.0'
 # a list of functions to run when the experiment ends (starts off blank)
@@ -272,24 +271,6 @@ def setupDevices(expInfo, thisExp, win):
         deviceManager.addDevice(
             deviceClass='keyboard', deviceName='defaultKeyboard', backend='iohub'
         )
-    if deviceManager.getDevice('key_resp_welcome') is None:
-        # initialise key_resp_welcome
-        key_resp_welcome = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_welcome',
-        )
-    if deviceManager.getDevice('key_resp_sm') is None:
-        # initialise key_resp_sm
-        key_resp_sm = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_sm',
-        )
-    if deviceManager.getDevice('key_resp_2') is None:
-        # initialise key_resp_2
-        key_resp_2 = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_2',
-        )
     # return True if completed successfully
     return True
 
@@ -370,6 +351,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     """
     # mark experiment as started
     thisExp.status = STARTED
+    # update experiment info
+    expInfo['date'] = data.getDateStr()
+    expInfo['expName'] = expName
+    expInfo['expVersion'] = expVersion
+    expInfo['psychopyVersion'] = psychopyVersion
     # make sure window is set to foreground to prevent losing focus
     win.winHandle.activate()
     # make sure variables created by exec are available globally
@@ -397,77 +383,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # Start Code - component code to be run after the window creation
     
-    # --- Initialize components for Routine "welcome" ---
-    key_resp_welcome = keyboard.Keyboard(deviceName='key_resp_welcome')
-    t_body = visual.TextStim(win=win, name='t_body',
-        text='',
-        font='Arial',
-        units='height', pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-1.0);
-    t_continue = visual.TextStim(win=win, name='t_continue',
-        text='Press the SPACEBAR to continue',
-        font='Arial',
-        units='height', pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
+    # --- Initialize components for Routine "experimentSetup" ---
+    # Run 'Begin Experiment' code from code_experiment_setup
+    # ------------------------------------------------------------
+    # code_experiment_setup
+    # Global screen geometry and shared layout variables.
+    #
+    # Computes window aspect ratio and establishes a unified
+    # coordinate system in 'height' units so all routines scale
+    # consistently across monitors.
+    #
+    # Also defines shared wrap-width values for text components.
+    # ------------------------------------------------------------
     
-    # --- Initialize components for Routine "stateMeasure" ---
-    slider_generic = visual.Slider(win=win, name='slider_generic',
-        startValue=None, size=1.0, pos=(0, 0), units=win.units,
-        labels=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), ticks=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), granularity=1.0,
-        style='rating', styleTweaks=(), opacity=None,
-        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
-        font='Noto Sans', labelHeight=0.05,
-        flip=False, ori=0.0, depth=0, readOnly=False)
-    slider_SAM = visual.Slider(win=win, name='slider_SAM',
-        startValue=None, size=1.0, pos=[0,0], units=win.units,
-        labels=[1, 2, 3, 4, 5, 6, 7, 8, 9],ticks=None, granularity=1,
-        style='radio', styleTweaks=(), opacity=None,
-        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
-        font='Noto Sans', labelHeight=0.05,
-        flip=False, ori=0.0, depth=-1, readOnly=False)
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-2.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=1.5, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-3.0);
-    t_label_min = visual.TextStim(win=win, name='t_label_min',
-        text='',
-        font='Arial',
-        pos=[0,0], draggable=False, height=0.05, wrapWidth=0.25, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-4.0);
-    t_label_max = visual.TextStim(win=win, name='t_label_max',
-        text='',
-        font='Arial',
-        pos=[0,0], draggable=False, height=0.05, wrapWidth=0.25, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-5.0);
-    t_continue_sm = visual.TextStim(win=win, name='t_continue_sm',
-        text='Press the SPACEBAR to continue',
-        font='Arial',
-        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-6.0);
-    # Run 'Begin Experiment' code from code_sm_helper
-    # Scale SAM properly
-    # Window and coordinate setup
+    # ============================================================
+    # =============== GLOBAL SCREEN GEOMETRY =====================
+    # ============================================================
+    # Centralized screen geometry so all routines share the same coordinate system
+    
     screen_width, screen_height = win.size
     aspect = screen_width / screen_height  # width / height
     
@@ -479,114 +412,223 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     topEdge = 0.5
     bottomEdge = -0.5
     
+    # Wrap width as a percentage of screen width
+    aspect80 = aspect * 0.80 # 80% of screen width
+    aspect20 = aspect * 0.20  # 20% of screen width
+    comp_wrap_width_body = aspect80
+    comp_wrap_width_header = aspect80
+    comp_wrap_width_continue = aspect80 
+    
+    # Run 'Begin Experiment' code from code_state_measure_setup
+    # ------------------------------------------------------------
+    # code_state_measure_setup
+    # Global setup logic for the stateMeasure routine.
+    #
+    # Handles scaling rules, slider configuration helpers, and
+    # shared variables needed to dynamically construct rating
+    # scales based on loop parameters.
+    #
+    # The stateMeasure routine depends on this setup code to
+    # size components correctly and interpret SAM/text settings.
+    # ------------------------------------------------------------
+    
+    # --- Helper functions for dynamic slider configuration ---
+    def parse_tick_values(raw):
+        # If PsychoPy already parsed it into a list, just return it
+        if isinstance(raw, list):
+            return raw
+        # Otherwise assume it's a comma-separated string
+        return [int(x.strip()) for x in raw.split(',')]
+    
+    # ===============================================================
+    # ============== STATE-MEASURE SPECIFIC GEOMETRY ================
+    # ===============================================================
+    
+    def sm_compute_tick_positions(tick_values, rating_type):
+        """
+        Compute slider size, slider position, and min/max label positions
+        for both SAM and Generic rating types.
+        """
+    
+        if rating_type == "SAM":
+            # SAM uses the precomputed geometry
+            slider_size = (sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)
+            slider_pos  = (0, sm_sam_comp_slider_pos_y)
+    
+            # Tick positions already computed globally
+            tick_positions = sm_sam_tick_positions
+    
+            label_min_pos = (tick_positions[0],  sm_sam_comp_label_pos_y)
+            label_max_pos = (tick_positions[-1], sm_sam_comp_label_pos_y)
+    
+        else:
+            # Generic slider: evenly spaced ticks across the slider width
+            slider_size = (sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height)
+            slider_pos  = (0, sm_gen_comp_slider_pos_y)
+    
+            # Compute generic tick positions dynamically
+            num_ticks = len(tick_values)
+            half_width = sm_gen_comp_slider_size_width / 2
+    
+            # Even spacing across the width
+            tick_positions = [
+                -half_width + (i / (num_ticks - 1)) * sm_gen_comp_slider_size_width
+                for i in range(num_ticks)
+            ]
+    
+            # Labels sit below the slider
+            label_min_pos = (tick_positions[0],  sm_gen_comp_label_pos_y)
+            label_max_pos = (tick_positions[-1], sm_gen_comp_label_pos_y)
+    
+        return {
+            "slider_size": slider_size,
+            "slider_pos": slider_pos,
+            "tick_positions": tick_positions,
+            "label_min_pos": label_min_pos,
+            "label_max_pos": label_max_pos
+        }
+    
+    # ===============================================================
+    # =================== GEN SPECIFIC GEOMETRY =====================
+    # ===============================================================
     
     # --- Generic Slider Scaling ---
     # Full-width slider across screen
-    slider_gen_width = aspect * 0.6   # 60% of screen width
-    
-    # --- SAM image geometry (pixels) ---
-    sam_px_width = 1168
-    sam_px_height = 231
-    sam_aspect = sam_px_width / sam_px_height  # ≈ 5.065
-    
-    # Pictogram/gap geometry (pixels)
-    pictogram_px_width = 215
-    gap_px_width = 23
-    num_pictograms = 5
-    num_gaps = num_pictograms - 1
-    
-    # Sanity check total width in px (info only)
-    total_calc_px = num_pictograms * pictogram_px_width + num_gaps * gap_px_width
-    # Note: total_calc_px ≈ 1175; close enough to 1170 given source image padding.
-    
-    # --- Layout decisions (height units) ---
-    sam_height = 0.25                         # 25% of screen height
-    sam_width  = sam_height * sam_aspect      # scaled width based on aspect
-    sam_y      = 0.1                          # vertical position of the image
+    # Generic slider (used when rating_type != "SAM")
     
     # Slider layout (height units)
-    slider_y      = -0.09                     # vertical position of the slider center
-    slider_height = 0.06                      # slider thickness/height
-    slider_px_width = sam_px_width - 215
-    slider_width = sam_width * (slider_px_width / sam_px_width) # match slider width to image width
+    sm_gen_comp_slider_size_width  = aspect * 0.6  # 60% of screen width
+    sm_gen_comp_slider_size_height = 0.1           # slider thickness/height
+    sm_gen_comp_slider_pos_y       = 0             # vertical position of the slider center
     
-    # Label MinMax layout
-    label_y = slider_y - 0.2 # slightly below the slider
+    # Label Min/Max layout
+    sm_gen_comp_label_pos_y = sm_gen_comp_slider_pos_y - 0.2
+    
+    # ===============================================================
+    # =================== SAM SPECIFIC GEOMETRY =====================
+    # ===============================================================
+    
+    # --- SAM image geometry (pixels) ---
+    sm_sam_img_px_width  = 1168
+    sm_sam_img_px_height = 231
+    sm_sam_img_aspect    = sm_sam_img_px_width / sm_sam_img_px_height  # ≈ 5.056
+    
+    # Pictogram/gap geometry (pixels)
+    # Note: there are 5 pictograms and 4 gaps spanning the full image width
+    sm_sam_pictogram_px_width     = 215
+    sm_sam_pictogram_gap_px_width = 23
+    
+    # --- Layout decisions (height units) ---
+    sm_sam_comp_img_size_height = 0.25                                             # 25% of screen height
+    sm_sam_comp_img_size_width  = sm_sam_comp_img_size_height * sm_sam_img_aspect  # scaled width based on aspect
+    sm_sam_comp_img_pos_y       = 0.1                                              # vertical position of the image
     
     # Message Layout
-    message_y = sam_y + 0.2
+    sm_sam_comp_message_pos_y = sm_sam_comp_img_pos_y + 0.2
+    
+    # Slider layout (height units)
+    sm_sam_comp_slider_pos_y       = -0.09      # vertical position of the slider center
+    sm_sam_comp_slider_size_height = 0.06       # slider thickness/height
+    sm_sam_slider_px_width    = sm_sam_img_px_width - 215
+    sm_sam_comp_slider_width  = sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width)
     
     # Scale factor: px -> 'height' units within the image width
-    scale_factor = sam_width / sam_px_width
+    sm_sam_scale_factor = sm_sam_comp_img_size_width / sm_sam_img_px_width
     
-    pictogram_w = pictogram_px_width * scale_factor
-    gap_w       = gap_px_width * scale_factor
+    sm_sam_pictogram_w  = sm_sam_pictogram_px_width * sm_sam_scale_factor
+    sm_sam_gap_w        = sm_sam_pictogram_gap_px_width * sm_sam_scale_factor
     
-    # --- Compute 9 tick x-positions aligned to pictograms (1,3,5,7,9) and gaps (2,4,6,8) ---
-    tick_positions = []
-    # Start at the center of the first pictogram: left edge + half pictogram width
-    x = -sam_width / 2 + pictogram_w / 2
+    # --- Compute 9 tick x-positions aligned to pictograms ---
+    sm_sam_tick_positions = []
+    sm_sam_tick_x = -sm_sam_comp_img_size_width / 2 + sm_sam_pictogram_w / 2
     
     for i in range(9):
-        tick_positions.append(x)
-        # Advance: pictogram -> gap -> pictogram -> gap ...
-        if i % 2 == 0:  # 0,2,4,6,8 (odd-numbered ticks under pictograms)
-            x += pictogram_w / 2 + gap_w / 2
-        else:           # 1,3,5,7 (even-numbered ticks under gaps)
-            x += gap_w / 2 + pictogram_w / 2
+        sm_sam_tick_positions.append(sm_sam_tick_x)
+        if i % 2 == 0:
+            sm_sam_tick_x += sm_sam_pictogram_w / 2 + sm_sam_gap_w / 2
+        else:
+            sm_sam_tick_x += sm_sam_gap_w / 2 + sm_sam_pictogram_w / 2
     
-    # Helpful mapping: tick index (0..8) -> value (1..9)
-    tick_values = list(range(1, 10))
+    # Label Min/Max layout
+    sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15
     
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
-    
-    # --- Initialize components for Routine "instruction" ---
-    key_resp_2 = keyboard.Keyboard(deviceName='key_resp_2')
-    t_instruction = visual.TextStim(win=win, name='t_instruction',
+    # --- Initialize components for Routine "welcome" ---
+    t_welcome_body = visual.TextStim(win=win, name='t_welcome_body',
         text='',
         font='Arial',
-        pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=None, ori=0.0, 
+        units='height', pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    t_welcome_continue = visual.TextStim(win=win, name='t_welcome_continue',
+        text='Press the SPACEBAR to continue',
+        font='Arial',
+        units='height', pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    t_continue_2 = visual.TextStim(win=win, name='t_continue_2',
-        text='Press the SPACEBAR to begin',
+    key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
+    
+    # --- Initialize components for Routine "stateMeasure" ---
+    image_SAM = visual.ImageStim(
+        win=win,
+        name='image_SAM', units='height', 
+        image='default.png', mask=None, anchor='center',
+        ori=0.0, pos=[0,0], draggable=False, size=1.0,
+        color=[1,1,1], colorSpace='rgb', opacity=None,
+        flipHoriz=False, flipVert=False,
+        texRes=128.0, interpolate=True, depth=-1.0)
+    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
+        text='',
         font='Arial',
-        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=None, ori=0.0, 
+        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
+    t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
+        text='Press the SPACEBAR to continue',
+        font='Arial',
+        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-3.0);
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
-    # --- Initialize components for Routine "triggerStart" ---
-    p_port_start = parallel.ParallelPort(address='0x0378')
+    # --- Initialize components for Routine "instruction" ---
+    t_instruction_body = visual.TextStim(win=win, name='t_instruction_body',
+        text='',
+        font='Arial',
+        units='height', pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    t_instruction_continue = visual.TextStim(win=win, name='t_instruction_continue',
+        text='Press the SPACEBAR to begin',
+        font='Arial',
+        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    key_resp_instruction = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "fixation" ---
     cross_fixation = visual.ShapeStim(
         win=win, name='cross_fixation', vertices='cross',units='height', 
-        size=(0.15, 0.15),
+        size=(0.2, 0.2),
         ori=0.0, pos=(0, 0), draggable=False, anchor='center',
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
         opacity=None, depth=0.0, interpolate=True)
-    
-    # --- Initialize components for Routine "triggerStop" ---
-    p_port_stop = parallel.ParallelPort(address='0x0378')
+    t_fixation_closed = visual.TextStim(win=win, name='t_fixation_closed',
+        text='',
+        font='Arial',
+        units='height', pos=(0.0, -0.4), draggable=False, height=0.03, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    p_port_fixation = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    slider_generic = visual.Slider(win=win, name='slider_generic',
-        startValue=None, size=1.0, pos=(0, 0), units=win.units,
-        labels=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), ticks=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), granularity=1.0,
-        style='rating', styleTweaks=(), opacity=None,
-        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
-        font='Noto Sans', labelHeight=0.05,
-        flip=False, ori=0.0, depth=0, readOnly=False)
-    slider_SAM = visual.Slider(win=win, name='slider_SAM',
-        startValue=None, size=1.0, pos=[0,0], units=win.units,
-        labels=[1, 2, 3, 4, 5, 6, 7, 8, 9],ticks=None, granularity=1,
-        style='radio', styleTweaks=(), opacity=None,
-        labelColor='LightGray', markerColor='Red', lineColor='White', colorSpace='rgb',
-        font='Noto Sans', labelHeight=0.05,
-        flip=False, ori=0.0, depth=-1, readOnly=False)
     image_SAM = visual.ImageStim(
         win=win,
         name='image_SAM', units='height', 
@@ -594,115 +636,28 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=[0,0], draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-2.0)
+        texRes=128.0, interpolate=True, depth=-1.0)
     t_sm_message = visual.TextStim(win=win, name='t_sm_message',
         text='',
         font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=1.5, ori=0.0, 
+        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-2.0);
+    t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
+        text='Press the SPACEBAR to continue',
+        font='Arial',
+        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-3.0);
-    t_label_min = visual.TextStim(win=win, name='t_label_min',
-        text='',
-        font='Arial',
-        pos=[0,0], draggable=False, height=0.05, wrapWidth=0.25, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-4.0);
-    t_label_max = visual.TextStim(win=win, name='t_label_max',
-        text='',
-        font='Arial',
-        pos=[0,0], draggable=False, height=0.05, wrapWidth=0.25, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-5.0);
-    t_continue_sm = visual.TextStim(win=win, name='t_continue_sm',
-        text='Press the SPACEBAR to continue',
-        font='Arial',
-        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-6.0);
-    # Run 'Begin Experiment' code from code_sm_helper
-    # Scale SAM properly
-    # Window and coordinate setup
-    screen_width, screen_height = win.size
-    aspect = screen_width / screen_height  # width / height
-    
-    # In 'height' units:
-    # - Full screen height = 1.0
-    # - Full screen width  = aspect
-    leftEdge = -aspect / 2
-    rightEdge = aspect / 2
-    topEdge = 0.5
-    bottomEdge = -0.5
-    
-    
-    # --- Generic Slider Scaling ---
-    # Full-width slider across screen
-    slider_gen_width = aspect * 0.6   # 60% of screen width
-    
-    # --- SAM image geometry (pixels) ---
-    sam_px_width = 1168
-    sam_px_height = 231
-    sam_aspect = sam_px_width / sam_px_height  # ≈ 5.065
-    
-    # Pictogram/gap geometry (pixels)
-    pictogram_px_width = 215
-    gap_px_width = 23
-    num_pictograms = 5
-    num_gaps = num_pictograms - 1
-    
-    # Sanity check total width in px (info only)
-    total_calc_px = num_pictograms * pictogram_px_width + num_gaps * gap_px_width
-    # Note: total_calc_px ≈ 1175; close enough to 1170 given source image padding.
-    
-    # --- Layout decisions (height units) ---
-    sam_height = 0.25                         # 25% of screen height
-    sam_width  = sam_height * sam_aspect      # scaled width based on aspect
-    sam_y      = 0.1                          # vertical position of the image
-    
-    # Slider layout (height units)
-    slider_y      = -0.09                     # vertical position of the slider center
-    slider_height = 0.06                      # slider thickness/height
-    slider_px_width = sam_px_width - 215
-    slider_width = sam_width * (slider_px_width / sam_px_width) # match slider width to image width
-    
-    # Label MinMax layout
-    label_y = slider_y - 0.2 # slightly below the slider
-    
-    # Message Layout
-    message_y = sam_y + 0.2
-    
-    # Scale factor: px -> 'height' units within the image width
-    scale_factor = sam_width / sam_px_width
-    
-    pictogram_w = pictogram_px_width * scale_factor
-    gap_w       = gap_px_width * scale_factor
-    
-    # --- Compute 9 tick x-positions aligned to pictograms (1,3,5,7,9) and gaps (2,4,6,8) ---
-    tick_positions = []
-    # Start at the center of the first pictogram: left edge + half pictogram width
-    x = -sam_width / 2 + pictogram_w / 2
-    
-    for i in range(9):
-        tick_positions.append(x)
-        # Advance: pictogram -> gap -> pictogram -> gap ...
-        if i % 2 == 0:  # 0,2,4,6,8 (odd-numbered ticks under pictograms)
-            x += pictogram_w / 2 + gap_w / 2
-        else:           # 1,3,5,7 (even-numbered ticks under gaps)
-            x += gap_w / 2 + pictogram_w / 2
-    
-    # Helpful mapping: tick index (0..8) -> value (1..9)
-    tick_values = list(range(1, 10))
-    
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
     t_goodbye = visual.TextStim(win=win, name='t_goodbye',
         text='You have completed the trial. Thank you!',
         font='Arial',
-        pos=(0, 0), draggable=False, height=0.07, wrapWidth=None, ori=0.0, 
+        units='height', pos=(0, 0), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
@@ -727,6 +682,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if ioServer is not None:
         ioServer.syncClock(globalClock)
     logging.setDefaultClock(globalClock)
+    if eyetracker is not None:
+        eyetracker.enableEventReporting()
     # routine timer to track time remaining of each (possibly non-slip) routine
     routineTimer = core.Clock()
     win.flip()  # flip window to reset last flip timer
@@ -735,6 +692,90 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         format='%Y-%m-%d %Hh%M.%S.%f %z', fractionalSecondDigits=6
     )
     
+    # --- Prepare to start Routine "experimentSetup" ---
+    # create an object to store info about Routine experimentSetup
+    experimentSetup = data.Routine(
+        name='experimentSetup',
+        components=[],
+    )
+    experimentSetup.status = NOT_STARTED
+    continueRoutine = True
+    # update component parameters for each repeat
+    # store start times for experimentSetup
+    experimentSetup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+    experimentSetup.tStart = globalClock.getTime(format='float')
+    experimentSetup.status = STARTED
+    experimentSetup.maxDuration = None
+    # keep track of which components have finished
+    experimentSetupComponents = experimentSetup.components
+    for thisComponent in experimentSetup.components:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "experimentSetup" ---
+    thisExp.currentRoutine = experimentSetup
+    experimentSetup.forceEnded = routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+        # pause experiment here if requested
+        if thisExp.status == PAUSED:
+            pauseExperiment(
+                thisExp=thisExp, 
+                win=win, 
+                timers=[routineTimer, globalClock], 
+                currentRoutine=experimentSetup,
+            )
+            # skip the frame we paused on
+            continue
+        
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
+            experimentSetup.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if experimentSetup.forceEnded or routineForceEnded:
+            break
+        # has every Component finished?
+        continueRoutine = False
+        for thisComponent in experimentSetup.components:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "experimentSetup" ---
+    for thisComponent in experimentSetup.components:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    # store stop times for experimentSetup
+    experimentSetup.tStop = globalClock.getTime(format='float')
+    experimentSetup.tStopRefresh = tThisFlipGlobal
+    thisExp.nextEntry()
+    # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
     # set up handler to look after randomisation of conditions etc
     intro_prompts = data.TrialHandler2(
         name='intro_prompts',
@@ -742,8 +783,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('../../shared/loop-templates/loopOpenClosedIntro.xlsx'), 
+        trialList=data.importConditions('loopOpenClosedIntro.csv'), 
         seed=None, 
+        isTrials=False, 
     )
     thisExp.addLoop(intro_prompts)  # add the loop to the experiment
     thisIntro_prompt = intro_prompts.trialList[0]  # so we can initialise stimuli with some values
@@ -767,16 +809,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine welcome
         welcome = data.Routine(
             name='welcome',
-            components=[key_resp_welcome, t_body, t_continue],
+            components=[t_welcome_body, t_welcome_continue, key_resp_welcome],
         )
         welcome.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
+        t_welcome_body.setText(Message)
         # create starting attributes for key_resp_welcome
         key_resp_welcome.keys = []
         key_resp_welcome.rt = []
         _key_resp_welcome_allKeys = []
-        t_body.setText(Message)
         # store start times for welcome
         welcome.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         welcome.tStart = globalClock.getTime(format='float')
@@ -798,6 +840,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "welcome" ---
+        thisExp.currentRoutine = welcome
         welcome.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -810,6 +853,42 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
+            # *t_welcome_body* updates
+            
+            # if t_welcome_body is starting this frame...
+            if t_welcome_body.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_welcome_body.frameNStart = frameN  # exact frame index
+                t_welcome_body.tStart = t  # local t and not account for scr refresh
+                t_welcome_body.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_welcome_body, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_welcome_body.status = STARTED
+                t_welcome_body.setAutoDraw(True)
+            
+            # if t_welcome_body is active this frame...
+            if t_welcome_body.status == STARTED:
+                # update params
+                pass
+            
+            # *t_welcome_continue* updates
+            
+            # if t_welcome_continue is starting this frame...
+            if t_welcome_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_welcome_continue.frameNStart = frameN  # exact frame index
+                t_welcome_continue.tStart = t  # local t and not account for scr refresh
+                t_welcome_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_welcome_continue, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_welcome_continue.status = STARTED
+                t_welcome_continue.setAutoDraw(True)
+            
+            # if t_welcome_continue is active this frame...
+            if t_welcome_continue.status == STARTED:
+                # update params
+                pass
+            
             # *key_resp_welcome* updates
             waitOnFlip = False
             
@@ -820,8 +899,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_welcome.tStart = t  # local t and not account for scr refresh
                 key_resp_welcome.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(key_resp_welcome, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'key_resp_welcome.started')
                 # update status
                 key_resp_welcome.status = STARTED
                 # keyboard checking is just starting
@@ -837,46 +914,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_welcome.duration = _key_resp_welcome_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # *t_body* updates
-            
-            # if t_body is starting this frame...
-            if t_body.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_body.frameNStart = frameN  # exact frame index
-                t_body.tStart = t  # local t and not account for scr refresh
-                t_body.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_body, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_body.started')
-                # update status
-                t_body.status = STARTED
-                t_body.setAutoDraw(True)
-            
-            # if t_body is active this frame...
-            if t_body.status == STARTED:
-                # update params
-                pass
-            
-            # *t_continue* updates
-            
-            # if t_continue is starting this frame...
-            if t_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_continue.frameNStart = frameN  # exact frame index
-                t_continue.tStart = t  # local t and not account for scr refresh
-                t_continue.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_continue, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_continue.started')
-                # update status
-                t_continue.status = STARTED
-                t_continue.setAutoDraw(True)
-            
-            # if t_continue is active this frame...
-            if t_continue.status == STARTED:
-                # update params
-                pass
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -895,11 +932,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 welcome.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if welcome.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in welcome.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -917,13 +957,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         welcome.tStop = globalClock.getTime(format='float')
         welcome.tStopRefresh = tThisFlipGlobal
         thisExp.addData('welcome.stopped', welcome.tStop)
-        # check responses
-        if key_resp_welcome.keys in ['', [], None]:  # No response was made
-            key_resp_welcome.keys = None
-        intro_prompts.addData('key_resp_welcome.keys',key_resp_welcome.keys)
-        if key_resp_welcome.keys != None:  # we had a response
-            intro_prompts.addData('key_resp_welcome.rt', key_resp_welcome.rt)
-            intro_prompts.addData('key_resp_welcome.duration', key_resp_welcome.duration)
         # the Routine "welcome" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisIntro_prompt as finished
@@ -950,8 +983,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('../../shared/loop-templates/loopStateMeasure.xlsx'), 
+        trialList=data.importConditions(
+        '../../shared/loop-templates/loopStateMeasure.csv', 
+        selection='0:7'
+    )
+    , 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(state_measure_pretrial)  # add the loop to the experiment
     thisState_measure_pretrial = state_measure_pretrial.trialList[0]  # so we can initialise stimuli with some values
@@ -981,26 +1019,85 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[slider_generic, slider_SAM, image_SAM, t_sm_message, t_label_min, t_label_max, t_continue_sm, key_resp_sm],
+            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        slider_generic.reset()
-        slider_generic.setSize((slider_gen_width, 0.1))
-        slider_SAM.reset()
-        slider_SAM.setPos((0, slider_y))
-        slider_SAM.setSize((slider_width, slider_height))
-        image_SAM.setPos((0, sam_y))
-        image_SAM.setSize((sam_width, sam_height))
-        image_SAM.setImage(picture_path)
-        t_sm_message.setText(rating_message)
-        t_label_min.setPos((tick_positions[0], label_y))
-        t_label_min.setText(rating_min_label)
-        t_label_max.setPos((tick_positions[-1], label_y))
-        t_label_max.setText(rating_max_label)
         # Run 'Begin Routine' code from code_sm_helper
         allowContinue = False
+        
+        # Parse tick values from the condition file
+        tick_values_parsed = parse_tick_values(tick_values)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
+        
+        # Compute geometry based on rating type
+        sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
+        
+        sm_comp_slider_size = sm_geometry["slider_size"]
+        sm_comp_slider_pos  = sm_geometry["slider_pos"]
+        sm_comp_label_min_pos = sm_geometry["label_min_pos"]
+        sm_comp_label_max_pos = sm_geometry["label_max_pos"]
+        
+        t_sm_label_min = visual.TextStim(
+            win=win,
+            text=rating_min_label,
+            pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
+            wrapWidth=aspect20,
+            anchorVert='top',
+            height=0.05,
+            color='white',
+            font='Noto Sans'
+        )
+        
+        t_sm_label_max = visual.TextStim(
+            win=win,
+            text=rating_max_label,
+            pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
+            wrapWidth=aspect20,
+            anchorVert='top',
+            height=0.05,
+            color='white',
+            font='Noto Sans'
+        )
+        
+        #t_label_min.setPos(sm_comp_label_min_pos)
+        #t_label_max.setPos(sm_comp_label_max_pos)
+        
+        # --- Create a fresh slider for this trial ---
+        sm_slider = visual.Slider(
+            win=win,
+            ticks=tick_values_parsed,
+            labels=tick_values_parsed,
+            granularity=granularity,
+            style=style.lower(),
+            pos=sm_comp_slider_pos,
+            size=sm_comp_slider_size,
+            labelHeight=0.05,
+            colorSpace='rgb',
+            markerColor='Red',
+            lineColor='White',
+            labelColor='LightGray',
+            font='Noto Sans'
+        )
+        
+        # --- SAM image logic ---
+        if rating_type == 'SAM':
+            image_SAM.setImage(picture_path)
+            image_SAM.setAutoDraw(True)
+        else:
+            image_SAM.setAutoDraw(False)
+        
+        image_SAM.setPos((0, sm_sam_comp_img_pos_y))
+        image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
+        image_SAM.setImage(picture_path)
+        t_sm_message.setText(rating_message)
         # create starting attributes for key_resp_sm
         key_resp_sm.keys = []
         key_resp_sm.rt = []
@@ -1026,6 +1123,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "stateMeasure" ---
+        thisExp.currentRoutine = stateMeasure
         stateMeasure.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -1037,72 +1135,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
+            # Run 'Each Frame' code from code_sm_helper
+            # Draw state measure components
+            sm_slider.draw()
+            t_sm_label_min.draw()
+            t_sm_label_max.draw()
             
-            # *slider_generic* updates
+            # If rated, allow spacebar to end the routine
+            if sm_slider.getRating() is not None:
+                allowContinue = True
             
-            # if slider_generic is starting this frame...
-            if slider_generic.status == NOT_STARTED and rating_type == 'Generic':
-                # keep track of start time/frame for later
-                slider_generic.frameNStart = frameN  # exact frame index
-                slider_generic.tStart = t  # local t and not account for scr refresh
-                slider_generic.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(slider_generic, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'slider_generic.started')
-                # update status
-                slider_generic.status = STARTED
-                slider_generic.setAutoDraw(True)
-            
-            # if slider_generic is active this frame...
-            if slider_generic.status == STARTED:
-                # update params
-                pass
-            
-            # if slider_generic is stopping this frame...
-            if slider_generic.status == STARTED:
-                if bool(rating_type != 'Generic'):
-                    # keep track of stop time/frame for later
-                    slider_generic.tStop = t  # not accounting for scr refresh
-                    slider_generic.tStopRefresh = tThisFlipGlobal  # on global time
-                    slider_generic.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'slider_generic.stopped')
-                    # update status
-                    slider_generic.status = FINISHED
-                    slider_generic.setAutoDraw(False)
-            
-            # *slider_SAM* updates
-            
-            # if slider_SAM is starting this frame...
-            if slider_SAM.status == NOT_STARTED and rating_type == 'SAM':
-                # keep track of start time/frame for later
-                slider_SAM.frameNStart = frameN  # exact frame index
-                slider_SAM.tStart = t  # local t and not account for scr refresh
-                slider_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(slider_SAM, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'slider_SAM.started')
-                # update status
-                slider_SAM.status = STARTED
-                slider_SAM.setAutoDraw(True)
-            
-            # if slider_SAM is active this frame...
-            if slider_SAM.status == STARTED:
-                # update params
-                pass
-            
-            # if slider_SAM is stopping this frame...
-            if slider_SAM.status == STARTED:
-                if bool(rating_type != 'SAM'):
-                    # keep track of stop time/frame for later
-                    slider_SAM.tStop = t  # not accounting for scr refresh
-                    slider_SAM.tStopRefresh = tThisFlipGlobal  # on global time
-                    slider_SAM.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'slider_SAM.stopped')
-                    # update status
-                    slider_SAM.status = FINISHED
-                    slider_SAM.setAutoDraw(False)
             
             # *image_SAM* updates
             
@@ -1113,8 +1155,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 image_SAM.tStart = t  # local t and not account for scr refresh
                 image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'image_SAM.started')
                 # update status
                 image_SAM.status = STARTED
                 image_SAM.setAutoDraw(True)
@@ -1133,8 +1173,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t_sm_message.tStart = t  # local t and not account for scr refresh
                 t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_sm_message.started')
                 # update status
                 t_sm_message.status = STARTED
                 t_sm_message.setAutoDraw(True)
@@ -1144,75 +1182,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update params
                 pass
             
-            # *t_label_min* updates
+            # *t_sm_continue* updates
             
-            # if t_label_min is starting this frame...
-            if t_label_min.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if t_sm_continue is starting this frame...
+            if t_sm_continue.status == NOT_STARTED and allowContinue == True:
                 # keep track of start time/frame for later
-                t_label_min.frameNStart = frameN  # exact frame index
-                t_label_min.tStart = t  # local t and not account for scr refresh
-                t_label_min.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_label_min, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_label_min.started')
+                t_sm_continue.frameNStart = frameN  # exact frame index
+                t_sm_continue.tStart = t  # local t and not account for scr refresh
+                t_sm_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_sm_continue, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                t_label_min.status = STARTED
-                t_label_min.setAutoDraw(True)
+                t_sm_continue.status = STARTED
+                t_sm_continue.setAutoDraw(True)
             
-            # if t_label_min is active this frame...
-            if t_label_min.status == STARTED:
+            # if t_sm_continue is active this frame...
+            if t_sm_continue.status == STARTED:
                 # update params
                 pass
-            
-            # *t_label_max* updates
-            
-            # if t_label_max is starting this frame...
-            if t_label_max.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_label_max.frameNStart = frameN  # exact frame index
-                t_label_max.tStart = t  # local t and not account for scr refresh
-                t_label_max.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_label_max, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_label_max.started')
-                # update status
-                t_label_max.status = STARTED
-                t_label_max.setAutoDraw(True)
-            
-            # if t_label_max is active this frame...
-            if t_label_max.status == STARTED:
-                # update params
-                pass
-            
-            # *t_continue_sm* updates
-            
-            # if t_continue_sm is starting this frame...
-            if t_continue_sm.status == NOT_STARTED and allowContinue == True:
-                # keep track of start time/frame for later
-                t_continue_sm.frameNStart = frameN  # exact frame index
-                t_continue_sm.tStart = t  # local t and not account for scr refresh
-                t_continue_sm.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_continue_sm, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_continue_sm.started')
-                # update status
-                t_continue_sm.status = STARTED
-                t_continue_sm.setAutoDraw(True)
-            
-            # if t_continue_sm is active this frame...
-            if t_continue_sm.status == STARTED:
-                # update params
-                pass
-            # Run 'Each Frame' code from code_sm_helper
-            # Check if either slider has been rated
-            rated = (slider_generic.getRating() is not None) or (slider_SAM.getRating() is not None)
-            
-            # If rated, allow spacebar to end the routine
-            if rated:
-                allowContinue = True
-            else:
-                allowContinue = False
-            
             
             # *key_resp_sm* updates
             waitOnFlip = False
@@ -1224,8 +1210,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_sm.tStart = t  # local t and not account for scr refresh
                 key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'key_resp_sm.started')
                 # update status
                 key_resp_sm.status = STARTED
                 # keyboard checking is just starting
@@ -1259,11 +1243,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 stateMeasure.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if stateMeasure.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in stateMeasure.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -1281,17 +1268,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStop = globalClock.getTime(format='float')
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
-        state_measure_pretrial.addData('slider_generic.response', slider_generic.getRating())
-        state_measure_pretrial.addData('slider_generic.rt', slider_generic.getRT())
-        state_measure_pretrial.addData('slider_SAM.response', slider_SAM.getRating())
-        state_measure_pretrial.addData('slider_SAM.rt', slider_SAM.getRT())
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_pretrial.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_pretrial.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_pretrial.addData('key_resp_sm.duration', key_resp_sm.duration)
+        # Run 'End Routine' code from code_sm_helper
+        #thisExp.addData('rating', sm_slider.getRating())
+        currentLoop.addData('rating', sm_slider.getRating())
+        currentLoop.addData('rating_rt', sm_slider.getRT())
+        
+        try:
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
+        except:
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1332,8 +1317,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='random', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('../../shared/loop-templates/loopOpenClosedTrial.xlsx'), 
+        trialList=data.importConditions('../../shared/loop-templates/loopOpenClosedTrial.csv'), 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(openclosed_trials)  # add the loop to the experiment
     thisOpenclosed_trial = openclosed_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1363,17 +1349,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine instruction
         instruction = data.Routine(
             name='instruction',
-            components=[key_resp_2, t_instruction, t_continue_2],
+            components=[t_instruction_body, t_instruction_continue, key_resp_instruction],
         )
         instruction.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        # create starting attributes for key_resp_2
-        key_resp_2.keys = []
-        key_resp_2.rt = []
-        _key_resp_2_allKeys = []
-        t_instruction.setText(Prompt
+        t_instruction_body.setText(Prompt
         )
+        # create starting attributes for key_resp_instruction
+        key_resp_instruction.keys = []
+        key_resp_instruction.rt = []
+        _key_resp_instruction_allKeys = []
         # store start times for instruction
         instruction.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         instruction.tStart = globalClock.getTime(format='float')
@@ -1395,6 +1381,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "instruction" ---
+        thisExp.currentRoutine = instruction
         instruction.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -1407,73 +1394,67 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
-            # *key_resp_2* updates
+            # *t_instruction_body* updates
+            
+            # if t_instruction_body is starting this frame...
+            if t_instruction_body.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_instruction_body.frameNStart = frameN  # exact frame index
+                t_instruction_body.tStart = t  # local t and not account for scr refresh
+                t_instruction_body.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_instruction_body, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_instruction_body.status = STARTED
+                t_instruction_body.setAutoDraw(True)
+            
+            # if t_instruction_body is active this frame...
+            if t_instruction_body.status == STARTED:
+                # update params
+                pass
+            
+            # *t_instruction_continue* updates
+            
+            # if t_instruction_continue is starting this frame...
+            if t_instruction_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_instruction_continue.frameNStart = frameN  # exact frame index
+                t_instruction_continue.tStart = t  # local t and not account for scr refresh
+                t_instruction_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_instruction_continue, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_instruction_continue.status = STARTED
+                t_instruction_continue.setAutoDraw(True)
+            
+            # if t_instruction_continue is active this frame...
+            if t_instruction_continue.status == STARTED:
+                # update params
+                pass
+            
+            # *key_resp_instruction* updates
             waitOnFlip = False
             
-            # if key_resp_2 is starting this frame...
-            if key_resp_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if key_resp_instruction is starting this frame...
+            if key_resp_instruction.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
                 # keep track of start time/frame for later
-                key_resp_2.frameNStart = frameN  # exact frame index
-                key_resp_2.tStart = t  # local t and not account for scr refresh
-                key_resp_2.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_2, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'key_resp_2.started')
+                key_resp_instruction.frameNStart = frameN  # exact frame index
+                key_resp_instruction.tStart = t  # local t and not account for scr refresh
+                key_resp_instruction.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(key_resp_instruction, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                key_resp_2.status = STARTED
+                key_resp_instruction.status = STARTED
                 # keyboard checking is just starting
                 waitOnFlip = True
-                win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_2.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            if key_resp_2.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_2.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_2_allKeys.extend(theseKeys)
-                if len(_key_resp_2_allKeys):
-                    key_resp_2.keys = _key_resp_2_allKeys[-1].name  # just the last key pressed
-                    key_resp_2.rt = _key_resp_2_allKeys[-1].rt
-                    key_resp_2.duration = _key_resp_2_allKeys[-1].duration
+                win.callOnFlip(key_resp_instruction.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(key_resp_instruction.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            if key_resp_instruction.status == STARTED and not waitOnFlip:
+                theseKeys = key_resp_instruction.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                _key_resp_instruction_allKeys.extend(theseKeys)
+                if len(_key_resp_instruction_allKeys):
+                    key_resp_instruction.keys = _key_resp_instruction_allKeys[-1].name  # just the last key pressed
+                    key_resp_instruction.rt = _key_resp_instruction_allKeys[-1].rt
+                    key_resp_instruction.duration = _key_resp_instruction_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # *t_instruction* updates
-            
-            # if t_instruction is starting this frame...
-            if t_instruction.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_instruction.frameNStart = frameN  # exact frame index
-                t_instruction.tStart = t  # local t and not account for scr refresh
-                t_instruction.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_instruction, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_instruction.started')
-                # update status
-                t_instruction.status = STARTED
-                t_instruction.setAutoDraw(True)
-            
-            # if t_instruction is active this frame...
-            if t_instruction.status == STARTED:
-                # update params
-                pass
-            
-            # *t_continue_2* updates
-            
-            # if t_continue_2 is starting this frame...
-            if t_continue_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_continue_2.frameNStart = frameN  # exact frame index
-                t_continue_2.tStart = t  # local t and not account for scr refresh
-                t_continue_2.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_continue_2, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_continue_2.started')
-                # update status
-                t_continue_2.status = STARTED
-                t_continue_2.setAutoDraw(True)
-            
-            # if t_continue_2 is active this frame...
-            if t_continue_2.status == STARTED:
-                # update params
-                pass
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1492,11 +1473,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 instruction.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if instruction.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in instruction.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -1514,145 +1498,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.tStop = globalClock.getTime(format='float')
         instruction.tStopRefresh = tThisFlipGlobal
         thisExp.addData('instruction.stopped', instruction.tStop)
-        # check responses
-        if key_resp_2.keys in ['', [], None]:  # No response was made
-            key_resp_2.keys = None
-        openclosed_trials.addData('key_resp_2.keys',key_resp_2.keys)
-        if key_resp_2.keys != None:  # we had a response
-            openclosed_trials.addData('key_resp_2.rt', key_resp_2.rt)
-            openclosed_trials.addData('key_resp_2.duration', key_resp_2.duration)
         # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
-        
-        # --- Prepare to start Routine "triggerStart" ---
-        # create an object to store info about Routine triggerStart
-        triggerStart = data.Routine(
-            name='triggerStart',
-            components=[p_port_start],
-        )
-        triggerStart.status = NOT_STARTED
-        continueRoutine = True
-        # update component parameters for each repeat
-        # store start times for triggerStart
-        triggerStart.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-        triggerStart.tStart = globalClock.getTime(format='float')
-        triggerStart.status = STARTED
-        thisExp.addData('triggerStart.started', triggerStart.tStart)
-        triggerStart.maxDuration = None
-        # keep track of which components have finished
-        triggerStartComponents = triggerStart.components
-        for thisComponent in triggerStart.components:
-            thisComponent.tStart = None
-            thisComponent.tStop = None
-            thisComponent.tStartRefresh = None
-            thisComponent.tStopRefresh = None
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        # reset timers
-        t = 0
-        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-        frameN = -1
-        
-        # --- Run Routine "triggerStart" ---
-        triggerStart.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 1.0:
-            # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
-                continueRoutine = False
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            # *p_port_start* updates
-            
-            # if p_port_start is starting this frame...
-            if p_port_start.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                p_port_start.frameNStart = frameN  # exact frame index
-                p_port_start.tStart = t  # local t and not account for scr refresh
-                p_port_start.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(p_port_start, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'p_port_start.started')
-                # update status
-                p_port_start.status = STARTED
-                p_port_start.status = STARTED
-                win.callOnFlip(p_port_start.setData, int(1))
-            
-            # if p_port_start is stopping this frame...
-            if p_port_start.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > p_port_start.tStartRefresh + 1.0-frameTolerance:
-                    # keep track of stop time/frame for later
-                    p_port_start.tStop = t  # not accounting for scr refresh
-                    p_port_start.tStopRefresh = tThisFlipGlobal  # on global time
-                    p_port_start.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_start.stopped')
-                    # update status
-                    p_port_start.status = FINISHED
-                    win.callOnFlip(p_port_start.setData, int(0))
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
-            if thisExp.status == FINISHED or endExpNow:
-                endExperiment(thisExp, win=win)
-                return
-            # pause experiment here if requested
-            if thisExp.status == PAUSED:
-                pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer, globalClock], 
-                    currentRoutine=triggerStart,
-                )
-                # skip the frame we paused on
-                continue
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                triggerStart.forceEnded = routineForceEnded = True
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in triggerStart.components:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "triggerStart" ---
-        for thisComponent in triggerStart.components:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        # store stop times for triggerStart
-        triggerStart.tStop = globalClock.getTime(format='float')
-        triggerStart.tStopRefresh = tThisFlipGlobal
-        thisExp.addData('triggerStart.stopped', triggerStart.tStop)
-        if p_port_start.status == STARTED:
-            win.callOnFlip(p_port_start.setData, int(0))
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if triggerStart.maxDurationReached:
-            routineTimer.addTime(-triggerStart.maxDuration)
-        elif triggerStart.forceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-1.000000)
         
         # --- Prepare to start Routine "fixation" ---
         # create an object to store info about Routine fixation
         fixation = data.Routine(
             name='fixation',
-            components=[cross_fixation],
+            components=[cross_fixation, t_fixation_closed, p_port_fixation],
         )
         fixation.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
+        t_fixation_closed.setText('Please keep your eyes closed during this block.')
         # store start times for fixation
         fixation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         fixation.tStart = globalClock.getTime(format='float')
@@ -1674,8 +1532,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "fixation" ---
+        thisExp.currentRoutine = fixation
         fixation.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 300.0:
+        while continueRoutine:
             # if trial has changed, end Routine now
             if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
                 continueRoutine = False
@@ -1720,6 +1579,63 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     cross_fixation.status = FINISHED
                     cross_fixation.setAutoDraw(False)
             
+            # *t_fixation_closed* updates
+            
+            # if t_fixation_closed is starting this frame...
+            if t_fixation_closed.status == NOT_STARTED and Category == "Closed-Eyes":
+                # keep track of start time/frame for later
+                t_fixation_closed.frameNStart = frameN  # exact frame index
+                t_fixation_closed.tStart = t  # local t and not account for scr refresh
+                t_fixation_closed.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_fixation_closed, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_fixation_closed.status = STARTED
+                t_fixation_closed.setAutoDraw(True)
+            
+            # if t_fixation_closed is active this frame...
+            if t_fixation_closed.status == STARTED:
+                # update params
+                pass
+            
+            # if t_fixation_closed is stopping this frame...
+            if t_fixation_closed.status == STARTED:
+                if bool(Category != "Closed-Eyes"):
+                    # keep track of stop time/frame for later
+                    t_fixation_closed.tStop = t  # not accounting for scr refresh
+                    t_fixation_closed.tStopRefresh = tThisFlipGlobal  # on global time
+                    t_fixation_closed.frameNStop = frameN  # exact frame index
+                    # update status
+                    t_fixation_closed.status = FINISHED
+                    t_fixation_closed.setAutoDraw(False)
+            # *p_port_fixation* updates
+            
+            # if p_port_fixation is starting this frame...
+            if p_port_fixation.status == NOT_STARTED and cross_fixation.status == STARTED:
+                # keep track of start time/frame for later
+                p_port_fixation.frameNStart = frameN  # exact frame index
+                p_port_fixation.tStart = t  # local t and not account for scr refresh
+                p_port_fixation.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(p_port_fixation, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'p_port_fixation.started')
+                # update status
+                p_port_fixation.status = STARTED
+                p_port_fixation.status = STARTED
+                win.callOnFlip(p_port_fixation.setData, int(1))
+            
+            # if p_port_fixation is stopping this frame...
+            if p_port_fixation.status == STARTED:
+                if bool(cross_fixation.status == STOPPED):
+                    # keep track of stop time/frame for later
+                    p_port_fixation.tStop = t  # not accounting for scr refresh
+                    p_port_fixation.tStopRefresh = tThisFlipGlobal  # on global time
+                    p_port_fixation.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'p_port_fixation.stopped')
+                    # update status
+                    p_port_fixation.status = FINISHED
+                    win.callOnFlip(p_port_fixation.setData, int(0))
+            
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
@@ -1737,11 +1653,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 fixation.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if fixation.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in fixation.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -1759,133 +1678,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStop = globalClock.getTime(format='float')
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if fixation.maxDurationReached:
-            routineTimer.addTime(-fixation.maxDuration)
-        elif fixation.forceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-300.000000)
-        
-        # --- Prepare to start Routine "triggerStop" ---
-        # create an object to store info about Routine triggerStop
-        triggerStop = data.Routine(
-            name='triggerStop',
-            components=[p_port_stop],
-        )
-        triggerStop.status = NOT_STARTED
-        continueRoutine = True
-        # update component parameters for each repeat
-        # store start times for triggerStop
-        triggerStop.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-        triggerStop.tStart = globalClock.getTime(format='float')
-        triggerStop.status = STARTED
-        thisExp.addData('triggerStop.started', triggerStop.tStart)
-        triggerStop.maxDuration = None
-        # keep track of which components have finished
-        triggerStopComponents = triggerStop.components
-        for thisComponent in triggerStop.components:
-            thisComponent.tStart = None
-            thisComponent.tStop = None
-            thisComponent.tStartRefresh = None
-            thisComponent.tStopRefresh = None
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        # reset timers
-        t = 0
-        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-        frameN = -1
-        
-        # --- Run Routine "triggerStop" ---
-        triggerStop.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 1.0:
-            # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
-                continueRoutine = False
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            # *p_port_stop* updates
-            
-            # if p_port_stop is starting this frame...
-            if p_port_stop.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                p_port_stop.frameNStart = frameN  # exact frame index
-                p_port_stop.tStart = t  # local t and not account for scr refresh
-                p_port_stop.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(p_port_stop, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'p_port_stop.started')
-                # update status
-                p_port_stop.status = STARTED
-                p_port_stop.status = STARTED
-                win.callOnFlip(p_port_stop.setData, int(2))
-            
-            # if p_port_stop is stopping this frame...
-            if p_port_stop.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > p_port_stop.tStartRefresh + 1.0-frameTolerance:
-                    # keep track of stop time/frame for later
-                    p_port_stop.tStop = t  # not accounting for scr refresh
-                    p_port_stop.tStopRefresh = tThisFlipGlobal  # on global time
-                    p_port_stop.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_stop.stopped')
-                    # update status
-                    p_port_stop.status = FINISHED
-                    win.callOnFlip(p_port_stop.setData, int(0))
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
-            if thisExp.status == FINISHED or endExpNow:
-                endExperiment(thisExp, win=win)
-                return
-            # pause experiment here if requested
-            if thisExp.status == PAUSED:
-                pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer, globalClock], 
-                    currentRoutine=triggerStop,
-                )
-                # skip the frame we paused on
-                continue
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                triggerStop.forceEnded = routineForceEnded = True
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in triggerStop.components:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "triggerStop" ---
-        for thisComponent in triggerStop.components:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        # store stop times for triggerStop
-        triggerStop.tStop = globalClock.getTime(format='float')
-        triggerStop.tStopRefresh = tThisFlipGlobal
-        thisExp.addData('triggerStop.stopped', triggerStop.tStop)
-        if p_port_stop.status == STARTED:
-            win.callOnFlip(p_port_stop.setData, int(0))
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if triggerStop.maxDurationReached:
-            routineTimer.addTime(-triggerStop.maxDuration)
-        elif triggerStop.forceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-1.000000)
+        if p_port_fixation.status == STARTED:
+            win.callOnFlip(p_port_fixation.setData, int(0))
+        # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         
         # set up handler to look after randomisation of conditions etc
         state_measure_trials = data.TrialHandler2(
@@ -1894,8 +1690,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             method='sequential', 
             extraInfo=expInfo, 
             originPath=-1, 
-            trialList=data.importConditions('../../shared/loop-templates/loopStateMeasure.xlsx'), 
+            trialList=data.importConditions(
+            '../../shared/loop-templates/loopStateMeasure.csv', 
+            selection='0:7'
+        )
+        , 
             seed=None, 
+            isTrials=True, 
         )
         thisExp.addLoop(state_measure_trials)  # add the loop to the experiment
         thisState_measure_trial = state_measure_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1925,26 +1726,85 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[slider_generic, slider_SAM, image_SAM, t_sm_message, t_label_min, t_label_max, t_continue_sm, key_resp_sm],
+                components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
-            slider_generic.reset()
-            slider_generic.setSize((slider_gen_width, 0.1))
-            slider_SAM.reset()
-            slider_SAM.setPos((0, slider_y))
-            slider_SAM.setSize((slider_width, slider_height))
-            image_SAM.setPos((0, sam_y))
-            image_SAM.setSize((sam_width, sam_height))
-            image_SAM.setImage(picture_path)
-            t_sm_message.setText(rating_message)
-            t_label_min.setPos((tick_positions[0], label_y))
-            t_label_min.setText(rating_min_label)
-            t_label_max.setPos((tick_positions[-1], label_y))
-            t_label_max.setText(rating_max_label)
             # Run 'Begin Routine' code from code_sm_helper
             allowContinue = False
+            
+            # Parse tick values from the condition file
+            tick_values_parsed = parse_tick_values(tick_values)
+            
+            try:
+                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+                logging.debug(f"State-measure tick values: {tick_values_parsed}")
+            except:
+                logging.error("Error printing current state measure row.")
+            
+            # Compute geometry based on rating type
+            sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
+            
+            sm_comp_slider_size = sm_geometry["slider_size"]
+            sm_comp_slider_pos  = sm_geometry["slider_pos"]
+            sm_comp_label_min_pos = sm_geometry["label_min_pos"]
+            sm_comp_label_max_pos = sm_geometry["label_max_pos"]
+            
+            t_sm_label_min = visual.TextStim(
+                win=win,
+                text=rating_min_label,
+                pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
+                wrapWidth=aspect20,
+                anchorVert='top',
+                height=0.05,
+                color='white',
+                font='Noto Sans'
+            )
+            
+            t_sm_label_max = visual.TextStim(
+                win=win,
+                text=rating_max_label,
+                pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
+                wrapWidth=aspect20,
+                anchorVert='top',
+                height=0.05,
+                color='white',
+                font='Noto Sans'
+            )
+            
+            #t_label_min.setPos(sm_comp_label_min_pos)
+            #t_label_max.setPos(sm_comp_label_max_pos)
+            
+            # --- Create a fresh slider for this trial ---
+            sm_slider = visual.Slider(
+                win=win,
+                ticks=tick_values_parsed,
+                labels=tick_values_parsed,
+                granularity=granularity,
+                style=style.lower(),
+                pos=sm_comp_slider_pos,
+                size=sm_comp_slider_size,
+                labelHeight=0.05,
+                colorSpace='rgb',
+                markerColor='Red',
+                lineColor='White',
+                labelColor='LightGray',
+                font='Noto Sans'
+            )
+            
+            # --- SAM image logic ---
+            if rating_type == 'SAM':
+                image_SAM.setImage(picture_path)
+                image_SAM.setAutoDraw(True)
+            else:
+                image_SAM.setAutoDraw(False)
+            
+            image_SAM.setPos((0, sm_sam_comp_img_pos_y))
+            image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
+            image_SAM.setImage(picture_path)
+            t_sm_message.setText(rating_message)
             # create starting attributes for key_resp_sm
             key_resp_sm.keys = []
             key_resp_sm.rt = []
@@ -1970,6 +1830,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = -1
             
             # --- Run Routine "stateMeasure" ---
+            thisExp.currentRoutine = stateMeasure
             stateMeasure.forceEnded = routineForceEnded = not continueRoutine
             while continueRoutine:
                 # if trial has changed, end Routine now
@@ -1981,72 +1842,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
+                # Run 'Each Frame' code from code_sm_helper
+                # Draw state measure components
+                sm_slider.draw()
+                t_sm_label_min.draw()
+                t_sm_label_max.draw()
                 
-                # *slider_generic* updates
+                # If rated, allow spacebar to end the routine
+                if sm_slider.getRating() is not None:
+                    allowContinue = True
                 
-                # if slider_generic is starting this frame...
-                if slider_generic.status == NOT_STARTED and rating_type == 'Generic':
-                    # keep track of start time/frame for later
-                    slider_generic.frameNStart = frameN  # exact frame index
-                    slider_generic.tStart = t  # local t and not account for scr refresh
-                    slider_generic.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(slider_generic, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'slider_generic.started')
-                    # update status
-                    slider_generic.status = STARTED
-                    slider_generic.setAutoDraw(True)
-                
-                # if slider_generic is active this frame...
-                if slider_generic.status == STARTED:
-                    # update params
-                    pass
-                
-                # if slider_generic is stopping this frame...
-                if slider_generic.status == STARTED:
-                    if bool(rating_type != 'Generic'):
-                        # keep track of stop time/frame for later
-                        slider_generic.tStop = t  # not accounting for scr refresh
-                        slider_generic.tStopRefresh = tThisFlipGlobal  # on global time
-                        slider_generic.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'slider_generic.stopped')
-                        # update status
-                        slider_generic.status = FINISHED
-                        slider_generic.setAutoDraw(False)
-                
-                # *slider_SAM* updates
-                
-                # if slider_SAM is starting this frame...
-                if slider_SAM.status == NOT_STARTED and rating_type == 'SAM':
-                    # keep track of start time/frame for later
-                    slider_SAM.frameNStart = frameN  # exact frame index
-                    slider_SAM.tStart = t  # local t and not account for scr refresh
-                    slider_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(slider_SAM, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'slider_SAM.started')
-                    # update status
-                    slider_SAM.status = STARTED
-                    slider_SAM.setAutoDraw(True)
-                
-                # if slider_SAM is active this frame...
-                if slider_SAM.status == STARTED:
-                    # update params
-                    pass
-                
-                # if slider_SAM is stopping this frame...
-                if slider_SAM.status == STARTED:
-                    if bool(rating_type != 'SAM'):
-                        # keep track of stop time/frame for later
-                        slider_SAM.tStop = t  # not accounting for scr refresh
-                        slider_SAM.tStopRefresh = tThisFlipGlobal  # on global time
-                        slider_SAM.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'slider_SAM.stopped')
-                        # update status
-                        slider_SAM.status = FINISHED
-                        slider_SAM.setAutoDraw(False)
                 
                 # *image_SAM* updates
                 
@@ -2057,8 +1862,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_SAM.tStart = t  # local t and not account for scr refresh
                     image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'image_SAM.started')
                     # update status
                     image_SAM.status = STARTED
                     image_SAM.setAutoDraw(True)
@@ -2077,8 +1880,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     t_sm_message.tStart = t  # local t and not account for scr refresh
                     t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 't_sm_message.started')
                     # update status
                     t_sm_message.status = STARTED
                     t_sm_message.setAutoDraw(True)
@@ -2088,75 +1889,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update params
                     pass
                 
-                # *t_label_min* updates
+                # *t_sm_continue* updates
                 
-                # if t_label_min is starting this frame...
-                if t_label_min.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # if t_sm_continue is starting this frame...
+                if t_sm_continue.status == NOT_STARTED and allowContinue == True:
                     # keep track of start time/frame for later
-                    t_label_min.frameNStart = frameN  # exact frame index
-                    t_label_min.tStart = t  # local t and not account for scr refresh
-                    t_label_min.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_label_min, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 't_label_min.started')
+                    t_sm_continue.frameNStart = frameN  # exact frame index
+                    t_sm_continue.tStart = t  # local t and not account for scr refresh
+                    t_sm_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(t_sm_continue, 'tStartRefresh')  # time at next scr refresh
                     # update status
-                    t_label_min.status = STARTED
-                    t_label_min.setAutoDraw(True)
+                    t_sm_continue.status = STARTED
+                    t_sm_continue.setAutoDraw(True)
                 
-                # if t_label_min is active this frame...
-                if t_label_min.status == STARTED:
+                # if t_sm_continue is active this frame...
+                if t_sm_continue.status == STARTED:
                     # update params
                     pass
-                
-                # *t_label_max* updates
-                
-                # if t_label_max is starting this frame...
-                if t_label_max.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_label_max.frameNStart = frameN  # exact frame index
-                    t_label_max.tStart = t  # local t and not account for scr refresh
-                    t_label_max.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_label_max, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 't_label_max.started')
-                    # update status
-                    t_label_max.status = STARTED
-                    t_label_max.setAutoDraw(True)
-                
-                # if t_label_max is active this frame...
-                if t_label_max.status == STARTED:
-                    # update params
-                    pass
-                
-                # *t_continue_sm* updates
-                
-                # if t_continue_sm is starting this frame...
-                if t_continue_sm.status == NOT_STARTED and allowContinue == True:
-                    # keep track of start time/frame for later
-                    t_continue_sm.frameNStart = frameN  # exact frame index
-                    t_continue_sm.tStart = t  # local t and not account for scr refresh
-                    t_continue_sm.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_continue_sm, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 't_continue_sm.started')
-                    # update status
-                    t_continue_sm.status = STARTED
-                    t_continue_sm.setAutoDraw(True)
-                
-                # if t_continue_sm is active this frame...
-                if t_continue_sm.status == STARTED:
-                    # update params
-                    pass
-                # Run 'Each Frame' code from code_sm_helper
-                # Check if either slider has been rated
-                rated = (slider_generic.getRating() is not None) or (slider_SAM.getRating() is not None)
-                
-                # If rated, allow spacebar to end the routine
-                if rated:
-                    allowContinue = True
-                else:
-                    allowContinue = False
-                
                 
                 # *key_resp_sm* updates
                 waitOnFlip = False
@@ -2168,8 +1917,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.tStart = t  # local t and not account for scr refresh
                     key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
                     win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'key_resp_sm.started')
                     # update status
                     key_resp_sm.status = STARTED
                     # keyboard checking is just starting
@@ -2203,11 +1950,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # skip the frame we paused on
                     continue
                 
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
+                # has a Component requested the Routine to end?
+                if not continueRoutine:
                     stateMeasure.forceEnded = routineForceEnded = True
+                # has the Routine been forcibly ended?
+                if stateMeasure.forceEnded or routineForceEnded:
                     break
-                continueRoutine = False  # will revert to True if at least one component still running
+                # has every Component finished?
+                continueRoutine = False
                 for thisComponent in stateMeasure.components:
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
@@ -2225,17 +1975,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStop = globalClock.getTime(format='float')
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
-            state_measure_trials.addData('slider_generic.response', slider_generic.getRating())
-            state_measure_trials.addData('slider_generic.rt', slider_generic.getRT())
-            state_measure_trials.addData('slider_SAM.response', slider_SAM.getRating())
-            state_measure_trials.addData('slider_SAM.rt', slider_SAM.getRT())
-            # check responses
-            if key_resp_sm.keys in ['', [], None]:  # No response was made
-                key_resp_sm.keys = None
-            state_measure_trials.addData('key_resp_sm.keys',key_resp_sm.keys)
-            if key_resp_sm.keys != None:  # we had a response
-                state_measure_trials.addData('key_resp_sm.rt', key_resp_sm.rt)
-                state_measure_trials.addData('key_resp_sm.duration', key_resp_sm.duration)
+            # Run 'End Routine' code from code_sm_helper
+            #thisExp.addData('rating', sm_slider.getRating())
+            currentLoop.addData('rating', sm_slider.getRating())
+            currentLoop.addData('rating_rt', sm_slider.getRT())
+            
+            try:
+                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
+            except:
+                logging.error("Error printing state-measure rating")
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_trial as finished
@@ -2313,7 +2061,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     goodbye.tStart = globalClock.getTime(format='float')
     goodbye.status = STARTED
     thisExp.addData('goodbye.started', goodbye.tStart)
-    goodbye.maxDuration = None
+    goodbye.maxDuration = 4
     # keep track of which components have finished
     goodbyeComponents = goodbye.components
     for thisComponent in goodbye.components:
@@ -2329,6 +2077,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "goodbye" ---
+    thisExp.currentRoutine = goodbye
     goodbye.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine and routineTimer.getTime() < 4.0:
         # get current time
@@ -2337,6 +2086,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        # is it time to end the Routine? (based on local clock)
+        if tThisFlip > goodbye.maxDuration-frameTolerance:
+            goodbye.maxDurationReached = True
+            continueRoutine = False
         
         # *t_goodbye* updates
         
@@ -2347,8 +2100,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             t_goodbye.tStart = t  # local t and not account for scr refresh
             t_goodbye.tStartRefresh = tThisFlipGlobal  # on global time
             win.timeOnFlip(t_goodbye, 'tStartRefresh')  # time at next scr refresh
-            # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 't_goodbye.started')
             # update status
             t_goodbye.status = STARTED
             t_goodbye.setAutoDraw(True)
@@ -2366,8 +2117,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t_goodbye.tStop = t  # not accounting for scr refresh
                 t_goodbye.tStopRefresh = tThisFlipGlobal  # on global time
                 t_goodbye.frameNStop = frameN  # exact frame index
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_goodbye.stopped')
                 # update status
                 t_goodbye.status = FINISHED
                 t_goodbye.setAutoDraw(False)
@@ -2389,11 +2138,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             goodbye.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if goodbye.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in goodbye.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True

@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2025.1.1),
-    on December 30, 2025, at 20:50
+This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
+    on January 02, 2026, at 00:07
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -16,7 +16,6 @@ from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
 plugins.activatePlugins()
-prefs.hardware['audioLib'] = 'ptb'
 from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, parallel
 from psychopy.tools import environmenttools
 from psychopy.constants import (
@@ -33,23 +32,30 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
-# Run 'Before Experiment' code from code_experiment_setup
-# ============================================================
-# =============== PARALLEL PORT CHECK UP =====================
-# ============================================================
+# Run 'Before Experiment' code from code_iasp_block_randomizer
+# ------------------------------------------------------------
+# code_iasp_block_randomizer
+#
+# Generates all trial CSV files used by the experiment:
+#   - emotion_regulation_unpleasant_trials.csv
+#   - emotion_regulation_neutral_trials.csv
+#   - emotion_regulation_practice_trials.csv
+#
+# Performs the following:
+#   • Checks for missing or extra IASP images
+#   • Randomizes technique assignment to blocks
+#   • Randomizes block order
+#   • Randomizes photo order within each block
+#   • Inserts placeholder images if needed
+#
+# This code runs once before the experiment begins and writes
+# fully randomized trial files that the main loops will read.
+#
+# IMPORTANT:
+#   This component does NOT slice or select trials during the
+#   experiment. It only creates the CSVs.
+# ------------------------------------------------------------
 
-# This catches any missing driver or import error and sets a flag.
-try:
-    from psychopy import parallel
-    p_port_available = True
-    test_port = parallel.ParallelPort(address='0x0378')
-except Exception as e:
-    p_port_available = False
-    print(f"WARNING: Parallel port not available. {e}")
-
-
-
-# Run 'Before Experiment' code from code_block_randomizer
 import random
 import csv
 import os
@@ -95,7 +101,7 @@ if missing_list:
     print(f"Missing stimuli: {len(missing_set)}")
     print("Names:", sorted(missing_set))
 else:
-    print("All files found.")
+    print("All IASP files found.")
 
 # ----------------------------------------------------------
 # Check for extra files in IASP/ that are not referenced in any block
@@ -125,7 +131,7 @@ elif extra_ids:
     print(f"Extra stimuli in IASP not used: {len(extra_ids)}")
     print("Names:", extra_ids)
 else:
-    print("No extra stimuli in IASP.")
+    print("No extra stimuli in IASP source folder.")
 
 # ----------------------------------------------------------
 # Create negative blocks trials file
@@ -134,17 +140,19 @@ negative_file_name = 'emotion_regulation_unpleasant_trials.csv'
 
 random.shuffle(techniques)
 block_to_technique = dict(zip(block_ids, techniques))
+negative_trials_technique_order = [] # Referenced in reset routine
 
 # Randomize block order
 block_order = block_ids.copy()
 random.shuffle(block_order)
 
 # Build trial list
-trials = []
-trial_number = 1
+negative_trials = []
+negative_trial_number = 1
 
 for block in block_order:
     technique = block_to_technique[block]
+    negative_trials_technique_order.append(technique)
     photos = photo_sets[block].copy()
     random.shuffle(photos)
     
@@ -154,19 +162,19 @@ for block in block_order:
         else:
             photo_path = f"IASP/{photo_id}.jpg"
 
-        trials.append({
-            'trial_number': trial_number,
+        negative_trials.append({
+            'trial_number': negative_trial_number,
             'block_id': block,
             'technique': technique,
             'photo_filename': photo_path
         })
-        trial_number += 1
+        negative_trial_number += 1
 
 # Save to CSV
 with open(negative_file_name, 'w', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=trials[0].keys())
+    writer = csv.DictWriter(f, fieldnames=negative_trials[0].keys())
     writer.writeheader()
-    writer.writerows(trials)
+    writer.writerows(negative_trials)
 
 print(f"Saved randomized trial file: {negative_file_name}")
 
@@ -189,7 +197,7 @@ for photo_id in neutral_photos:
     neutral_trials.append({
         'trial_number': neutral_trial_number,
         'block_id': 'block_neutral',
-        'technique': 'view',
+        'technique': 'View',
         'photo_filename': photo_path
     })
     neutral_trial_number += 1
@@ -221,7 +229,7 @@ for photo_id in practice_photos:
     practice_trials.append({
         'trial_number': practice_trial_number,
         'block_id': 'block_practice',
-        'technique': 'view',
+        'technique': 'View',
         'photo_filename': photo_path
     })
     practice_trial_number += 1
@@ -239,9 +247,9 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2025.1.1'
+psychopyVersion = '2025.2.3'
 expName = 'emotion-regulation'  # from the Builder filename that created this script
-expVersion = '0.3'
+expVersion = '0.5'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -372,7 +380,7 @@ def setupLogging(filename):
         )
     else:
         logFile.setLevel(
-            logging.getLevel('info')
+            logging.getLevel('debug')
         )
     
     return logFile
@@ -463,48 +471,6 @@ def setupDevices(expInfo, thisExp, win):
         deviceManager.addDevice(
             deviceClass='keyboard', deviceName='defaultKeyboard', backend='ptb'
         )
-    if deviceManager.getDevice('key_resp_welcome') is None:
-        # initialise key_resp_welcome
-        key_resp_welcome = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_welcome',
-        )
-    if deviceManager.getDevice('key_resp_sm') is None:
-        # initialise key_resp_sm
-        key_resp_sm = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_sm',
-        )
-    if deviceManager.getDevice('key_resp_neutral') is None:
-        # initialise key_resp_neutral
-        key_resp_neutral = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_neutral',
-        )
-    if deviceManager.getDevice('key_resp_iasp_debug') is None:
-        # initialise key_resp_iasp_debug
-        key_resp_iasp_debug = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_iasp_debug',
-        )
-    if deviceManager.getDevice('key_resp_practice') is None:
-        # initialise key_resp_practice
-        key_resp_practice = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_practice',
-        )
-    if deviceManager.getDevice('key_resp_unpleasant') is None:
-        # initialise key_resp_unpleasant
-        key_resp_unpleasant = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_unpleasant',
-        )
-    if deviceManager.getDevice('key_resp_unpleasant_2') is None:
-        # initialise key_resp_unpleasant_2
-        key_resp_unpleasant_2 = deviceManager.addDevice(
-            deviceClass='keyboard',
-            deviceName='key_resp_unpleasant_2',
-        )
     # return True if completed successfully
     return True
 
@@ -544,9 +510,6 @@ def pauseExperiment(thisExp, win=None, timers=[], currentRoutine=None):
         )
     # run a while loop while we wait to unpause
     while thisExp.status == PAUSED:
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=['escape']):
-            endExperiment(thisExp, win=win)
         # dispatch messages on response components
         if currentRoutine is not None:
             for comp in currentRoutine.getDispatchComponents():
@@ -585,6 +548,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     """
     # mark experiment as started
     thisExp.status = STARTED
+    # update experiment info
+    expInfo['date'] = data.getDateStr()
+    expInfo['expName'] = expName
+    expInfo['expVersion'] = expVersion
+    expInfo['psychopyVersion'] = psychopyVersion
     # make sure window is set to foreground to prevent losing focus
     win.winHandle.activate()
     # make sure variables created by exec are available globally
@@ -614,6 +582,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "experimentSetup" ---
     # Run 'Begin Experiment' code from code_experiment_setup
+    # ------------------------------------------------------------
+    # code_experiment_setup
+    # Global screen geometry and shared layout variables.
+    #
+    # Computes window aspect ratio and establishes a unified
+    # coordinate system in 'height' units so all routines scale
+    # consistently across monitors.
+    #
+    # Also defines shared wrap-width values for text components.
+    # ------------------------------------------------------------
+    
     # ============================================================
     # =============== GLOBAL SCREEN GEOMETRY =====================
     # ============================================================
@@ -638,6 +617,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     comp_wrap_width_continue = aspect80 
     
     # Run 'Begin Experiment' code from code_state_measure_setup
+    # ------------------------------------------------------------
+    # code_state_measure_setup
+    # Global setup logic for the stateMeasure routine.
+    #
+    # Handles scaling rules, slider configuration helpers, and
+    # shared variables needed to dynamically construct rating
+    # scales based on loop parameters.
+    #
+    # The stateMeasure routine depends on this setup code to
+    # size components correctly and interpret SAM/text settings.
+    # ------------------------------------------------------------
+    
     # --- Helper functions for dynamic slider configuration ---
     def parse_tick_values(raw):
         # If PsychoPy already parsed it into a list, just return it
@@ -758,6 +749,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Label Min/Max layout
     sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15
     # Run 'Begin Experiment' code from code_iasp_setup
+    # ------------------------------------------------------------
+    # code_iasp_setup
+    # Computes on-screen size for IASP images based on the window's
+    # aspect ratio. Preserves the original 4:3 image ratio and scales
+    # to the largest size that fits without distortion.
+    #
+    # Used by iaspView to size the image consistently across monitors.
+    # ------------------------------------------------------------
+    
     # Image aspect ratio (width / height)
     iasp_img_aspect = 1024 / 768  # = 1.3333
     
@@ -775,7 +775,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     #iasp_margin = 0.05  # 5% margin
     #iasp_comp_img_height *= (1 - iasp_margin)
     #iasp_comp_img_width  *= (1 - iasp_margin)
-    # Run 'Begin Experiment' code from code_block_randomizer
+    # Run 'Begin Experiment' code from code_iasp_block_randomizer
     # Initialize slice indices
     start = 0
     end = 40
@@ -799,7 +799,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_welcome = keyboard.Keyboard(deviceName='key_resp_welcome')
+    key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "stateMeasure" ---
     image_SAM = visual.ImageStim(
@@ -824,7 +824,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-3.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instructionNeutral" ---
     t_neutral_instruction = visual.TextStim(win=win, name='t_neutral_instruction',
@@ -841,12 +841,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_neutral = keyboard.Keyboard(deviceName='key_resp_neutral')
+    key_resp_neutral = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "emotionRegulationCue" ---
     cross_fixation = visual.ShapeStim(
         win=win, name='cross_fixation', vertices='cross',units='height', 
-        size=(0.15, 0.15),
+        size=(0.2, 0.2),
         ori=0.0, pos=(0, 0), draggable=False, anchor='center',
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
@@ -854,7 +854,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_emotion_regulation_cue = visual.TextStim(win=win, name='t_emotion_regulation_cue',
         text='',
         font='Arial',
-        pos=(0.0, 0.05), draggable=False, height=0.09, wrapWidth=None, ori=0.0, 
+        pos=(0.0, 0.05), draggable=False, height=0.14, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
@@ -867,7 +867,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-3.0);
     
     # --- Initialize components for Routine "iaspView" ---
-    key_resp_iasp_debug = keyboard.Keyboard(deviceName='key_resp_iasp_debug')
     image_iasp = visual.ImageStim(
         win=win,
         name='image_iasp', units='height', 
@@ -875,7 +874,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0), draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-2.0)
+        texRes=128.0, interpolate=True, depth=0.0)
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
@@ -901,7 +900,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-3.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instructionPractice" ---
     t_practice_instruction = visual.TextStim(win=win, name='t_practice_instruction',
@@ -918,12 +917,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_practice = keyboard.Keyboard(deviceName='key_resp_practice')
+    key_resp_practice = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "emotionRegulationCue" ---
     cross_fixation = visual.ShapeStim(
         win=win, name='cross_fixation', vertices='cross',units='height', 
-        size=(0.15, 0.15),
+        size=(0.2, 0.2),
         ori=0.0, pos=(0, 0), draggable=False, anchor='center',
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
@@ -931,7 +930,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_emotion_regulation_cue = visual.TextStim(win=win, name='t_emotion_regulation_cue',
         text='',
         font='Arial',
-        pos=(0.0, 0.05), draggable=False, height=0.09, wrapWidth=None, ori=0.0, 
+        pos=(0.0, 0.05), draggable=False, height=0.14, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
@@ -944,7 +943,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-3.0);
     
     # --- Initialize components for Routine "iaspView" ---
-    key_resp_iasp_debug = keyboard.Keyboard(deviceName='key_resp_iasp_debug')
     image_iasp = visual.ImageStim(
         win=win,
         name='image_iasp', units='height', 
@@ -952,7 +950,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0), draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-2.0)
+        texRes=128.0, interpolate=True, depth=0.0)
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
@@ -978,7 +976,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-3.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instructionUnpleasant" ---
     t_unpleasant_instruction = visual.TextStim(win=win, name='t_unpleasant_instruction',
@@ -989,35 +987,41 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     t_unpleasant_continue = visual.TextStim(win=win, name='t_unpleasant_continue',
-        text='Press the SPACEBAR to begin',
+        text='Otherwise, press the SPACEBAR to begin the emotion regulation tasks',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_unpleasant = keyboard.Keyboard(deviceName='key_resp_unpleasant')
+    key_resp_unpleasant = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "reset" ---
-    t_unpleasant_instruction_2 = visual.TextStim(win=win, name='t_unpleasant_instruction_2',
+    # Run 'Begin Experiment' code from code_slicer_helper
+    reset_routine_counter = 0
+    just_view_text = "Just View\n\nSimply look at the picture as it appears.\nDo not try to change your feelings or reactions.\nLet your natural response happen and just observe."
+    suppress_text = "Suppress Emotion\n\nTry not to feel the unpleasant emotions the picture might bring up.\nYou can push the feelings down, ignore them, or keep a neutral expression.\nFocus on staying calm and steady."
+    reappraise_text = "Reappraise\n\nChange the way you think about the picture so it feels less unpleasant.\nYou might imagine the situation has a neutral or positive outcome, that it is staged or not real, or that the people are safe afterward."
+    suppress_and_reappraise_text = "Suppress and Reappraise\n\nUse both strategies at the same time.\nFirst reinterpret the picture to make it feel less unpleasant.\nAt the same time, try not to show or feel the unpleasant emotion."
+    t_reset_instruction = visual.TextStim(win=win, name='t_reset_instruction',
         text='',
         font='Arial',
         pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    t_unpleasant_continue_2 = visual.TextStim(win=win, name='t_unpleasant_continue_2',
+    t_reset_continue = visual.TextStim(win=win, name='t_reset_continue',
         text='Press the SPACEBAR to begin',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
-    key_resp_unpleasant_2 = keyboard.Keyboard(deviceName='key_resp_unpleasant_2')
+    key_resp_reset = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "emotionRegulationCue" ---
     cross_fixation = visual.ShapeStim(
         win=win, name='cross_fixation', vertices='cross',units='height', 
-        size=(0.15, 0.15),
+        size=(0.2, 0.2),
         ori=0.0, pos=(0, 0), draggable=False, anchor='center',
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
@@ -1025,7 +1029,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_emotion_regulation_cue = visual.TextStim(win=win, name='t_emotion_regulation_cue',
         text='',
         font='Arial',
-        pos=(0.0, 0.05), draggable=False, height=0.09, wrapWidth=None, ori=0.0, 
+        pos=(0.0, 0.05), draggable=False, height=0.14, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
@@ -1038,7 +1042,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-3.0);
     
     # --- Initialize components for Routine "iaspView" ---
-    key_resp_iasp_debug = keyboard.Keyboard(deviceName='key_resp_iasp_debug')
     image_iasp = visual.ImageStim(
         win=win,
         name='image_iasp', units='height', 
@@ -1046,7 +1049,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         ori=0.0, pos=(0, 0), draggable=False, size=1.0,
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-2.0)
+        texRes=128.0, interpolate=True, depth=0.0)
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
@@ -1072,7 +1075,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-3.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='key_resp_sm')
+    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
     t_goodbye = visual.TextStim(win=win, name='t_goodbye',
@@ -1103,6 +1106,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if ioServer is not None:
         ioServer.syncClock(globalClock)
     logging.setDefaultClock(globalClock)
+    if eyetracker is not None:
+        eyetracker.enableEventReporting()
     # routine timer to track time remaining of each (possibly non-slip) routine
     routineTimer = core.Clock()
     win.flip()  # flip window to reset last flip timer
@@ -1124,7 +1129,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     experimentSetup.tStart = globalClock.getTime(format='float')
     experimentSetup.status = STARTED
-    thisExp.addData('experimentSetup.started', experimentSetup.tStart)
     experimentSetup.maxDuration = None
     # keep track of which components have finished
     experimentSetupComponents = experimentSetup.components
@@ -1141,6 +1145,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "experimentSetup" ---
+    thisExp.currentRoutine = experimentSetup
     experimentSetup.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -1149,10 +1154,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -1167,11 +1168,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             experimentSetup.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if experimentSetup.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in experimentSetup.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
@@ -1188,7 +1192,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for experimentSetup
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
-    thisExp.addData('experimentSetup.stopped', experimentSetup.tStop)
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1202,6 +1205,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions('loopEmotionRegulationIntro.csv'), 
         seed=None, 
+        isTrials=False, 
     )
     thisExp.addLoop(intro_prompts)  # add the loop to the experiment
     thisIntro_prompt = intro_prompts.trialList[0]  # so we can initialise stimuli with some values
@@ -1256,6 +1260,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "welcome" ---
+        thisExp.currentRoutine = welcome
         welcome.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -1277,8 +1282,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t_welcome_body.tStart = t  # local t and not account for scr refresh
                 t_welcome_body.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(t_welcome_body, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_welcome_body.started')
                 # update status
                 t_welcome_body.status = STARTED
                 t_welcome_body.setAutoDraw(True)
@@ -1297,8 +1300,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 t_welcome_continue.tStart = t  # local t and not account for scr refresh
                 t_welcome_continue.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(t_welcome_continue, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 't_welcome_continue.started')
                 # update status
                 t_welcome_continue.status = STARTED
                 t_welcome_continue.setAutoDraw(True)
@@ -1318,8 +1319,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_welcome.tStart = t  # local t and not account for scr refresh
                 key_resp_welcome.tStartRefresh = tThisFlipGlobal  # on global time
                 win.timeOnFlip(key_resp_welcome, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'key_resp_welcome.started')
                 # update status
                 key_resp_welcome.status = STARTED
                 # keyboard checking is just starting
@@ -1327,7 +1326,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_welcome.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_welcome.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_welcome.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_welcome.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_welcome.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
                 _key_resp_welcome_allKeys.extend(theseKeys)
                 if len(_key_resp_welcome_allKeys):
                     key_resp_welcome.keys = _key_resp_welcome_allKeys[-1].name  # just the last key pressed
@@ -1335,10 +1334,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_welcome.duration = _key_resp_welcome_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -1353,11 +1348,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 welcome.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if welcome.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in welcome.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -1375,13 +1373,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         welcome.tStop = globalClock.getTime(format='float')
         welcome.tStopRefresh = tThisFlipGlobal
         thisExp.addData('welcome.stopped', welcome.tStop)
-        # check responses
-        if key_resp_welcome.keys in ['', [], None]:  # No response was made
-            key_resp_welcome.keys = None
-        intro_prompts.addData('key_resp_welcome.keys',key_resp_welcome.keys)
-        if key_resp_welcome.keys != None:  # we had a response
-            intro_prompts.addData('key_resp_welcome.rt', key_resp_welcome.rt)
-            intro_prompts.addData('key_resp_welcome.duration', key_resp_welcome.duration)
         # the Routine "welcome" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisIntro_prompt as finished
@@ -1414,6 +1405,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     )
     , 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(state_measure_pretrial)  # add the loop to the experiment
     thisState_measure_pretrial = state_measure_pretrial.trialList[0]  # so we can initialise stimuli with some values
@@ -1452,9 +1444,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -1542,6 +1539,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "stateMeasure" ---
+        thisExp.currentRoutine = stateMeasure
         stateMeasure.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -1635,7 +1633,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -1643,10 +1641,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -1661,11 +1655,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 stateMeasure.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if stateMeasure.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in stateMeasure.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -1684,21 +1681,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_pretrial.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_pretrial.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_pretrial.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1767,6 +1756,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "instructionNeutral" ---
+    thisExp.currentRoutine = instructionNeutral
     instructionNeutral.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -1829,7 +1819,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_neutral.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_neutral.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_neutral.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_neutral.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_neutral.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
             _key_resp_neutral_allKeys.extend(theseKeys)
             if len(_key_resp_neutral_allKeys):
                 key_resp_neutral.keys = _key_resp_neutral_allKeys[-1].name  # just the last key pressed
@@ -1837,10 +1827,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_neutral.duration = _key_resp_neutral_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -1855,11 +1841,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             instructionNeutral.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if instructionNeutral.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in instructionNeutral.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
@@ -1877,13 +1866,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionNeutral.tStop = globalClock.getTime(format='float')
     instructionNeutral.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionNeutral.stopped', instructionNeutral.tStop)
-    # check responses
-    if key_resp_neutral.keys in ['', [], None]:  # No response was made
-        key_resp_neutral.keys = None
-    thisExp.addData('key_resp_neutral.keys',key_resp_neutral.keys)
-    if key_resp_neutral.keys != None:  # we had a response
-        thisExp.addData('key_resp_neutral.rt', key_resp_neutral.rt)
-        thisExp.addData('key_resp_neutral.duration', key_resp_neutral.duration)
     thisExp.nextEntry()
     # the Routine "instructionNeutral" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1897,6 +1879,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions('emotion_regulation_neutral_trials.csv'), 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(iasp_neutral_trials)  # add the loop to the experiment
     thisIasp_neutral_trial = iasp_neutral_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -1962,6 +1945,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "emotionRegulationCue" ---
+        thisExp.currentRoutine = emotionRegulationCue
         emotionRegulationCue.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -2075,10 +2059,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     t_blank_delayer.status = FINISHED
                     t_blank_delayer.setAutoDraw(False)
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2093,11 +2073,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 emotionRegulationCue.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if emotionRegulationCue.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in emotionRegulationCue.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -2123,20 +2106,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine iaspView
         iaspView = data.Routine(
             name='iaspView',
-            components=[key_resp_iasp_debug, image_iasp, p_port_iasp],
+            components=[image_iasp, p_port_iasp],
         )
         iaspView.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        # Run 'Begin Routine' code from code_iasp_helper
-        ## Disable the Builder component BEFORE PsychoPy tries to use it
-        #if not p_port_available:
-        #    from psychopy import constants
-        #    p_port_iasp.status = constants.FINISHED
-        # create starting attributes for key_resp_iasp_debug
-        key_resp_iasp_debug.keys = []
-        key_resp_iasp_debug.rt = []
-        _key_resp_iasp_debug_allKeys = []
         image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
         image_iasp.setImage(photo_filename)
         # store start times for iaspView
@@ -2164,6 +2138,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "iaspView" ---
+        thisExp.currentRoutine = iaspView
         iaspView.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -2179,44 +2154,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if tThisFlip > iaspView.maxDuration-frameTolerance:
                 iaspView.maxDurationReached = True
                 continueRoutine = False
-            
-            # *key_resp_iasp_debug* updates
-            waitOnFlip = False
-            
-            # if key_resp_iasp_debug is starting this frame...
-            if key_resp_iasp_debug.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                key_resp_iasp_debug.frameNStart = frameN  # exact frame index
-                key_resp_iasp_debug.tStart = t  # local t and not account for scr refresh
-                key_resp_iasp_debug.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_iasp_debug, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                key_resp_iasp_debug.status = STARTED
-                # keyboard checking is just starting
-                waitOnFlip = True
-                win.callOnFlip(key_resp_iasp_debug.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_iasp_debug.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            
-            # if key_resp_iasp_debug is stopping this frame...
-            if key_resp_iasp_debug.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > key_resp_iasp_debug.tStartRefresh + 5-frameTolerance:
-                    # keep track of stop time/frame for later
-                    key_resp_iasp_debug.tStop = t  # not accounting for scr refresh
-                    key_resp_iasp_debug.tStopRefresh = tThisFlipGlobal  # on global time
-                    key_resp_iasp_debug.frameNStop = frameN  # exact frame index
-                    # update status
-                    key_resp_iasp_debug.status = FINISHED
-                    key_resp_iasp_debug.status = FINISHED
-            if key_resp_iasp_debug.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_iasp_debug.getKeys(keyList=['y','n','left','right','space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_iasp_debug_allKeys.extend(theseKeys)
-                if len(_key_resp_iasp_debug_allKeys):
-                    key_resp_iasp_debug.keys = _key_resp_iasp_debug_allKeys[-1].name  # just the last key pressed
-                    key_resp_iasp_debug.rt = _key_resp_iasp_debug_allKeys[-1].rt
-                    key_resp_iasp_debug.duration = _key_resp_iasp_debug_allKeys[-1].duration
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *image_iasp* updates
             
@@ -2279,10 +2216,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     p_port_iasp.status = FINISHED
                     win.callOnFlip(p_port_iasp.setData, int(0))
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2297,11 +2230,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 iaspView.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if iaspView.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in iaspView.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -2320,13 +2256,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         setupWindow(expInfo=expInfo, win=win)
-        # check responses
-        if key_resp_iasp_debug.keys in ['', [], None]:  # No response was made
-            key_resp_iasp_debug.keys = None
-        iasp_neutral_trials.addData('key_resp_iasp_debug.keys',key_resp_iasp_debug.keys)
-        if key_resp_iasp_debug.keys != None:  # we had a response
-            iasp_neutral_trials.addData('key_resp_iasp_debug.rt', key_resp_iasp_debug.rt)
-            iasp_neutral_trials.addData('key_resp_iasp_debug.duration', key_resp_iasp_debug.duration)
         if p_port_iasp.status == STARTED:
             win.callOnFlip(p_port_iasp.setData, int(0))
         # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -2371,10 +2300,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='[7, 2, 3, 4, 5, 6]'
+        selection='[2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(state_measure_neutral)  # add the loop to the experiment
     thisState_measure_neutral = state_measure_neutral.trialList[0]  # so we can initialise stimuli with some values
@@ -2413,9 +2343,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -2503,6 +2438,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "stateMeasure" ---
+        thisExp.currentRoutine = stateMeasure
         stateMeasure.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -2596,7 +2532,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -2604,10 +2540,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2622,11 +2554,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 stateMeasure.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if stateMeasure.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in stateMeasure.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -2645,21 +2580,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_neutral.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_neutral.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_neutral.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_neutral as finished
@@ -2728,6 +2655,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "instructionPractice" ---
+    thisExp.currentRoutine = instructionPractice
     instructionPractice.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -2790,7 +2718,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_practice.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_practice.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_practice.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_practice.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_practice.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
             _key_resp_practice_allKeys.extend(theseKeys)
             if len(_key_resp_practice_allKeys):
                 key_resp_practice.keys = _key_resp_practice_allKeys[-1].name  # just the last key pressed
@@ -2798,10 +2726,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_practice.duration = _key_resp_practice_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -2816,11 +2740,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             instructionPractice.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if instructionPractice.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in instructionPractice.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
@@ -2838,13 +2765,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionPractice.tStop = globalClock.getTime(format='float')
     instructionPractice.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionPractice.stopped', instructionPractice.tStop)
-    # check responses
-    if key_resp_practice.keys in ['', [], None]:  # No response was made
-        key_resp_practice.keys = None
-    thisExp.addData('key_resp_practice.keys',key_resp_practice.keys)
-    if key_resp_practice.keys != None:  # we had a response
-        thisExp.addData('key_resp_practice.rt', key_resp_practice.rt)
-        thisExp.addData('key_resp_practice.duration', key_resp_practice.duration)
     thisExp.nextEntry()
     # the Routine "instructionPractice" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -2858,6 +2778,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions('emotion_regulation_practice_trials.csv'), 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(iasp_practice_trials)  # add the loop to the experiment
     thisIasp_practice_trial = iasp_practice_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -2923,6 +2844,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "emotionRegulationCue" ---
+        thisExp.currentRoutine = emotionRegulationCue
         emotionRegulationCue.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -3036,10 +2958,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     t_blank_delayer.status = FINISHED
                     t_blank_delayer.setAutoDraw(False)
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3054,11 +2972,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 emotionRegulationCue.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if emotionRegulationCue.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in emotionRegulationCue.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -3084,20 +3005,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine iaspView
         iaspView = data.Routine(
             name='iaspView',
-            components=[key_resp_iasp_debug, image_iasp, p_port_iasp],
+            components=[image_iasp, p_port_iasp],
         )
         iaspView.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        # Run 'Begin Routine' code from code_iasp_helper
-        ## Disable the Builder component BEFORE PsychoPy tries to use it
-        #if not p_port_available:
-        #    from psychopy import constants
-        #    p_port_iasp.status = constants.FINISHED
-        # create starting attributes for key_resp_iasp_debug
-        key_resp_iasp_debug.keys = []
-        key_resp_iasp_debug.rt = []
-        _key_resp_iasp_debug_allKeys = []
         image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
         image_iasp.setImage(photo_filename)
         # store start times for iaspView
@@ -3125,6 +3037,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "iaspView" ---
+        thisExp.currentRoutine = iaspView
         iaspView.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -3140,44 +3053,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if tThisFlip > iaspView.maxDuration-frameTolerance:
                 iaspView.maxDurationReached = True
                 continueRoutine = False
-            
-            # *key_resp_iasp_debug* updates
-            waitOnFlip = False
-            
-            # if key_resp_iasp_debug is starting this frame...
-            if key_resp_iasp_debug.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                key_resp_iasp_debug.frameNStart = frameN  # exact frame index
-                key_resp_iasp_debug.tStart = t  # local t and not account for scr refresh
-                key_resp_iasp_debug.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_iasp_debug, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                key_resp_iasp_debug.status = STARTED
-                # keyboard checking is just starting
-                waitOnFlip = True
-                win.callOnFlip(key_resp_iasp_debug.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_iasp_debug.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            
-            # if key_resp_iasp_debug is stopping this frame...
-            if key_resp_iasp_debug.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > key_resp_iasp_debug.tStartRefresh + 5-frameTolerance:
-                    # keep track of stop time/frame for later
-                    key_resp_iasp_debug.tStop = t  # not accounting for scr refresh
-                    key_resp_iasp_debug.tStopRefresh = tThisFlipGlobal  # on global time
-                    key_resp_iasp_debug.frameNStop = frameN  # exact frame index
-                    # update status
-                    key_resp_iasp_debug.status = FINISHED
-                    key_resp_iasp_debug.status = FINISHED
-            if key_resp_iasp_debug.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_iasp_debug.getKeys(keyList=['y','n','left','right','space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_iasp_debug_allKeys.extend(theseKeys)
-                if len(_key_resp_iasp_debug_allKeys):
-                    key_resp_iasp_debug.keys = _key_resp_iasp_debug_allKeys[-1].name  # just the last key pressed
-                    key_resp_iasp_debug.rt = _key_resp_iasp_debug_allKeys[-1].rt
-                    key_resp_iasp_debug.duration = _key_resp_iasp_debug_allKeys[-1].duration
-                    # a response ends the routine
-                    continueRoutine = False
             
             # *image_iasp* updates
             
@@ -3240,10 +3115,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     p_port_iasp.status = FINISHED
                     win.callOnFlip(p_port_iasp.setData, int(0))
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3258,11 +3129,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 iaspView.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if iaspView.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in iaspView.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -3281,13 +3155,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         setupWindow(expInfo=expInfo, win=win)
-        # check responses
-        if key_resp_iasp_debug.keys in ['', [], None]:  # No response was made
-            key_resp_iasp_debug.keys = None
-        iasp_practice_trials.addData('key_resp_iasp_debug.keys',key_resp_iasp_debug.keys)
-        if key_resp_iasp_debug.keys != None:  # we had a response
-            iasp_practice_trials.addData('key_resp_iasp_debug.rt', key_resp_iasp_debug.rt)
-            iasp_practice_trials.addData('key_resp_iasp_debug.duration', key_resp_iasp_debug.duration)
         if p_port_iasp.status == STARTED:
             win.callOnFlip(p_port_iasp.setData, int(0))
         # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -3332,10 +3199,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='[7, 2, 3, 4, 5, 6]'
+        selection='[2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
+        isTrials=True, 
     )
     thisExp.addLoop(state_measure_practice)  # add the loop to the experiment
     thisState_measure_practice = state_measure_practice.trialList[0]  # so we can initialise stimuli with some values
@@ -3374,9 +3242,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         allowContinue = False
         
         # Parse tick values from the condition file
-        print(f"ROW: {rating_category}, {rating_type}")
         tick_values_parsed = parse_tick_values(tick_values)
-        print(tick_values_parsed)
+        
+        try:
+            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+            logging.debug(f"State-measure tick values: {tick_values_parsed}")
+        except:
+            logging.error("Error printing current state measure row.")
         
         # Compute geometry based on rating type
         sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -3464,6 +3337,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "stateMeasure" ---
+        thisExp.currentRoutine = stateMeasure
         stateMeasure.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
@@ -3557,7 +3431,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -3565,10 +3439,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3583,11 +3453,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 stateMeasure.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if stateMeasure.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in stateMeasure.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -3606,21 +3479,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating', sm_slider.getRating())
         currentLoop.addData('rating_rt', sm_slider.getRT())
         
         try:
-            print(f"{rating_category}: {sm_slider.getRating()}")
+            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
         except:
-            print("Error printing rating")
-        # check responses
-        if key_resp_sm.keys in ['', [], None]:  # No response was made
-            key_resp_sm.keys = None
-        state_measure_practice.addData('key_resp_sm.keys',key_resp_sm.keys)
-        if key_resp_sm.keys != None:  # we had a response
-            state_measure_practice.addData('key_resp_sm.rt', key_resp_sm.rt)
-            state_measure_practice.addData('key_resp_sm.duration', key_resp_sm.duration)
+            logging.error("Error printing state-measure rating")
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_practice as finished
@@ -3663,7 +3528,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionUnpleasant.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
-    t_unpleasant_instruction.setText('Prompt\n')
+    t_unpleasant_instruction.setText('Next, you will begin the main set of unpleasant picture trials.\n\nIf at any point you would like to stop, please let the experimenter know.')
     # create starting attributes for key_resp_unpleasant
     key_resp_unpleasant.keys = []
     key_resp_unpleasant.rt = []
@@ -3689,6 +3554,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "instructionUnpleasant" ---
+    thisExp.currentRoutine = instructionUnpleasant
     instructionUnpleasant.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine:
         # get current time
@@ -3751,7 +3617,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_unpleasant.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_unpleasant.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_unpleasant.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_unpleasant.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_unpleasant.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
             _key_resp_unpleasant_allKeys.extend(theseKeys)
             if len(_key_resp_unpleasant_allKeys):
                 key_resp_unpleasant.keys = _key_resp_unpleasant_allKeys[-1].name  # just the last key pressed
@@ -3759,10 +3625,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_unpleasant.duration = _key_resp_unpleasant_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -3777,11 +3639,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             instructionUnpleasant.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if instructionUnpleasant.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in instructionUnpleasant.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
@@ -3799,67 +3664,93 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionUnpleasant.tStop = globalClock.getTime(format='float')
     instructionUnpleasant.tStopRefresh = tThisFlipGlobal
     thisExp.addData('instructionUnpleasant.stopped', instructionUnpleasant.tStop)
-    # check responses
-    if key_resp_unpleasant.keys in ['', [], None]:  # No response was made
-        key_resp_unpleasant.keys = None
-    thisExp.addData('key_resp_unpleasant.keys',key_resp_unpleasant.keys)
-    if key_resp_unpleasant.keys != None:  # we had a response
-        thisExp.addData('key_resp_unpleasant.rt', key_resp_unpleasant.rt)
-        thisExp.addData('key_resp_unpleasant.duration', key_resp_unpleasant.duration)
     thisExp.nextEntry()
     # the Routine "instructionUnpleasant" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    repeat = data.TrialHandler2(
-        name='repeat',
+    block_loop = data.TrialHandler2(
+        name='block_loop',
         nReps=1.0, 
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('blocks.csv'), 
+        trialList=data.importConditions('current_slice.csv'), 
         seed=None, 
+        isTrials=False, 
     )
-    thisExp.addLoop(repeat)  # add the loop to the experiment
-    thisRepeat = repeat.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisRepeat.rgb)
-    if thisRepeat != None:
-        for paramName in thisRepeat:
-            globals()[paramName] = thisRepeat[paramName]
+    thisExp.addLoop(block_loop)  # add the loop to the experiment
+    thisBlock_loop = block_loop.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisBlock_loop.rgb)
+    if thisBlock_loop != None:
+        for paramName in thisBlock_loop:
+            globals()[paramName] = thisBlock_loop[paramName]
     
-    for thisRepeat in repeat:
-        repeat.status = STARTED
-        if hasattr(thisRepeat, 'status'):
-            thisRepeat.status = STARTED
-        currentLoop = repeat
+    for thisBlock_loop in block_loop:
+        block_loop.status = STARTED
+        if hasattr(thisBlock_loop, 'status'):
+            thisBlock_loop.status = STARTED
+        currentLoop = block_loop
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
-        # abbreviate parameter names if possible (e.g. rgb = thisRepeat.rgb)
-        if thisRepeat != None:
-            for paramName in thisRepeat:
-                globals()[paramName] = thisRepeat[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisBlock_loop.rgb)
+        if thisBlock_loop != None:
+            for paramName in thisBlock_loop:
+                globals()[paramName] = thisBlock_loop[paramName]
         
         # --- Prepare to start Routine "reset" ---
         # create an object to store info about Routine reset
         reset = data.Routine(
             name='reset',
-            components=[t_unpleasant_instruction_2, t_unpleasant_continue_2, key_resp_unpleasant_2],
+            components=[t_reset_instruction, t_reset_continue, key_resp_reset],
         )
         reset.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_slicer_helper
+        # ------------------------------------------------------------
+        # code_slicer_helper
+        #
+        # Selects the current 40 trial slice from the pre-randomized
+        # CSV file. The surrounding loop uses this slice to determine
+        # which trials to run for the current block.
+        #
+        # Begin Routine:
+        #   • Builds a "start:end" slice string (e.g., "0:40")
+        #   • Logs the slice to the data file for analysis
+        #
+        # End Routine:
+        #   • Advances start/end by 40 to move to the next block
+        #
+        # This component does NOT randomize trials. It only selects
+        # which portion of the CSV to use on each loop iteration.
+        # ------------------------------------------------------------
+        
         # Define slice for current block
         row_section = f"{start}:{end}"
         print(row_section)
         
         # Log which slice was used
-        currentLoop.addData('row_section', row_section)
+        #currentLoop.addData('row_section', row_section)
         
-        t_unpleasant_instruction_2.setText('Prompt\n')
-        # create starting attributes for key_resp_unpleasant_2
-        key_resp_unpleasant_2.keys = []
-        key_resp_unpleasant_2.rt = []
-        _key_resp_unpleasant_2_allKeys = []
+        # Change current emotion regulation strategy text
+        current_technique = negative_trials_technique_order[reset_routine_counter]
+        t_reset_instruction_text = ""
+        
+        if current_technique == "View":
+            t_reset_instruction_text = just_view_text
+        elif current_technique == "Suppress":
+            t_reset_instruction_text = suppress_text
+        elif current_technique == "Reappraise":
+            t_reset_instruction_text = reappraise_text
+        elif current_technique == "Suppress and Reappraise":
+            t_reset_instruction_text = suppress_and_reappraise_text
+        else:
+            t_reset_instruction_text = "Unknown technique. Please contact the experimenter."
+        t_reset_instruction.setText(t_reset_instruction_text)
+        # create starting attributes for key_resp_reset
+        key_resp_reset.keys = []
+        key_resp_reset.rt = []
+        _key_resp_reset_allKeys = []
         # store start times for reset
         reset.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         reset.tStart = globalClock.getTime(format='float')
@@ -3881,10 +3772,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         frameN = -1
         
         # --- Run Routine "reset" ---
+        thisExp.currentRoutine = reset
         reset.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisRepeat, 'status') and thisRepeat.status == STOPPING:
+            if hasattr(thisBlock_loop, 'status') and thisBlock_loop.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -3893,71 +3785,67 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             
-            # *t_unpleasant_instruction_2* updates
+            # *t_reset_instruction* updates
             
-            # if t_unpleasant_instruction_2 is starting this frame...
-            if t_unpleasant_instruction_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if t_reset_instruction is starting this frame...
+            if t_reset_instruction.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
                 # keep track of start time/frame for later
-                t_unpleasant_instruction_2.frameNStart = frameN  # exact frame index
-                t_unpleasant_instruction_2.tStart = t  # local t and not account for scr refresh
-                t_unpleasant_instruction_2.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_unpleasant_instruction_2, 'tStartRefresh')  # time at next scr refresh
+                t_reset_instruction.frameNStart = frameN  # exact frame index
+                t_reset_instruction.tStart = t  # local t and not account for scr refresh
+                t_reset_instruction.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_reset_instruction, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                t_unpleasant_instruction_2.status = STARTED
-                t_unpleasant_instruction_2.setAutoDraw(True)
+                t_reset_instruction.status = STARTED
+                t_reset_instruction.setAutoDraw(True)
             
-            # if t_unpleasant_instruction_2 is active this frame...
-            if t_unpleasant_instruction_2.status == STARTED:
+            # if t_reset_instruction is active this frame...
+            if t_reset_instruction.status == STARTED:
                 # update params
                 pass
             
-            # *t_unpleasant_continue_2* updates
+            # *t_reset_continue* updates
             
-            # if t_unpleasant_continue_2 is starting this frame...
-            if t_unpleasant_continue_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if t_reset_continue is starting this frame...
+            if t_reset_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
                 # keep track of start time/frame for later
-                t_unpleasant_continue_2.frameNStart = frameN  # exact frame index
-                t_unpleasant_continue_2.tStart = t  # local t and not account for scr refresh
-                t_unpleasant_continue_2.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_unpleasant_continue_2, 'tStartRefresh')  # time at next scr refresh
+                t_reset_continue.frameNStart = frameN  # exact frame index
+                t_reset_continue.tStart = t  # local t and not account for scr refresh
+                t_reset_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_reset_continue, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                t_unpleasant_continue_2.status = STARTED
-                t_unpleasant_continue_2.setAutoDraw(True)
+                t_reset_continue.status = STARTED
+                t_reset_continue.setAutoDraw(True)
             
-            # if t_unpleasant_continue_2 is active this frame...
-            if t_unpleasant_continue_2.status == STARTED:
+            # if t_reset_continue is active this frame...
+            if t_reset_continue.status == STARTED:
                 # update params
                 pass
             
-            # *key_resp_unpleasant_2* updates
+            # *key_resp_reset* updates
             waitOnFlip = False
             
-            # if key_resp_unpleasant_2 is starting this frame...
-            if key_resp_unpleasant_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if key_resp_reset is starting this frame...
+            if key_resp_reset.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
                 # keep track of start time/frame for later
-                key_resp_unpleasant_2.frameNStart = frameN  # exact frame index
-                key_resp_unpleasant_2.tStart = t  # local t and not account for scr refresh
-                key_resp_unpleasant_2.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_unpleasant_2, 'tStartRefresh')  # time at next scr refresh
+                key_resp_reset.frameNStart = frameN  # exact frame index
+                key_resp_reset.tStart = t  # local t and not account for scr refresh
+                key_resp_reset.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(key_resp_reset, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                key_resp_unpleasant_2.status = STARTED
+                key_resp_reset.status = STARTED
                 # keyboard checking is just starting
                 waitOnFlip = True
-                win.callOnFlip(key_resp_unpleasant_2.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_unpleasant_2.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            if key_resp_unpleasant_2.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_unpleasant_2.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_unpleasant_2_allKeys.extend(theseKeys)
-                if len(_key_resp_unpleasant_2_allKeys):
-                    key_resp_unpleasant_2.keys = _key_resp_unpleasant_2_allKeys[-1].name  # just the last key pressed
-                    key_resp_unpleasant_2.rt = _key_resp_unpleasant_2_allKeys[-1].rt
-                    key_resp_unpleasant_2.duration = _key_resp_unpleasant_2_allKeys[-1].duration
+                win.callOnFlip(key_resp_reset.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(key_resp_reset.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            if key_resp_reset.status == STARTED and not waitOnFlip:
+                theseKeys = key_resp_reset.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                _key_resp_reset_allKeys.extend(theseKeys)
+                if len(_key_resp_reset_allKeys):
+                    key_resp_reset.keys = _key_resp_reset_allKeys[-1].name  # just the last key pressed
+                    key_resp_reset.rt = _key_resp_reset_allKeys[-1].rt
+                    key_resp_reset.duration = _key_resp_reset_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3972,11 +3860,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # skip the frame we paused on
                 continue
             
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
                 reset.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if reset.forceEnded or routineForceEnded:
                 break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # has every Component finished?
+            continueRoutine = False
             for thisComponent in reset.components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
@@ -3999,13 +3890,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         start += 40
         end += 40
         
-        # check responses
-        if key_resp_unpleasant_2.keys in ['', [], None]:  # No response was made
-            key_resp_unpleasant_2.keys = None
-        repeat.addData('key_resp_unpleasant_2.keys',key_resp_unpleasant_2.keys)
-        if key_resp_unpleasant_2.keys != None:  # we had a response
-            repeat.addData('key_resp_unpleasant_2.rt', key_resp_unpleasant_2.rt)
-            repeat.addData('key_resp_unpleasant_2.duration', key_resp_unpleasant_2.duration)
+        if reset_routine_counter < len(negative_trials_technique_order):
+            reset_routine_counter += 1
         # the Routine "reset" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -4022,6 +3908,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         )
         , 
             seed=None, 
+            isTrials=True, 
         )
         thisExp.addLoop(iasp_unpleasant_trials)  # add the loop to the experiment
         thisIasp_unpleasant_trial = iasp_unpleasant_trials.trialList[0]  # so we can initialise stimuli with some values
@@ -4087,6 +3974,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = -1
             
             # --- Run Routine "emotionRegulationCue" ---
+            thisExp.currentRoutine = emotionRegulationCue
             emotionRegulationCue.forceEnded = routineForceEnded = not continueRoutine
             while continueRoutine:
                 # if trial has changed, end Routine now
@@ -4200,10 +4088,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         t_blank_delayer.status = FINISHED
                         t_blank_delayer.setAutoDraw(False)
-                
-                # check for quit (typically the Esc key)
-                if defaultKeyboard.getKeys(keyList=["escape"]):
-                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4218,11 +4102,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # skip the frame we paused on
                     continue
                 
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
+                # has a Component requested the Routine to end?
+                if not continueRoutine:
                     emotionRegulationCue.forceEnded = routineForceEnded = True
+                # has the Routine been forcibly ended?
+                if emotionRegulationCue.forceEnded or routineForceEnded:
                     break
-                continueRoutine = False  # will revert to True if at least one component still running
+                # has every Component finished?
+                continueRoutine = False
                 for thisComponent in emotionRegulationCue.components:
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
@@ -4248,20 +4135,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine iaspView
             iaspView = data.Routine(
                 name='iaspView',
-                components=[key_resp_iasp_debug, image_iasp, p_port_iasp],
+                components=[image_iasp, p_port_iasp],
             )
             iaspView.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
-            # Run 'Begin Routine' code from code_iasp_helper
-            ## Disable the Builder component BEFORE PsychoPy tries to use it
-            #if not p_port_available:
-            #    from psychopy import constants
-            #    p_port_iasp.status = constants.FINISHED
-            # create starting attributes for key_resp_iasp_debug
-            key_resp_iasp_debug.keys = []
-            key_resp_iasp_debug.rt = []
-            _key_resp_iasp_debug_allKeys = []
             image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
             image_iasp.setImage(photo_filename)
             # store start times for iaspView
@@ -4289,6 +4167,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = -1
             
             # --- Run Routine "iaspView" ---
+            thisExp.currentRoutine = iaspView
             iaspView.forceEnded = routineForceEnded = not continueRoutine
             while continueRoutine:
                 # if trial has changed, end Routine now
@@ -4304,44 +4183,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if tThisFlip > iaspView.maxDuration-frameTolerance:
                     iaspView.maxDurationReached = True
                     continueRoutine = False
-                
-                # *key_resp_iasp_debug* updates
-                waitOnFlip = False
-                
-                # if key_resp_iasp_debug is starting this frame...
-                if key_resp_iasp_debug.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    key_resp_iasp_debug.frameNStart = frameN  # exact frame index
-                    key_resp_iasp_debug.tStart = t  # local t and not account for scr refresh
-                    key_resp_iasp_debug.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(key_resp_iasp_debug, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    key_resp_iasp_debug.status = STARTED
-                    # keyboard checking is just starting
-                    waitOnFlip = True
-                    win.callOnFlip(key_resp_iasp_debug.clock.reset)  # t=0 on next screen flip
-                    win.callOnFlip(key_resp_iasp_debug.clearEvents, eventType='keyboard')  # clear events on next screen flip
-                
-                # if key_resp_iasp_debug is stopping this frame...
-                if key_resp_iasp_debug.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > key_resp_iasp_debug.tStartRefresh + 5-frameTolerance:
-                        # keep track of stop time/frame for later
-                        key_resp_iasp_debug.tStop = t  # not accounting for scr refresh
-                        key_resp_iasp_debug.tStopRefresh = tThisFlipGlobal  # on global time
-                        key_resp_iasp_debug.frameNStop = frameN  # exact frame index
-                        # update status
-                        key_resp_iasp_debug.status = FINISHED
-                        key_resp_iasp_debug.status = FINISHED
-                if key_resp_iasp_debug.status == STARTED and not waitOnFlip:
-                    theseKeys = key_resp_iasp_debug.getKeys(keyList=['y','n','left','right','space'], ignoreKeys=["escape"], waitRelease=False)
-                    _key_resp_iasp_debug_allKeys.extend(theseKeys)
-                    if len(_key_resp_iasp_debug_allKeys):
-                        key_resp_iasp_debug.keys = _key_resp_iasp_debug_allKeys[-1].name  # just the last key pressed
-                        key_resp_iasp_debug.rt = _key_resp_iasp_debug_allKeys[-1].rt
-                        key_resp_iasp_debug.duration = _key_resp_iasp_debug_allKeys[-1].duration
-                        # a response ends the routine
-                        continueRoutine = False
                 
                 # *image_iasp* updates
                 
@@ -4404,10 +4245,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         p_port_iasp.status = FINISHED
                         win.callOnFlip(p_port_iasp.setData, int(0))
-                
-                # check for quit (typically the Esc key)
-                if defaultKeyboard.getKeys(keyList=["escape"]):
-                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4422,11 +4259,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # skip the frame we paused on
                     continue
                 
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
+                # has a Component requested the Routine to end?
+                if not continueRoutine:
                     iaspView.forceEnded = routineForceEnded = True
+                # has the Routine been forcibly ended?
+                if iaspView.forceEnded or routineForceEnded:
                     break
-                continueRoutine = False  # will revert to True if at least one component still running
+                # has every Component finished?
+                continueRoutine = False
                 for thisComponent in iaspView.components:
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
@@ -4445,13 +4285,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             iaspView.tStopRefresh = tThisFlipGlobal
             thisExp.addData('iaspView.stopped', iaspView.tStop)
             setupWindow(expInfo=expInfo, win=win)
-            # check responses
-            if key_resp_iasp_debug.keys in ['', [], None]:  # No response was made
-                key_resp_iasp_debug.keys = None
-            iasp_unpleasant_trials.addData('key_resp_iasp_debug.keys',key_resp_iasp_debug.keys)
-            if key_resp_iasp_debug.keys != None:  # we had a response
-                iasp_unpleasant_trials.addData('key_resp_iasp_debug.rt', key_resp_iasp_debug.rt)
-                iasp_unpleasant_trials.addData('key_resp_iasp_debug.duration', key_resp_iasp_debug.duration)
             if p_port_iasp.status == STARTED:
                 win.callOnFlip(p_port_iasp.setData, int(0))
             # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -4500,6 +4333,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         )
         , 
             seed=None, 
+            isTrials=True, 
         )
         thisExp.addLoop(state_measure_unpleasant)  # add the loop to the experiment
         thisState_measure_unpleasant = state_measure_unpleasant.trialList[0]  # so we can initialise stimuli with some values
@@ -4538,9 +4372,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             allowContinue = False
             
             # Parse tick values from the condition file
-            print(f"ROW: {rating_category}, {rating_type}")
             tick_values_parsed = parse_tick_values(tick_values)
-            print(tick_values_parsed)
+            
+            try:
+                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
+                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
+                logging.debug(f"State-measure tick values: {tick_values_parsed}")
+            except:
+                logging.error("Error printing current state measure row.")
             
             # Compute geometry based on rating type
             sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
@@ -4628,6 +4467,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = -1
             
             # --- Run Routine "stateMeasure" ---
+            thisExp.currentRoutine = stateMeasure
             stateMeasure.forceEnded = routineForceEnded = not continueRoutine
             while continueRoutine:
                 # if trial has changed, end Routine now
@@ -4721,7 +4561,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                     win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
                 if key_resp_sm.status == STARTED and not waitOnFlip:
-                    theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                    theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
                     _key_resp_sm_allKeys.extend(theseKeys)
                     if len(_key_resp_sm_allKeys):
                         key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -4729,10 +4569,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                         # a response ends the routine
                         continueRoutine = False
-                
-                # check for quit (typically the Esc key)
-                if defaultKeyboard.getKeys(keyList=["escape"]):
-                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4747,11 +4583,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # skip the frame we paused on
                     continue
                 
-                # check if all components have finished
-                if not continueRoutine:  # a component has requested a forced-end of Routine
+                # has a Component requested the Routine to end?
+                if not continueRoutine:
                     stateMeasure.forceEnded = routineForceEnded = True
+                # has the Routine been forcibly ended?
+                if stateMeasure.forceEnded or routineForceEnded:
                     break
-                continueRoutine = False  # will revert to True if at least one component still running
+                # has every Component finished?
+                continueRoutine = False
                 for thisComponent in stateMeasure.components:
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
@@ -4770,21 +4609,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            #thisExp.addData('rating', sm_slider.getRating())
             currentLoop.addData('rating', sm_slider.getRating())
             currentLoop.addData('rating_rt', sm_slider.getRT())
             
             try:
-                print(f"{rating_category}: {sm_slider.getRating()}")
+                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
             except:
-                print("Error printing rating")
-            # check responses
-            if key_resp_sm.keys in ['', [], None]:  # No response was made
-                key_resp_sm.keys = None
-            state_measure_unpleasant.addData('key_resp_sm.keys',key_resp_sm.keys)
-            if key_resp_sm.keys != None:  # we had a response
-                state_measure_unpleasant.addData('key_resp_sm.rt', key_resp_sm.rt)
-                state_measure_unpleasant.addData('key_resp_sm.duration', key_resp_sm.duration)
+                logging.error("Error printing state-measure rating")
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_unpleasant as finished
@@ -4817,11 +4648,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         state_measure_unpleasant.saveAsExcel(filename + '.xlsx', sheetName='state_measure_unpleasant',
             stimOut=params,
             dataOut=['n','all_mean','all_std', 'all_raw'])
-        # mark thisRepeat as finished
-        if hasattr(thisRepeat, 'status'):
-            thisRepeat.status = FINISHED
+        # mark thisBlock_loop as finished
+        if hasattr(thisBlock_loop, 'status'):
+            thisBlock_loop.status = FINISHED
         # if awaiting a pause, pause now
-        if repeat.status == PAUSED:
+        if block_loop.status == PAUSED:
             thisExp.status = PAUSED
             pauseExperiment(
                 thisExp=thisExp, 
@@ -4829,9 +4660,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[globalClock], 
             )
             # once done pausing, restore running status
-            repeat.status = STARTED
-    # completed 1.0 repeats of 'repeat'
-    repeat.status = FINISHED
+            block_loop.status = STARTED
+    # completed 1.0 repeats of 'block_loop'
+    block_loop.status = FINISHED
     
     
     # --- Prepare to start Routine "goodbye" ---
@@ -4864,6 +4695,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     frameN = -1
     
     # --- Run Routine "goodbye" ---
+    thisExp.currentRoutine = goodbye
     goodbye.forceEnded = routineForceEnded = not continueRoutine
     while continueRoutine and routineTimer.getTime() < 4.0:
         # get current time
@@ -4906,10 +4738,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update status
                 t_goodbye.status = FINISHED
                 t_goodbye.setAutoDraw(False)
-        
-        # check for quit (typically the Esc key)
-        if defaultKeyboard.getKeys(keyList=["escape"]):
-            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -4924,11 +4752,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # skip the frame we paused on
             continue
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
             goodbye.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if goodbye.forceEnded or routineForceEnded:
             break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # has every Component finished?
+        continueRoutine = False
         for thisComponent in goodbye.components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
