@@ -16,7 +16,7 @@ All state-measure routines use the same configuration.
 - SAM Arousal
 - SAM Dominance
 
-These are collected three times: once before trials and once after each block.
+These are collected five times: once before trials and once after each block.
 
 # Routines Overview
 - `experimentSetup` — initializes screen geometry, wrapWidth logic, and state-measure parameters
