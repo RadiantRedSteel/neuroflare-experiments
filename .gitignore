@@ -170,3 +170,4 @@ cython_debug/
 .vscode/settings.json
 psychopy/Phoda.zip
 psychopy/experiments/open-closed/open-closed.py
+/psychopy/scripts/tests
