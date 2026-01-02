@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 02, 2026, at 01:26
+    on January 02, 2026, at 01:24
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,7 +40,7 @@ deviceManager = hardware.DeviceManager()
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
-expName = 'open-closed'  # from the Builder filename that created this script
+expName = 'open-closed-2x'  # from the Builder filename that created this script
 expVersion = '1.0'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
@@ -133,7 +133,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\open-closed\\open-closed_lastrun.py',
+        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\open-closed-2x\\open-closed-2x.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -798,7 +798,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopOpenClosedIntro.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xIntro.csv'), 
         seed=None, 
         isTrials=False, 
     )
@@ -1326,39 +1326,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
-    openclosed_trials = data.TrialHandler2(
-        name='openclosed_trials',
+    openclosed2x_trials = data.TrialHandler2(
+        name='openclosed2x_trials',
         nReps=1.0, 
         method='random', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopOpenClosedTrial.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xTrial.csv'), 
         seed=None, 
         isTrials=True, 
     )
-    thisExp.addLoop(openclosed_trials)  # add the loop to the experiment
-    thisOpenclosed_trial = openclosed_trials.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-    if thisOpenclosed_trial != None:
-        for paramName in thisOpenclosed_trial:
-            globals()[paramName] = thisOpenclosed_trial[paramName]
+    thisExp.addLoop(openclosed2x_trials)  # add the loop to the experiment
+    thisOpenclosed2x_trial = openclosed2x_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+    if thisOpenclosed2x_trial != None:
+        for paramName in thisOpenclosed2x_trial:
+            globals()[paramName] = thisOpenclosed2x_trial[paramName]
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     
-    for thisOpenclosed_trial in openclosed_trials:
-        openclosed_trials.status = STARTED
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = STARTED
-        currentLoop = openclosed_trials
+    for thisOpenclosed2x_trial in openclosed2x_trials:
+        openclosed2x_trials.status = STARTED
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = STARTED
+        currentLoop = openclosed2x_trials
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-        if thisOpenclosed_trial != None:
-            for paramName in thisOpenclosed_trial:
-                globals()[paramName] = thisOpenclosed_trial[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+        if thisOpenclosed2x_trial != None:
+            for paramName in thisOpenclosed2x_trial:
+                globals()[paramName] = thisOpenclosed2x_trial[paramName]
         
         # --- Prepare to start Routine "instruction" ---
         # create an object to store info about Routine instruction
@@ -1415,7 +1415,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1566,7 +1566,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -2046,11 +2046,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         state_measure_trials.saveAsExcel(filename + '.xlsx', sheetName='state_measure_trials',
             stimOut=params,
             dataOut=['n','all_mean','all_std', 'all_raw'])
-        # mark thisOpenclosed_trial as finished
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = FINISHED
+        # mark thisOpenclosed2x_trial as finished
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = FINISHED
         # if awaiting a pause, pause now
-        if openclosed_trials.status == PAUSED:
+        if openclosed2x_trials.status == PAUSED:
             thisExp.status = PAUSED
             pauseExperiment(
                 thisExp=thisExp, 
@@ -2058,22 +2058,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[globalClock], 
             )
             # once done pausing, restore running status
-            openclosed_trials.status = STARTED
+            openclosed2x_trials.status = STARTED
         thisExp.nextEntry()
         
-    # completed 1.0 repeats of 'openclosed_trials'
-    openclosed_trials.status = FINISHED
+    # completed 1.0 repeats of 'openclosed2x_trials'
+    openclosed2x_trials.status = FINISHED
     
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     # get names of stimulus parameters
-    if openclosed_trials.trialList in ([], [None], None):
+    if openclosed2x_trials.trialList in ([], [None], None):
         params = []
     else:
-        params = openclosed_trials.trialList[0].keys()
+        params = openclosed2x_trials.trialList[0].keys()
     # save data for this loop
-    openclosed_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed_trials',
+    openclosed2x_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed2x_trials',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
