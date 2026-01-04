@@ -17,7 +17,7 @@ Before and after each run, participants complete a set of state-measure ratings 
 
 The experiment consists of **two identical runs**, each containing:
 
-1. **Pre‑Run State Measures**  
+1. **Pre-Run State Measures**  
    Participants rate:
    - Fatigue  
    - Sleepiness  
@@ -28,10 +28,10 @@ The experiment consists of **two identical runs**, each containing:
    - SAM Dominance  
 
 2. **PHODA Picture‑Viewing Block (40 trials)**  
-   - Gray screen ITI: **1500–2500 ms**, randomized  
+   - Gray screen ITI: **1500–2500 ms**, randomized (This gray screen might have a cross cue, according to the powerpoint)
    - PHODA image: **6000 ms** or until participant responds  
    - Rating scale: **0 (Not harmful at all) → 100 (Extremely harmful)**  
-   - Response via keypad  
+   - Response via keypad (set up a slider instead, VAS)
    - EEG/EMG trigger active for entire image duration  
 
 3. **Post‑Run State Measures**  

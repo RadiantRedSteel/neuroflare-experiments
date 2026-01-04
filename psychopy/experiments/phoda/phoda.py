@@ -133,7 +133,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\phoda\\phoda_lastrun.py',
+        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\phoda\\phoda.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
