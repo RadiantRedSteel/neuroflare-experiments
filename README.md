@@ -29,18 +29,23 @@ neuroflare-experiments/
 
 ## Current Experiments
 
-### **Open‑Closed**
-A minimal visual‑attention experiment used for baseline recordings and workflow validation. Participants alternate between looking at a fixation cross for five minutes and resting with no visual target for five minutes. A secondary version will extend this to two full cycles.
+### Open‑Closed
+A minimal visual‑attention experiment used for baseline recordings and workflow validation. Participants alternate between looking at a fixation cross for five minutes and resting with no visual target for five minutes.
 
-Location:
-`psychopy/experiments/open-closed/`
+Locations:  
+- `psychopy/experiments/open-closed/`  
+- `psychopy/experiments/open-closed-2x/` (two‑cycle version)
 
-### **Emotion‑Regulation**
+### PHODA Picture‑Viewing Task 
+A two‑block experiment presenting daily‑activity photographs from the OpenPHODA‑Short set. One block uses a 0–100 VAS slider to rate perceived harmfulness; the other is passive viewing only. Both blocks use randomized image order, include pre‑ and post‑block state measures, and send image‑aligned parallel‑port triggers for EEG/EMG synchronization.
+
+Location: `psychopy/experiments/phoda/`
+
+### Emotion‑Regulation
 A full experimental task involving neutral and unpleasant images, block‑wise emotion‑regulation strategies, randomized trial slicing, and multiple state‑measure routines.
 Includes parallel‑port triggers for EEG/EMG synchronization and dynamically generated condition files.
 
-Location:
-`psychopy/experiments/emotion-regulation/`
+Location: `psychopy/experiments/emotion-regulation/`
 
 ## Getting Started
 1. **Clone the repo**  
