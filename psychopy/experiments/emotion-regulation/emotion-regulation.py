@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 02, 2026, at 00:07
+    on January 03, 2026, at 16:58
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -510,6 +510,9 @@ def pauseExperiment(thisExp, win=None, timers=[], currentRoutine=None):
         )
     # run a while loop while we wait to unpause
     while thisExp.status == PAUSED:
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=['escape']):
+            endExperiment(thisExp, win=win)
         # dispatch messages on response components
         if currentRoutine is not None:
             for comp in currentRoutine.getDispatchComponents():
@@ -1154,6 +1157,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         tThisFlipGlobal = win.getFutureFlipTime(clock=None)
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -1326,7 +1333,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_welcome.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_welcome.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_welcome.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_welcome.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                theseKeys = key_resp_welcome.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_welcome_allKeys.extend(theseKeys)
                 if len(_key_resp_welcome_allKeys):
                     key_resp_welcome.keys = _key_resp_welcome_allKeys[-1].name  # just the last key pressed
@@ -1334,6 +1341,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_welcome.duration = _key_resp_welcome_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -1633,7 +1644,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -1641,6 +1652,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -1819,7 +1834,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_neutral.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_neutral.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_neutral.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_neutral.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+            theseKeys = key_resp_neutral.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_neutral_allKeys.extend(theseKeys)
             if len(_key_resp_neutral_allKeys):
                 key_resp_neutral.keys = _key_resp_neutral_allKeys[-1].name  # just the last key pressed
@@ -1827,6 +1842,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_neutral.duration = _key_resp_neutral_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -2059,6 +2078,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     t_blank_delayer.status = FINISHED
                     t_blank_delayer.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2216,6 +2239,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     p_port_iasp.status = FINISHED
                     win.callOnFlip(p_port_iasp.setData, int(0))
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2532,7 +2559,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -2540,6 +2567,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -2718,7 +2749,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_practice.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_practice.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_practice.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_practice.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+            theseKeys = key_resp_practice.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_practice_allKeys.extend(theseKeys)
             if len(_key_resp_practice_allKeys):
                 key_resp_practice.keys = _key_resp_practice_allKeys[-1].name  # just the last key pressed
@@ -2726,6 +2757,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_practice.duration = _key_resp_practice_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -2958,6 +2993,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     t_blank_delayer.status = FINISHED
                     t_blank_delayer.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3115,6 +3154,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     p_port_iasp.status = FINISHED
                     win.callOnFlip(p_port_iasp.setData, int(0))
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3431,7 +3474,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_sm_allKeys.extend(theseKeys)
                 if len(_key_resp_sm_allKeys):
                     key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -3439,6 +3482,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -3617,7 +3664,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_unpleasant.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_unpleasant.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_unpleasant.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_unpleasant.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+            theseKeys = key_resp_unpleasant.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_unpleasant_allKeys.extend(theseKeys)
             if len(_key_resp_unpleasant_allKeys):
                 key_resp_unpleasant.keys = _key_resp_unpleasant_allKeys[-1].name  # just the last key pressed
@@ -3625,6 +3672,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 key_resp_unpleasant.duration = _key_resp_unpleasant_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
@@ -3838,7 +3889,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_reset.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_reset.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_reset.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_reset.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                theseKeys = key_resp_reset.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_reset_allKeys.extend(theseKeys)
                 if len(_key_resp_reset_allKeys):
                     key_resp_reset.keys = _key_resp_reset_allKeys[-1].name  # just the last key pressed
@@ -3846,6 +3897,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     key_resp_reset.duration = _key_resp_reset_allKeys[-1].duration
                     # a response ends the routine
                     continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
             if thisExp.status == FINISHED or endExpNow:
                 endExperiment(thisExp, win=win)
                 return
@@ -4088,6 +4143,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         t_blank_delayer.status = FINISHED
                         t_blank_delayer.setAutoDraw(False)
+                
+                # check for quit (typically the Esc key)
+                if defaultKeyboard.getKeys(keyList=["escape"]):
+                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4245,6 +4304,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         p_port_iasp.status = FINISHED
                         win.callOnFlip(p_port_iasp.setData, int(0))
+                
+                # check for quit (typically the Esc key)
+                if defaultKeyboard.getKeys(keyList=["escape"]):
+                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4561,7 +4624,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
                     win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
                 if key_resp_sm.status == STARTED and not waitOnFlip:
-                    theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=None, waitRelease=False)
+                    theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
                     _key_resp_sm_allKeys.extend(theseKeys)
                     if len(_key_resp_sm_allKeys):
                         key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
@@ -4569,6 +4632,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
                         # a response ends the routine
                         continueRoutine = False
+                
+                # check for quit (typically the Esc key)
+                if defaultKeyboard.getKeys(keyList=["escape"]):
+                    thisExp.status = FINISHED
                 if thisExp.status == FINISHED or endExpNow:
                     endExperiment(thisExp, win=win)
                     return
@@ -4738,6 +4805,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update status
                 t_goodbye.status = FINISHED
                 t_goodbye.setAutoDraw(False)
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
         if thisExp.status == FINISHED or endExpNow:
             endExperiment(thisExp, win=win)
             return
