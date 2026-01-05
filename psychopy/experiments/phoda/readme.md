@@ -1,51 +1,62 @@
 # PHODA Picture-Viewing Task
-A PsychoPy experiment for rating perceived harmfulness of daily-activity photographs (OpenPHODA-Short Electronic Version).
-
----
+A PsychoPy experiment for presenting daily‑activity photographs (OpenPHODA‑Short Electronic Version) with optional harmfulness ratings and EEG/EMG synchronization.
 
 ## Overview
+This experiment presents a set of PHODA (Photograph Series of Daily Activities) images across two picture‑viewing blocks. Each block contains the same set of photographs, but the order is randomized independently for each run.
 
-This experiment presents a series of PHODA (Photograph Series of Daily Activities) images. Participants rate how harmful they perceive each activity to be on a 0-100 visual analogue scale. The task consists of two runs, each containing 40 images. EEG/EMG is recorded continuously throughout the task.
+One block requires participants to **rate how harmful** they perceive each activity to be using a **0–100 visual analogue scale (VAS)**.  
+The other block is a **passive‑viewing** run in which participants simply view each image without making a rating.
 
-A condition file may be generated at the start of the experiment to randomize the order of the 40 PHODA images for each run. However, PsychoPy's built in loop randomization could work in its stead. A parallel-port trigger is sent for the full duration of each image presentation.
-
-Before and after each run, participants complete a set of state-measure ratings assessing fatigue, sleepiness, pain, pain unpleasantness, and SAM affective dimensions.
-
----
+A parallel‑port trigger is sent for the full duration of each image presentation to allow EEG/EMG synchronization.
 
 # Experiment Structure
+The experiment consists of **two picture‑viewing blocks**, each containing 40 PHODA images:
 
-The experiment consists of **two identical runs**, each containing:
+1. **Randomized ITI (1500–2500 ms)**  
+   A gray screen with a variable delay before each trial.
 
-1. **Pre-Run State Measures**  
-   Participants rate:
-   - Fatigue  
-   - Sleepiness  
-   - Pain  
-   - Pain Unpleasantness  
-   - SAM Valence  
-   - SAM Arousal  
-   - SAM Dominance  
+2. **PHODA Image (6000 ms)**  
+   The photograph is displayed for a fixed duration.  
+   A parallel‑port trigger remains active for the entire image presentation.
 
-2. **PHODA Picture‑Viewing Block (40 trials)**  
-   - Gray screen ITI: **1500–2500 ms**, randomized (This gray screen might have a cross cue, according to the powerpoint)
-   - PHODA image: **6000 ms** or until participant responds  
-   - Rating scale: **0 (Not harmful at all) → 100 (Extremely harmful)**  
-   - Response via keypad (set up a slider instead, VAS)
-   - EEG/EMG trigger active for entire image duration  
+3. **Block‑Specific Behavior**  
+   - **Rate Block:** A custom VAS slider (0–100) appears below the image. Participants provide a harmfulness rating before continuing.  
+   - **View Block:** No rating is shown; participants simply view the image for the full duration.
 
-3. **Post‑Run State Measures**  
-   Same set of ratings as pre‑run.
-
-Run 2 repeats the same structure, but without per-image ratings if the protocol specifies a passive-viewing second run (based on the PDF). If the study uses ratings in both runs, the experiment can be configured accordingly.
-
----
+The order of the two blocks (rate → view or view → rate) is randomized at runtime.
 
 # Per‑Trial Flow
 ```
 Gray Screen (1500-2500 ms, randomized)
 ↓
-PHODA Image (6000 ms or until response)
+PHODA Image (6000 ms)
 ↓
-Harmfulness Rating (0-100 VAS)
+When rating: Harmfulness Rating (0–100 VAS)
 ```
+
+# State Measures
+All state-measure routines use the same configuration.
+- Fatigue
+- Sleepiness
+- Pain
+- Pain Unpleasantness
+- SAM Valence
+- SAM Arousal
+- SAM Dominance
+
+These are collected three times: once before trials and once after each block.
+
+# Routines Overview
+- `experimentSetup` — initializes screen geometry, wrapWidth logic, and state-measure parameters
+- `welcome` — introduces the experiment
+- `instruction` — displays the block-specific prompt from the condition file
+- `phodaDelay` — presents a randomized 1500–2500 ms inter‑trial interval before each PHODA image
+- `phodaView` — displays the PHODA image, handles rating or passive‑view logic, and sends the image‑aligned port signal
+- `stateMeasure` — collects ratings using the standard configuration
+- `goodbye` — end screen with a 4-second exit delay
+
+# Notes
+- Both blocks use the same 40 images, but each block randomizes the order independently.  
+- The custom slider is implemented in code to support real‑time marker updates and consistent layout beneath the image.  
+- Port signaling (`p_port_phoda`) is tied directly to the onset and offset of the image component for precise synchronization.  
+
