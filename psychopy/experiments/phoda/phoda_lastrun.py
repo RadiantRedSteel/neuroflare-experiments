@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 05, 2026, at 02:35
+    on January 05, 2026, at 19:38
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -888,19 +888,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "phodaDelay" ---
     t_blank_delayer = visual.TextStim(win=win, name='t_blank_delayer',
-        text='',
+        text=None,
         font='Arial',
         pos=(0, 0), draggable=False, height=0.05, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    t_test_mode = visual.TextStim(win=win, name='t_test_mode',
-        text='',
-        font='Arial',
-        pos=(0, 0.2), draggable=False, height=0.05, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     
     # --- Initialize components for Routine "phodaView" ---
     image_phoda = visual.ImageStim(
@@ -1852,7 +1845,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine phodaDelay
             phodaDelay = data.Routine(
                 name='phodaDelay',
-                components=[t_blank_delayer, t_test_mode],
+                components=[t_blank_delayer],
             )
             phodaDelay.status = NOT_STARTED
             continueRoutine = True
@@ -1862,8 +1855,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # Used for t_blank_delayer
             delay_time = random.uniform(1.5, 2.5)
             
-            t_blank_delayer.setText(delay_time)
-            t_test_mode.setText(mode)
+            t_blank_delayer.setText('')
             # store start times for phodaDelay
             phodaDelay.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
             phodaDelay.tStart = globalClock.getTime(format='float')
@@ -1927,36 +1919,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         t_blank_delayer.status = FINISHED
                         t_blank_delayer.setAutoDraw(False)
-                
-                # *t_test_mode* updates
-                
-                # if t_test_mode is starting this frame...
-                if t_test_mode.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_test_mode.frameNStart = frameN  # exact frame index
-                    t_test_mode.tStart = t  # local t and not account for scr refresh
-                    t_test_mode.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_test_mode, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_test_mode.status = STARTED
-                    t_test_mode.setAutoDraw(True)
-                
-                # if t_test_mode is active this frame...
-                if t_test_mode.status == STARTED:
-                    # update params
-                    pass
-                
-                # if t_test_mode is stopping this frame...
-                if t_test_mode.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > t_test_mode.tStartRefresh + delay_time-frameTolerance:
-                        # keep track of stop time/frame for later
-                        t_test_mode.tStop = t  # not accounting for scr refresh
-                        t_test_mode.tStopRefresh = tThisFlipGlobal  # on global time
-                        t_test_mode.frameNStop = frameN  # exact frame index
-                        # update status
-                        t_test_mode.status = FINISHED
-                        t_test_mode.setAutoDraw(False)
                 
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
