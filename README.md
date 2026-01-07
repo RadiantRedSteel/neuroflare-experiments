@@ -4,7 +4,7 @@ PsychoPy experiments and orchestration scripts for EEG/EMG pain flare-up researc
 ## Repository Layout
 ```
 neuroflare-experiments/
-├─ psychopy/
+├─ neuroflare/
 │   ├─ experiments/        # individual experiment folders
 │   │   ├─ open-closed/    # example experiment
 │   │   │   ├─ open_closed.psyexp
