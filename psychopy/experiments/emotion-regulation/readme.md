@@ -12,7 +12,7 @@ Throughout the experiment, several state-measure routines are used to assess how
 
 A parallel-port trigger is sent to the EEG/EMG system for the full duration of each `image_iasp` presentation.
 
-# Experiment Phases
+## Experiment Phases
 The experiment progresses in three trial phases:
 
 - **Neutral block**:
@@ -21,7 +21,7 @@ The experiment progresses in three trial phases:
 - **Practice block**:
   8 unpleasant photos, randomized order, strategy = *view*.
 
-- **Main unpleasant blocks**:
+- **Unpleasant blocks**:
   4 × 40 unpleasant photos.
   Each block is randomly assigned one strategy:
   *view*, *suppression*, *reappraisal*, *suppression+reappraisal*.
@@ -31,7 +31,7 @@ The experiment progresses in three trial phases:
 Cross (300 ms) → Cue (1000 ms) → Delay (500-1500 ms) → Photo (4000 ms) → Blank (1000 ms)
 
 ## State Measures
-The experiment uses three distinct state-measure configurations, depending on the phase.
+The experiment uses two distinct state-measure configurations, depending on the phase.
 
 ### 1. Pre-Trial Baseline
 Collected once at the start of the experiment.
@@ -44,10 +44,11 @@ Includes 7 ratings:
 - SAM Arousal
 - SAM Dominance
 
-### 2. Neutral + Practice State Measure
+### 2. Neutral Block State Measure
 Used after the neutral block.
-(The practice block currently includes a state measure, though this may change in future updates.)
 Includes:
+- Fatigue
+- Sleepiness
 - Pain
 - Pain Unpleasantness
 - SAM Valence
@@ -58,42 +59,15 @@ Includes:
 Used after each unpleasant block.
 Includes:
 - Emotion-Regulation Success
+- Fatigue
+- Sleepiness
 - Pain
 - Pain Unpleasantness
 - SAM Valence
 - SAM Arousal
 - SAM Dominance
 
-These configurations are implemented as separate routines to keep the logic modular and ensure each block receives the correct set of ratings.
-
-# Main Unpleasant Trial Structure
-The unpleasant section progresses in four blocks, each containing 40 trials. Before each block, the reset routine:
-- updates the slice indices (`row_section`)
-- retrieves the strategy assigned to that block
-- displays a strategy-specific instruction screen
-
-Each block follows:
-```txt
-Trial Flow (4 blocks total):
-
- ┌──────────┐      ┌──────────────┐      ┌───────────────┐
- │  reset   │  ->  │    trial     │  ->  │ state_measure  ┐
- └──────────┘      └──────────────┘      └───────────────┘│ 
-       ▲                  │                               │ 
-       │                  │(progresses 40 rows at a time) │ 
-       │                                                  │ 
-       └──────────────────────────────────────────────────┘
-                     repeated ×4
-```
-
-This design ensures:
-
-- randomized block order
-- randomized photo order within each block
-- correct strategy assignment per block
-- reproducible logging of slice indices
-
-# Routines Overview
+## Routines Overview
 - `experimentSetup` - global scaling, layout, and helper initialization
 - `welcome` - introduction to the experiment
 - `instructionNeutral` - neutral-block instructions
@@ -105,11 +79,11 @@ This design ensures:
 - `stateMeasure` - collects ratings using the appropriate configuration
 - `goodbye` - end screen with a 4-second exit delay
 
-# Parallel-Port Trigger
+## Parallel-Port Trigger
 A p_port trigger is sent whenever `image_iasp` is displayed (for its entire duration).
 This allows synchronization with external hardware during stimulus presentation.
 
-# Logging
+## Logging
 Logging has been streamlined by:
 - disabling unnecessary onset/offset timestamps
 - adding descriptive comments to routines and code components
