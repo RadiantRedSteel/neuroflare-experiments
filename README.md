@@ -33,19 +33,19 @@ neuroflare-experiments/
 A minimal visual‑attention experiment used for baseline recordings and workflow validation. Participants alternate between looking at a fixation cross for five minutes and resting with no visual target for five minutes.
 
 Locations:  
-- `psychopy/experiments/open-closed/`  
-- `psychopy/experiments/open-closed-2x/` (two‑cycle version)
+- `neuroflare/experiments/open-closed/`  
+- `neuroflare/experiments/open-closed-2x/` (two‑cycle version)
 
 ### PHODA Picture‑Viewing Task 
 A two‑block experiment presenting daily‑activity photographs from the OpenPHODA‑Short set. One block uses a 0–100 VAS slider to rate perceived harmfulness; the other is passive viewing only. Both blocks use randomized image order, include pre‑ and post‑block state measures, and send image‑aligned parallel‑port triggers for EEG/EMG synchronization.
 
-Location: `psychopy/experiments/phoda/`
+Location: `neuroflare/experiments/phoda/`
 
 ### Emotion‑Regulation
 A full experimental task involving neutral and unpleasant images, block‑wise emotion‑regulation strategies, randomized trial slicing, and multiple state‑measure routines.
 Includes parallel‑port triggers for EEG/EMG synchronization and dynamically generated condition files.
 
-Location: `psychopy/experiments/emotion-regulation/`
+Location: `neuroflare/experiments/emotion-regulation/`
 
 ## Getting Started
 1. **Clone the repo**  
@@ -56,11 +56,11 @@ Location: `psychopy/experiments/emotion-regulation/`
 2. **Install dependencies**  
    - PsychoPy (latest stable release)  
    - Python 3.10.19  
-   - Any hardware drivers in `psychopy/drivers/`
+   - Any hardware drivers in `neuroflare/drivers/`
    - To recreate the Conda environment: ```conda env create -f environment.yml```
 
 3. **Run an experiment**
-   - Navigate to `psychopy/experiments/<experiment-name>/`
+   - Navigate to `neuroflare/experiments/<experiment-name>/`
    - Open the `.psyexp` file in PsychoPy Builder
    - Ensure any required drivers (e.g., parallel port DLLs) are present
    - Run the experiment from Builder
@@ -73,20 +73,22 @@ Location: `psychopy/experiments/emotion-regulation/`
 
 ## Data Management
 - Each experiment writes participant data into its own `data/` folder  
-- Utility scripts in `psychopy/scripts/` can be used to reorganize or archive data across experiments  
+- Utility scripts in `neuroflare/scripts/` can be used to reorganize or archive data across experiments  
 - Use relative paths to reference shared assets (`../shared/pictures/...`) for reproducibility
 
 ## Hardware Notes
 - Parallel port drivers must be in the same directory as the `.psyexp` file  
-- Alternatively, symlinks or shortcuts can be used to reference `psychopy/drivers/`  
+- Alternatively, symlinks or shortcuts can be used to reference `neuroflare/drivers/`  
 - Document any hardware setup or program notes in `docs/`
 
 ## Contributing
-- Add new experiments under `psychopy/experiments/`  
-- Place shared assets in `psychopy/shared/`  
+- Add new experiments under `neuroflare/experiments/`  
+- Place shared assets in `neuroflare/shared/`  
 
 ## Useful Links
 [Parallel Port Issues w/ Windows 11](https://discourse.psychopy.org/t/parallel-port-issues-w-windows-11/45464/19)
+
+[PsychoPy Builder Execution Order Logic Rules](docs\builder-execution-order.md)
 
 ---
 
