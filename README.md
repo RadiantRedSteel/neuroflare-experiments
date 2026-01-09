@@ -88,7 +88,7 @@ Location: `neuroflare/experiments/emotion-regulation/`
 ## Useful Links
 [Parallel Port Issues w/ Windows 11](https://discourse.psychopy.org/t/parallel-port-issues-w-windows-11/45464/19)
 
-[PsychoPy Builder Execution Order Logic Rules](docs\builder-execution-order.md)
+[PsychoPy Builder Execution Order Logic Rules](docs\builder_execution_order.md)
 
 ---
 
