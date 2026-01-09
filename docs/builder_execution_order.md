@@ -109,4 +109,4 @@ This becomes especially important when you have:
 
 ---
 
-*2026-01-08: This data was gathered through my own personal testing on PsychoPy Builder v2025.2.3beta* ***~ RadiantRedSteel***
+*2026-01-08: This data was gathered through my own personal testing on PsychoPy Builder v2025.2.3beta* ***~RadiantRedSteel***
