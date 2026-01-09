@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 08, 2026, at 22:12
+    on January 08, 2026, at 22:34
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1426,7 +1426,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        # Log rating, rt
+        # Log rating, rt, and turn off AutoDraw
         sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
@@ -2221,7 +2221,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        # Log rating, rt
+        # Log rating, rt, and turn off AutoDraw
         sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
@@ -3831,7 +3831,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            # Log rating, rt
+            # Log rating, rt, and turn off AutoDraw
             sm.end_routine(currentLoop)
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
