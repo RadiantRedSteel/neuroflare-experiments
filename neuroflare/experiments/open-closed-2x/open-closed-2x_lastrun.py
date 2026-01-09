@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 02, 2026, at 01:26
+    on January 08, 2026, at 22:42
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,8 +40,8 @@ deviceManager = hardware.DeviceManager()
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
-expName = 'open-closed'  # from the Builder filename that created this script
-expVersion = '1.0'
+expName = 'open-closed-2x'  # from the Builder filename that created this script
+expVersion = '1.01'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -133,7 +133,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\open-closed\\open-closed_lastrun.py',
+        originPath='D:\\Github\\neuroflare-experiments\\neuroflare\\experiments\\open-closed-2x\\open-closed-2x_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -431,126 +431,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # The stateMeasure routine depends on this setup code to
     # size components correctly and interpret SAM/text settings.
     # ------------------------------------------------------------
+    _THIS_DIR = os.path.dirname(__file__)
+    _REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, '..', '..', '..'))
+    if _REPO_ROOT not in sys.path:
+        sys.path.insert(0, _REPO_ROOT)
     
-    # --- Helper functions for dynamic slider configuration ---
-    def parse_tick_values(raw):
-        # If PsychoPy already parsed it into a list, just return it
-        if isinstance(raw, list):
-            return raw
-        # Otherwise assume it's a comma-separated string
-        return [int(x.strip()) for x in raw.split(',')]
+    from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
-    # ===============================================================
-    # ============== STATE-MEASURE SPECIFIC GEOMETRY ================
-    # ===============================================================
-    
-    def sm_compute_tick_positions(tick_values, rating_type):
-        """
-        Compute slider size, slider position, and min/max label positions
-        for both SAM and Generic rating types.
-        """
-    
-        if rating_type == "SAM":
-            # SAM uses the precomputed geometry
-            slider_size = (sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)
-            slider_pos  = (0, sm_sam_comp_slider_pos_y)
-    
-            # Tick positions already computed globally
-            tick_positions = sm_sam_tick_positions
-    
-            label_min_pos = (tick_positions[0],  sm_sam_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_sam_comp_label_pos_y)
-    
-        else:
-            # Generic slider: evenly spaced ticks across the slider width
-            slider_size = (sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height)
-            slider_pos  = (0, sm_gen_comp_slider_pos_y)
-    
-            # Compute generic tick positions dynamically
-            num_ticks = len(tick_values)
-            half_width = sm_gen_comp_slider_size_width / 2
-    
-            # Even spacing across the width
-            tick_positions = [
-                -half_width + (i / (num_ticks - 1)) * sm_gen_comp_slider_size_width
-                for i in range(num_ticks)
-            ]
-    
-            # Labels sit below the slider
-            label_min_pos = (tick_positions[0],  sm_gen_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_gen_comp_label_pos_y)
-    
-        return {
-            "slider_size": slider_size,
-            "slider_pos": slider_pos,
-            "tick_positions": tick_positions,
-            "label_min_pos": label_min_pos,
-            "label_max_pos": label_max_pos
-        }
-    
-    # ===============================================================
-    # =================== GEN SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- Generic Slider Scaling ---
-    # Full-width slider across screen
-    # Generic slider (used when rating_type != "SAM")
-    
-    # Slider layout (height units)
-    sm_gen_comp_slider_size_width  = aspect * 0.6  # 60% of screen width
-    sm_gen_comp_slider_size_height = 0.1           # slider thickness/height
-    sm_gen_comp_slider_pos_y       = 0             # vertical position of the slider center
-    
-    # Label Min/Max layout
-    sm_gen_comp_label_pos_y = sm_gen_comp_slider_pos_y - 0.2
-    
-    # ===============================================================
-    # =================== SAM SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- SAM image geometry (pixels) ---
-    sm_sam_img_px_width  = 1168
-    sm_sam_img_px_height = 231
-    sm_sam_img_aspect    = sm_sam_img_px_width / sm_sam_img_px_height  # ≈ 5.056
-    
-    # Pictogram/gap geometry (pixels)
-    # Note: there are 5 pictograms and 4 gaps spanning the full image width
-    sm_sam_pictogram_px_width     = 215
-    sm_sam_pictogram_gap_px_width = 23
-    
-    # --- Layout decisions (height units) ---
-    sm_sam_comp_img_size_height = 0.25                                             # 25% of screen height
-    sm_sam_comp_img_size_width  = sm_sam_comp_img_size_height * sm_sam_img_aspect  # scaled width based on aspect
-    sm_sam_comp_img_pos_y       = 0.1                                              # vertical position of the image
-    
-    # Message Layout
-    sm_sam_comp_message_pos_y = sm_sam_comp_img_pos_y + 0.2
-    
-    # Slider layout (height units)
-    sm_sam_comp_slider_pos_y       = -0.09      # vertical position of the slider center
-    sm_sam_comp_slider_size_height = 0.06       # slider thickness/height
-    sm_sam_slider_px_width    = sm_sam_img_px_width - 215
-    sm_sam_comp_slider_width  = sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width)
-    
-    # Scale factor: px -> 'height' units within the image width
-    sm_sam_scale_factor = sm_sam_comp_img_size_width / sm_sam_img_px_width
-    
-    sm_sam_pictogram_w  = sm_sam_pictogram_px_width * sm_sam_scale_factor
-    sm_sam_gap_w        = sm_sam_pictogram_gap_px_width * sm_sam_scale_factor
-    
-    # --- Compute 9 tick x-positions aligned to pictograms ---
-    sm_sam_tick_positions = []
-    sm_sam_tick_x = -sm_sam_comp_img_size_width / 2 + sm_sam_pictogram_w / 2
-    
-    for i in range(9):
-        sm_sam_tick_positions.append(sm_sam_tick_x)
-        if i % 2 == 0:
-            sm_sam_tick_x += sm_sam_pictogram_w / 2 + sm_sam_gap_w / 2
-        else:
-            sm_sam_tick_x += sm_sam_gap_w / 2 + sm_sam_pictogram_w / 2
-    
-    # Label Min/Max layout
-    sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15
+    sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -585,28 +473,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instruction" ---
@@ -644,28 +517,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     p_port_fixation = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
@@ -798,7 +656,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopOpenClosedIntro.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xIntro.csv'), 
         seed=None, 
         isTrials=False, 
     )
@@ -1000,7 +858,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='0:7'
+        selection='[0, 1, 2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
@@ -1034,85 +892,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+            components=[t_sm_continue, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_sm_helper
-        allowContinue = False
-        
-        # Parse tick values from the condition file
-        tick_values_parsed = parse_tick_values(tick_values)
-        
-        try:
-            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-            logging.debug(f"State-measure tick values: {tick_values_parsed}")
-        except:
-            logging.error("Error printing current state measure row.")
-        
-        # Compute geometry based on rating type
-        sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-        
-        sm_comp_slider_size = sm_geometry["slider_size"]
-        sm_comp_slider_pos  = sm_geometry["slider_pos"]
-        sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-        sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-        
-        t_sm_label_min = visual.TextStim(
-            win=win,
-            text=rating_min_label,
-            pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        t_sm_label_max = visual.TextStim(
-            win=win,
-            text=rating_max_label,
-            pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        #t_label_min.setPos(sm_comp_label_min_pos)
-        #t_label_max.setPos(sm_comp_label_max_pos)
-        
         # --- Create a fresh slider for this trial ---
-        sm_slider = visual.Slider(
-            win=win,
-            ticks=tick_values_parsed,
-            labels=tick_values_parsed,
-            granularity=granularity,
-            style=style.lower(),
-            pos=sm_comp_slider_pos,
-            size=sm_comp_slider_size,
-            labelHeight=0.05,
-            colorSpace='rgb',
-            markerColor='Red',
-            lineColor='White',
-            labelColor='LightGray',
-            font='Noto Sans'
-        )
-        
-        # --- SAM image logic ---
-        if rating_type == 'SAM':
-            image_SAM.setImage(picture_path)
-            image_SAM.setAutoDraw(True)
-        else:
-            image_SAM.setAutoDraw(False)
-        
-        image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-        image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-        image_SAM.setImage(picture_path)
-        t_sm_message.setText(rating_message)
+        allowContinue = False
+        sm.begin_routine_from_category(rating_category)
         # create starting attributes for key_resp_sm
         key_resp_sm.keys = []
         key_resp_sm.rt = []
@@ -1151,51 +939,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             # Run 'Each Frame' code from code_sm_helper
-            # Draw state measure components
-            sm_slider.draw()
-            t_sm_label_min.draw()
-            t_sm_label_max.draw()
-            
             # If rated, allow spacebar to end the routine
-            if sm_slider.getRating() is not None:
+            if sm.has_rating():
                 allowContinue = True
-            
-            
-            # *image_SAM* updates
-            
-            # if image_SAM is starting this frame...
-            if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                image_SAM.frameNStart = frameN  # exact frame index
-                image_SAM.tStart = t  # local t and not account for scr refresh
-                image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                image_SAM.status = STARTED
-                image_SAM.setAutoDraw(True)
-            
-            # if image_SAM is active this frame...
-            if image_SAM.status == STARTED:
-                # update params
-                pass
-            
-            # *t_sm_message* updates
-            
-            # if t_sm_message is starting this frame...
-            if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_sm_message.frameNStart = frameN  # exact frame index
-                t_sm_message.tStart = t  # local t and not account for scr refresh
-                t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_sm_message.status = STARTED
-                t_sm_message.setAutoDraw(True)
-            
-            # if t_sm_message is active this frame...
-            if t_sm_message.status == STARTED:
-                # update params
-                pass
             
             # *t_sm_continue* updates
             
@@ -1284,14 +1030,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating_rt', sm_slider.getRT())
-        
-        try:
-            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-        except:
-            logging.error("Error printing state-measure rating")
+        # Log rating, rt, and turn off AutoDraw
+        sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1326,39 +1066,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
-    openclosed_trials = data.TrialHandler2(
-        name='openclosed_trials',
+    openclosed2x_trials = data.TrialHandler2(
+        name='openclosed2x_trials',
         nReps=1.0, 
         method='random', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopOpenClosedTrial.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xTrial.csv'), 
         seed=None, 
         isTrials=True, 
     )
-    thisExp.addLoop(openclosed_trials)  # add the loop to the experiment
-    thisOpenclosed_trial = openclosed_trials.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-    if thisOpenclosed_trial != None:
-        for paramName in thisOpenclosed_trial:
-            globals()[paramName] = thisOpenclosed_trial[paramName]
+    thisExp.addLoop(openclosed2x_trials)  # add the loop to the experiment
+    thisOpenclosed2x_trial = openclosed2x_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+    if thisOpenclosed2x_trial != None:
+        for paramName in thisOpenclosed2x_trial:
+            globals()[paramName] = thisOpenclosed2x_trial[paramName]
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     
-    for thisOpenclosed_trial in openclosed_trials:
-        openclosed_trials.status = STARTED
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = STARTED
-        currentLoop = openclosed_trials
+    for thisOpenclosed2x_trial in openclosed2x_trials:
+        openclosed2x_trials.status = STARTED
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = STARTED
+        currentLoop = openclosed2x_trials
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-        if thisOpenclosed_trial != None:
-            for paramName in thisOpenclosed_trial:
-                globals()[paramName] = thisOpenclosed_trial[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+        if thisOpenclosed2x_trial != None:
+            for paramName in thisOpenclosed2x_trial:
+                globals()[paramName] = thisOpenclosed2x_trial[paramName]
         
         # --- Prepare to start Routine "instruction" ---
         # create an object to store info about Routine instruction
@@ -1415,7 +1155,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1566,7 +1306,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1722,7 +1462,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             originPath=-1, 
             trialList=data.importConditions(
             '../../shared/loop-templates/loopStateMeasure.csv', 
-            selection='0:7'
+            selection='[0, 1, 2, 3, 4, 5, 6]'
         )
         , 
             seed=None, 
@@ -1756,85 +1496,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+                components=[t_sm_continue, key_resp_sm],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
             # Run 'Begin Routine' code from code_sm_helper
-            allowContinue = False
-            
-            # Parse tick values from the condition file
-            tick_values_parsed = parse_tick_values(tick_values)
-            
-            try:
-                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-                logging.debug(f"State-measure tick values: {tick_values_parsed}")
-            except:
-                logging.error("Error printing current state measure row.")
-            
-            # Compute geometry based on rating type
-            sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-            
-            sm_comp_slider_size = sm_geometry["slider_size"]
-            sm_comp_slider_pos  = sm_geometry["slider_pos"]
-            sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-            sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-            
-            t_sm_label_min = visual.TextStim(
-                win=win,
-                text=rating_min_label,
-                pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            t_sm_label_max = visual.TextStim(
-                win=win,
-                text=rating_max_label,
-                pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            #t_label_min.setPos(sm_comp_label_min_pos)
-            #t_label_max.setPos(sm_comp_label_max_pos)
-            
             # --- Create a fresh slider for this trial ---
-            sm_slider = visual.Slider(
-                win=win,
-                ticks=tick_values_parsed,
-                labels=tick_values_parsed,
-                granularity=granularity,
-                style=style.lower(),
-                pos=sm_comp_slider_pos,
-                size=sm_comp_slider_size,
-                labelHeight=0.05,
-                colorSpace='rgb',
-                markerColor='Red',
-                lineColor='White',
-                labelColor='LightGray',
-                font='Noto Sans'
-            )
-            
-            # --- SAM image logic ---
-            if rating_type == 'SAM':
-                image_SAM.setImage(picture_path)
-                image_SAM.setAutoDraw(True)
-            else:
-                image_SAM.setAutoDraw(False)
-            
-            image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-            image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-            image_SAM.setImage(picture_path)
-            t_sm_message.setText(rating_message)
+            allowContinue = False
+            sm.begin_routine_from_category(rating_category)
             # create starting attributes for key_resp_sm
             key_resp_sm.keys = []
             key_resp_sm.rt = []
@@ -1873,51 +1543,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
                 # Run 'Each Frame' code from code_sm_helper
-                # Draw state measure components
-                sm_slider.draw()
-                t_sm_label_min.draw()
-                t_sm_label_max.draw()
-                
                 # If rated, allow spacebar to end the routine
-                if sm_slider.getRating() is not None:
+                if sm.has_rating():
                     allowContinue = True
-                
-                
-                # *image_SAM* updates
-                
-                # if image_SAM is starting this frame...
-                if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    image_SAM.frameNStart = frameN  # exact frame index
-                    image_SAM.tStart = t  # local t and not account for scr refresh
-                    image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    image_SAM.status = STARTED
-                    image_SAM.setAutoDraw(True)
-                
-                # if image_SAM is active this frame...
-                if image_SAM.status == STARTED:
-                    # update params
-                    pass
-                
-                # *t_sm_message* updates
-                
-                # if t_sm_message is starting this frame...
-                if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_sm_message.frameNStart = frameN  # exact frame index
-                    t_sm_message.tStart = t  # local t and not account for scr refresh
-                    t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_sm_message.status = STARTED
-                    t_sm_message.setAutoDraw(True)
-                
-                # if t_sm_message is active this frame...
-                if t_sm_message.status == STARTED:
-                    # update params
-                    pass
                 
                 # *t_sm_continue* updates
                 
@@ -2006,14 +1634,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            #thisExp.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating_rt', sm_slider.getRT())
-            
-            try:
-                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-            except:
-                logging.error("Error printing state-measure rating")
+            # Log rating, rt, and turn off AutoDraw
+            sm.end_routine(currentLoop)
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_trial as finished
@@ -2046,11 +1668,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         state_measure_trials.saveAsExcel(filename + '.xlsx', sheetName='state_measure_trials',
             stimOut=params,
             dataOut=['n','all_mean','all_std', 'all_raw'])
-        # mark thisOpenclosed_trial as finished
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = FINISHED
+        # mark thisOpenclosed2x_trial as finished
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = FINISHED
         # if awaiting a pause, pause now
-        if openclosed_trials.status == PAUSED:
+        if openclosed2x_trials.status == PAUSED:
             thisExp.status = PAUSED
             pauseExperiment(
                 thisExp=thisExp, 
@@ -2058,22 +1680,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[globalClock], 
             )
             # once done pausing, restore running status
-            openclosed_trials.status = STARTED
+            openclosed2x_trials.status = STARTED
         thisExp.nextEntry()
         
-    # completed 1.0 repeats of 'openclosed_trials'
-    openclosed_trials.status = FINISHED
+    # completed 1.0 repeats of 'openclosed2x_trials'
+    openclosed2x_trials.status = FINISHED
     
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     # get names of stimulus parameters
-    if openclosed_trials.trialList in ([], [None], None):
+    if openclosed2x_trials.trialList in ([], [None], None):
         params = []
     else:
-        params = openclosed_trials.trialList[0].keys()
+        params = openclosed2x_trials.trialList[0].keys()
     # save data for this loop
-    openclosed_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed_trials',
+    openclosed2x_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed2x_trials',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     

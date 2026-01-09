@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 05, 2026, at 19:38
+    on January 08, 2026, at 22:42
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,8 +40,8 @@ deviceManager = hardware.DeviceManager()
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
-expName = 'phoda'  # from the Builder filename that created this script
-expVersion = '0.5'
+expName = 'open-closed-2x'  # from the Builder filename that created this script
+expVersion = '1.01'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -133,7 +133,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\phoda\\phoda.py',
+        originPath='D:\\Github\\neuroflare-experiments\\neuroflare\\experiments\\open-closed-2x\\open-closed-2x.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -394,10 +394,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # consistently across monitors.
     #
     # Also defines shared wrap-width values for text components.
-    # Also includes imports for later components
     # ------------------------------------------------------------
-    
-    import random # for t_blank_delayer
     
     # ============================================================
     # =============== GLOBAL SCREEN GEOMETRY =====================
@@ -434,395 +431,29 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # The stateMeasure routine depends on this setup code to
     # size components correctly and interpret SAM/text settings.
     # ------------------------------------------------------------
+    _THIS_DIR = os.path.dirname(__file__)
+    _REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, '..', '..', '..'))
+    if _REPO_ROOT not in sys.path:
+        sys.path.insert(0, _REPO_ROOT)
     
-    # --- Helper functions for dynamic slider configuration ---
-    def parse_tick_values(raw):
-        # If PsychoPy already parsed it into a list, just return it
-        if isinstance(raw, list):
-            return raw
-        # Otherwise assume it's a comma-separated string
-        return [int(x.strip()) for x in raw.split(',')]
+    from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
-    # ===============================================================
-    # ============== STATE-MEASURE SPECIFIC GEOMETRY ================
-    # ===============================================================
+    sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
+    # Run 'Begin Experiment' code from code_open_closed_setup
+    # ------------------------------------------------------------
+    # code_open_closed_setup
+    # Define the instruction text for each eye-state condition.
+    # ------------------------------------------------------------
+    # These strings are kept in-code (rather than in the CSV) so the
+    # condition file only needs to specify the Category. This keeps
+    # the output cleaner and prevents text duplication across files.
+    open_eyes_text = "Look at the + mark and stay still for 5 minutes."
+    closed_eyes_text = "Close your eyes and stay still for 5 minutes."
     
-    def sm_compute_tick_positions(tick_values, rating_type):
-        """
-        Compute slider size, slider position, and min/max label positions
-        for both SAM and Generic rating types.
-        """
-    
-        if rating_type == "SAM":
-            # SAM uses the precomputed geometry
-            slider_size = (sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)
-            slider_pos  = (0, sm_sam_comp_slider_pos_y)
-    
-            # Tick positions already computed globally
-            tick_positions = sm_sam_tick_positions
-    
-            label_min_pos = (tick_positions[0],  sm_sam_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_sam_comp_label_pos_y)
-    
-        else:
-            # Generic slider: evenly spaced ticks across the slider width
-            slider_size = (sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height)
-            slider_pos  = (0, sm_gen_comp_slider_pos_y)
-    
-            # Compute generic tick positions dynamically
-            num_ticks = len(tick_values)
-            half_width = sm_gen_comp_slider_size_width / 2
-    
-            # Even spacing across the width
-            tick_positions = [
-                -half_width + (i / (num_ticks - 1)) * sm_gen_comp_slider_size_width
-                for i in range(num_ticks)
-            ]
-    
-            # Labels sit below the slider
-            label_min_pos = (tick_positions[0],  sm_gen_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_gen_comp_label_pos_y)
-    
-        return {
-            "slider_size": slider_size,
-            "slider_pos": slider_pos,
-            "tick_positions": tick_positions,
-            "label_min_pos": label_min_pos,
-            "label_max_pos": label_max_pos
-        }
-    
-    # ===============================================================
-    # =================== GEN SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- Generic Slider Scaling ---
-    # Full-width slider across screen
-    # Generic slider (used when rating_type != "SAM")
-    
-    # Slider layout (height units)
-    sm_gen_comp_slider_size_width  = aspect * 0.6  # 60% of screen width
-    sm_gen_comp_slider_size_height = 0.1           # slider thickness/height
-    sm_gen_comp_slider_pos_y       = 0             # vertical position of the slider center
-    
-    # Label Min/Max layout
-    sm_gen_comp_label_pos_y = sm_gen_comp_slider_pos_y - 0.2
-    
-    # ===============================================================
-    # =================== SAM SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- SAM image geometry (pixels) ---
-    sm_sam_img_px_width  = 1168
-    sm_sam_img_px_height = 231
-    sm_sam_img_aspect    = sm_sam_img_px_width / sm_sam_img_px_height  # ≈ 5.056
-    
-    # Pictogram/gap geometry (pixels)
-    # Note: there are 5 pictograms and 4 gaps spanning the full image width
-    sm_sam_pictogram_px_width     = 215
-    sm_sam_pictogram_gap_px_width = 23
-    
-    # --- Layout decisions (height units) ---
-    sm_sam_comp_img_size_height = 0.25                                             # 25% of screen height
-    sm_sam_comp_img_size_width  = sm_sam_comp_img_size_height * sm_sam_img_aspect  # scaled width based on aspect
-    sm_sam_comp_img_pos_y       = 0.1                                              # vertical position of the image
-    
-    # Message Layout
-    sm_sam_comp_message_pos_y = sm_sam_comp_img_pos_y + 0.2
-    
-    # Slider layout (height units)
-    sm_sam_comp_slider_pos_y       = -0.09      # vertical position of the slider center
-    sm_sam_comp_slider_size_height = 0.06       # slider thickness/height
-    sm_sam_slider_px_width    = sm_sam_img_px_width - 215
-    sm_sam_comp_slider_width  = sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width)
-    
-    # Scale factor: px -> 'height' units within the image width
-    sm_sam_scale_factor = sm_sam_comp_img_size_width / sm_sam_img_px_width
-    
-    sm_sam_pictogram_w  = sm_sam_pictogram_px_width * sm_sam_scale_factor
-    sm_sam_gap_w        = sm_sam_pictogram_gap_px_width * sm_sam_scale_factor
-    
-    # --- Compute 9 tick x-positions aligned to pictograms ---
-    sm_sam_tick_positions = []
-    sm_sam_tick_x = -sm_sam_comp_img_size_width / 2 + sm_sam_pictogram_w / 2
-    
-    for i in range(9):
-        sm_sam_tick_positions.append(sm_sam_tick_x)
-        if i % 2 == 0:
-            sm_sam_tick_x += sm_sam_pictogram_w / 2 + sm_sam_gap_w / 2
-        else:
-            sm_sam_tick_x += sm_sam_gap_w / 2 + sm_sam_pictogram_w / 2
-    
-    # Label Min/Max layout
-    sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15
-    # Run 'Begin Experiment' code from code_phoda_slider_setup
-    # ============================================================
-    # =================== CONFIGURATION ==========================
-    # ============================================================
-    
-    # PHODA image settings
-    PS_PHODA_IMG_PATH = ''
-    PS_PHODA_IMG_PX_WIDTH = 283
-    PS_PHODA_IMG_PX_HEIGHT = 425
-    PS_PHODA_IMG_HEIGHT_RATIO = 0.62  # Percentage of screen height
-    PS_PHODA_IMG_POS_Y = 0.13  # Vertical position (0 = center, positive = above center)
-    
-    # Slider settings
-    PS_SLIDER_WIDTH_RATIO = 0.8  # Percentage of screen width
-    PS_SLIDER_HEIGHT = 0.08
-    PS_SLIDER_MARKER_WIDTH = 0.02
-    PS_SLIDER_GRANULARITY = 0  # 0 for continuous (VAS), 1 for integers
-    PS_SLIDER_TICKS = range(0, 101)
-    
-    # Spacing
-    PS_IMAGE_SLIDER_GAP = 0.08  # Vertical space between image and slider
-    PS_SLIDER_LABELS_GAP = 0.03  # Vertical space between slider and numeric labels
-    
-    # Label settings
-    PS_LABEL_VALUES = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    PS_LABEL_HEIGHT = 0.03
-    PS_LABEL_FONT = 'Noto Sans'
-    PS_LABEL_COLOR = 'white'
-    
-    # Endpoint labels
-    PS_LABEL_LEFT_TEXT = 'Not at all\nharmful'
-    PS_LABEL_RIGHT_TEXT = 'Extremely\nharmful'
-    PS_LABEL_ENDPOINT_HEIGHT = 0.025
-    PS_LABEL_ENDPOINT_OFFSET = 0.055 # subtracted from label y-pos
-    
-    # Rating display
-    PS_RATING_TEXT_HEIGHT = 0.04
-    PS_RATING_TEXT_DEFAULT = 'Click or drag the slider to rate'
-    
-    # Auto logging for all components
-    PS_AUTO_LOG = False
-    PS_AUTO_LOG_SLIDER = False
-    
-    # ============================================================
-    # =================== HELPER FUNCTIONS =======================
-    # ============================================================
-    
-    def calculate_phoda_geometry():
-        """
-        Calculate all geometry for PHODA image and slider layout.
-        Returns a dictionary with all positioning and sizing values.
-        """
-        # Image geometry
-        img_aspect = PS_PHODA_IMG_PX_WIDTH / PS_PHODA_IMG_PX_HEIGHT
-        img_height = PS_PHODA_IMG_HEIGHT_RATIO
-        img_width = img_height * img_aspect
-        
-        # Slider geometry
-        slider_width = aspect * PS_SLIDER_WIDTH_RATIO
-        slider_height = PS_SLIDER_HEIGHT
-        
-        # Vertical positioning
-        img_pos_y = PS_PHODA_IMG_POS_Y  # Use the defined position for the image
-        img_bottom = img_pos_y - img_height / 2
-        slider_pos_y = img_bottom - PS_IMAGE_SLIDER_GAP
-        label_pos_y = slider_pos_y - slider_height / 2 - PS_SLIDER_LABELS_GAP
-        
-        # Slider boundaries
-        slider_left = -slider_width / 2
-        slider_right = slider_width / 2
-        
-        return {
-            'img_width': img_width,
-            'img_height': img_height,
-            'img_pos_y': img_pos_y,
-            'slider_width': slider_width,
-            'slider_height': slider_height,
-            'slider_pos_y': slider_pos_y,
-            'slider_left': slider_left,
-            'slider_right': slider_right,
-            'label_pos_y': label_pos_y
-        }
-    
-    def create_custom_slider(geom):
-        """
-        Create and customize a PHODA slider with narrow marker.
-        """
-        slider = visual.Slider(
-            win=win,
-            size=(geom['slider_width'], geom['slider_height']),
-            pos=(0, geom['slider_pos_y']),
-            ticks=PS_SLIDER_TICKS,
-            labels=None,
-            granularity=PS_SLIDER_GRANULARITY,
-            style='scrollbar',
-            flip=False,
-            name="ps_phoda_slider",
-            autoLog=PS_AUTO_LOG_SLIDER
-    
-        )
-        
-        # Customize marker width
-        slider.marker.size = (PS_SLIDER_MARKER_WIDTH, slider.marker.size[1])
-        
-        # Adjust line size (compensate for scrollbar's 20% extra width)
-        slider.line.size = (geom['slider_width'] + PS_SLIDER_MARKER_WIDTH, slider.line.size[1])
-        
-        return slider
-    
-    def create_slider_labels(geom):
-        """
-        Create numeric labels positioned along the slider.
-        """
-        labels = []
-        slider_left = geom['slider_left']
-        slider_right = geom['slider_right']
-        label_pos_y = geom['label_pos_y']
-        
-        for label_val in PS_LABEL_VALUES:
-            label_ratio = label_val / 100
-            x_pos = slider_left + (slider_right - slider_left) * label_ratio
-            
-            label_obj = visual.TextStim(
-                win=win,
-                text=str(label_val),
-                pos=(x_pos, label_pos_y),
-                height=PS_LABEL_HEIGHT,
-                anchorVert='top',
-                color=PS_LABEL_COLOR,
-                font=PS_LABEL_FONT,
-                name=f"ps_slider_label_{label_val}",
-                autoLog=PS_AUTO_LOG
-            )
-            labels.append(label_obj)
-        
-        return labels
-    
-    def create_endpoint_labels(geom):
-        """
-        Create left and right endpoint description labels.
-        """
-        label_left = visual.TextStim(
-            win=win,
-            text=PS_LABEL_LEFT_TEXT,
-            pos=(geom['slider_left'], geom['label_pos_y'] - PS_LABEL_ENDPOINT_OFFSET),
-            height=PS_LABEL_ENDPOINT_HEIGHT,
-            anchorVert='top',
-            color=PS_LABEL_COLOR,
-            font=PS_LABEL_FONT,
-            name="ps_label_left",
-            autoLog=PS_AUTO_LOG
-        )
-        
-        label_right = visual.TextStim(
-            win=win,
-            text=PS_LABEL_RIGHT_TEXT,
-            pos=(geom['slider_right'], geom['label_pos_y'] - PS_LABEL_ENDPOINT_OFFSET),
-            height=PS_LABEL_ENDPOINT_HEIGHT,
-            anchorVert='top',
-            color=PS_LABEL_COLOR,
-            font=PS_LABEL_FONT,
-            name="ps_label_right",
-            autoLog=PS_AUTO_LOG
-        )
-        
-        return label_left, label_right
-    
-    def run_phoda_trial():
-        """
-        Draw all PHODA components on the window.
-        """
-        ps_phoda_slider.draw()
-        for label in ps_manual_labels:
-            label.draw()
-        ps_phoda_label_left.draw()
-        ps_phoda_label_right.draw()
-        
-        # Update rating display in real-time
-        if ps_phoda_slider.markerPos is not None:
-            if PS_SLIDER_GRANULARITY == 0:
-                # Show float for VAS (continuous)
-                ps_phoda_rating_text.text = f'Current rating: {ps_phoda_slider.markerPos:.1f}'
-            else:
-                # Show integer for discrete scale
-                ps_phoda_rating_text.text = f'Current rating: {int(ps_phoda_slider.markerPos)}'
-        else:
-            ps_phoda_rating_text.text = PS_RATING_TEXT_DEFAULT
-        
-        ps_phoda_rating_text.draw()
-    
-    def phoda_autodraw_on():
-        """
-        Turn on AutoDraw for all PHODA components on the window.
-        """
-        ps_phoda_slider.setAutoDraw(True)
-        for label in ps_manual_labels:
-            label.setAutoDraw(True)
-        ps_phoda_label_left.setAutoDraw(True)
-        ps_phoda_label_right.setAutoDraw(True)
-        ps_phoda_rating_text.setAutoDraw(True)
-        logging.exp("PHODA components: AutoDraw ON")
-    
-    def phoda_autodraw_off():
-        """
-        Turn off AutoDraw for all PHODA components on the window.
-        """
-        ps_phoda_slider.setAutoDraw(False)
-        for label in ps_manual_labels:
-            label.setAutoDraw(False)
-        ps_phoda_label_left.setAutoDraw(False)
-        ps_phoda_label_right.setAutoDraw(False)
-        ps_phoda_rating_text.setAutoDraw(False)
-        logging.exp("PHODA components: AutoDraw OFF")
-    
-    def update_phoda_rating_text(last_rating_value):
-        """
-        Update the PHODA rating display text if the slider value has changed.
-        """
-        current = ps_phoda_slider.markerPos
-    
-        # Only update when the value actually changes
-        if current != last_rating_value:
-            if current is None:
-                ps_phoda_rating_text.text = PS_RATING_TEXT_DEFAULT
-            else:
-                if PS_SLIDER_GRANULARITY == 0:
-                    ps_phoda_rating_text.text = f'Current rating: {current:.1f}'
-                else:
-                    ps_phoda_rating_text.text = f'Current rating: {int(current)}'
-    
-            # Update the flag
-            last_rating_value = current
-    
-        return last_rating_value
-    
-    # Calculate all geometry
-    ps_geom = calculate_phoda_geometry()
-    
-    # ============================================================
-    # =================== CREATE COMPONENTS ======================
-    # ============================================================
-    
-    # PHODA image
-    ps_phoda_comp_img_pos_y = ps_geom['img_pos_y']
-    ps_phoda_comp_img_size = (ps_geom['img_width'], ps_geom['img_height'])
-    
-    # Custom slider
-    ps_phoda_slider = create_custom_slider(ps_geom)
-    
-    # Slider labels
-    ps_manual_labels = create_slider_labels(ps_geom)
-    
-    # Endpoint labels
-    ps_phoda_label_left, ps_phoda_label_right = create_endpoint_labels(ps_geom)
-    t_phoda_continue_pos_y = ps_geom['label_pos_y'] - PS_LABEL_ENDPOINT_OFFSET -0.02
-    
-    # Rating display text
-    ps_phoda_rating_text = visual.TextStim(
-        win=win,
-        text=PS_RATING_TEXT_DEFAULT,
-        pos=(0, ps_geom['slider_pos_y']),
-        height=PS_RATING_TEXT_HEIGHT,
-        bold=True,
-        color=PS_LABEL_COLOR,
-        font=PS_LABEL_FONT,
-        name="ps_phoda_rating_text",
-        autoLog=PS_AUTO_LOG
-    )
-    
+    # This variable will be updated on each loop iteration by the
+    # instruction helper code. It provides the text shown in the
+    # instruction routine.
+    instruction_text = "Default message."
     
     # --- Initialize components for Routine "welcome" ---
     t_welcome_body = visual.TextStim(win=win, name='t_welcome_body',
@@ -842,34 +473,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instruction" ---
-    # Run 'Begin Experiment' code from code_instruction_helper
-    view_mode_text = 'You will see photographs of daily activities.\n\nIn this block, simply view each picture without making a rating.'
-    rate_mode_text = 'You will see photographs of daily activities.\n\nFor each picture, please rate how harmful you feel the activity is to your body.'
     t_instruction_body = visual.TextStim(win=win, name='t_instruction_body',
         text='',
         font='Arial',
@@ -886,57 +499,31 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-2.0);
     key_resp_instruction = keyboard.Keyboard(deviceName='defaultKeyboard')
     
-    # --- Initialize components for Routine "phodaDelay" ---
-    t_blank_delayer = visual.TextStim(win=win, name='t_blank_delayer',
-        text=None,
+    # --- Initialize components for Routine "fixation" ---
+    cross_fixation = visual.ShapeStim(
+        win=win, name='cross_fixation', vertices='cross',units='height', 
+        size=(0.2, 0.2),
+        ori=0.0, pos=(0, 0), draggable=False, anchor='center',
+        lineWidth=1.0,
+        colorSpace='rgb', lineColor='white', fillColor='white',
+        opacity=None, depth=0.0, interpolate=True)
+    t_fixation_closed = visual.TextStim(win=win, name='t_fixation_closed',
+        text='',
         font='Arial',
-        pos=(0, 0), draggable=False, height=0.05, wrapWidth=None, ori=0.0, 
+        units='height', pos=(0.0, -0.4), draggable=False, height=0.03, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    
-    # --- Initialize components for Routine "phodaView" ---
-    image_phoda = visual.ImageStim(
-        win=win,
-        name='image_phoda', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    p_port_phoda = parallel.ParallelPort(address='0x0378')
-    t_phoda_continue = visual.TextStim(win=win, name='t_phoda_continue',
-        text='',
-        font='Arial',
-        pos=[0,0], draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-3.0);
-    key_resp_phoda = keyboard.Keyboard(deviceName='defaultKeyboard')
+    p_port_fixation = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
@@ -1069,7 +656,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopPhodaIntro.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xIntro.csv'), 
         seed=None, 
         isTrials=False, 
     )
@@ -1271,7 +858,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='0:7'
+        selection='[0, 1, 2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
@@ -1305,85 +892,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+            components=[t_sm_continue, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_sm_helper
-        allowContinue = False
-        
-        # Parse tick values from the condition file
-        tick_values_parsed = parse_tick_values(tick_values)
-        
-        try:
-            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-            logging.debug(f"State-measure tick values: {tick_values_parsed}")
-        except:
-            logging.error("Error printing current state measure row.")
-        
-        # Compute geometry based on rating type
-        sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-        
-        sm_comp_slider_size = sm_geometry["slider_size"]
-        sm_comp_slider_pos  = sm_geometry["slider_pos"]
-        sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-        sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-        
-        t_sm_label_min = visual.TextStim(
-            win=win,
-            text=rating_min_label,
-            pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        t_sm_label_max = visual.TextStim(
-            win=win,
-            text=rating_max_label,
-            pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        #t_label_min.setPos(sm_comp_label_min_pos)
-        #t_label_max.setPos(sm_comp_label_max_pos)
-        
         # --- Create a fresh slider for this trial ---
-        sm_slider = visual.Slider(
-            win=win,
-            ticks=tick_values_parsed,
-            labels=tick_values_parsed,
-            granularity=granularity,
-            style=style.lower(),
-            pos=sm_comp_slider_pos,
-            size=sm_comp_slider_size,
-            labelHeight=0.05,
-            colorSpace='rgb',
-            markerColor='Red',
-            lineColor='White',
-            labelColor='LightGray',
-            font='Noto Sans'
-        )
-        
-        # --- SAM image logic ---
-        if rating_type == 'SAM':
-            image_SAM.setImage(picture_path)
-            image_SAM.setAutoDraw(True)
-        else:
-            image_SAM.setAutoDraw(False)
-        
-        image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-        image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-        image_SAM.setImage(picture_path)
-        t_sm_message.setText(rating_message)
+        allowContinue = False
+        sm.begin_routine_from_category(rating_category)
         # create starting attributes for key_resp_sm
         key_resp_sm.keys = []
         key_resp_sm.rt = []
@@ -1422,51 +939,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             # Run 'Each Frame' code from code_sm_helper
-            # Draw state measure components
-            sm_slider.draw()
-            t_sm_label_min.draw()
-            t_sm_label_max.draw()
-            
             # If rated, allow spacebar to end the routine
-            if sm_slider.getRating() is not None:
+            if sm.has_rating():
                 allowContinue = True
-            
-            
-            # *image_SAM* updates
-            
-            # if image_SAM is starting this frame...
-            if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                image_SAM.frameNStart = frameN  # exact frame index
-                image_SAM.tStart = t  # local t and not account for scr refresh
-                image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                image_SAM.status = STARTED
-                image_SAM.setAutoDraw(True)
-            
-            # if image_SAM is active this frame...
-            if image_SAM.status == STARTED:
-                # update params
-                pass
-            
-            # *t_sm_message* updates
-            
-            # if t_sm_message is starting this frame...
-            if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_sm_message.frameNStart = frameN  # exact frame index
-                t_sm_message.tStart = t  # local t and not account for scr refresh
-                t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_sm_message.status = STARTED
-                t_sm_message.setAutoDraw(True)
-            
-            # if t_sm_message is active this frame...
-            if t_sm_message.status == STARTED:
-                # update params
-                pass
             
             # *t_sm_continue* updates
             
@@ -1555,14 +1030,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        #thisExp.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating_rt', sm_slider.getRT())
-        
-        try:
-            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-        except:
-            logging.error("Error printing state-measure rating")
+        # Log rating, rt, and turn off AutoDraw
+        sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1597,39 +1066,39 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
-    phoda_mode_loop = data.TrialHandler2(
-        name='phoda_mode_loop',
+    openclosed2x_trials = data.TrialHandler2(
+        name='openclosed2x_trials',
         nReps=1.0, 
         method='random', 
         extraInfo=expInfo, 
         originPath=-1, 
-        trialList=data.importConditions('loopPhodaMode.csv'), 
+        trialList=data.importConditions('loopOpenClosed2xTrial.csv'), 
         seed=None, 
         isTrials=True, 
     )
-    thisExp.addLoop(phoda_mode_loop)  # add the loop to the experiment
-    thisPhoda_mode_loop = phoda_mode_loop.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisPhoda_mode_loop.rgb)
-    if thisPhoda_mode_loop != None:
-        for paramName in thisPhoda_mode_loop:
-            globals()[paramName] = thisPhoda_mode_loop[paramName]
+    thisExp.addLoop(openclosed2x_trials)  # add the loop to the experiment
+    thisOpenclosed2x_trial = openclosed2x_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+    if thisOpenclosed2x_trial != None:
+        for paramName in thisOpenclosed2x_trial:
+            globals()[paramName] = thisOpenclosed2x_trial[paramName]
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     
-    for thisPhoda_mode_loop in phoda_mode_loop:
-        phoda_mode_loop.status = STARTED
-        if hasattr(thisPhoda_mode_loop, 'status'):
-            thisPhoda_mode_loop.status = STARTED
-        currentLoop = phoda_mode_loop
+    for thisOpenclosed2x_trial in openclosed2x_trials:
+        openclosed2x_trials.status = STARTED
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = STARTED
+        currentLoop = openclosed2x_trials
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-        # abbreviate parameter names if possible (e.g. rgb = thisPhoda_mode_loop.rgb)
-        if thisPhoda_mode_loop != None:
-            for paramName in thisPhoda_mode_loop:
-                globals()[paramName] = thisPhoda_mode_loop[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed2x_trial.rgb)
+        if thisOpenclosed2x_trial != None:
+            for paramName in thisOpenclosed2x_trial:
+                globals()[paramName] = thisOpenclosed2x_trial[paramName]
         
         # --- Prepare to start Routine "instruction" ---
         # create an object to store info about Routine instruction
@@ -1644,22 +1113,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # ------------------------------------------------------------
         # code_instruction_helper
         
-        # Select the appropriate instruction text based 
-        # on the current trial's mode value
+        # Select the appropriate instruction text based on the current
+        # trial's Category value. This keeps the logic centralized and
+        # avoids storing long text strings in the condition file.
         # ------------------------------------------------------------
-        # Determine whether this PHODA trial is in view or rate mode.
-        # In view mode, components must be allowed to start immediately.
-        isModeView = (mode == 'view')
-        isModeRate = (mode == 'rate')
-        
-        if isModeView:
-            instruction_text = view_mode_text
-        elif isModeRate:
-            instruction_text = rate_mode_text
+        if Category == "Open-Eyes":
+            instruction_text = open_eyes_text
+        elif Category == "Closed-Eyes":
+            instruction_text = closed_eyes_text
         else:
             # Fallback message in case the condition file contains an
             # unexpected category. This helps catch typos or file issues.
-            instruction_text = "Unknown mode. Please contact the experimenter."
+            instruction_text = "Unknown category. Please contact the experimenter."
         t_instruction_body.setText(instruction_text)
         # create starting attributes for key_resp_instruction
         key_resp_instruction.keys = []
@@ -1690,7 +1155,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisPhoda_mode_loop, 'status') and thisPhoda_mode_loop.status == STOPPING:
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1806,464 +1271,187 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
-        # set up handler to look after randomisation of conditions etc
-        phoda_trials = data.TrialHandler2(
-            name='phoda_trials',
-            nReps=1.0, 
-            method='random', 
-            extraInfo=expInfo, 
-            originPath=-1, 
-            trialList=data.importConditions('phodaPhotoList.csv'), 
-            seed=None, 
-            isTrials=True, 
+        # --- Prepare to start Routine "fixation" ---
+        # create an object to store info about Routine fixation
+        fixation = data.Routine(
+            name='fixation',
+            components=[cross_fixation, t_fixation_closed, p_port_fixation],
         )
-        thisExp.addLoop(phoda_trials)  # add the loop to the experiment
-        thisPhoda_trial = phoda_trials.trialList[0]  # so we can initialise stimuli with some values
-        # abbreviate parameter names if possible (e.g. rgb = thisPhoda_trial.rgb)
-        if thisPhoda_trial != None:
-            for paramName in thisPhoda_trial:
-                globals()[paramName] = thisPhoda_trial[paramName]
-        if thisSession is not None:
-            # if running in a Session with a Liaison client, send data up to now
-            thisSession.sendExperimentData()
+        fixation.status = NOT_STARTED
+        continueRoutine = True
+        # update component parameters for each repeat
+        t_fixation_closed.setText('Please keep your eyes closed during this block.')
+        # store start times for fixation
+        fixation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+        fixation.tStart = globalClock.getTime(format='float')
+        fixation.status = STARTED
+        thisExp.addData('fixation.started', fixation.tStart)
+        fixation.maxDuration = None
+        # keep track of which components have finished
+        fixationComponents = fixation.components
+        for thisComponent in fixation.components:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
         
-        for thisPhoda_trial in phoda_trials:
-            phoda_trials.status = STARTED
-            if hasattr(thisPhoda_trial, 'status'):
-                thisPhoda_trial.status = STARTED
-            currentLoop = phoda_trials
-            thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
-            if thisSession is not None:
-                # if running in a Session with a Liaison client, send data up to now
-                thisSession.sendExperimentData()
-            # abbreviate parameter names if possible (e.g. rgb = thisPhoda_trial.rgb)
-            if thisPhoda_trial != None:
-                for paramName in thisPhoda_trial:
-                    globals()[paramName] = thisPhoda_trial[paramName]
-            
-            # --- Prepare to start Routine "phodaDelay" ---
-            # create an object to store info about Routine phodaDelay
-            phodaDelay = data.Routine(
-                name='phodaDelay',
-                components=[t_blank_delayer],
-            )
-            phodaDelay.status = NOT_STARTED
-            continueRoutine = True
-            # update component parameters for each repeat
-            # Run 'Begin Routine' code from code_delay_calculator
-            # Gives a random float between 1.5 and 2.5 seconds (i.e., 1500–2500 ms)
-            # Used for t_blank_delayer
-            delay_time = random.uniform(1.5, 2.5)
-            
-            t_blank_delayer.setText('')
-            # store start times for phodaDelay
-            phodaDelay.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-            phodaDelay.tStart = globalClock.getTime(format='float')
-            phodaDelay.status = STARTED
-            thisExp.addData('phodaDelay.started', phodaDelay.tStart)
-            phodaDelay.maxDuration = None
-            # keep track of which components have finished
-            phodaDelayComponents = phodaDelay.components
-            for thisComponent in phodaDelay.components:
-                thisComponent.tStart = None
-                thisComponent.tStop = None
-                thisComponent.tStartRefresh = None
-                thisComponent.tStopRefresh = None
-                if hasattr(thisComponent, 'status'):
-                    thisComponent.status = NOT_STARTED
-            # reset timers
-            t = 0
-            _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-            frameN = -1
-            
-            # --- Run Routine "phodaDelay" ---
-            thisExp.currentRoutine = phodaDelay
-            phodaDelay.forceEnded = routineForceEnded = not continueRoutine
-            while continueRoutine:
-                # if trial has changed, end Routine now
-                if hasattr(thisPhoda_trial, 'status') and thisPhoda_trial.status == STOPPING:
-                    continueRoutine = False
-                # get current time
-                t = routineTimer.getTime()
-                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-                # update/draw components on each frame
-                
-                # *t_blank_delayer* updates
-                
-                # if t_blank_delayer is starting this frame...
-                if t_blank_delayer.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_blank_delayer.frameNStart = frameN  # exact frame index
-                    t_blank_delayer.tStart = t  # local t and not account for scr refresh
-                    t_blank_delayer.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_blank_delayer, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_blank_delayer.status = STARTED
-                    t_blank_delayer.setAutoDraw(True)
-                
-                # if t_blank_delayer is active this frame...
-                if t_blank_delayer.status == STARTED:
-                    # update params
-                    pass
-                
-                # if t_blank_delayer is stopping this frame...
-                if t_blank_delayer.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > t_blank_delayer.tStartRefresh + delay_time-frameTolerance:
-                        # keep track of stop time/frame for later
-                        t_blank_delayer.tStop = t  # not accounting for scr refresh
-                        t_blank_delayer.tStopRefresh = tThisFlipGlobal  # on global time
-                        t_blank_delayer.frameNStop = frameN  # exact frame index
-                        # update status
-                        t_blank_delayer.status = FINISHED
-                        t_blank_delayer.setAutoDraw(False)
-                
-                # check for quit (typically the Esc key)
-                if defaultKeyboard.getKeys(keyList=["escape"]):
-                    thisExp.status = FINISHED
-                if thisExp.status == FINISHED or endExpNow:
-                    endExperiment(thisExp, win=win)
-                    return
-                # pause experiment here if requested
-                if thisExp.status == PAUSED:
-                    pauseExperiment(
-                        thisExp=thisExp, 
-                        win=win, 
-                        timers=[routineTimer, globalClock], 
-                        currentRoutine=phodaDelay,
-                    )
-                    # skip the frame we paused on
-                    continue
-                
-                # has a Component requested the Routine to end?
-                if not continueRoutine:
-                    phodaDelay.forceEnded = routineForceEnded = True
-                # has the Routine been forcibly ended?
-                if phodaDelay.forceEnded or routineForceEnded:
-                    break
-                # has every Component finished?
+        # --- Run Routine "fixation" ---
+        thisExp.currentRoutine = fixation
+        fixation.forceEnded = routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # if trial has changed, end Routine now
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
                 continueRoutine = False
-                for thisComponent in phodaDelay.components:
-                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                        continueRoutine = True
-                        break  # at least one component has not yet finished
-                
-                # refresh the screen
-                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                    win.flip()
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
             
-            # --- Ending Routine "phodaDelay" ---
-            for thisComponent in phodaDelay.components:
-                if hasattr(thisComponent, "setAutoDraw"):
-                    thisComponent.setAutoDraw(False)
-            # store stop times for phodaDelay
-            phodaDelay.tStop = globalClock.getTime(format='float')
-            phodaDelay.tStopRefresh = tThisFlipGlobal
-            thisExp.addData('phodaDelay.stopped', phodaDelay.tStop)
-            # the Routine "phodaDelay" was not non-slip safe, so reset the non-slip timer
-            routineTimer.reset()
+            # *cross_fixation* updates
             
-            # --- Prepare to start Routine "phodaView" ---
-            # create an object to store info about Routine phodaView
-            phodaView = data.Routine(
-                name='phodaView',
-                components=[image_phoda, p_port_phoda, t_phoda_continue, key_resp_phoda],
-            )
-            phodaView.status = NOT_STARTED
-            continueRoutine = True
-            # update component parameters for each repeat
-            # Run 'Begin Routine' code from code_phoda_helper
-            # PsychoPy Builder evaluates component start conditions before any code runs.
-            # We compute a stable flag here so both t_phoda_continue and key_resp_phoda
-            # can rely on it without hitting race‑condition issues.
-            canContinue = isModeView
+            # if cross_fixation is starting this frame...
+            if cross_fixation.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                cross_fixation.frameNStart = frameN  # exact frame index
+                cross_fixation.tStart = t  # local t and not account for scr refresh
+                cross_fixation.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(cross_fixation, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'cross_fixation.started')
+                # update status
+                cross_fixation.status = STARTED
+                cross_fixation.setAutoDraw(True)
             
-            # Tracks the last displayed slider value so we only update the rating text
-            # when the marker actually changes. This prevents unnecessary property updates
-            # and keeps the log file clean.
-            last_rating_value = "INIT"
+            # if cross_fixation is active this frame...
+            if cross_fixation.status == STARTED:
+                # update params
+                pass
             
-            # Only draw slider components in rate mode. View mode hides all rating UI.
-            if isModeRate:
-                phoda_autodraw_on()
-            
-            # Reset the slider so markerPos doesn't carry over between trials.
-            ps_phoda_slider.reset()
-            
-            # Set the image path for this trial. Used by image_phoda to load the correct photo.
-            ps_phoda_img_path = f'phoda-stimuli\\{phoda_photo}'
-            
-            image_phoda.setPos((0, ps_phoda_comp_img_pos_y))
-            image_phoda.setSize(ps_phoda_comp_img_size)
-            image_phoda.setImage(ps_phoda_img_path)
-            t_phoda_continue.setPos((0, t_phoda_continue_pos_y))
-            t_phoda_continue.setText('Press the SPACEBAR to continue')
-            # create starting attributes for key_resp_phoda
-            key_resp_phoda.keys = []
-            key_resp_phoda.rt = []
-            _key_resp_phoda_allKeys = []
-            # store start times for phodaView
-            phodaView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-            phodaView.tStart = globalClock.getTime(format='float')
-            phodaView.status = STARTED
-            thisExp.addData('phodaView.started', phodaView.tStart)
-            phodaView.maxDuration = None
-            # keep track of which components have finished
-            phodaViewComponents = phodaView.components
-            for thisComponent in phodaView.components:
-                thisComponent.tStart = None
-                thisComponent.tStop = None
-                thisComponent.tStartRefresh = None
-                thisComponent.tStopRefresh = None
-                if hasattr(thisComponent, 'status'):
-                    thisComponent.status = NOT_STARTED
-            # reset timers
-            t = 0
-            _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-            frameN = -1
-            
-            # --- Run Routine "phodaView" ---
-            thisExp.currentRoutine = phodaView
-            phodaView.forceEnded = routineForceEnded = not continueRoutine
-            while continueRoutine:
-                # if trial has changed, end Routine now
-                if hasattr(thisPhoda_trial, 'status') and thisPhoda_trial.status == STOPPING:
-                    continueRoutine = False
-                # get current time
-                t = routineTimer.getTime()
-                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-                # update/draw components on each frame
-                # Run 'Each Frame' code from code_phoda_helper
-                # Draws the slider, labels, and rating
-                if isModeRate:
-                    last_rating_value = update_phoda_rating_text(last_rating_value)
-                    # If rated, allow spacebar to end the routine
-                    if ps_phoda_slider.getRating() is not None:
-                        canContinue = True
-                
-                
-                
-                # *image_phoda* updates
-                
-                # if image_phoda is starting this frame...
-                if image_phoda.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    image_phoda.frameNStart = frameN  # exact frame index
-                    image_phoda.tStart = t  # local t and not account for scr refresh
-                    image_phoda.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(image_phoda, 'tStartRefresh')  # time at next scr refresh
+            # if cross_fixation is stopping this frame...
+            if cross_fixation.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > cross_fixation.tStartRefresh + 300-frameTolerance:
+                    # keep track of stop time/frame for later
+                    cross_fixation.tStop = t  # not accounting for scr refresh
+                    cross_fixation.tStopRefresh = tThisFlipGlobal  # on global time
+                    cross_fixation.frameNStop = frameN  # exact frame index
                     # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'image_phoda.started')
+                    thisExp.timestampOnFlip(win, 'cross_fixation.stopped')
                     # update status
-                    image_phoda.status = STARTED
-                    image_phoda.setAutoDraw(True)
-                
-                # if image_phoda is active this frame...
-                if image_phoda.status == STARTED:
-                    # update params
-                    pass
-                
-                # if image_phoda is stopping this frame...
-                if image_phoda.status == STARTED:
-                    # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > image_phoda.tStartRefresh + 6-frameTolerance:
-                        # keep track of stop time/frame for later
-                        image_phoda.tStop = t  # not accounting for scr refresh
-                        image_phoda.tStopRefresh = tThisFlipGlobal  # on global time
-                        image_phoda.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'image_phoda.stopped')
-                        # update status
-                        image_phoda.status = FINISHED
-                        image_phoda.setAutoDraw(False)
-                # *p_port_phoda* updates
-                
-                # if p_port_phoda is starting this frame...
-                if p_port_phoda.status == NOT_STARTED and image_phoda.status == STARTED:
-                    # keep track of start time/frame for later
-                    p_port_phoda.frameNStart = frameN  # exact frame index
-                    p_port_phoda.tStart = t  # local t and not account for scr refresh
-                    p_port_phoda.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(p_port_phoda, 'tStartRefresh')  # time at next scr refresh
+                    cross_fixation.status = FINISHED
+                    cross_fixation.setAutoDraw(False)
+            
+            # *t_fixation_closed* updates
+            
+            # if t_fixation_closed is starting this frame...
+            if t_fixation_closed.status == NOT_STARTED and Category == "Closed-Eyes":
+                # keep track of start time/frame for later
+                t_fixation_closed.frameNStart = frameN  # exact frame index
+                t_fixation_closed.tStart = t  # local t and not account for scr refresh
+                t_fixation_closed.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_fixation_closed, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_fixation_closed.status = STARTED
+                t_fixation_closed.setAutoDraw(True)
+            
+            # if t_fixation_closed is active this frame...
+            if t_fixation_closed.status == STARTED:
+                # update params
+                pass
+            
+            # if t_fixation_closed is stopping this frame...
+            if t_fixation_closed.status == STARTED:
+                if bool(Category != "Closed-Eyes"):
+                    # keep track of stop time/frame for later
+                    t_fixation_closed.tStop = t  # not accounting for scr refresh
+                    t_fixation_closed.tStopRefresh = tThisFlipGlobal  # on global time
+                    t_fixation_closed.frameNStop = frameN  # exact frame index
+                    # update status
+                    t_fixation_closed.status = FINISHED
+                    t_fixation_closed.setAutoDraw(False)
+            # *p_port_fixation* updates
+            
+            # if p_port_fixation is starting this frame...
+            if p_port_fixation.status == NOT_STARTED and cross_fixation.status == STARTED:
+                # keep track of start time/frame for later
+                p_port_fixation.frameNStart = frameN  # exact frame index
+                p_port_fixation.tStart = t  # local t and not account for scr refresh
+                p_port_fixation.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(p_port_fixation, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'p_port_fixation.started')
+                # update status
+                p_port_fixation.status = STARTED
+                p_port_fixation.status = STARTED
+                win.callOnFlip(p_port_fixation.setData, int(1))
+            
+            # if p_port_fixation is stopping this frame...
+            if p_port_fixation.status == STARTED:
+                if bool(cross_fixation.status == STOPPED):
+                    # keep track of stop time/frame for later
+                    p_port_fixation.tStop = t  # not accounting for scr refresh
+                    p_port_fixation.tStopRefresh = tThisFlipGlobal  # on global time
+                    p_port_fixation.frameNStop = frameN  # exact frame index
                     # add timestamp to datafile
-                    thisExp.addData('p_port_phoda.started', t)
+                    thisExp.timestampOnFlip(win, 'p_port_fixation.stopped')
                     # update status
-                    p_port_phoda.status = STARTED
-                    p_port_phoda.status = STARTED
-                    win.callOnFlip(p_port_phoda.setData, int(1))
-                
-                # if p_port_phoda is stopping this frame...
-                if p_port_phoda.status == STARTED:
-                    if bool(image_phoda.status == STOPPED):
-                        # keep track of stop time/frame for later
-                        p_port_phoda.tStop = t  # not accounting for scr refresh
-                        p_port_phoda.tStopRefresh = tThisFlipGlobal  # on global time
-                        p_port_phoda.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.addData('p_port_phoda.stopped', t)
-                        # update status
-                        p_port_phoda.status = FINISHED
-                        win.callOnFlip(p_port_phoda.setData, int(0))
-                
-                # *t_phoda_continue* updates
-                
-                # if t_phoda_continue is starting this frame...
-                if t_phoda_continue.status == NOT_STARTED and canContinue:
-                    # keep track of start time/frame for later
-                    t_phoda_continue.frameNStart = frameN  # exact frame index
-                    t_phoda_continue.tStart = t  # local t and not account for scr refresh
-                    t_phoda_continue.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_phoda_continue, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_phoda_continue.status = STARTED
-                    t_phoda_continue.setAutoDraw(True)
-                
-                # if t_phoda_continue is active this frame...
-                if t_phoda_continue.status == STARTED:
-                    # update params
-                    pass
-                
-                # if t_phoda_continue is stopping this frame...
-                if t_phoda_continue.status == STARTED:
-                    if bool(isModeView):
-                        # keep track of stop time/frame for later
-                        t_phoda_continue.tStop = t  # not accounting for scr refresh
-                        t_phoda_continue.tStopRefresh = tThisFlipGlobal  # on global time
-                        t_phoda_continue.frameNStop = frameN  # exact frame index
-                        # update status
-                        t_phoda_continue.status = FINISHED
-                        t_phoda_continue.setAutoDraw(False)
-                
-                # *key_resp_phoda* updates
-                waitOnFlip = False
-                
-                # if key_resp_phoda is starting this frame...
-                if key_resp_phoda.status == NOT_STARTED and canContinue:
-                    # keep track of start time/frame for later
-                    key_resp_phoda.frameNStart = frameN  # exact frame index
-                    key_resp_phoda.tStart = t  # local t and not account for scr refresh
-                    key_resp_phoda.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(key_resp_phoda, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    key_resp_phoda.status = STARTED
-                    # keyboard checking is just starting
-                    waitOnFlip = True
-                    win.callOnFlip(key_resp_phoda.clock.reset)  # t=0 on next screen flip
-                    win.callOnFlip(key_resp_phoda.clearEvents, eventType='keyboard')  # clear events on next screen flip
-                
-                # if key_resp_phoda is stopping this frame...
-                if key_resp_phoda.status == STARTED:
-                    if bool(isModeView):
-                        # keep track of stop time/frame for later
-                        key_resp_phoda.tStop = t  # not accounting for scr refresh
-                        key_resp_phoda.tStopRefresh = tThisFlipGlobal  # on global time
-                        key_resp_phoda.frameNStop = frameN  # exact frame index
-                        # update status
-                        key_resp_phoda.status = FINISHED
-                        key_resp_phoda.status = FINISHED
-                if key_resp_phoda.status == STARTED and not waitOnFlip:
-                    theseKeys = key_resp_phoda.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                    _key_resp_phoda_allKeys.extend(theseKeys)
-                    if len(_key_resp_phoda_allKeys):
-                        key_resp_phoda.keys = _key_resp_phoda_allKeys[-1].name  # just the last key pressed
-                        key_resp_phoda.rt = _key_resp_phoda_allKeys[-1].rt
-                        key_resp_phoda.duration = _key_resp_phoda_allKeys[-1].duration
-                        # a response ends the routine
-                        continueRoutine = False
-                
-                # check for quit (typically the Esc key)
-                if defaultKeyboard.getKeys(keyList=["escape"]):
-                    thisExp.status = FINISHED
-                if thisExp.status == FINISHED or endExpNow:
-                    endExperiment(thisExp, win=win)
-                    return
-                # pause experiment here if requested
-                if thisExp.status == PAUSED:
-                    pauseExperiment(
-                        thisExp=thisExp, 
-                        win=win, 
-                        timers=[routineTimer, globalClock], 
-                        currentRoutine=phodaView,
-                    )
-                    # skip the frame we paused on
-                    continue
-                
-                # has a Component requested the Routine to end?
-                if not continueRoutine:
-                    phodaView.forceEnded = routineForceEnded = True
-                # has the Routine been forcibly ended?
-                if phodaView.forceEnded or routineForceEnded:
-                    break
-                # has every Component finished?
-                continueRoutine = False
-                for thisComponent in phodaView.components:
-                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                        continueRoutine = True
-                        break  # at least one component has not yet finished
-                
-                # refresh the screen
-                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                    win.flip()
+                    p_port_fixation.status = FINISHED
+                    win.callOnFlip(p_port_fixation.setData, int(0))
             
-            # --- Ending Routine "phodaView" ---
-            for thisComponent in phodaView.components:
-                if hasattr(thisComponent, "setAutoDraw"):
-                    thisComponent.setAutoDraw(False)
-            # store stop times for phodaView
-            phodaView.tStop = globalClock.getTime(format='float')
-            phodaView.tStopRefresh = tThisFlipGlobal
-            thisExp.addData('phodaView.stopped', phodaView.tStop)
-            # Run 'End Routine' code from code_phoda_helper
-            phoda_autodraw_off()
-            
-            if isModeRate:
-                currentLoop.addData('rating', ps_phoda_slider.getRating())
-                currentLoop.addData('rating_rt', ps_phoda_slider.getRT())
-                currentLoop.addData('delay_time', delay_time)
-                try:
-                    print(f'{phoda_photo} rating: {ps_phoda_slider.getRating()}')
-                    logging.data(f'{phoda_photo} rating: {ps_phoda_slider.getRating()}')
-                    logging.data(f'{phoda_photo} rating_rt: {ps_phoda_slider.getRT()}')
-                except:
-                    logging.error("Error printing phoda rating")
-            if p_port_phoda.status == STARTED:
-                win.callOnFlip(p_port_phoda.setData, int(0))
-            # the Routine "phodaView" was not non-slip safe, so reset the non-slip timer
-            routineTimer.reset()
-            # mark thisPhoda_trial as finished
-            if hasattr(thisPhoda_trial, 'status'):
-                thisPhoda_trial.status = FINISHED
-            # if awaiting a pause, pause now
-            if phoda_trials.status == PAUSED:
-                thisExp.status = PAUSED
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            # pause experiment here if requested
+            if thisExp.status == PAUSED:
                 pauseExperiment(
                     thisExp=thisExp, 
                     win=win, 
-                    timers=[globalClock], 
+                    timers=[routineTimer, globalClock], 
+                    currentRoutine=fixation,
                 )
-                # once done pausing, restore running status
-                phoda_trials.status = STARTED
-            thisExp.nextEntry()
+                # skip the frame we paused on
+                continue
             
-        # completed 1.0 repeats of 'phoda_trials'
-        phoda_trials.status = FINISHED
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
+                fixation.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if fixation.forceEnded or routineForceEnded:
+                break
+            # has every Component finished?
+            continueRoutine = False
+            for thisComponent in fixation.components:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
         
-        if thisSession is not None:
-            # if running in a Session with a Liaison client, send data up to now
-            thisSession.sendExperimentData()
-        # get names of stimulus parameters
-        if phoda_trials.trialList in ([], [None], None):
-            params = []
-        else:
-            params = phoda_trials.trialList[0].keys()
-        # save data for this loop
-        phoda_trials.saveAsExcel(filename + '.xlsx', sheetName='phoda_trials',
-            stimOut=params,
-            dataOut=['n','all_mean','all_std', 'all_raw'])
+        # --- Ending Routine "fixation" ---
+        for thisComponent in fixation.components:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # store stop times for fixation
+        fixation.tStop = globalClock.getTime(format='float')
+        fixation.tStopRefresh = tThisFlipGlobal
+        thisExp.addData('fixation.stopped', fixation.tStop)
+        if p_port_fixation.status == STARTED:
+            win.callOnFlip(p_port_fixation.setData, int(0))
+        # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         
         # set up handler to look after randomisation of conditions etc
         state_measure_trials = data.TrialHandler2(
@@ -2274,7 +1462,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             originPath=-1, 
             trialList=data.importConditions(
             '../../shared/loop-templates/loopStateMeasure.csv', 
-            selection='0:7'
+            selection='[0, 1, 2, 3, 4, 5, 6]'
         )
         , 
             seed=None, 
@@ -2308,85 +1496,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+                components=[t_sm_continue, key_resp_sm],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
             # Run 'Begin Routine' code from code_sm_helper
-            allowContinue = False
-            
-            # Parse tick values from the condition file
-            tick_values_parsed = parse_tick_values(tick_values)
-            
-            try:
-                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-                logging.debug(f"State-measure tick values: {tick_values_parsed}")
-            except:
-                logging.error("Error printing current state measure row.")
-            
-            # Compute geometry based on rating type
-            sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-            
-            sm_comp_slider_size = sm_geometry["slider_size"]
-            sm_comp_slider_pos  = sm_geometry["slider_pos"]
-            sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-            sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-            
-            t_sm_label_min = visual.TextStim(
-                win=win,
-                text=rating_min_label,
-                pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            t_sm_label_max = visual.TextStim(
-                win=win,
-                text=rating_max_label,
-                pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            #t_label_min.setPos(sm_comp_label_min_pos)
-            #t_label_max.setPos(sm_comp_label_max_pos)
-            
             # --- Create a fresh slider for this trial ---
-            sm_slider = visual.Slider(
-                win=win,
-                ticks=tick_values_parsed,
-                labels=tick_values_parsed,
-                granularity=granularity,
-                style=style.lower(),
-                pos=sm_comp_slider_pos,
-                size=sm_comp_slider_size,
-                labelHeight=0.05,
-                colorSpace='rgb',
-                markerColor='Red',
-                lineColor='White',
-                labelColor='LightGray',
-                font='Noto Sans'
-            )
-            
-            # --- SAM image logic ---
-            if rating_type == 'SAM':
-                image_SAM.setImage(picture_path)
-                image_SAM.setAutoDraw(True)
-            else:
-                image_SAM.setAutoDraw(False)
-            
-            image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-            image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-            image_SAM.setImage(picture_path)
-            t_sm_message.setText(rating_message)
+            allowContinue = False
+            sm.begin_routine_from_category(rating_category)
             # create starting attributes for key_resp_sm
             key_resp_sm.keys = []
             key_resp_sm.rt = []
@@ -2425,51 +1543,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
                 # Run 'Each Frame' code from code_sm_helper
-                # Draw state measure components
-                sm_slider.draw()
-                t_sm_label_min.draw()
-                t_sm_label_max.draw()
-                
                 # If rated, allow spacebar to end the routine
-                if sm_slider.getRating() is not None:
+                if sm.has_rating():
                     allowContinue = True
-                
-                
-                # *image_SAM* updates
-                
-                # if image_SAM is starting this frame...
-                if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    image_SAM.frameNStart = frameN  # exact frame index
-                    image_SAM.tStart = t  # local t and not account for scr refresh
-                    image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    image_SAM.status = STARTED
-                    image_SAM.setAutoDraw(True)
-                
-                # if image_SAM is active this frame...
-                if image_SAM.status == STARTED:
-                    # update params
-                    pass
-                
-                # *t_sm_message* updates
-                
-                # if t_sm_message is starting this frame...
-                if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_sm_message.frameNStart = frameN  # exact frame index
-                    t_sm_message.tStart = t  # local t and not account for scr refresh
-                    t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_sm_message.status = STARTED
-                    t_sm_message.setAutoDraw(True)
-                
-                # if t_sm_message is active this frame...
-                if t_sm_message.status == STARTED:
-                    # update params
-                    pass
                 
                 # *t_sm_continue* updates
                 
@@ -2558,14 +1634,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            #thisExp.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating_rt', sm_slider.getRT())
-            
-            try:
-                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-            except:
-                logging.error("Error printing state-measure rating")
+            # Log rating, rt, and turn off AutoDraw
+            sm.end_routine(currentLoop)
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_trial as finished
@@ -2598,11 +1668,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         state_measure_trials.saveAsExcel(filename + '.xlsx', sheetName='state_measure_trials',
             stimOut=params,
             dataOut=['n','all_mean','all_std', 'all_raw'])
-        # mark thisPhoda_mode_loop as finished
-        if hasattr(thisPhoda_mode_loop, 'status'):
-            thisPhoda_mode_loop.status = FINISHED
+        # mark thisOpenclosed2x_trial as finished
+        if hasattr(thisOpenclosed2x_trial, 'status'):
+            thisOpenclosed2x_trial.status = FINISHED
         # if awaiting a pause, pause now
-        if phoda_mode_loop.status == PAUSED:
+        if openclosed2x_trials.status == PAUSED:
             thisExp.status = PAUSED
             pauseExperiment(
                 thisExp=thisExp, 
@@ -2610,22 +1680,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[globalClock], 
             )
             # once done pausing, restore running status
-            phoda_mode_loop.status = STARTED
+            openclosed2x_trials.status = STARTED
         thisExp.nextEntry()
         
-    # completed 1.0 repeats of 'phoda_mode_loop'
-    phoda_mode_loop.status = FINISHED
+    # completed 1.0 repeats of 'openclosed2x_trials'
+    openclosed2x_trials.status = FINISHED
     
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     # get names of stimulus parameters
-    if phoda_mode_loop.trialList in ([], [None], None):
+    if openclosed2x_trials.trialList in ([], [None], None):
         params = []
     else:
-        params = phoda_mode_loop.trialList[0].keys()
+        params = openclosed2x_trials.trialList[0].keys()
     # save data for this loop
-    phoda_mode_loop.saveAsExcel(filename + '.xlsx', sheetName='phoda_mode_loop',
+    openclosed2x_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed2x_trials',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     

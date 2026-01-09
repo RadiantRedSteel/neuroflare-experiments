@@ -1,0 +1,9 @@
+rating_type,rating_category,rating_message,rating_min_label,rating_max_label,picture_path,tick_values,granularity,style
+Generic,fatigue,Rate your current fatigue level,No fatigue\nat all,As bad as\nyou can imagine,,"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",1,rating
+Generic,sleepiness,Rate your current sleepiness level,Not at all sleepy,As bad as you can imagine,,"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",1,rating
+Generic,pain,Rate your current pain level,No pain,Worst possible pain,,"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",1,rating
+Generic,pain_unpleasantness,Rate your current pain unpleasantness level,Not at all unpleasant pain,Worst possible unpleasant pain,,"0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10",1,rating
+SAM,sam_valence,Rate how pleasant or unpleasant you feel,Pleasant,Unpleasant,../../shared/pictures/sam-valence.png,"1, 2, 3, 4, 5, 6, 7, 8, 9",1,radio
+SAM,sam_arousal,Rate how calm or excited you feel,Calm,Excited,../../shared/pictures/sam-arousal.png,"1, 2, 3, 4, 5, 6, 7, 8, 9",1,radio
+SAM,sam_dominance,Rate how dominated or in control you feel,Dominated,In Control,../../shared/pictures/sam-dominance.png,"1, 2, 3, 4, 5, 6, 7, 8, 9",1,radio
+Generic,emotion_regulation,Rate how successful you were in doing the emotion regulation tasks,Not at all successful,Completely successful,,"0, 1, 2, 3, 4, 5, 6, 7",1,rating

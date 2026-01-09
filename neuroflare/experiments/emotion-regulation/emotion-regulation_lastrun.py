@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 06, 2026, at 20:20
+    on January 08, 2026, at 22:34
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -249,7 +249,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
 expName = 'emotion-regulation'  # from the Builder filename that created this script
-expVersion = '0.5'
+expVersion = '0.51'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -341,7 +341,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version=expVersion,
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='D:\\Github\\neuroflare-experiments\\psychopy\\experiments\\emotion-regulation\\emotion-regulation.py',
+        originPath='D:\\Github\\neuroflare-experiments\\neuroflare\\experiments\\emotion-regulation\\emotion-regulation_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -631,126 +631,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # The stateMeasure routine depends on this setup code to
     # size components correctly and interpret SAM/text settings.
     # ------------------------------------------------------------
+    _THIS_DIR = os.path.dirname(__file__)
+    _REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, '..', '..', '..'))
+    if _REPO_ROOT not in sys.path:
+        sys.path.insert(0, _REPO_ROOT)
     
-    # --- Helper functions for dynamic slider configuration ---
-    def parse_tick_values(raw):
-        # If PsychoPy already parsed it into a list, just return it
-        if isinstance(raw, list):
-            return raw
-        # Otherwise assume it's a comma-separated string
-        return [int(x.strip()) for x in raw.split(',')]
+    from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
-    # ===============================================================
-    # ============== STATE-MEASURE SPECIFIC GEOMETRY ================
-    # ===============================================================
-    
-    def sm_compute_tick_positions(tick_values, rating_type):
-        """
-        Compute slider size, slider position, and min/max label positions
-        for both SAM and Generic rating types.
-        """
-    
-        if rating_type == "SAM":
-            # SAM uses the precomputed geometry
-            slider_size = (sm_sam_comp_slider_width, sm_sam_comp_slider_size_height)
-            slider_pos  = (0, sm_sam_comp_slider_pos_y)
-    
-            # Tick positions already computed globally
-            tick_positions = sm_sam_tick_positions
-    
-            label_min_pos = (tick_positions[0],  sm_sam_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_sam_comp_label_pos_y)
-    
-        else:
-            # Generic slider: evenly spaced ticks across the slider width
-            slider_size = (sm_gen_comp_slider_size_width, sm_gen_comp_slider_size_height)
-            slider_pos  = (0, sm_gen_comp_slider_pos_y)
-    
-            # Compute generic tick positions dynamically
-            num_ticks = len(tick_values)
-            half_width = sm_gen_comp_slider_size_width / 2
-    
-            # Even spacing across the width
-            tick_positions = [
-                -half_width + (i / (num_ticks - 1)) * sm_gen_comp_slider_size_width
-                for i in range(num_ticks)
-            ]
-    
-            # Labels sit below the slider
-            label_min_pos = (tick_positions[0],  sm_gen_comp_label_pos_y)
-            label_max_pos = (tick_positions[-1], sm_gen_comp_label_pos_y)
-    
-        return {
-            "slider_size": slider_size,
-            "slider_pos": slider_pos,
-            "tick_positions": tick_positions,
-            "label_min_pos": label_min_pos,
-            "label_max_pos": label_max_pos
-        }
-    
-    # ===============================================================
-    # =================== GEN SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- Generic Slider Scaling ---
-    # Full-width slider across screen
-    # Generic slider (used when rating_type != "SAM")
-    
-    # Slider layout (height units)
-    sm_gen_comp_slider_size_width  = aspect * 0.6  # 60% of screen width
-    sm_gen_comp_slider_size_height = 0.1           # slider thickness/height
-    sm_gen_comp_slider_pos_y       = 0             # vertical position of the slider center
-    
-    # Label Min/Max layout
-    sm_gen_comp_label_pos_y = sm_gen_comp_slider_pos_y - 0.2
-    
-    # ===============================================================
-    # =================== SAM SPECIFIC GEOMETRY =====================
-    # ===============================================================
-    
-    # --- SAM image geometry (pixels) ---
-    sm_sam_img_px_width  = 1168
-    sm_sam_img_px_height = 231
-    sm_sam_img_aspect    = sm_sam_img_px_width / sm_sam_img_px_height  # ≈ 5.056
-    
-    # Pictogram/gap geometry (pixels)
-    # Note: there are 5 pictograms and 4 gaps spanning the full image width
-    sm_sam_pictogram_px_width     = 215
-    sm_sam_pictogram_gap_px_width = 23
-    
-    # --- Layout decisions (height units) ---
-    sm_sam_comp_img_size_height = 0.25                                             # 25% of screen height
-    sm_sam_comp_img_size_width  = sm_sam_comp_img_size_height * sm_sam_img_aspect  # scaled width based on aspect
-    sm_sam_comp_img_pos_y       = 0.1                                              # vertical position of the image
-    
-    # Message Layout
-    sm_sam_comp_message_pos_y = sm_sam_comp_img_pos_y + 0.2
-    
-    # Slider layout (height units)
-    sm_sam_comp_slider_pos_y       = -0.09      # vertical position of the slider center
-    sm_sam_comp_slider_size_height = 0.06       # slider thickness/height
-    sm_sam_slider_px_width    = sm_sam_img_px_width - 215
-    sm_sam_comp_slider_width  = sm_sam_comp_img_size_width * (sm_sam_slider_px_width / sm_sam_img_px_width)
-    
-    # Scale factor: px -> 'height' units within the image width
-    sm_sam_scale_factor = sm_sam_comp_img_size_width / sm_sam_img_px_width
-    
-    sm_sam_pictogram_w  = sm_sam_pictogram_px_width * sm_sam_scale_factor
-    sm_sam_gap_w        = sm_sam_pictogram_gap_px_width * sm_sam_scale_factor
-    
-    # --- Compute 9 tick x-positions aligned to pictograms ---
-    sm_sam_tick_positions = []
-    sm_sam_tick_x = -sm_sam_comp_img_size_width / 2 + sm_sam_pictogram_w / 2
-    
-    for i in range(9):
-        sm_sam_tick_positions.append(sm_sam_tick_x)
-        if i % 2 == 0:
-            sm_sam_tick_x += sm_sam_pictogram_w / 2 + sm_sam_gap_w / 2
-        else:
-            sm_sam_tick_x += sm_sam_gap_w / 2 + sm_sam_pictogram_w / 2
-    
-    # Label Min/Max layout
-    sm_sam_comp_label_pos_y = sm_sam_comp_slider_pos_y - 0.15
+    sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
     # Run 'Begin Experiment' code from code_iasp_setup
     # ------------------------------------------------------------
     # code_iasp_setup
@@ -768,7 +656,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if aspect >= iasp_img_aspect:
         # Height fills the screen (minus a small margin if you want)
         iasp_comp_img_size_height = 1.0
-        iasp_comp_img_size_width = iasp_comp_img_size_height * aspect
+        iasp_comp_img_size_width = iasp_comp_img_size_height * iasp_img_aspect
     else:
         # Width fills the screen
         iasp_comp_img_size_width = aspect
@@ -805,33 +693,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instructionNeutral" ---
     t_neutral_instruction = visual.TextStim(win=win, name='t_neutral_instruction',
-        text='',
+        text='First, you will just view neutral pictures. \n\nLook at each picture naturally as it appears.\nDo not try to change your thoughts, feelings, or reactions.\nSimply observe the picture and let your response unfold on its own.',
         font='Arial',
         pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -878,36 +751,29 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
+    # Run 'Begin Experiment' code from code_iasp_helper
+    background_box = visual.Rect(
+        win,
+        width=aspect,   # full width in height units
+        height=1.0,     # full height
+        fillColor='black',
+        lineColor='black'
+    )
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instructionPractice" ---
     t_practice_instruction = visual.TextStim(win=win, name='t_practice_instruction',
-        text='',
+        text='You will see examples of unpleasant pictures. \n\nLook at each picture naturally as it appears.\nDo not try to change your thoughts, feelings, or reactions.\nSimply observe the picture and let your response unfold on its own.',
         font='Arial',
         pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -954,6 +820,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
+    # Run 'Begin Experiment' code from code_iasp_helper
+    background_box = visual.Rect(
+        win,
+        width=aspect,   # full width in height units
+        height=1.0,     # full height
+        fillColor='black',
+        lineColor='black'
+    )
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "instructionUnpleasant" ---
@@ -976,10 +850,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "reset" ---
     # Run 'Begin Experiment' code from code_slicer_helper
     reset_routine_counter = 0
-    just_view_text = "Just View\n\nSimply look at the picture as it appears.\nDo not try to change your feelings or reactions.\nLet your natural response happen and just observe."
-    suppress_text = "Suppress Emotion\n\nTry not to feel the unpleasant emotions the picture might bring up.\nYou can push the feelings down, ignore them, or keep a neutral expression.\nFocus on staying calm and steady."
-    reappraise_text = "Reappraise\n\nChange the way you think about the picture so it feels less unpleasant.\nYou might imagine the situation has a neutral or positive outcome, that it is staged or not real, or that the people are safe afterward."
-    suppress_and_reappraise_text = "Suppress and Reappraise\n\nUse both strategies at the same time.\nFirst reinterpret the picture to make it feel less unpleasant.\nAt the same time, try not to show or feel the unpleasant emotion."
+    just_view_text = "Just View\n\nLook at each picture naturally as it appears.\nDo not try to change your thoughts, feelings, or reactions.\nSimply observe the picture and let your response unfold on its own."
+    suppress_text = "Suppress Emotion\n\nTry to reduce or hold back the unpleasant feelings the picture might bring up.\nYou can push the feelings down, ignore them, or keep a neutral expression.\nFocus on staying steady and minimizing your emotional reaction."
+    reappraise_text = "Reappraise\n\nChange the way you think about the picture so it feels less unpleasant.\nYou might reinterpret what is happening, imagine a different meaning,\nor think about the situation in a way that makes it feel less intense."
+    suppress_and_reappraise_text = "Suppress and Reappraise\n\nUse both strategies at the same time.\nFirst, reinterpret the picture in a way that makes it feel less unpleasant.\nAt the same time, try to hold back or reduce your emotional reaction."
     t_reset_instruction = visual.TextStim(win=win, name='t_reset_instruction',
         text='',
         font='Arial',
@@ -1028,31 +902,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=0.0)
+    # Run 'Begin Experiment' code from code_iasp_helper
+    background_box = visual.Rect(
+        win,
+        width=aspect,   # full width in height units
+        height=1.0,     # full height
+        fillColor='black',
+        lineColor='black'
+    )
     p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
-    image_SAM = visual.ImageStim(
-        win=win,
-        name='image_SAM', units='height', 
-        image='default.png', mask=None, anchor='center',
-        ori=0.0, pos=[0,0], draggable=False, size=1.0,
-        color=[1,1,1], colorSpace='rgb', opacity=None,
-        flipHoriz=False, flipVert=False,
-        texRes=128.0, interpolate=True, depth=-1.0)
-    t_sm_message = visual.TextStim(win=win, name='t_sm_message',
-        text='',
-        font='Arial',
-        pos=(0, .35), draggable=False, height=0.07, wrapWidth=comp_wrap_width_header, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-2.0);
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
         text='Press the SPACEBAR to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-3.0);
+        depth=-1.0);
     key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
@@ -1421,85 +1288,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+            components=[t_sm_continue, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_sm_helper
-        allowContinue = False
-        
-        # Parse tick values from the condition file
-        tick_values_parsed = parse_tick_values(tick_values)
-        
-        try:
-            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-            logging.debug(f"State-measure tick values: {tick_values_parsed}")
-        except:
-            logging.error("Error printing current state measure row.")
-        
-        # Compute geometry based on rating type
-        sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-        
-        sm_comp_slider_size = sm_geometry["slider_size"]
-        sm_comp_slider_pos  = sm_geometry["slider_pos"]
-        sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-        sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-        
-        t_sm_label_min = visual.TextStim(
-            win=win,
-            text=rating_min_label,
-            pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        t_sm_label_max = visual.TextStim(
-            win=win,
-            text=rating_max_label,
-            pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        #t_label_min.setPos(sm_comp_label_min_pos)
-        #t_label_max.setPos(sm_comp_label_max_pos)
-        
         # --- Create a fresh slider for this trial ---
-        sm_slider = visual.Slider(
-            win=win,
-            ticks=tick_values_parsed,
-            labels=tick_values_parsed,
-            granularity=granularity,
-            style=style.lower(),
-            pos=sm_comp_slider_pos,
-            size=sm_comp_slider_size,
-            labelHeight=0.05,
-            colorSpace='rgb',
-            markerColor='Red',
-            lineColor='White',
-            labelColor='LightGray',
-            font='Noto Sans'
-        )
-        
-        # --- SAM image logic ---
-        if rating_type == 'SAM':
-            image_SAM.setImage(picture_path)
-            image_SAM.setAutoDraw(True)
-        else:
-            image_SAM.setAutoDraw(False)
-        
-        image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-        image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-        image_SAM.setImage(picture_path)
-        t_sm_message.setText(rating_message)
+        allowContinue = False
+        sm.begin_routine_from_category(rating_category)
         # create starting attributes for key_resp_sm
         key_resp_sm.keys = []
         key_resp_sm.rt = []
@@ -1538,51 +1335,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             # Run 'Each Frame' code from code_sm_helper
-            # Draw state measure components
-            sm_slider.draw()
-            t_sm_label_min.draw()
-            t_sm_label_max.draw()
-            
             # If rated, allow spacebar to end the routine
-            if sm_slider.getRating() is not None:
+            if sm.has_rating():
                 allowContinue = True
-            
-            
-            # *image_SAM* updates
-            
-            # if image_SAM is starting this frame...
-            if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                image_SAM.frameNStart = frameN  # exact frame index
-                image_SAM.tStart = t  # local t and not account for scr refresh
-                image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                image_SAM.status = STARTED
-                image_SAM.setAutoDraw(True)
-            
-            # if image_SAM is active this frame...
-            if image_SAM.status == STARTED:
-                # update params
-                pass
-            
-            # *t_sm_message* updates
-            
-            # if t_sm_message is starting this frame...
-            if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_sm_message.frameNStart = frameN  # exact frame index
-                t_sm_message.tStart = t  # local t and not account for scr refresh
-                t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_sm_message.status = STARTED
-                t_sm_message.setAutoDraw(True)
-            
-            # if t_sm_message is active this frame...
-            if t_sm_message.status == STARTED:
-                # update params
-                pass
             
             # *t_sm_continue* updates
             
@@ -1671,13 +1426,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        currentLoop.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating_rt', sm_slider.getRT())
-        
-        try:
-            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-        except:
-            logging.error("Error printing state-measure rating")
+        # Log rating, rt, and turn off AutoDraw
+        sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_pretrial as finished
@@ -1720,7 +1470,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionNeutral.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
-    t_neutral_instruction.setText('First, you will just view neutral pictures. \n\nLook at the picture naturally without trying to change your thoughts or feelings. Avoid thinking about unrelated topics.')
     # create starting attributes for key_resp_neutral
     key_resp_neutral.keys = []
     key_resp_neutral.rt = []
@@ -1920,10 +1669,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.status = STARTED
         thisExp.addData('emotionRegulationCue.started', emotionRegulationCue.tStart)
         emotionRegulationCue.maxDuration = None
-        win.color = [-1.0000, -1.0000, -1.0000]
-        win.colorSpace = 'rgb'
-        win.backgroundImage = ''
-        win.backgroundFit = 'none'
         # keep track of which components have finished
         emotionRegulationCueComponents = emotionRegulationCue.components
         for thisComponent in emotionRegulationCue.components:
@@ -2096,7 +1841,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.tStop = globalClock.getTime(format='float')
         emotionRegulationCue.tStopRefresh = tThisFlipGlobal
         thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
-        setupWindow(expInfo=expInfo, win=win)
         # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -2111,16 +1855,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update component parameters for each repeat
         image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
         image_iasp.setImage(photo_filename)
+        # Run 'Begin Routine' code from code_iasp_helper
+        background_box.setAutoDraw(True)
+        
         # store start times for iaspView
         iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         iaspView.tStart = globalClock.getTime(format='float')
         iaspView.status = STARTED
         thisExp.addData('iaspView.started', iaspView.tStart)
         iaspView.maxDuration = 5
-        win.color = [-1.0000, -1.0000, -1.0000]
-        win.colorSpace = 'rgb'
-        win.backgroundImage = ''
-        win.backgroundFit = 'none'
         # keep track of which components have finished
         iaspViewComponents = iaspView.components
         for thisComponent in iaspView.components:
@@ -2186,6 +1929,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     image_iasp.status = FINISHED
                     image_iasp.setAutoDraw(False)
+            # Run 'Each Frame' code from code_iasp_helper
+            if image_iasp.status == STOPPED:
+                background_box.autoDraw = False
             # *p_port_iasp* updates
             
             # if p_port_iasp is starting this frame...
@@ -2257,7 +2003,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStop = globalClock.getTime(format='float')
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
-        setupWindow(expInfo=expInfo, win=win)
+        # Run 'End Routine' code from code_iasp_helper
+        background_box.setAutoDraw(False)
         if p_port_iasp.status == STARTED:
             win.callOnFlip(p_port_iasp.setData, int(0))
         # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -2336,85 +2083,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+            components=[t_sm_continue, key_resp_sm],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_sm_helper
-        allowContinue = False
-        
-        # Parse tick values from the condition file
-        tick_values_parsed = parse_tick_values(tick_values)
-        
-        try:
-            logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-            logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-            logging.debug(f"State-measure tick values: {tick_values_parsed}")
-        except:
-            logging.error("Error printing current state measure row.")
-        
-        # Compute geometry based on rating type
-        sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-        
-        sm_comp_slider_size = sm_geometry["slider_size"]
-        sm_comp_slider_pos  = sm_geometry["slider_pos"]
-        sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-        sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-        
-        t_sm_label_min = visual.TextStim(
-            win=win,
-            text=rating_min_label,
-            pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        t_sm_label_max = visual.TextStim(
-            win=win,
-            text=rating_max_label,
-            pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-            wrapWidth=aspect20,
-            anchorVert='top',
-            height=0.05,
-            color='white',
-            font='Noto Sans'
-        )
-        
-        #t_label_min.setPos(sm_comp_label_min_pos)
-        #t_label_max.setPos(sm_comp_label_max_pos)
-        
         # --- Create a fresh slider for this trial ---
-        sm_slider = visual.Slider(
-            win=win,
-            ticks=tick_values_parsed,
-            labels=tick_values_parsed,
-            granularity=granularity,
-            style=style.lower(),
-            pos=sm_comp_slider_pos,
-            size=sm_comp_slider_size,
-            labelHeight=0.05,
-            colorSpace='rgb',
-            markerColor='Red',
-            lineColor='White',
-            labelColor='LightGray',
-            font='Noto Sans'
-        )
-        
-        # --- SAM image logic ---
-        if rating_type == 'SAM':
-            image_SAM.setImage(picture_path)
-            image_SAM.setAutoDraw(True)
-        else:
-            image_SAM.setAutoDraw(False)
-        
-        image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-        image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-        image_SAM.setImage(picture_path)
-        t_sm_message.setText(rating_message)
+        allowContinue = False
+        sm.begin_routine_from_category(rating_category)
         # create starting attributes for key_resp_sm
         key_resp_sm.keys = []
         key_resp_sm.rt = []
@@ -2453,51 +2130,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             # Run 'Each Frame' code from code_sm_helper
-            # Draw state measure components
-            sm_slider.draw()
-            t_sm_label_min.draw()
-            t_sm_label_max.draw()
-            
             # If rated, allow spacebar to end the routine
-            if sm_slider.getRating() is not None:
+            if sm.has_rating():
                 allowContinue = True
-            
-            
-            # *image_SAM* updates
-            
-            # if image_SAM is starting this frame...
-            if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                image_SAM.frameNStart = frameN  # exact frame index
-                image_SAM.tStart = t  # local t and not account for scr refresh
-                image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                image_SAM.status = STARTED
-                image_SAM.setAutoDraw(True)
-            
-            # if image_SAM is active this frame...
-            if image_SAM.status == STARTED:
-                # update params
-                pass
-            
-            # *t_sm_message* updates
-            
-            # if t_sm_message is starting this frame...
-            if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_sm_message.frameNStart = frameN  # exact frame index
-                t_sm_message.tStart = t  # local t and not account for scr refresh
-                t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_sm_message.status = STARTED
-                t_sm_message.setAutoDraw(True)
-            
-            # if t_sm_message is active this frame...
-            if t_sm_message.status == STARTED:
-                # update params
-                pass
             
             # *t_sm_continue* updates
             
@@ -2586,13 +2221,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         stateMeasure.tStopRefresh = tThisFlipGlobal
         thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
         # Run 'End Routine' code from code_sm_helper
-        currentLoop.addData('rating', sm_slider.getRating())
-        currentLoop.addData('rating_rt', sm_slider.getRT())
-        
-        try:
-            logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-        except:
-            logging.error("Error printing state-measure rating")
+        # Log rating, rt, and turn off AutoDraw
+        sm.end_routine(currentLoop)
         # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisState_measure_neutral as finished
@@ -2635,7 +2265,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     instructionPractice.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
-    t_practice_instruction.setText('Next, you will see examples of unpleasant pictures. \n\nLook at the picture naturally without trying to change your thoughts or feelings. Avoid thinking about unrelated topics.\n')
     # create starting attributes for key_resp_practice
     key_resp_practice.keys = []
     key_resp_practice.rt = []
@@ -2835,10 +2464,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.status = STARTED
         thisExp.addData('emotionRegulationCue.started', emotionRegulationCue.tStart)
         emotionRegulationCue.maxDuration = None
-        win.color = [-1.0000, -1.0000, -1.0000]
-        win.colorSpace = 'rgb'
-        win.backgroundImage = ''
-        win.backgroundFit = 'none'
         # keep track of which components have finished
         emotionRegulationCueComponents = emotionRegulationCue.components
         for thisComponent in emotionRegulationCue.components:
@@ -3011,7 +2636,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.tStop = globalClock.getTime(format='float')
         emotionRegulationCue.tStopRefresh = tThisFlipGlobal
         thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
-        setupWindow(expInfo=expInfo, win=win)
         # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -3026,16 +2650,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update component parameters for each repeat
         image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
         image_iasp.setImage(photo_filename)
+        # Run 'Begin Routine' code from code_iasp_helper
+        background_box.setAutoDraw(True)
+        
         # store start times for iaspView
         iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         iaspView.tStart = globalClock.getTime(format='float')
         iaspView.status = STARTED
         thisExp.addData('iaspView.started', iaspView.tStart)
         iaspView.maxDuration = 5
-        win.color = [-1.0000, -1.0000, -1.0000]
-        win.colorSpace = 'rgb'
-        win.backgroundImage = ''
-        win.backgroundFit = 'none'
         # keep track of which components have finished
         iaspViewComponents = iaspView.components
         for thisComponent in iaspView.components:
@@ -3101,6 +2724,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     image_iasp.status = FINISHED
                     image_iasp.setAutoDraw(False)
+            # Run 'Each Frame' code from code_iasp_helper
+            if image_iasp.status == STOPPED:
+                background_box.autoDraw = False
             # *p_port_iasp* updates
             
             # if p_port_iasp is starting this frame...
@@ -3172,7 +2798,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStop = globalClock.getTime(format='float')
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
-        setupWindow(expInfo=expInfo, win=win)
+        # Run 'End Routine' code from code_iasp_helper
+        background_box.setAutoDraw(False)
         if p_port_iasp.status == STARTED:
             win.callOnFlip(p_port_iasp.setData, int(0))
         # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -3652,10 +3279,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             emotionRegulationCue.status = STARTED
             thisExp.addData('emotionRegulationCue.started', emotionRegulationCue.tStart)
             emotionRegulationCue.maxDuration = None
-            win.color = [-1.0000, -1.0000, -1.0000]
-            win.colorSpace = 'rgb'
-            win.backgroundImage = ''
-            win.backgroundFit = 'none'
             # keep track of which components have finished
             emotionRegulationCueComponents = emotionRegulationCue.components
             for thisComponent in emotionRegulationCue.components:
@@ -3828,7 +3451,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             emotionRegulationCue.tStop = globalClock.getTime(format='float')
             emotionRegulationCue.tStopRefresh = tThisFlipGlobal
             thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
-            setupWindow(expInfo=expInfo, win=win)
             # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             
@@ -3843,16 +3465,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update component parameters for each repeat
             image_iasp.setSize([iasp_comp_img_size_width, iasp_comp_img_size_height])
             image_iasp.setImage(photo_filename)
+            # Run 'Begin Routine' code from code_iasp_helper
+            background_box.setAutoDraw(True)
+            
             # store start times for iaspView
             iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
             iaspView.tStart = globalClock.getTime(format='float')
             iaspView.status = STARTED
             thisExp.addData('iaspView.started', iaspView.tStart)
             iaspView.maxDuration = 5
-            win.color = [-1.0000, -1.0000, -1.0000]
-            win.colorSpace = 'rgb'
-            win.backgroundImage = ''
-            win.backgroundFit = 'none'
             # keep track of which components have finished
             iaspViewComponents = iaspView.components
             for thisComponent in iaspView.components:
@@ -3918,6 +3539,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         image_iasp.status = FINISHED
                         image_iasp.setAutoDraw(False)
+                # Run 'Each Frame' code from code_iasp_helper
+                if image_iasp.status == STOPPED:
+                    background_box.autoDraw = False
                 # *p_port_iasp* updates
                 
                 # if p_port_iasp is starting this frame...
@@ -3989,7 +3613,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             iaspView.tStop = globalClock.getTime(format='float')
             iaspView.tStopRefresh = tThisFlipGlobal
             thisExp.addData('iaspView.stopped', iaspView.tStop)
-            setupWindow(expInfo=expInfo, win=win)
+            # Run 'End Routine' code from code_iasp_helper
+            background_box.setAutoDraw(False)
             if p_port_iasp.status == STARTED:
                 win.callOnFlip(p_port_iasp.setData, int(0))
             # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
@@ -4068,85 +3693,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[image_SAM, t_sm_message, t_sm_continue, key_resp_sm],
+                components=[t_sm_continue, key_resp_sm],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
             # Run 'Begin Routine' code from code_sm_helper
-            allowContinue = False
-            
-            # Parse tick values from the condition file
-            tick_values_parsed = parse_tick_values(tick_values)
-            
-            try:
-                logging.debug(f"Starting state-measure in loop: {currentLoop.name}")
-                logging.debug(f"State-measure current row: {rating_category}, {rating_type}")
-                logging.debug(f"State-measure tick values: {tick_values_parsed}")
-            except:
-                logging.error("Error printing current state measure row.")
-            
-            # Compute geometry based on rating type
-            sm_geometry = sm_compute_tick_positions(tick_values_parsed, rating_type)
-            
-            sm_comp_slider_size = sm_geometry["slider_size"]
-            sm_comp_slider_pos  = sm_geometry["slider_pos"]
-            sm_comp_label_min_pos = sm_geometry["label_min_pos"]
-            sm_comp_label_max_pos = sm_geometry["label_max_pos"]
-            
-            t_sm_label_min = visual.TextStim(
-                win=win,
-                text=rating_min_label,
-                pos=(sm_comp_label_min_pos[0], sm_comp_label_min_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            t_sm_label_max = visual.TextStim(
-                win=win,
-                text=rating_max_label,
-                pos=(sm_comp_label_max_pos[0], sm_comp_label_max_pos[1]),
-                wrapWidth=aspect20,
-                anchorVert='top',
-                height=0.05,
-                color='white',
-                font='Noto Sans'
-            )
-            
-            #t_label_min.setPos(sm_comp_label_min_pos)
-            #t_label_max.setPos(sm_comp_label_max_pos)
-            
             # --- Create a fresh slider for this trial ---
-            sm_slider = visual.Slider(
-                win=win,
-                ticks=tick_values_parsed,
-                labels=tick_values_parsed,
-                granularity=granularity,
-                style=style.lower(),
-                pos=sm_comp_slider_pos,
-                size=sm_comp_slider_size,
-                labelHeight=0.05,
-                colorSpace='rgb',
-                markerColor='Red',
-                lineColor='White',
-                labelColor='LightGray',
-                font='Noto Sans'
-            )
-            
-            # --- SAM image logic ---
-            if rating_type == 'SAM':
-                image_SAM.setImage(picture_path)
-                image_SAM.setAutoDraw(True)
-            else:
-                image_SAM.setAutoDraw(False)
-            
-            image_SAM.setPos((0, sm_sam_comp_img_pos_y))
-            image_SAM.setSize((sm_sam_comp_img_size_width, sm_sam_comp_img_size_height))
-            image_SAM.setImage(picture_path)
-            t_sm_message.setText(rating_message)
+            allowContinue = False
+            sm.begin_routine_from_category(rating_category)
             # create starting attributes for key_resp_sm
             key_resp_sm.keys = []
             key_resp_sm.rt = []
@@ -4185,51 +3740,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
                 # Run 'Each Frame' code from code_sm_helper
-                # Draw state measure components
-                sm_slider.draw()
-                t_sm_label_min.draw()
-                t_sm_label_max.draw()
-                
                 # If rated, allow spacebar to end the routine
-                if sm_slider.getRating() is not None:
+                if sm.has_rating():
                     allowContinue = True
-                
-                
-                # *image_SAM* updates
-                
-                # if image_SAM is starting this frame...
-                if image_SAM.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    image_SAM.frameNStart = frameN  # exact frame index
-                    image_SAM.tStart = t  # local t and not account for scr refresh
-                    image_SAM.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(image_SAM, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    image_SAM.status = STARTED
-                    image_SAM.setAutoDraw(True)
-                
-                # if image_SAM is active this frame...
-                if image_SAM.status == STARTED:
-                    # update params
-                    pass
-                
-                # *t_sm_message* updates
-                
-                # if t_sm_message is starting this frame...
-                if t_sm_message.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                    # keep track of start time/frame for later
-                    t_sm_message.frameNStart = frameN  # exact frame index
-                    t_sm_message.tStart = t  # local t and not account for scr refresh
-                    t_sm_message.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_sm_message, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    t_sm_message.status = STARTED
-                    t_sm_message.setAutoDraw(True)
-                
-                # if t_sm_message is active this frame...
-                if t_sm_message.status == STARTED:
-                    # update params
-                    pass
                 
                 # *t_sm_continue* updates
                 
@@ -4318,13 +3831,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             stateMeasure.tStopRefresh = tThisFlipGlobal
             thisExp.addData('stateMeasure.stopped', stateMeasure.tStop)
             # Run 'End Routine' code from code_sm_helper
-            currentLoop.addData('rating', sm_slider.getRating())
-            currentLoop.addData('rating_rt', sm_slider.getRT())
-            
-            try:
-                logging.data(f"State-measure rating: {rating_category}, {sm_slider.getRating()}")
-            except:
-                logging.error("Error printing state-measure rating")
+            # Log rating, rt, and turn off AutoDraw
+            sm.end_routine(currentLoop)
             # the Routine "stateMeasure" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisState_measure_unpleasant as finished

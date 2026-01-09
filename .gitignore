@@ -168,6 +168,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .vscode/settings.json
-psychopy/Phoda.zip
-psychopy/experiments/open-closed/open-closed.py
-/psychopy/scripts/tests
+/neuroflare/scripts/tests
