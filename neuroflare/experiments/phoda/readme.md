@@ -13,7 +13,7 @@ A parallel-port trigger is sent for the full duration of each image presentation
 The experiment consists of **two picture-viewing blocks**, each containing 40 PHODA images:
 
 1. **Randomized ITI (1500-2500 ms)**  
-   A gray screen with a variable delay before each trial.
+   A cross fixation with a variable delay before each trial.
 
 2. **PHODA Image (6000 ms)**  
    The photograph is displayed for a fixed duration.  
@@ -23,7 +23,7 @@ The experiment consists of **two picture-viewing blocks**, each containing 40 PH
    - **Rate Block:** A custom VAS slider (0-100) appears below the image. Participants provide a harmfulness rating before continuing.  
    - **View Block:** No rating is shown; participants simply view the image for the full duration.
 
-The order of the two blocks (rate → view or view → rate) is randomized at runtime.
+The order of the two blocks is randomized.
 
 # Per-Trial Flow
 ```
@@ -57,6 +57,7 @@ These are collected three times: once before trials and once after each block.
 
 # Notes
 - Both blocks use the same 40 images, but each block randomizes the order independently.  
-- The custom slider is implemented in code to support real-time marker updates and consistent layout beneath the image.  
+- The custom slider is implemented in code to support real-time marker updates and consistent layout beneath the image.
+- The slider can be set to use integer values instead of VAS.
 - Port signaling (`p_port_phoda`) is tied directly to the onset and offset of the image component for precise synchronization.  
 
