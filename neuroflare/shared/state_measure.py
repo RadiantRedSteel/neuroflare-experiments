@@ -96,6 +96,7 @@ class StateMeasure:
         self.label_max: Optional[visual.TextStim] = None
         self.message_text: Optional[visual.TextStim] = None
         self.sam_image: Optional[visual.ImageStim] = None
+        self.rating_type: Optional[str] = None
         self._last_rating_value: Any = None
 
         # Cached geometry
@@ -264,6 +265,9 @@ class StateMeasure:
                 autoLog=False,
             )
 
+        # Store rating_type for later use in end_routine
+        self.rating_type = rating_type
+
         if auto_draw:
             self.autodraw_on()
 
@@ -348,7 +352,7 @@ class StateMeasure:
                 logging.error("StateMeasure: failed to add data to currentLoop.")
 
         try:
-            logging.data(f"State-measure rating collected: {rating}")
+            logging.data(f"State-measure rating collected: {self.rating_type}, {rating}")
         except Exception:
             logging.error("StateMeasure: error logging rating.")
 
