@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 08, 2026, at 22:42
+    on January 13, 2026, at 22:45
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -41,7 +41,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
 expName = 'open-closed-2x'  # from the Builder filename that created this script
-expVersion = '1.01'
+expVersion = '1.02'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -454,6 +454,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # instruction helper code. It provides the text shown in the
     # instruction routine.
     instruction_text = "Default message."
+    # Run 'Begin Experiment' code from code_sound_setup
+    # ------------------------------------------------------------
+    # code_sound_setup
+    # Create a sound that will be played after the fixation routine
+    # Also used during testing to ensure sound backend is working
+    # ------------------------------------------------------------
+    
+    test_sound = sound.Sound(
+        value=330,
+        volume=1.0,
+        secs=1.0,
+        hamming=True,
+        stereo=True,
+        autoLog=False,
+        name='test_sound'
+    )
     
     # --- Initialize components for Routine "welcome" ---
     t_welcome_body = visual.TextStim(win=win, name='t_welcome_body',
@@ -471,6 +487,23 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-1.0);
     key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
+    
+    # --- Initialize components for Routine "testSound" ---
+    t_test_sound = visual.TextStim(win=win, name='t_test_sound',
+        text='At the end of each round, a brief sound will play to let you know it is complete. \n\nPress T to test the sound.\n\nIf you do not hear it, try pressing T again or adjust your volume.',
+        font='Arial',
+        pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
+    t_test_sound_continue = visual.TextStim(win=win, name='t_test_sound_continue',
+        text='Press the SPACEBAR to continue',
+        font='Arial',
+        pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-2.0);
+    key_resp_test_sound = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -515,6 +548,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-1.0);
     p_port_fixation = parallel.ParallelPort(address='0x0378')
+    
+    # --- Initialize components for Routine "fixationFinish" ---
+    t_fixation_finish = visual.TextStim(win=win, name='t_fixation_finish',
+        text='This round is complete.',
+        font='Arial',
+        pos=(0, 0), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=0.0);
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -848,6 +890,171 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # completed 1.0 repeats of 'intro_prompts'
     intro_prompts.status = FINISHED
     
+    
+    # --- Prepare to start Routine "testSound" ---
+    # create an object to store info about Routine testSound
+    testSound = data.Routine(
+        name='testSound',
+        components=[t_test_sound, t_test_sound_continue, key_resp_test_sound],
+    )
+    testSound.status = NOT_STARTED
+    continueRoutine = True
+    # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_test_sound_helper
+    # Clear any recorded keys so that the sound doesn't play early
+    event.clearEvents(eventType='keyboard')
+    
+    # If sound_tested is true, then the user can continue to the next routine
+    sound_tested = False
+    # create starting attributes for key_resp_test_sound
+    key_resp_test_sound.keys = []
+    key_resp_test_sound.rt = []
+    _key_resp_test_sound_allKeys = []
+    # store start times for testSound
+    testSound.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+    testSound.tStart = globalClock.getTime(format='float')
+    testSound.status = STARTED
+    thisExp.addData('testSound.started', testSound.tStart)
+    testSound.maxDuration = None
+    # keep track of which components have finished
+    testSoundComponents = testSound.components
+    for thisComponent in testSound.components:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "testSound" ---
+    thisExp.currentRoutine = testSound
+    testSound.forceEnded = routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *t_test_sound* updates
+        
+        # if t_test_sound is starting this frame...
+        if t_test_sound.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            t_test_sound.frameNStart = frameN  # exact frame index
+            t_test_sound.tStart = t  # local t and not account for scr refresh
+            t_test_sound.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(t_test_sound, 'tStartRefresh')  # time at next scr refresh
+            # update status
+            t_test_sound.status = STARTED
+            t_test_sound.setAutoDraw(True)
+        
+        # if t_test_sound is active this frame...
+        if t_test_sound.status == STARTED:
+            # update params
+            pass
+        # Run 'Each Frame' code from code_test_sound_helper
+        # Check to see if the key is pressed
+        # If it is, play the sound and let the user continue
+        if 't' in event.getKeys() and not test_sound.isPlaying:
+            test_sound.play()
+            sound_tested = True
+        
+        
+        # *t_test_sound_continue* updates
+        
+        # if t_test_sound_continue is starting this frame...
+        if t_test_sound_continue.status == NOT_STARTED and sound_tested:
+            # keep track of start time/frame for later
+            t_test_sound_continue.frameNStart = frameN  # exact frame index
+            t_test_sound_continue.tStart = t  # local t and not account for scr refresh
+            t_test_sound_continue.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(t_test_sound_continue, 'tStartRefresh')  # time at next scr refresh
+            # update status
+            t_test_sound_continue.status = STARTED
+            t_test_sound_continue.setAutoDraw(True)
+        
+        # if t_test_sound_continue is active this frame...
+        if t_test_sound_continue.status == STARTED:
+            # update params
+            pass
+        
+        # *key_resp_test_sound* updates
+        waitOnFlip = False
+        
+        # if key_resp_test_sound is starting this frame...
+        if key_resp_test_sound.status == NOT_STARTED and sound_tested:
+            # keep track of start time/frame for later
+            key_resp_test_sound.frameNStart = frameN  # exact frame index
+            key_resp_test_sound.tStart = t  # local t and not account for scr refresh
+            key_resp_test_sound.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(key_resp_test_sound, 'tStartRefresh')  # time at next scr refresh
+            # update status
+            key_resp_test_sound.status = STARTED
+            # keyboard checking is just starting
+            waitOnFlip = True
+            win.callOnFlip(key_resp_test_sound.clock.reset)  # t=0 on next screen flip
+            win.callOnFlip(key_resp_test_sound.clearEvents, eventType='keyboard')  # clear events on next screen flip
+        if key_resp_test_sound.status == STARTED and not waitOnFlip:
+            theseKeys = key_resp_test_sound.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+            _key_resp_test_sound_allKeys.extend(theseKeys)
+            if len(_key_resp_test_sound_allKeys):
+                key_resp_test_sound.keys = _key_resp_test_sound_allKeys[-1].name  # just the last key pressed
+                key_resp_test_sound.rt = _key_resp_test_sound_allKeys[-1].rt
+                key_resp_test_sound.duration = _key_resp_test_sound_allKeys[-1].duration
+                # a response ends the routine
+                continueRoutine = False
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, win=win)
+            return
+        # pause experiment here if requested
+        if thisExp.status == PAUSED:
+            pauseExperiment(
+                thisExp=thisExp, 
+                win=win, 
+                timers=[routineTimer, globalClock], 
+                currentRoutine=testSound,
+            )
+            # skip the frame we paused on
+            continue
+        
+        # has a Component requested the Routine to end?
+        if not continueRoutine:
+            testSound.forceEnded = routineForceEnded = True
+        # has the Routine been forcibly ended?
+        if testSound.forceEnded or routineForceEnded:
+            break
+        # has every Component finished?
+        continueRoutine = False
+        for thisComponent in testSound.components:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "testSound" ---
+    for thisComponent in testSound.components:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    # store stop times for testSound
+    testSound.tStop = globalClock.getTime(format='float')
+    testSound.tStopRefresh = tThisFlipGlobal
+    thisExp.addData('testSound.stopped', testSound.tStop)
+    thisExp.nextEntry()
+    # the Routine "testSound" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
     state_measure_pretrial = data.TrialHandler2(
@@ -1452,6 +1659,137 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             win.callOnFlip(p_port_fixation.setData, int(0))
         # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
+        
+        # --- Prepare to start Routine "fixationFinish" ---
+        # create an object to store info about Routine fixationFinish
+        fixationFinish = data.Routine(
+            name='fixationFinish',
+            components=[t_fixation_finish],
+        )
+        fixationFinish.status = NOT_STARTED
+        continueRoutine = True
+        # update component parameters for each repeat
+        # Run 'Begin Routine' code from code_fixation_finish_helper
+        # Plays a sound created in code_sound_setup to let 
+        # the user know that the fixatio nroutine has ended
+        test_sound.play()
+        
+        # store start times for fixationFinish
+        fixationFinish.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+        fixationFinish.tStart = globalClock.getTime(format='float')
+        fixationFinish.status = STARTED
+        thisExp.addData('fixationFinish.started', fixationFinish.tStart)
+        fixationFinish.maxDuration = None
+        # keep track of which components have finished
+        fixationFinishComponents = fixationFinish.components
+        for thisComponent in fixationFinish.components:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "fixationFinish" ---
+        thisExp.currentRoutine = fixationFinish
+        fixationFinish.forceEnded = routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 1.0:
+            # if trial has changed, end Routine now
+            if hasattr(thisOpenclosed2x_trial, 'status') and thisOpenclosed2x_trial.status == STOPPING:
+                continueRoutine = False
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *t_fixation_finish* updates
+            
+            # if t_fixation_finish is starting this frame...
+            if t_fixation_finish.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_fixation_finish.frameNStart = frameN  # exact frame index
+                t_fixation_finish.tStart = t  # local t and not account for scr refresh
+                t_fixation_finish.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_fixation_finish, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_fixation_finish.status = STARTED
+                t_fixation_finish.setAutoDraw(True)
+            
+            # if t_fixation_finish is active this frame...
+            if t_fixation_finish.status == STARTED:
+                # update params
+                pass
+            
+            # if t_fixation_finish is stopping this frame...
+            if t_fixation_finish.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > t_fixation_finish.tStartRefresh + 1.0-frameTolerance:
+                    # keep track of stop time/frame for later
+                    t_fixation_finish.tStop = t  # not accounting for scr refresh
+                    t_fixation_finish.tStopRefresh = tThisFlipGlobal  # on global time
+                    t_fixation_finish.frameNStop = frameN  # exact frame index
+                    # update status
+                    t_fixation_finish.status = FINISHED
+                    t_fixation_finish.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, win=win)
+                return
+            # pause experiment here if requested
+            if thisExp.status == PAUSED:
+                pauseExperiment(
+                    thisExp=thisExp, 
+                    win=win, 
+                    timers=[routineTimer, globalClock], 
+                    currentRoutine=fixationFinish,
+                )
+                # skip the frame we paused on
+                continue
+            
+            # has a Component requested the Routine to end?
+            if not continueRoutine:
+                fixationFinish.forceEnded = routineForceEnded = True
+            # has the Routine been forcibly ended?
+            if fixationFinish.forceEnded or routineForceEnded:
+                break
+            # has every Component finished?
+            continueRoutine = False
+            for thisComponent in fixationFinish.components:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "fixationFinish" ---
+        for thisComponent in fixationFinish.components:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # store stop times for fixationFinish
+        fixationFinish.tStop = globalClock.getTime(format='float')
+        fixationFinish.tStopRefresh = tThisFlipGlobal
+        thisExp.addData('fixationFinish.stopped', fixationFinish.tStop)
+        # Run 'End Routine' code from code_fixation_finish_helper
+        ## Stop the sound, just in case it trys to escape the routine.
+        #test_sound.stop()
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if fixationFinish.maxDurationReached:
+            routineTimer.addTime(-fixationFinish.maxDuration)
+        elif fixationFinish.forceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-1.000000)
         
         # set up handler to look after randomisation of conditions etc
         state_measure_trials = data.TrialHandler2(

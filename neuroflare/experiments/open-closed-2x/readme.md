@@ -21,8 +21,10 @@ These are collected five times: once before trials and once after each block.
 # Routines Overview
 - `experimentSetup` - initializes screen geometry, wrapWidth logic, and state-measure parameters
 - `welcome` - introduces the experiment
+- `testSound` - allows user to test a sound that will play after `fixation`
 - `instruction` - displays the block-specific prompt from the condition file
 - `fixation` - displays a fixation cross for 5 minutes with a parallel-port trigger
+- `fixationFinish` - plays a sound and displays text to indicate completion
 - `stateMeasure` - collects ratings using the standard configuration
 - `goodbye` - end screen with a 4-second exit delay
 

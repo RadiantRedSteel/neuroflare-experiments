@@ -96,7 +96,7 @@ class StateMeasure:
         self.label_max: Optional[visual.TextStim] = None
         self.message_text: Optional[visual.TextStim] = None
         self.sam_image: Optional[visual.ImageStim] = None
-        self.rating_type: Optional[str] = None
+        self.rating_category: Optional[str] = None
         self._last_rating_value: Any = None
 
         # Cached geometry
@@ -265,8 +265,8 @@ class StateMeasure:
                 autoLog=False,
             )
 
-        # Store rating_type for later use in end_routine
-        self.rating_type = rating_type
+        # Store rating_category for later use in end_routine
+        self.rating_category = rating_category
 
         if auto_draw:
             self.autodraw_on()
@@ -285,13 +285,13 @@ class StateMeasure:
         - Infers SAM vs Generic from category name (prefix 'sam_').
         - Merges built-in defaults and optional per-row overrides.
         """
-        cat = str(rating_category).strip()
-        spec = resolve_spec(cat, overrides)
-        rating_type = 'SAM' if is_sam(cat) else 'GENERIC'
+        rating_category_cat = str(rating_category).strip()
+        spec = resolve_spec(rating_category_cat, overrides)
+        rating_type = 'SAM' if is_sam(rating_category_cat) else 'GENERIC'
 
         self.begin_routine(
             rating_type=rating_type,
-            rating_category=cat,
+            rating_category=rating_category_cat,
             rating_message=spec.get('message', ''),
             rating_min_label=spec.get('min_label', ''),
             rating_max_label=spec.get('max_label', ''),
@@ -352,7 +352,7 @@ class StateMeasure:
                 logging.error("StateMeasure: failed to add data to currentLoop.")
 
         try:
-            logging.data(f"State-measure rating collected: {self.rating_type}, {rating}")
+            logging.data(f"State-measure rating collected: {self.rating_category}, {rating}")
         except Exception:
             logging.error("StateMeasure: error logging rating.")
 
