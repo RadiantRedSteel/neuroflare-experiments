@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 13, 2026, at 22:45
+    on January 28, 2026, at 04:50
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -16,7 +16,7 @@ from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
 plugins.activatePlugins()
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, parallel
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware
 from psychopy.tools import environmenttools
 from psychopy.constants import (
     NOT_STARTED, STARTED, PLAYING, PAUSED, STOPPED, STOPPING, FINISHED, PRESSED, 
@@ -41,7 +41,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
 expName = 'open-closed-2x'  # from the Builder filename that created this script
-expVersion = '1.02'
+expVersion = '1.03'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -439,6 +439,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
     sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
+    # Run 'Begin Experiment' code from code_trigger_setup
+    # ------------------------------------------------------------
+    # code_trigger_setup
+    
+    # Manage a Brain Products TriggerBox over a virtual serial port.
+    # Provides connection discovery, reconnection, and high/low 
+    # trigger management without crashing when the COM port is missing.
+    # ------------------------------------------------------------
+    from neuroflare.shared.trigger_box import TriggerBoxManager
+    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb.begin_experiment()
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -454,6 +465,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # instruction helper code. It provides the text shown in the
     # instruction routine.
     instruction_text = "Default message."
+    
+    # Used by code_fixation_helper to determine what text 
+    # should be on screen during the fixation routine.
+    fixation_text = ""
+    fixation_open_text = ""
+    fixation_closed_text = "Please keep your eyes closed during this block."
     # Run 'Begin Experiment' code from code_sound_setup
     # ------------------------------------------------------------
     # code_sound_setup
@@ -546,8 +563,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         units='height', pos=(0.0, -0.4), draggable=False, height=0.03, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-1.0);
-    p_port_fixation = parallel.ParallelPort(address='0x0378')
+        depth=-2.0);
     
     # --- Initialize components for Routine "fixationFinish" ---
     t_fixation_finish = visual.TextStim(win=win, name='t_fixation_finish',
@@ -1482,12 +1498,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine fixation
         fixation = data.Routine(
             name='fixation',
-            components=[cross_fixation, t_fixation_closed, p_port_fixation],
+            components=[cross_fixation, t_fixation_closed],
         )
         fixation.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        t_fixation_closed.setText('Please keep your eyes closed during this block.')
+        # Run 'Begin Routine' code from code_fixation_helper
+        if Category == "Closed-Eyes":
+            fixation_text = fixation_closed_text
+        elif Category == "Open-Eyes":
+            fixation_text = fixation_open_text
+        else:
+            fixation_text = ""
+        t_fixation_closed.setText(fixation_text)
         # store start times for fixation
         fixation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         fixation.tStart = globalClock.getTime(format='float')
@@ -1555,11 +1578,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     cross_fixation.status = FINISHED
                     cross_fixation.setAutoDraw(False)
+            # Run 'Each Frame' code from code_fixation_helper
+            if cross_fixation.status == STARTED:
+                tb.start(name="fixation", value=1)
+            if cross_fixation.status == STOPPED:
+                tb.stop(name="fixation")
             
             # *t_fixation_closed* updates
             
             # if t_fixation_closed is starting this frame...
-            if t_fixation_closed.status == NOT_STARTED and Category == "Closed-Eyes":
+            if t_fixation_closed.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
                 # keep track of start time/frame for later
                 t_fixation_closed.frameNStart = frameN  # exact frame index
                 t_fixation_closed.tStart = t  # local t and not account for scr refresh
@@ -1576,7 +1604,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             
             # if t_fixation_closed is stopping this frame...
             if t_fixation_closed.status == STARTED:
-                if bool(Category != "Closed-Eyes"):
+                if bool(cross_fixation.status == STOPPED):
                     # keep track of stop time/frame for later
                     t_fixation_closed.tStop = t  # not accounting for scr refresh
                     t_fixation_closed.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1584,34 +1612,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # update status
                     t_fixation_closed.status = FINISHED
                     t_fixation_closed.setAutoDraw(False)
-            # *p_port_fixation* updates
-            
-            # if p_port_fixation is starting this frame...
-            if p_port_fixation.status == NOT_STARTED and cross_fixation.status == STARTED:
-                # keep track of start time/frame for later
-                p_port_fixation.frameNStart = frameN  # exact frame index
-                p_port_fixation.tStart = t  # local t and not account for scr refresh
-                p_port_fixation.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(p_port_fixation, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'p_port_fixation.started')
-                # update status
-                p_port_fixation.status = STARTED
-                p_port_fixation.status = STARTED
-                win.callOnFlip(p_port_fixation.setData, int(1))
-            
-            # if p_port_fixation is stopping this frame...
-            if p_port_fixation.status == STARTED:
-                if bool(cross_fixation.status == STOPPED):
-                    # keep track of stop time/frame for later
-                    p_port_fixation.tStop = t  # not accounting for scr refresh
-                    p_port_fixation.tStopRefresh = tThisFlipGlobal  # on global time
-                    p_port_fixation.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_fixation.stopped')
-                    # update status
-                    p_port_fixation.status = FINISHED
-                    win.callOnFlip(p_port_fixation.setData, int(0))
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1655,8 +1655,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStop = globalClock.getTime(format='float')
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
-        if p_port_fixation.status == STARTED:
-            win.callOnFlip(p_port_fixation.setData, int(0))
+        # Run 'End Routine' code from code_fixation_helper
+        tb.stop(name="fixation")
         # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -2161,6 +2161,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     else:
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
+    # Run 'End Experiment' code from code_trigger_setup
+    tb.end_experiment()
+    status = tb.get_status()  # for summary logging if desired
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)
