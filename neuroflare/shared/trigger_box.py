@@ -1,8 +1,7 @@
 """TriggerBox helper for PsychoPy Builder code.
 
-Provides connection discovery, reconnection, and high/low trigger management
-without crashing when the COM port is missing. Designed to be instantiated once
-in a "Begin Experiment" code component and called from per-routine code.
+This module provides the TriggerBoxManager class for managing Brain Products
+TriggerBox communication in PsychoPy Builder experiments.
 """
 
 from __future__ import annotations
@@ -20,7 +19,84 @@ except Exception:  # pragma: no cover - environment dependent
 
 
 class TriggerBoxManager:
-    """Manage a Brain Products TriggerBox over a virtual serial port."""
+    """Manage a Brain Products TriggerBox over a virtual serial port.
+
+    Provides connection discovery, reconnection, and high/low trigger management
+    without crashing when the COM port is missing. Designed to be instantiated once
+    in a "Begin Experiment" code component and called from per-routine code.
+
+    ===========================================================================
+    USAGE IN PSYCHOPY BUILDER
+    ===========================================================================
+    
+    1. SETUP CODE COMPONENT (place at the very start of your experiment):
+       
+        Create a Code Component in your first routine and add this to "Begin Experiment":
+       
+            from neuroflare.shared.trigger_box import TriggerBoxManager
+            tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+            tb.begin_experiment()
+       
+        And add this to "End Experiment":
+       
+            tb.end_experiment()
+    
+    2. TRIGGER CODE COMPONENTS (place BELOW the component you're triggering):
+       
+        Important: Component order matters! Each frame, Builder executes components
+        from top to bottom. Your trigger code must come AFTER the component it
+        synchronizes with, so both have updated status values.
+       
+        You can create multiple trigger components with different names and values.
+        Values range from 0-255 (8-bit). Choose unique trigger values for each event.
+       
+        In "Each Frame":
+       
+            if cross_fixation.status == STARTED:
+                tb.start(name="fixation", value=1)
+            if cross_fixation.status == STOPPED:
+                tb.stop(name="fixation")
+       
+        Multiple simultaneous triggers are supported:
+        
+            if stimulus.status == STARTED:
+                tb.start(name="stimulus", value=10)
+            if audio.status == STARTED:
+                tb.start(name="audio", value=20)
+       
+        Belt-and-suspenders cleanup in "End Routine":
+       
+            tb.stop(name="fixation")
+            tb.stop(name="stimulus")
+            tb.stop(name="audio")
+            or simply:
+                tb.stop_all()
+    
+    3. MONITORING CONNECTION (optional):
+       
+        To display connection status in your UI:
+       
+        In "Each Frame" of a code component:
+            if tb.get_status()["warning_no_connection"]:
+                warning_text = "No TriggerBox connection!"
+            else:
+                warning_text = ""
+
+        Then display `$warning_text` in a Text component.
+
+    ===========================================================================
+    FEATURES
+    ===========================================================================
+
+    - Trigger values: 0-255 (8-bit); choose unique values for different events
+    - Custom names: Name each trigger however you like (e.g., "fixation", "stimulus")
+    - Multiple triggers: Send multiple simultaneous triggers with different values
+    - Auto-discovery: Scans for TriggerBox by description if preferred port fails
+    - Graceful degradation: Continues experiment if port is missing (logs warnings)
+    - Reconnection: Attempts to reconnect every x seconds if disconnected
+    - Deduplication: Tracks active triggers; only sends first start() per frame
+    - Safety: Automatically sends 0xFF reset on experiment end
+    """
 
     def __init__(
         self,
@@ -30,7 +106,7 @@ class TriggerBoxManager:
         baudrate: int = 9600,
         stop_byte: int = 0x00,
         reset_byte: int = 0xFF,
-        reconnect_interval_sec: float = 1.0,
+        reconnect_interval_sec: float = 1.0, # seconds between reconnection attempts
     ) -> None:
         self.preferred_ports: List[str] = list(preferred_ports or ["COM3"])
         self.description_hint = description_hint
@@ -47,6 +123,25 @@ class TriggerBoxManager:
         self.failure_count: int = 0
         self._last_reconnect_attempt: float = 0.0
         self._active: Dict[str, int] = {}
+
+    # ------------------------------------------------------------------
+    # Logging helpers (with immediate flush for real-time visibility)
+    # ------------------------------------------------------------------
+    def _log_error(self, msg: str) -> None:
+        logging.error(msg)
+        logging.flush()
+
+    def _log_warning(self, msg: str) -> None:
+        logging.warning(msg)
+        logging.flush()
+
+    def _log_info(self, msg: str) -> None:
+        logging.info(msg)
+        logging.flush()
+
+    def _log_data(self, msg: str) -> None:
+        logging.data(msg)
+        logging.flush()
 
     # ------------------------------------------------------------------
     # Connection management
@@ -73,7 +168,7 @@ class TriggerBoxManager:
         self._last_reconnect_attempt = now
 
         if serial is None:
-            logging.error("TriggerBoxManager: pyserial not available; cannot connect.")
+            self._log_error("TriggerBoxManager: pyserial not available; cannot connect.")
             self.connected = False
             self.connection_warning = True
             return
@@ -95,13 +190,13 @@ class TriggerBoxManager:
             seen.add(port_name)
             try:
                 self._open_serial(port_name)
-                logging.info(f"TriggerBoxManager: connected on {port_name} (baud={self.baudrate}).")
+                self._log_info(f"TriggerBoxManager: connected on {port_name} (baud={self.baudrate}).")
                 self.connected = True
                 self.connection_warning = False
                 self.port_in_use = port_name
                 return
             except Exception as exc:
-                logging.warning(f"TriggerBoxManager: failed to open {port_name}: {exc}")
+                self._log_warning(f"TriggerBoxManager: failed to open {port_name}: {exc}")
 
         # If we reach here, no port worked
         self.connected = False
@@ -125,13 +220,19 @@ class TriggerBoxManager:
 
     def start(self, *, name: str, value: int) -> bool:
         """Hold a value high until stop(). Warn on duplicate active values."""
+        # Always check if we can reconnect, even if trigger is already active
+        if not self.connected or self.serial is None:
+            self._connect_if_needed()
+        
+        # If this trigger is already active, don't resend (silently return)
+        if name in self._active:
+            return self.connected  # Return connection status instead of True
+        
+        # Check for value conflicts with OTHER triggers
         if value in self._active.values():
             other = [k for k, v in self._active.items() if v == value]
-            logging.warning(
-                "TriggerBoxManager: duplicate trigger value %s requested by %s (already active by %s)",
-                value,
-                name,
-                ",".join(other),
+            self._log_warning(
+                f"TriggerBoxManager: duplicate trigger value {value} requested by {name} (already active by {','.join(other)})"
             )
         self._active[name] = value
         return self._send_value(value)
@@ -157,17 +258,17 @@ class TriggerBoxManager:
         if not self.connected or self.serial is None:
             self.failure_count += 1
             self.connection_warning = True
-            logging.warning("TriggerBoxManager: send skipped; no connection.")
+            self._log_warning("TriggerBoxManager: send skipped; no connection.")
             return False
 
         try:
             self.serial.write(bytes([value]))  # type: ignore[call-arg]
             self.last_trigger_value = value
-            logging.data(f"TriggerBoxManager: sent {value} on {self.port_in_use}")
+            self._log_data(f"TriggerBoxManager: sent {value} on {self.port_in_use}")
             return True
         except Exception as exc:
             self.failure_count += 1
-            logging.warning(f"TriggerBoxManager: write failed ({exc}); attempting reconnect.")
+            self._log_warning(f"TriggerBoxManager: write failed ({exc}); attempting reconnect.")
             self.connected = False
             self._connect_if_needed()
             return False

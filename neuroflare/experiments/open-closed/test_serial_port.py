@@ -32,7 +32,9 @@ while True:
         tb.start(name='test_pulse', value=5)
         core.wait(0.01)
         tb.stop(name='test_pulse')
-        print(tb.get_status())
+        #print(tb.get_status())
+        if tb.get_status()["warning_no_connection"]:
+            print("Warning: No TriggerBox connection!")
     elif 'escape' in keys:
         print('Experiment cancelled')
         break
