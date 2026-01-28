@@ -7,7 +7,7 @@ TriggerBox communication in PsychoPy Builder experiments.
 from __future__ import annotations
 
 import time
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, Iterable, List, Optional, Set
 
 from psychopy import logging
 
@@ -123,6 +123,7 @@ class TriggerBoxManager:
         self.failure_count: int = 0
         self._last_reconnect_attempt: float = 0.0
         self._active: Dict[str, int] = {}
+        self._failed_stops: Set[str] = set()  # Track trigger names that failed to stop
 
     # ------------------------------------------------------------------
     # Logging helpers (with immediate flush for real-time visibility)
@@ -160,6 +161,7 @@ class TriggerBoxManager:
                 pass
         self.connected = False
         self.port_in_use = None
+        self._log_info("TriggerBoxManager: experiment ended, port closed.")
 
     def _connect_if_needed(self, *, initial: bool = False) -> None:
         now = time.time()
@@ -220,9 +222,13 @@ class TriggerBoxManager:
 
     def start(self, *, name: str, value: int) -> bool:
         """Hold a value high until stop(). Warn on duplicate active values."""
-        # Always check if we can reconnect, even if trigger is already active
-        if not self.connected or self.serial is None:
-            self._connect_if_needed()
+        # Clean up any triggers that failed to stop, if we're now connected
+        if self.connected and self._failed_stops:
+            for failed_name in list(self._failed_stops):
+                if self._send_value(self.stop_byte):
+                    self._failed_stops.discard(failed_name)
+                    self._active.pop(failed_name, None)
+                    break  # One success proves reconnection works; others will retry next frame
         
         # If this trigger is already active, don't resend (silently return)
         if name in self._active:
@@ -234,20 +240,36 @@ class TriggerBoxManager:
             self._log_warning(
                 f"TriggerBoxManager: duplicate trigger value {value} requested by {name} (already active by {','.join(other)})"
             )
-        self._active[name] = value
-        return self._send_value(value)
+        
+        # Send the value first
+        success = self._send_value(value)
+        # Only mark as active if send succeeded
+        if success:
+            self._active[name] = value
+        return success
 
     def stop(self, name: str) -> bool:
         """Send stop byte for a named trigger if it was active."""
         if name not in self._active:
             return False
-        self._active.pop(name, None)
-        return self._send_value(self.stop_byte)
+        success = self._send_value(self.stop_byte)
+        if success:
+            self._active.pop(name, None)
+            self._failed_stops.discard(name)  # No longer failed
+        else:
+            self._failed_stops.add(name)  # Track as failed to stop
+        return success
 
     def stop_all(self) -> bool:
         """Stop all active triggers and send reset byte."""
-        self._active.clear()
-        return self._send_value(self.reset_byte)
+        success = self._send_value(self.reset_byte)
+        if success:
+            self._active.clear()
+            self._failed_stops.clear()
+        else:
+            # If reset failed, track all active triggers as failed stops
+            self._failed_stops.update(self._active.keys())
+        return success
 
     # ------------------------------------------------------------------
     # Internal send with reconnection
@@ -256,9 +278,6 @@ class TriggerBoxManager:
         if not self.connected or self.serial is None:
             self._connect_if_needed()
         if not self.connected or self.serial is None:
-            self.failure_count += 1
-            self.connection_warning = True
-            self._log_warning("TriggerBoxManager: send skipped; no connection.")
             return False
 
         try:
