@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 08, 2026, at 23:09
+    on January 28, 2026, at 05:08
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -41,7 +41,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
 expName = 'phoda'  # from the Builder filename that created this script
-expVersion = '0.51'
+expVersion = '0.52'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -442,6 +442,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
     sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
+    # Run 'Begin Experiment' code from code_trigger_setup
+    # ------------------------------------------------------------
+    # code_trigger_setup
+    
+    # Manage a Brain Products TriggerBox over a virtual serial port.
+    # Provides connection discovery, reconnection, and high/low 
+    # trigger management without crashing when the COM port is missing.
+    # ------------------------------------------------------------
+    from neuroflare.shared.trigger_box import TriggerBoxManager
+    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb.begin_experiment()
     # Run 'Begin Experiment' code from code_phoda_slider_setup
     # ============================================================
     # =================== CONFIGURATION ==========================
@@ -777,7 +788,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=False, flipVert=False,
         texRes=128.0, interpolate=True, depth=-1.0)
-    p_port_phoda = parallel.ParallelPort(address='0x0378')
     t_phoda_continue = visual.TextStim(win=win, name='t_phoda_continue',
         text='',
         font='Arial',
@@ -1713,7 +1723,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine phodaView
             phodaView = data.Routine(
                 name='phodaView',
-                components=[image_phoda, p_port_phoda, t_phoda_continue, key_resp_phoda],
+                components=[image_phoda, t_phoda_continue, key_resp_phoda],
             )
             phodaView.status = NOT_STARTED
             continueRoutine = True
@@ -1824,34 +1834,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         # update status
                         image_phoda.status = FINISHED
                         image_phoda.setAutoDraw(False)
-                # *p_port_phoda* updates
-                
-                # if p_port_phoda is starting this frame...
-                if p_port_phoda.status == NOT_STARTED and image_phoda.status == STARTED:
-                    # keep track of start time/frame for later
-                    p_port_phoda.frameNStart = frameN  # exact frame index
-                    p_port_phoda.tStart = t  # local t and not account for scr refresh
-                    p_port_phoda.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(p_port_phoda, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.addData('p_port_phoda.started', t)
-                    # update status
-                    p_port_phoda.status = STARTED
-                    p_port_phoda.status = STARTED
-                    win.callOnFlip(p_port_phoda.setData, int(1))
-                
-                # if p_port_phoda is stopping this frame...
-                if p_port_phoda.status == STARTED:
-                    if bool(image_phoda.status == STOPPED):
-                        # keep track of stop time/frame for later
-                        p_port_phoda.tStop = t  # not accounting for scr refresh
-                        p_port_phoda.tStopRefresh = tThisFlipGlobal  # on global time
-                        p_port_phoda.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.addData('p_port_phoda.stopped', t)
-                        # update status
-                        p_port_phoda.status = FINISHED
-                        win.callOnFlip(p_port_phoda.setData, int(0))
+                # Run 'Each Frame' code from code_trigger_helper
+                if image_phoda.status == STARTED:
+                    tb.start(name="image", value=1)
+                if image_phoda.status == STOPPED:
+                    tb.stop(name="image")
                 
                 # *t_phoda_continue* updates
                 
@@ -1957,10 +1944,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             for thisComponent in phodaView.components:
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
-            # store stop times for phodaView
-            phodaView.tStop = globalClock.getTime(format='float')
-            phodaView.tStopRefresh = tThisFlipGlobal
-            thisExp.addData('phodaView.stopped', phodaView.tStop)
             # Run 'End Routine' code from code_phoda_helper
             phoda_autodraw_off()
             
@@ -1974,8 +1957,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     logging.data(f'{phoda_photo} rating_rt: {ps_phoda_slider.getRT()}')
                 except:
                     logging.error("Error printing phoda rating")
-            if p_port_phoda.status == STARTED:
-                win.callOnFlip(p_port_phoda.setData, int(0))
+            # store stop times for phodaView
+            phodaView.tStop = globalClock.getTime(format='float')
+            phodaView.tStopRefresh = tThisFlipGlobal
+            thisExp.addData('phodaView.stopped', phodaView.tStop)
+            # Run 'End Routine' code from code_trigger_helper
+            tb.stop(name="image")
             # the Routine "phodaView" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisPhoda_trial as finished
@@ -2379,6 +2366,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     else:
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
+    # Run 'End Experiment' code from code_trigger_setup
+    tb.end_experiment()
+    status = tb.get_status()  # for summary logging if desired
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)

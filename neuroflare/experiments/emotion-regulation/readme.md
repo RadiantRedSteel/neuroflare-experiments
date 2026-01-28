@@ -10,7 +10,7 @@ Before each unpleasant block, the reset routine updates the slice indices and di
 
 Throughout the experiment, several state-measure routines are used to assess how the participant is feeling at different stages.
 
-A parallel-port trigger is sent to the EEG/EMG system for the full duration of each `image_iasp` presentation.
+A serialPort trigger is sent to the EEG/EMG system for the full duration of each `image_iasp` presentation.
 
 ## Experiment Phases
 The experiment progresses in three trial phases:
@@ -79,18 +79,8 @@ Includes:
 - `stateMeasure` - collects ratings using the appropriate configuration
 - `goodbye` - end screen with a 4-second exit delay
 
-## Parallel-Port Trigger
-A p_port trigger is sent whenever `image_iasp` is displayed (for its entire duration).
-This allows synchronization with external hardware during stimulus presentation.
-
-## Logging
-Logging has been streamlined by:
-- disabling unnecessary onset/offset timestamps
-- adding descriptive comments to routines and code components
-- ensuring ratings are properly saved
-
+# Future Improvements
 Future improvements will focus on:
 - final wording polish
 - text formatting
 - debug checks
-- verifying the trigger address

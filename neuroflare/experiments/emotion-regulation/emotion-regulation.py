@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 11, 2026, at 22:36
+    on January 28, 2026, at 05:05
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -249,7 +249,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2025.2.3'
 expName = 'emotion-regulation'  # from the Builder filename that created this script
-expVersion = '0.51'
+expVersion = '0.52'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -639,6 +639,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     from neuroflare.shared.state_measure import StateMeasure, parse_tick_values
     
     sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
+    # Run 'Begin Experiment' code from code_trigger_setup
+    # ------------------------------------------------------------
+    # code_trigger_setup
+    
+    # Manage a Brain Products TriggerBox over a virtual serial port.
+    # Provides connection discovery, reconnection, and high/low 
+    # trigger management without crashing when the COM port is missing.
+    # ------------------------------------------------------------
+    from neuroflare.shared.trigger_box import TriggerBoxManager
+    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb.begin_experiment()
     # Run 'Begin Experiment' code from code_iasp_setup
     # ------------------------------------------------------------
     # code_iasp_setup
@@ -759,7 +770,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fillColor='black',
         lineColor='black'
     )
-    p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -828,7 +838,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fillColor='black',
         lineColor='black'
     )
-    p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "instructionUnpleasant" ---
     t_unpleasant_instruction = visual.TextStim(win=win, name='t_unpleasant_instruction',
@@ -910,7 +919,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fillColor='black',
         lineColor='black'
     )
-    p_port_iasp = parallel.ParallelPort(address='0x0378')
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -1848,7 +1856,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine iaspView
         iaspView = data.Routine(
             name='iaspView',
-            components=[image_iasp, p_port_iasp],
+            components=[image_iasp],
         )
         iaspView.status = NOT_STARTED
         continueRoutine = True
@@ -1881,7 +1889,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # --- Run Routine "iaspView" ---
         thisExp.currentRoutine = iaspView
         iaspView.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine:
+        while continueRoutine and routineTimer.getTime() < 5.0:
             # if trial has changed, end Routine now
             if hasattr(thisIasp_neutral_trial, 'status') and thisIasp_neutral_trial.status == STOPPING:
                 continueRoutine = False
@@ -1930,36 +1938,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_iasp.status = FINISHED
                     image_iasp.setAutoDraw(False)
             # Run 'Each Frame' code from code_iasp_helper
+            if image_iasp.status == STARTED:
+                tb.start(name="image", value=1)
             if image_iasp.status == STOPPED:
+                tb.stop(name="image")
                 background_box.autoDraw = False
-            # *p_port_iasp* updates
-            
-            # if p_port_iasp is starting this frame...
-            if p_port_iasp.status == NOT_STARTED and image_IASP.status == STARTED:
-                # keep track of start time/frame for later
-                p_port_iasp.frameNStart = frameN  # exact frame index
-                p_port_iasp.tStart = t  # local t and not account for scr refresh
-                p_port_iasp.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(p_port_iasp, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'p_port_iasp.started')
-                # update status
-                p_port_iasp.status = STARTED
-                p_port_iasp.status = STARTED
-                win.callOnFlip(p_port_iasp.setData, int(1))
-            
-            # if p_port_iasp is stopping this frame...
-            if p_port_iasp.status == STARTED:
-                if bool(image_iasp.status == STOPPED):
-                    # keep track of stop time/frame for later
-                    p_port_iasp.tStop = t  # not accounting for scr refresh
-                    p_port_iasp.tStopRefresh = tThisFlipGlobal  # on global time
-                    p_port_iasp.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_iasp.stopped')
-                    # update status
-                    p_port_iasp.status = FINISHED
-                    win.callOnFlip(p_port_iasp.setData, int(0))
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -2004,11 +1987,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         # Run 'End Routine' code from code_iasp_helper
+        tb.stop(name="image")
         background_box.setAutoDraw(False)
-        if p_port_iasp.status == STARTED:
-            win.callOnFlip(p_port_iasp.setData, int(0))
-        # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if iaspView.maxDurationReached:
+            routineTimer.addTime(-iaspView.maxDuration)
+        elif iaspView.forceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-5.000000)
         # mark thisIasp_neutral_trial as finished
         if hasattr(thisIasp_neutral_trial, 'status'):
             thisIasp_neutral_trial.status = FINISHED
@@ -2643,7 +2630,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine iaspView
         iaspView = data.Routine(
             name='iaspView',
-            components=[image_iasp, p_port_iasp],
+            components=[image_iasp],
         )
         iaspView.status = NOT_STARTED
         continueRoutine = True
@@ -2676,7 +2663,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # --- Run Routine "iaspView" ---
         thisExp.currentRoutine = iaspView
         iaspView.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine:
+        while continueRoutine and routineTimer.getTime() < 5.0:
             # if trial has changed, end Routine now
             if hasattr(thisIasp_practice_trial, 'status') and thisIasp_practice_trial.status == STOPPING:
                 continueRoutine = False
@@ -2725,36 +2712,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_iasp.status = FINISHED
                     image_iasp.setAutoDraw(False)
             # Run 'Each Frame' code from code_iasp_helper
+            if image_iasp.status == STARTED:
+                tb.start(name="image", value=1)
             if image_iasp.status == STOPPED:
+                tb.stop(name="image")
                 background_box.autoDraw = False
-            # *p_port_iasp* updates
-            
-            # if p_port_iasp is starting this frame...
-            if p_port_iasp.status == NOT_STARTED and image_IASP.status == STARTED:
-                # keep track of start time/frame for later
-                p_port_iasp.frameNStart = frameN  # exact frame index
-                p_port_iasp.tStart = t  # local t and not account for scr refresh
-                p_port_iasp.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(p_port_iasp, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'p_port_iasp.started')
-                # update status
-                p_port_iasp.status = STARTED
-                p_port_iasp.status = STARTED
-                win.callOnFlip(p_port_iasp.setData, int(1))
-            
-            # if p_port_iasp is stopping this frame...
-            if p_port_iasp.status == STARTED:
-                if bool(image_iasp.status == STOPPED):
-                    # keep track of stop time/frame for later
-                    p_port_iasp.tStop = t  # not accounting for scr refresh
-                    p_port_iasp.tStopRefresh = tThisFlipGlobal  # on global time
-                    p_port_iasp.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_iasp.stopped')
-                    # update status
-                    p_port_iasp.status = FINISHED
-                    win.callOnFlip(p_port_iasp.setData, int(0))
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -2799,11 +2761,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         # Run 'End Routine' code from code_iasp_helper
+        tb.stop(name="image")
         background_box.setAutoDraw(False)
-        if p_port_iasp.status == STARTED:
-            win.callOnFlip(p_port_iasp.setData, int(0))
-        # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if iaspView.maxDurationReached:
+            routineTimer.addTime(-iaspView.maxDuration)
+        elif iaspView.forceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-5.000000)
         # mark thisIasp_practice_trial as finished
         if hasattr(thisIasp_practice_trial, 'status'):
             thisIasp_practice_trial.status = FINISHED
@@ -3458,7 +3424,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine iaspView
             iaspView = data.Routine(
                 name='iaspView',
-                components=[image_iasp, p_port_iasp],
+                components=[image_iasp],
             )
             iaspView.status = NOT_STARTED
             continueRoutine = True
@@ -3491,7 +3457,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # --- Run Routine "iaspView" ---
             thisExp.currentRoutine = iaspView
             iaspView.forceEnded = routineForceEnded = not continueRoutine
-            while continueRoutine:
+            while continueRoutine and routineTimer.getTime() < 5.0:
                 # if trial has changed, end Routine now
                 if hasattr(thisIasp_unpleasant_trial, 'status') and thisIasp_unpleasant_trial.status == STOPPING:
                     continueRoutine = False
@@ -3540,36 +3506,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         image_iasp.status = FINISHED
                         image_iasp.setAutoDraw(False)
                 # Run 'Each Frame' code from code_iasp_helper
+                if image_iasp.status == STARTED:
+                    tb.start(name="image", value=1)
                 if image_iasp.status == STOPPED:
+                    tb.stop(name="image")
                     background_box.autoDraw = False
-                # *p_port_iasp* updates
-                
-                # if p_port_iasp is starting this frame...
-                if p_port_iasp.status == NOT_STARTED and image_IASP.status == STARTED:
-                    # keep track of start time/frame for later
-                    p_port_iasp.frameNStart = frameN  # exact frame index
-                    p_port_iasp.tStart = t  # local t and not account for scr refresh
-                    p_port_iasp.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(p_port_iasp, 'tStartRefresh')  # time at next scr refresh
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'p_port_iasp.started')
-                    # update status
-                    p_port_iasp.status = STARTED
-                    p_port_iasp.status = STARTED
-                    win.callOnFlip(p_port_iasp.setData, int(1))
-                
-                # if p_port_iasp is stopping this frame...
-                if p_port_iasp.status == STARTED:
-                    if bool(image_iasp.status == STOPPED):
-                        # keep track of stop time/frame for later
-                        p_port_iasp.tStop = t  # not accounting for scr refresh
-                        p_port_iasp.tStopRefresh = tThisFlipGlobal  # on global time
-                        p_port_iasp.frameNStop = frameN  # exact frame index
-                        # add timestamp to datafile
-                        thisExp.timestampOnFlip(win, 'p_port_iasp.stopped')
-                        # update status
-                        p_port_iasp.status = FINISHED
-                        win.callOnFlip(p_port_iasp.setData, int(0))
                 
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -3614,11 +3555,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             iaspView.tStopRefresh = tThisFlipGlobal
             thisExp.addData('iaspView.stopped', iaspView.tStop)
             # Run 'End Routine' code from code_iasp_helper
+            tb.stop(name="image")
             background_box.setAutoDraw(False)
-            if p_port_iasp.status == STARTED:
-                win.callOnFlip(p_port_iasp.setData, int(0))
-            # the Routine "iaspView" was not non-slip safe, so reset the non-slip timer
-            routineTimer.reset()
+            # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+            if iaspView.maxDurationReached:
+                routineTimer.addTime(-iaspView.maxDuration)
+            elif iaspView.forceEnded:
+                routineTimer.reset()
+            else:
+                routineTimer.addTime(-5.000000)
             # mark thisIasp_unpleasant_trial as finished
             if hasattr(thisIasp_unpleasant_trial, 'status'):
                 thisIasp_unpleasant_trial.status = FINISHED
@@ -4006,6 +3951,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     else:
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
+    # Run 'End Experiment' code from code_trigger_setup
+    tb.end_experiment()
+    status = tb.get_status()  # for summary logging if desired
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)

@@ -7,7 +7,7 @@ This experiment presents a set of PHODA (Photograph Series of Daily Activities) 
 One block requires participants to **rate how harmful** they perceive each activity to be using a **0-100 visual analogue scale (VAS)**.  
 The other block is a **passive-viewing** run in which participants simply view each image without making a rating.
 
-A parallel-port trigger is sent for the full duration of each image presentation to allow EEG/EMG synchronization.
+A serialPort trigger is sent for the full duration of each image presentation to allow EEG/EMG synchronization.
 
 # Experiment Structure
 The experiment consists of **two picture-viewing blocks**, each containing 40 PHODA images:
@@ -17,7 +17,7 @@ The experiment consists of **two picture-viewing blocks**, each containing 40 PH
 
 2. **PHODA Image (6000 ms)**  
    The photograph is displayed for a fixed duration.  
-   A parallel-port trigger remains active for the entire image presentation.
+   A serialPort trigger remains active for the entire image presentation.
 
 3. **Block-Specific Behavior**  
    - **Rate Block:** A custom VAS slider (0-100) appears below the image. Participants provide a harmfulness rating before continuing.  
@@ -60,4 +60,3 @@ These are collected three times: once before trials and once after each block.
 - The custom slider is implemented in code to support real-time marker updates and consistent layout beneath the image.
 - The slider can be set to use integer values instead of VAS.
 - Port signaling (`p_port_phoda`) is tied directly to the onset and offset of the image component for precise synchronization.  
-
