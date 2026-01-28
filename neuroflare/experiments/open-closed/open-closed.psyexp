@@ -132,14 +132,14 @@
       <CodeComponent name="code_trigger_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;#tb = TriggerBoxManager(preferred_ports=[&quot;COM3&quot;], baudrate=9600)&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;tb = TriggerBoxManager(preferred_ports=[&quot;COM3&quot;], baudrate=9600)&amp;#10;tb.begin_experiment()" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="tb.end_experiment()&amp;#10;status = tb.get_status()  # for summary logging if desired" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
@@ -149,7 +149,7 @@
       <CodeComponent name="code_open_closed_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_open_closed_setup&amp;#10;# Define the instruction text for each eye-state condition.&amp;#10;# ------------------------------------------------------------&amp;#10;# These strings are kept in-code (rather than in the CSV) so the&amp;#10;# condition file only needs to specify the Category. This keeps&amp;#10;# the output cleaner and prevents text duplication across files.&amp;#10;open_eyes_text = &quot;Look at the + mark and stay still for 5 minutes.&quot;&amp;#10;closed_eyes_text = &quot;Close your eyes and stay still for 5 minutes.&quot;&amp;#10;&amp;#10;# This variable will be updated on each loop iteration by the&amp;#10;# instruction helper code. It provides the text shown in the&amp;#10;# instruction routine.&amp;#10;instruction_text = &quot;Default message.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_open_closed_setup&amp;#10;# Define the instruction text for each eye-state condition.&amp;#10;# ------------------------------------------------------------&amp;#10;# These strings are kept in-code (rather than in the CSV) so the&amp;#10;# condition file only needs to specify the Category. This keeps&amp;#10;# the output cleaner and prevents text duplication across files.&amp;#10;open_eyes_text = &quot;Look at the + mark and stay still for 5 minutes.&quot;&amp;#10;closed_eyes_text = &quot;Close your eyes and stay still for 5 minutes.&quot;&amp;#10;&amp;#10;# This variable will be updated on each loop iteration by the&amp;#10;# instruction helper code. It provides the text shown in the&amp;#10;# instruction routine.&amp;#10;instruction_text = &quot;Default message.&quot;&amp;#10;&amp;#10;# Used by code_fixation_helper to determine what text &amp;#10;# should be on screen during the fixation routine.&amp;#10;fixation_text = &quot;&quot;&amp;#10;fixation_open_text = &quot;&quot;&amp;#10;fixation_closed_text = &quot;Please keep your eyes closed during this block.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -618,14 +618,14 @@
       <CodeComponent name="code_fixation_helper" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="fixation_text = &quot;&quot;&amp;#10;fixation_open_text = &quot;&quot;&amp;#10;fixation_closed_text = &quot;Please keep your eyes closed during this block.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="if Category == &quot;Closed-Eyes&quot;:&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif Category == &quot;Open-Eyes&quot;:&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="if cross_fixation.status == STARTED:&amp;#10;    tb.start(name=&quot;fixation&quot;, value=1)&amp;#10;if cross_fixation.status == STOPPED:&amp;#10;    tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="tb.end_experiment()&amp;#10;status = tb.get_status()  # for summary logging if desired" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
         <Param val="tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
@@ -659,29 +659,12 @@
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
-      <ParallelOutComponent name="p_port_fixation" plugin="None">
-        <Param val="0x0378" valType="str" updates="None" name="address"/>
-        <Param val="True" valType="bool" updates="None" name="disabled"/>
-        <Param val="300" valType="code" updates="None" name="durationEstim"/>
-        <Param val="p_port_fixation" valType="code" updates="None" name="name"/>
-        <Param val="EIO" valType="str" updates="None" name="register"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="1" valType="code" updates="None" name="startData"/>
-        <Param val="0" valType="code" updates="None" name="startEstim"/>
-        <Param val="condition" valType="str" updates="None" name="startType"/>
-        <Param val="$cross_fixation.status == STARTED" valType="code" updates="None" name="startVal"/>
-        <Param val="0" valType="code" updates="None" name="stopData"/>
-        <Param val="condition" valType="str" updates="None" name="stopType"/>
-        <Param val="$cross_fixation.status == STOPPED" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="constant" name="syncScreen"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-      </ParallelOutComponent>
-      <SerialOutComponent name="serialPort" plugin="None">
+      <SerialOutComponent name="serialPort_fixation" plugin="None">
         <Param val="COM3" valType="device" updates="None" name="deviceLabel"/>
         <Param val="True" valType="bool" updates="None" name="disabled"/>
         <Param val="300" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="None" name="getResponse"/>
-        <Param val="serialPort" valType="code" updates="None" name="name"/>
+        <Param val="serialPort_fixation" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="1110010" valType="code" updates="None" name="startDataBinary"/>
         <Param val="\x72" valType="str" updates="None" name="startDataChar"/>
@@ -779,7 +762,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="## Stop the sound, just in case it trys to escape the routine.&amp;#10;#test_sound.stop()" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_fixation_finish_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>

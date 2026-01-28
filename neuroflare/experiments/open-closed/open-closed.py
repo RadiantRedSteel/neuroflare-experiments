@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 28, 2026, at 02:12
+    on January 28, 2026, at 02:42
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -439,9 +439,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     sm = StateMeasure(win=win, aspect=aspect, screen_width=screen_width, screen_height=screen_height)
     # Run 'Begin Experiment' code from code_trigger_setup
+    # ------------------------------------------------------------
+    # code_trigger_setup
+    
+    # Manage a Brain Products TriggerBox over a virtual serial port.
+    # Provides connection discovery, reconnection, and high/low 
+    # trigger management without crashing when the COM port is missing.
+    # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
-    #tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
-    tb = TriggerBoxManager()
+    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
     tb.begin_experiment()
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
@@ -458,6 +464,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # instruction helper code. It provides the text shown in the
     # instruction routine.
     instruction_text = "Default message."
+    
+    # Used by code_fixation_helper to determine what text 
+    # should be on screen during the fixation routine.
+    fixation_text = ""
+    fixation_open_text = ""
+    fixation_closed_text = "Please keep your eyes closed during this block."
     # Run 'Begin Experiment' code from code_sound_setup
     # ------------------------------------------------------------
     # code_sound_setup
@@ -544,10 +556,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
         opacity=None, depth=0.0, interpolate=True)
-    # Run 'Begin Experiment' code from code_fixation_helper
-    fixation_text = ""
-    fixation_open_text = ""
-    fixation_closed_text = "Please keep your eyes closed during this block."
     t_fixation_closed = visual.TextStim(win=win, name='t_fixation_closed',
         text='',
         font='Arial',
@@ -1771,9 +1779,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixationFinish.tStop = globalClock.getTime(format='float')
         fixationFinish.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixationFinish.stopped', fixationFinish.tStop)
-        # Run 'End Routine' code from code_fixation_finish_helper
-        ## Stop the sound, just in case it trys to escape the routine.
-        #test_sound.stop()
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if fixationFinish.maxDurationReached:
             routineTimer.addTime(-fixationFinish.maxDuration)
@@ -2152,7 +2157,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     else:
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
-    # Run 'End Experiment' code from code_fixation_helper
+    # Run 'End Experiment' code from code_trigger_setup
     tb.end_experiment()
     status = tb.get_status()  # for summary logging if desired
     
