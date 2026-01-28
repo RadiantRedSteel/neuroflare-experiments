@@ -222,6 +222,10 @@ class TriggerBoxManager:
 
     def start(self, *, name: str, value: int) -> bool:
         """Hold a value high until stop(). Warn on duplicate active values."""
+        # Attempt reconnection if disconnected (even if trigger is in _active)
+        if not self.connected or self.serial is None:
+            self._connect_if_needed()
+        
         # Clean up any triggers that failed to stop, if we're now connected
         if self.connected and self._failed_stops:
             for failed_name in list(self._failed_stops):
