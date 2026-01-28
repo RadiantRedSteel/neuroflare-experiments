@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<PsychoPy2experiment encoding="utf-8" version="2025.2.4">
+<PsychoPy2experiment encoding="utf-8" version="2025.2.3">
   <Settings>
     <Param val="ptb" valType="str" updates="None" name="Audio lib"/>
     <Param val="" valType="str" updates="None" name="Completed URL"/>
@@ -68,7 +68,7 @@
     <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
     <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
     <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
-    <Param val="0" valType="code" updates="None" name="runMode"/>
+    <Param val="1" valType="code" updates="None" name="runMode"/>
     <Param val="False" valType="bool" updates="None" name="rush"/>
     <Param val="time" valType="str" updates="None" name="sortColumns"/>
     <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
@@ -98,7 +98,7 @@
       <CodeComponent name="code_experiment_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_experiment_setup&amp;#10;# Global screen geometry and shared layout variables.&amp;#10;#&amp;#10;# Computes window aspect ratio and establishes a unified&amp;#10;# coordinate system in 'height' units so all routines scale&amp;#10;# consistently across monitors.&amp;#10;#&amp;#10;# Also defines shared wrap-width values for text components.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# ============================================================&amp;#10;# =============== GLOBAL SCREEN GEOMETRY =====================&amp;#10;# ============================================================&amp;#10;# Centralized screen geometry so all routines share the same coordinate system&amp;#10;&amp;#10;screen_width, screen_height = win.size&amp;#10;aspect = screen_width / screen_height  # width / height&amp;#10;&amp;#10;# In 'height' units:&amp;#10;# - Full screen height = 1.0&amp;#10;# - Full screen width  = aspect&amp;#10;leftEdge = -aspect / 2&amp;#10;rightEdge = aspect / 2&amp;#10;topEdge = 0.5&amp;#10;bottomEdge = -0.5&amp;#10;&amp;#10;# Wrap width as a percentage of screen width&amp;#10;aspect80 = aspect * 0.80 # 80% of screen width&amp;#10;aspect20 = aspect * 0.20  # 20% of screen width&amp;#10;comp_wrap_width_body = aspect80&amp;#10;comp_wrap_width_header = aspect80&amp;#10;comp_wrap_width_continue = aspect80 &amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_experiment_setup&amp;#10;# Global screen geometry and shared layout variables.&amp;#10;#&amp;#10;# Computes window aspect ratio and establishes a unified&amp;#10;# coordinate system in 'height' units so all routines scale&amp;#10;# consistently across monitors.&amp;#10;#&amp;#10;# Also defines shared wrap-width values for text components.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;# ============================================================&amp;#10;# =============== GLOBAL SCREEN GEOMETRY =====================&amp;#10;# ============================================================&amp;#10;# Centralized screen geometry so all routines share the same coordinate system&amp;#10;screen_width, screen_height = win.size&amp;#10;aspect = screen_width / screen_height  # width / height&amp;#10;&amp;#10;# In 'height' units:&amp;#10;# - Full screen height = 1.0&amp;#10;# - Full screen width  = aspect&amp;#10;leftEdge = -aspect / 2&amp;#10;rightEdge = aspect / 2&amp;#10;topEdge = 0.5&amp;#10;bottomEdge = -0.5&amp;#10;&amp;#10;# Wrap width as a percentage of screen width&amp;#10;aspect80 = aspect * 0.80 # 80% of screen width&amp;#10;aspect20 = aspect * 0.20  # 20% of screen width&amp;#10;comp_wrap_width_body = aspect80&amp;#10;comp_wrap_width_header = aspect80&amp;#10;comp_wrap_width_continue = aspect80 &amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="[screen_width, screen_height] = psychoJS.window.size;&amp;#10;aspect = (screen_width / screen_height);&amp;#10;leftEdge = ((- aspect) / 2);&amp;#10;rightEdge = (aspect / 2);&amp;#10;topEdge = 0.5;&amp;#10;bottomEdge = (- 0.5);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -128,6 +128,23 @@
         <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_state_measure_setup" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <CodeComponent name="code_trigger_setup" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;#tb = TriggerBoxManager(preferred_ports=[&quot;COM3&quot;], baudrate=9600)&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_trigger_setup" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <CodeComponent name="code_open_closed_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
@@ -569,23 +586,6 @@
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <CodeComponent name="code_fixation_helper" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="fixation_text = &quot;&quot;&amp;#10;fixation_open_text = &quot;&quot;&amp;#10;fixation_closed_text = &quot;Please keep your eyes closed during this block.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if Category == &quot;Closed-Eyes&quot;:&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif Category == &quot;Open-Eyes&quot;:&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="code_fixation_helper" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <PolygonComponent name="cross_fixation" plugin="None">
         <Param val="center" valType="str" updates="constant" name="anchor"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -615,6 +615,23 @@
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
+      <CodeComponent name="code_fixation_helper" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="fixation_text = &quot;&quot;&amp;#10;fixation_open_text = &quot;&quot;&amp;#10;fixation_closed_text = &quot;Please keep your eyes closed during this block.&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="if Category == &quot;Closed-Eyes&quot;:&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif Category == &quot;Open-Eyes&quot;:&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="if cross_fixation.status == STARTED:&amp;#10;    tb.start(name=&quot;fixation&quot;, value=1)&amp;#10;if cross_fixation.status == STOPPED:&amp;#10;    tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="tb.end_experiment()&amp;#10;status = tb.get_status()  # for summary logging if desired" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_fixation_helper" valType="code" updates="None" name="name"/>
+      </CodeComponent>
       <TextComponent name="t_fixation_closed" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
         <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
@@ -661,7 +678,7 @@
       </ParallelOutComponent>
       <SerialOutComponent name="serialPort" plugin="None">
         <Param val="COM3" valType="device" updates="None" name="deviceLabel"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="None" name="disabled"/>
         <Param val="300" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="None" name="getResponse"/>
         <Param val="serialPort" valType="code" updates="None" name="name"/>
