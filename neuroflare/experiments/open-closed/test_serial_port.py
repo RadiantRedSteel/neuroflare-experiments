@@ -20,6 +20,7 @@ win = visual.Window(WINDOW_SIZE, color=WINDOW_COLOR, monitor="testMonitor", unit
 # Create helper to manage the TriggerBox connection.
 tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
 tb.begin_experiment()
+tb._connect_if_needed(initial=True)
 
 
 # Main loop
@@ -29,11 +30,11 @@ while True:
 
     keys = event.getKeys(['space', 'escape'])
     if 'space' in keys:
-        tb.start(name='test_pulse', value=5)
+        tb.send_event(name='test_pulse', value=5)
         core.wait(0.01)
-        tb.stop(name='test_pulse')
+        tb.send_idle()
         #print(tb.get_status())
-        if tb.get_status()["warning_no_connection"]:
+        if tb.get_status()["connected"] is False:
             print("Warning: No TriggerBox connection!")
     elif 'escape' in keys:
         print('Experiment cancelled')

@@ -1,14 +1,6 @@
-"""TriggerBox helper for PsychoPy Builder code.
-
-This module provides the TriggerBoxManager class for managing Brain Products
-TriggerBox communication in PsychoPy Builder experiments.
-"""
-
 from __future__ import annotations
-
 import time
-from typing import Dict, Iterable, List, Optional, Set
-
+from typing import Optional
 from psychopy import logging
 
 try:
@@ -17,13 +9,14 @@ try:
 except Exception:  # pragma: no cover - environment dependent
     serial = None  # type: ignore
 
-
 class TriggerBoxManager:
-    """Manage a Brain Products TriggerBox over a virtual serial port.
+    """
+    Manage a Brain Products TriggerBox over a virtual serial port.
+    Specfically, the TriggerBox appears as a USB virtual COM port.
 
     Provides connection discovery, reconnection, and high/low trigger management
-    without crashing when the COM port is missing. Designed to be instantiated once
-    in a "Begin Experiment" code component and called from per-routine code.
+    (0-255) without crashing when the COM port is missing. Designed to be instantiated 
+    once in a "Begin Experiment" code component and called from per-routine code.
 
     ===========================================================================
     USAGE IN PSYCHOPY BUILDER
@@ -31,13 +24,29 @@ class TriggerBoxManager:
     
     1. SETUP CODE COMPONENT (place at the very start of your experiment):
        
-        Create a Code Component in your first routine and add this to "Begin Experiment":
+        Create a Code Component in your setup routine (e.g., "experiment_setup") and add this to "Begin Experiment":
        
             from neuroflare.shared.trigger_box import TriggerBoxManager
-            tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
-            tb.begin_experiment()
+            tb = TriggerBoxManager()
+            tb.begin_experiment() 
+        
+        Depending on your environment, you may need a wrapper to make the 'neuroflare'
+        package importable, similar to this:
+
+            import os, sys
+            _THIS_DIR = os.path.dirname(__file__)
+            _REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, '..', '..', '..'))
+            if _REPO_ROOT not in sys.path:
+                sys.path.insert(0, _REPO_ROOT)
+        
+        Then, in "End Routine" of the same component, add:
+
+            tb.send_event(value=1, name="experiment_start")
+            tb.send_idle() # immediately return to baseline
+
+        This helps to clear out any residual triggers, and also acts as both a marker and connection insurance.
        
-        And add this to "End Experiment":
+        Lastly, add this to "End Experiment":
        
             tb.end_experiment()
     
@@ -48,36 +57,70 @@ class TriggerBoxManager:
         synchronizes with, so both have updated status values.
        
         You can create multiple trigger components with different names and values.
-        Values range from 0-255 (8-bit). Choose unique trigger values for each event.
+        Values range from 0-255 (8-bit). I recommended staying consistent.
        
         In "Each Frame":
        
             if cross_fixation.status == STARTED:
-                tb.start(name="fixation", value=1)
+                tb.send_event(value=10, name="fixation")
             if cross_fixation.status == STOPPED:
-                tb.stop(name="fixation")
-       
-        Multiple simultaneous triggers are supported:
-        
-            if stimulus.status == STARTED:
-                tb.start(name="stimulus", value=10)
-            if audio.status == STARTED:
-                tb.start(name="audio", value=20)
-       
-        Belt-and-suspenders cleanup in "End Routine":
-       
-            tb.stop(name="fixation")
-            tb.stop(name="stimulus")
-            tb.stop(name="audio")
-            or simply:
-                tb.stop_all()
+                tb.send_idle()
+
+        The trigger methods take note of previous successfully sent values.
+        Therefore, if you're worried about if that send_idle() never went through,
+        you can call it again without worry - put it in the end routine of other routines.
+
+        Because the TriggerBox can only output one value at a time, overlapping events
+        (e.g., image onset and rating clicks) require careful condition logic to avoid overwriting 
+        triggers or producing one-frame idle gaps.
+
+        For example, you might want to mark the duration of an image, but also flag when a rating happens.
+        With correct condition checks, you can meld them together. However, this could lead
+        to the rating trigger lasting one frame only, which may be too brief for your recording system.
+
+        If you need a trigger to last longer than one frame (e.g., PHODA rating clicks),
+        implement a short-duration pulse in your experiment logic using a timer. For example:
+
+        In "Begin Routine"
+
+            from psychopy import core # if not already imported
+            rating_pulse_active = False
+            rating_timer = core.Clock()
+
+        In "Each Frame"
+
+            # 1. Rating pulse takes priority
+            if rating_pulse_active:
+                # End pulse?
+                if rating_timer.getTime() > 1.0:
+                    rating_pulse_active = False
+                    # Immediately restore correct image state
+                    if image_phoda.status == STARTED:
+                        tb.send_event(40, "image")
+                    else:
+                        tb.send_idle()
+                # If pulse still active, do nothing else this frame
+                else:
+                    return  # Skip image logic entirely
+
+            # 2. Image logic (only runs when no rating pulse is active)
+            if image_phoda.status == STARTED:
+                tb.send_event(40, "image")
+            elif image_phoda.status == STOPPED:
+                tb.send_idle()
+
+            # 3. Rating click detection (starts a pulse)
+            if slider_phoda.getRating() is not None and not rating_pulse_active:
+                tb.send_event(49, "rating_pulse")
+                rating_pulse_active = True
+                rating_timer.reset()
     
     3. MONITORING CONNECTION (optional):
        
         To display connection status in your UI:
        
         In "Each Frame" of a code component:
-            if tb.get_status()["warning_no_connection"]:
+            if tb.get_status()["connected"] is False:
                 warning_text = "No TriggerBox connection!"
             else:
                 warning_text = ""
@@ -88,226 +131,237 @@ class TriggerBoxManager:
     FEATURES
     ===========================================================================
 
-    - Trigger values: 0-255 (8-bit); choose unique values for different events
-    - Custom names: Name each trigger however you like (e.g., "fixation", "stimulus")
-    - Multiple triggers: Send multiple simultaneous triggers with different values
+    - Trigger values: 0-255 (8-bit); stick to a pattern for your experiment!
+    - Custom names: Name each trigger however you like (e.g., "fixation", "stimulus") (for logging)
+    - Single output: TriggerBox outputs one 8-bit value at a time; each send overwrites previous
     - Auto-discovery: Scans for TriggerBox by description if preferred port fails
     - Graceful degradation: Continues experiment if port is missing (logs warnings)
     - Reconnection: Attempts to reconnect every x seconds if disconnected
-    - Deduplication: Tracks active triggers; only sends first start() per frame
-    - Safety: Automatically sends 0xFF reset on experiment end
+    - Deduplication: Tracks current trigger value; only sends first send_event() per frame
+
+    ===========================================================================
+    RECOMMENDED TRIGGER MAP (for consistency across tasks)
+    ===========================================================================
+    Global:
+        0     idle baseline (when nothing else is happening)
+        1     experiment start
+        255   experiment end (reset byte, sent at experiment end)
+
+    Open/Closed Eyes (10-19):
+        10    fixation duration for eyes open
+        11    fixation duration for eyes closed
+
+    Open/Closed Eyes 2x (20-29):
+        20    fixation duration for eyes open
+        21    fixation duration for eyes closed
+
+    Emotion Regulation (30-39):
+        30    neutral image duration
+        31    practice image duration
+        32    negative image duration
+        ...
+        38    regulation cue
+
+    PHODA (40-49):
+        40    image duration
+        ...
+        49    rating pulse
+
+    Pain Regulation (50-59):
+        50    stimulus duration
+        ...
+        59    rating pulse    
+    
+    State Measure (200-239):
+        200   placeholder 
+    
+    Audio (global):
+        240   sound played
     """
 
     def __init__(
         self,
         *,
-        preferred_ports: Optional[Iterable[str]] = None,
-        description_hint: str = "TriggerBox",
-        baudrate: int = 9600,
-        stop_byte: int = 0x00,
-        reset_byte: int = 0xFF,
+        preferred_ports = ("COM3", "COM4", "COM5"), # Add common defaults if needed
+        description_hint: str = "TriggerBox", # Description hint to identify the device in Device Manager
+        baudrate: int = 9600, # Standard baudrate, though our TriggerBox doesn't actually care
+        idle_byte: int = 0x00, # Idle baseline byte
+        reset_byte: int = 0xFF, # Experiment end byte
         reconnect_interval_sec: float = 1.0, # seconds between reconnection attempts
-    ) -> None:
-        self.preferred_ports: List[str] = list(preferred_ports or ["COM3"])
+    ):
+        self.preferred_ports = list(preferred_ports)
         self.description_hint = description_hint
         self.baudrate = baudrate
-        self.stop_byte = stop_byte
+        self.idle_byte = idle_byte
         self.reset_byte = reset_byte
         self.reconnect_interval_sec = reconnect_interval_sec
 
-        self.serial = None
+        self.serial_device = None
         self.port_in_use: Optional[str] = None
         self.connected: bool = False
-        self.connection_warning: bool = False
+        self.last_connection_state: bool = None # ensures first log fires
         self.last_trigger_value: Optional[int] = None
-        self.failure_count: int = 0
         self._last_reconnect_attempt: float = 0.0
-        self._active: Dict[str, int] = {}
-        self._failed_stops: Set[str] = set()  # Track trigger names that failed to stop
 
     # ------------------------------------------------------------------
-    # Logging helpers (with immediate flush for real-time visibility)
+    # Logging helpers (because PsychoPy logging doesn't like to update)
     # ------------------------------------------------------------------
     def _log_error(self, msg: str) -> None:
+        """Log an error message, and flush immediately."""
         logging.error(msg)
         logging.flush()
 
     def _log_warning(self, msg: str) -> None:
+        """Log a warning message, and flush immediately."""
         logging.warning(msg)
         logging.flush()
 
     def _log_info(self, msg: str) -> None:
+        """Log an info message, and flush immediately."""
         logging.info(msg)
         logging.flush()
 
     def _log_data(self, msg: str) -> None:
+        """Log a data message, and flush immediately."""
         logging.data(msg)
         logging.flush()
-
+    
+    def _log_state_change(self) -> None:
+        """Log only when connection state changes."""
+        if self.connected != self.last_connection_state:
+            if self.connected:
+                self._log_info(f"TriggerBoxManager: connected on {self.port_in_use}")
+            else:
+                self._log_warning("TriggerBoxManager: disconnected")
+            self.last_connection_state = self.connected
+    
     # ------------------------------------------------------------------
     # Connection management
     # ------------------------------------------------------------------
     def begin_experiment(self) -> None:
-        """Attempt initial connection."""
+        """Placed at Begin Experiment to initialize connection."""
         self._connect_if_needed(initial=True)
 
     def end_experiment(self) -> None:
-        """Reset lines and close the port."""
-        self.stop_all()
-        if self.serial is not None:
+        """Placed at End Experiment to close connection and send reset byte."""
+        self._send_reset(name="experiment_end")
+        if self.serial_device:
             try:
-                self.serial.close()
+                self.serial_device.close()
             except Exception:
                 pass
         self.connected = False
         self.port_in_use = None
-        self._log_info("TriggerBoxManager: experiment ended, port closed.")
+        self._log_state_change()
 
-    def _connect_if_needed(self, *, initial: bool = False) -> None:
+    def _connect_if_needed(self, *, initial=False) -> None:
+        """Attempt to connect if needed, with optional initial flag to bypass throttling."""
         now = time.time()
+        # Skip the interval if initial is set to True, otherwise throttle attempts
         if not initial and (now - self._last_reconnect_attempt) < self.reconnect_interval_sec:
             return
         self._last_reconnect_attempt = now
 
         if serial is None:
-            self._log_error("TriggerBoxManager: pyserial not available; cannot connect.")
             self.connected = False
-            self.connection_warning = True
+            self._log_state_change()
             return
 
-        # Try preferred ports first
+        # Build candidate port list
         candidates = list(self.preferred_ports)
-        # Then scan for matching description
+        # Then scan for matching description, in case it's on a different port
         try:
-            for port in serial.tools.list_ports.comports():  # type: ignore[attr-defined]
+            for port in serial.tools.list_ports.comports():
                 if self.description_hint.lower() in port.description.lower():
                     candidates.append(port.device)
         except Exception:
             pass
 
-        seen = set()
-        for port_name in candidates:
-            if port_name in seen:
-                continue
-            seen.add(port_name)
+        # Try ports
+        for port_name in dict.fromkeys(candidates):  # remove duplicates
             try:
                 self._open_serial(port_name)
-                self._log_info(f"TriggerBoxManager: connected on {port_name} (baud={self.baudrate}).")
                 self.connected = True
-                self.connection_warning = False
                 self.port_in_use = port_name
+                self._log_state_change()
                 return
-            except Exception as exc:
-                self._log_warning(f"TriggerBoxManager: failed to open {port_name}: {exc}")
+            except Exception:
+                continue
 
-        # If we reach here, no port worked
+        # If all failed
         self.connected = False
-        self.connection_warning = True
         self.port_in_use = None
+        self._log_state_change()
 
     def _open_serial(self, port_name: str) -> None:
-        if self.serial is not None:
+        """Open a serial connection to the specified port."""
+        # Only called when we intend to open a new connection
+        # This happens when connecting for the first time or reconnecting
+        if self.serial_device is not None:
             try:
-                self.serial.close()
+                # Close existing connection, if any to avoid port conflicts and resource leaks
+                self.serial_device.close()
             except Exception:
                 pass
-        self.serial = serial.Serial(port=port_name, baudrate=self.baudrate, timeout=0)  # type: ignore[call-arg]
+        # Open new connection
+        self.serial_device = serial.Serial(port=port_name, baudrate=self.baudrate, timeout=0)
+
+    # ------------------------------------------------------------
+    # Sending values
+    # ------------------------------------------------------------
+    def _send_value(self, value: int, name: Optional[str]) -> bool:
+        """Attempts to send a byte value (0-255) to the TriggerBox."""
+        if not (0 <= value <= 255):
+            raise ValueError(f"Trigger value {value} is out of range (0-255).")
+
+        # Let's not overwork our computer if we don't have to!
+        if self.last_trigger_value == value:
+            return True
+        
+        # Ensure connection (with throttled reconnect attempts)
+        if not self.connected or not self.serial_device:
+            self._connect_if_needed()
+
+        # If still not connected, give up for now (will retry on next call)
+        if not self.connected or not self.serial_device:
+            return False
+        
+        # Send the byte
+        try:
+            self.serial_device.write(bytes([value]))
+            self.last_trigger_value = value # Stop any further sends of the same value until it changes
+            label = f" ({name})" if name else ""
+            self._log_data(f"TriggerBoxManager: sent {value}{label}")
+            return True
+        except Exception:
+            self.connected = False
+            self._log_state_change()
+            return False
 
     # ------------------------------------------------------------------
     # Trigger operations
     # ------------------------------------------------------------------
-    def send(self, value: int) -> bool:
-        """Send a one-shot value (no tracking)."""
-        return self._send_value(value)
+    def send_event(self, value: int, name: Optional[str] = "event") -> bool:
+        """Send a trigger value (1-254). Optionally, set a name for logging."""
+        return self._send_value(value, name)
 
-    def start(self, *, name: str, value: int) -> bool:
-        """Hold a value high until stop(). Warn on duplicate active values."""
-        # Attempt reconnection if disconnected (even if trigger is in _active)
-        if not self.connected or self.serial is None:
-            self._connect_if_needed()
-        
-        # Clean up any triggers that failed to stop, if we're now connected
-        if self.connected and self._failed_stops:
-            for failed_name in list(self._failed_stops):
-                if self._send_value(self.stop_byte):
-                    self._failed_stops.discard(failed_name)
-                    self._active.pop(failed_name, None)
-                    break  # One success proves reconnection works; others will retry next frame
-        
-        # If this trigger is already active, don't resend (silently return)
-        if name in self._active:
-            return self.connected  # Return connection status instead of True
-        
-        # Check for value conflicts with OTHER triggers
-        if value in self._active.values():
-            other = [k for k, v in self._active.items() if v == value]
-            self._log_warning(
-                f"TriggerBoxManager: duplicate trigger value {value} requested by {name} (already active by {','.join(other)})"
-            )
-        
-        # Send the value first
-        success = self._send_value(value)
-        # Only mark as active if send succeeded
-        if success:
-            self._active[name] = value
-        return success
+    def send_idle(self, name: Optional[str] = "idle") -> bool:
+        """Send idle baseline (0)."""
+        return self._send_value(self.idle_byte, name)
 
-    def stop(self, name: str) -> bool:
-        """Send stop byte for a named trigger if it was active."""
-        if name not in self._active:
-            return False
-        success = self._send_value(self.stop_byte)
-        if success:
-            self._active.pop(name, None)
-            self._failed_stops.discard(name)  # No longer failed
-        else:
-            self._failed_stops.add(name)  # Track as failed to stop
-        return success
-
-    def stop_all(self) -> bool:
-        """Stop all active triggers and send reset byte."""
-        success = self._send_value(self.reset_byte)
-        if success:
-            self._active.clear()
-            self._failed_stops.clear()
-        else:
-            # If reset failed, track all active triggers as failed stops
-            self._failed_stops.update(self._active.keys())
-        return success
-
-    # ------------------------------------------------------------------
-    # Internal send with reconnection
-    # ------------------------------------------------------------------
-    def _send_value(self, value: int) -> bool:
-        if not self.connected or self.serial is None:
-            self._connect_if_needed()
-        if not self.connected or self.serial is None:
-            return False
-
-        try:
-            self.serial.write(bytes([value]))  # type: ignore[call-arg]
-            self.last_trigger_value = value
-            self._log_data(f"TriggerBoxManager: sent {value} on {self.port_in_use}")
-            return True
-        except Exception as exc:
-            self.failure_count += 1
-            self._log_warning(f"TriggerBoxManager: write failed ({exc}); attempting reconnect.")
-            self.connected = False
-            self._connect_if_needed()
-            return False
-
-    # ------------------------------------------------------------------
-    # Status helpers
-    # ------------------------------------------------------------------
-    def get_status(self) -> Dict[str, object]:
+    def _send_reset(self, name: Optional[str] = "reset") -> bool:
+        """Send reset byte (255), used in end_experiment."""
+        return self._send_value(self.reset_byte, name)
+    
+    # ------------------------------------------------------------
+    # Status
+    # ------------------------------------------------------------
+    def get_status(self) -> dict:
+        # You can use "connected" to set up a Psychopy CodeComponent to monitor connection status
         return {
-            "connected": self.connected,
+            "connected": self.connected, 
             "port": self.port_in_use,
-            "warning_no_connection": self.connection_warning,
             "last_trigger_value": self.last_trigger_value,
-            "failure_count": self.failure_count,
-            "active_triggers": dict(self._active),
         }
-
 
 __all__ = ["TriggerBoxManager"]
