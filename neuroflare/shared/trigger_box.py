@@ -85,6 +85,7 @@ class TriggerBoxManager:
 
             from psychopy import core # if not already imported
             rating_pulse_active = False
+            rating_pulse_sent = False
             rating_timer = core.Clock()
 
         In "Each Frame"
@@ -110,9 +111,10 @@ class TriggerBoxManager:
                 tb.send_idle()
 
             # 3. Rating click detection (starts a pulse)
-            if slider_phoda.getRating() is not None and not rating_pulse_active:
+            if slider_phoda.getRating() is not None and not rating_pulse_sent:
                 tb.send_event(49, "rating_pulse")
                 rating_pulse_active = True
+                rating_pulse_sent = True
                 rating_timer.reset()
     
     3. MONITORING CONNECTION (optional):
