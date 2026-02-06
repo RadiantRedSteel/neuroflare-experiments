@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 28, 2026, at 05:08
+    on February 06, 2026, at 05:53
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -16,7 +16,7 @@ from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
 plugins.activatePlugins()
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, parallel
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware
 from psychopy.tools import environmenttools
 from psychopy.constants import (
     NOT_STARTED, STARTED, PLAYING, PAUSED, STOPPED, STOPPING, FINISHED, PRESSED, 
@@ -451,8 +451,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # trigger management without crashing when the COM port is missing.
     # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
-    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb = TriggerBoxManager()
     tb.begin_experiment()
+    
+    # PHODA (40-49):
+    trigger_image_phoda = (40, "image_phoda")
+    trigger_rating_pulse = (49, "rating_pulse")
+    
     # Run 'Begin Experiment' code from code_phoda_slider_setup
     # ============================================================
     # =================== CONFIGURATION ==========================
@@ -926,6 +931,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for experimentSetup
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
+    # Run 'End Routine' code from code_trigger_setup
+    # Clear out any residual triggers
+    # Acts as both a marker and connection insurance.
+    tb.send_event(value=1, name="experiment_start")
+    tb.send_idle() # immediately return to baseline
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1752,6 +1762,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             image_phoda.setPos((0, ps_phoda_comp_img_pos_y))
             image_phoda.setSize(ps_phoda_comp_img_size)
             image_phoda.setImage(ps_phoda_img_path)
+            # Run 'Begin Routine' code from code_trigger_helper
+            rating_pulse_active = False
+            rating_pulse_sent = False
+            rating_timer = core.Clock()
             t_phoda_continue.setPos((0, t_phoda_continue_pos_y))
             t_phoda_continue.setText('Press the SPACEBAR to continue')
             # create starting attributes for key_resp_phoda
@@ -1835,10 +1849,30 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         image_phoda.status = FINISHED
                         image_phoda.setAutoDraw(False)
                 # Run 'Each Frame' code from code_trigger_helper
-                if image_phoda.status == STARTED:
-                    tb.start(name="image", value=1)
-                if image_phoda.status == STOPPED:
-                    tb.stop(name="image")
+                # 1. Rating pulse takes priority
+                if rating_pulse_active:
+                    # End pulse?
+                    if rating_timer.getTime() > 1.0:
+                        rating_pulse_active = False
+                        # Restore image state
+                        if image_phoda.status == STARTED:
+                            tb.send_event(*trigger_image_phoda)
+                        else:
+                            tb.send_idle()
+                else:
+                    # 2. Image logic (only runs when no rating pulse is active)
+                    if image_phoda.status == STARTED:
+                        tb.send_event(*trigger_image_phoda)
+                    elif image_phoda.status == STOPPED:
+                        tb.send_idle()
+                
+                    # 3. Rating detection (only once)
+                    if (ps_phoda_slider.getRating() is not None and not rating_pulse_sent):
+                        tb.send_event(*trigger_rating_pulse)
+                        rating_pulse_active = True
+                        rating_pulse_sent = True
+                        rating_timer.reset()
+                
                 
                 # *t_phoda_continue* updates
                 
@@ -1944,6 +1978,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             for thisComponent in phodaView.components:
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
+            # store stop times for phodaView
+            phodaView.tStop = globalClock.getTime(format='float')
+            phodaView.tStopRefresh = tThisFlipGlobal
+            thisExp.addData('phodaView.stopped', phodaView.tStop)
             # Run 'End Routine' code from code_phoda_helper
             phoda_autodraw_off()
             
@@ -1957,12 +1995,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     logging.data(f'{phoda_photo} rating_rt: {ps_phoda_slider.getRT()}')
                 except:
                     logging.error("Error printing phoda rating")
-            # store stop times for phodaView
-            phodaView.tStop = globalClock.getTime(format='float')
-            phodaView.tStopRefresh = tThisFlipGlobal
-            thisExp.addData('phodaView.stopped', phodaView.tStop)
             # Run 'End Routine' code from code_trigger_helper
-            tb.stop(name="image")
+            tb.send_idle()
             # the Routine "phodaView" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             # mark thisPhoda_trial as finished
@@ -2367,8 +2401,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
     # Run 'End Experiment' code from code_trigger_setup
+    # Close connection and send reset byte.
     tb.end_experiment()
-    status = tb.get_status()  # for summary logging if desired
+    
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)

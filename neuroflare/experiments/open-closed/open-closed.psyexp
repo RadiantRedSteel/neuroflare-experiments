@@ -132,7 +132,7 @@
       <CodeComponent name="code_trigger_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;tb = TriggerBoxManager(preferred_ports=[&quot;COM3&quot;], baudrate=9600)&amp;#10;tb.begin_experiment()" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()&amp;#10;&amp;#10;# Open/Closed Eyes (10-19):&amp;#10;trigger_eyes_open = (10, &quot;fixation_eyes_open&quot;)&amp;#10;trigger_eyes_closed = (11, &quot;fixation_eyes_closed&quot;)&amp;#10;trigger_sound_played = (240, &quot;sound_played&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -142,7 +142,7 @@
         <Param val="tb.end_experiment()&amp;#10;status = tb.get_status()  # for summary logging if desired" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="tb.send_event(value=1, name=&quot;experiment_start&quot;)&amp;#10;tb.send_idle() # immediately return to baseline" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_trigger_setup" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -484,7 +484,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if Category == &quot;Open-Eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;elif Category == &quot;Closed-Eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
@@ -621,14 +621,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if Category == &quot;Closed-Eyes&quot;:&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif Category == &quot;Open-Eyes&quot;:&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# One-shot flag&amp;#10;unknown_category_logged = False&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="if cross_fixation.status == STARTED:&amp;#10;    tb.start(name=&quot;fixation&quot;, value=1)&amp;#10;if cross_fixation.status == STOPPED:&amp;#10;    tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="if cross_fixation.status == STARTED:&amp;#10;    if category == &quot;open-eyes&quot;:&amp;#10;        tb.send_event(*trigger_eyes_open)&amp;#10;    elif category == &quot;closed-eyes&quot;:&amp;#10;        tb.send_event(*trigger_eyes_closed)&amp;#10;    else:&amp;#10;        if not unknown_category_logged:&amp;#10;            tb._log_error(f&quot;Unknown category '{category}' - no trigger sent&quot;)&amp;#10;            unknown_category_logged = True&amp;#10;        tb.send_idle()&amp;#10;elif cross_fixation.status == STOPPED:&amp;#10;    tb.send_idle()&amp;#10;" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="tb.stop(name=&quot;fixation&quot;)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="tb.send_idle()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_fixation_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -755,14 +755,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# Plays a sound created in code_sound_setup to let &amp;#10;# the user know that the fixatio nroutine has ended&amp;#10;test_sound.play()&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# Plays a sound created in code_sound_setup to let &amp;#10;# the user know that the fixatio nroutine has ended&amp;#10;test_sound.play()&amp;#10;tb.send_event(*trigger_sound_played)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="tb.send_idle()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_fixation_finish_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -844,7 +844,7 @@
     <LoopTerminator name="state_measure_pretrial"/>
     <LoopInitiator loopType="TrialHandler" name="openclosed_trials">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
-      <Param name="conditions" updates="None" val="[OrderedDict([('Category', 'Open-Eyes')]), OrderedDict([('Category', 'Closed-Eyes')])]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('category', 'open-eyes')]), OrderedDict([('category', 'closed-eyes')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="loopOpenClosedTrial.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>

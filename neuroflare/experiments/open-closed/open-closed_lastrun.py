@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 28, 2026, at 02:42
+    on February 06, 2026, at 05:09
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -447,8 +447,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # trigger management without crashing when the COM port is missing.
     # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
-    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb = TriggerBoxManager()
     tb.begin_experiment()
+    
+    # Open/Closed Eyes (10-19):
+    trigger_eyes_open = (10, "fixation_eyes_open")
+    trigger_eyes_closed = (11, "fixation_eyes_closed")
+    trigger_sound_played = (240, "sound_played")
+    
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -702,6 +708,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for experimentSetup
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
+    # Run 'End Routine' code from code_trigger_setup
+    tb.send_event(value=1, name="experiment_start")
+    tb.send_idle() # immediately return to baseline
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1339,14 +1348,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # trial's Category value. This keeps the logic centralized and
         # avoids storing long text strings in the condition file.
         # ------------------------------------------------------------
-        if Category == "Open-Eyes":
+        if category == "open-eyes":
             instruction_text = open_eyes_text
-        elif Category == "Closed-Eyes":
+            fixation_text = fixation_closed_text
+        elif category == "closed-eyes":
             instruction_text = closed_eyes_text
+            fixation_text = fixation_open_text
         else:
             # Fallback message in case the condition file contains an
             # unexpected category. This helps catch typos or file issues.
             instruction_text = "Unknown category. Please contact the experimenter."
+            fixation_text = ""
         t_instruction_body.setText(instruction_text)
         # create starting attributes for key_resp_instruction
         key_resp_instruction.keys = []
@@ -1503,12 +1515,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_fixation_helper
-        if Category == "Closed-Eyes":
-            fixation_text = fixation_closed_text
-        elif Category == "Open-Eyes":
-            fixation_text = fixation_open_text
-        else:
-            fixation_text = ""
+        # One-shot flag
+        unknown_category_logged = False
+        
         t_fixation_closed.setText(fixation_text)
         # store start times for fixation
         fixation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -1579,9 +1588,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     cross_fixation.setAutoDraw(False)
             # Run 'Each Frame' code from code_fixation_helper
             if cross_fixation.status == STARTED:
-                tb.start(name="fixation", value=1)
-            if cross_fixation.status == STOPPED:
-                tb.stop(name="fixation")
+                if category == "open-eyes":
+                    tb.send_event(*trigger_eyes_open)
+                elif category == "closed-eyes":
+                    tb.send_event(*trigger_eyes_closed)
+                else:
+                    if not unknown_category_logged:
+                        tb._log_error(f"Unknown category '{category}' - no trigger sent")
+                        unknown_category_logged = True
+                    tb.send_idle()
+            elif cross_fixation.status == STOPPED:
+                tb.send_idle()
+            
             
             # *t_fixation_closed* updates
             
@@ -1655,7 +1673,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
         # Run 'End Routine' code from code_fixation_helper
-        tb.stop(name="fixation")
+        tb.send_idle()
         # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -1672,7 +1690,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Plays a sound created in code_sound_setup to let 
         # the user know that the fixatio nroutine has ended
         test_sound.play()
-        
+        tb.send_event(*trigger_sound_played)
         # store start times for fixationFinish
         fixationFinish.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         fixationFinish.tStart = globalClock.getTime(format='float')
@@ -1779,6 +1797,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixationFinish.tStop = globalClock.getTime(format='float')
         fixationFinish.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixationFinish.stopped', fixationFinish.tStop)
+        # Run 'End Routine' code from code_fixation_finish_helper
+        tb.send_idle()
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if fixationFinish.maxDurationReached:
             routineTimer.addTime(-fixationFinish.maxDuration)

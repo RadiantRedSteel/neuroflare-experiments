@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on January 28, 2026, at 05:05
+    on February 06, 2026, at 06:19
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -16,7 +16,7 @@ from psychopy import locale_setup
 from psychopy import prefs
 from psychopy import plugins
 plugins.activatePlugins()
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware, parallel
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout, hardware
 from psychopy.tools import environmenttools
 from psychopy.constants import (
     NOT_STARTED, STARTED, PLAYING, PAUSED, STOPPED, STOPPING, FINISHED, PRESSED, 
@@ -648,8 +648,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # trigger management without crashing when the COM port is missing.
     # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
-    tb = TriggerBoxManager(preferred_ports=["COM3"], baudrate=9600)
+    tb = TriggerBoxManager()
     tb.begin_experiment()
+    
+    # Emotion Regulation (30-39):
+    trigger_neutral_image = (30, "neutral_image")
+    trigger_practice_image = (31, "practice_image")
+    trigger_negative_image = (32, "negative_image")
+    trigger_regulation_cue = (38, "regulation_cue")
     # Run 'Begin Experiment' code from code_iasp_setup
     # ------------------------------------------------------------
     # code_iasp_setup
@@ -1049,6 +1055,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for experimentSetup
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
+    # Run 'End Routine' code from code_trigger_setup
+    # Clear out any residual triggers
+    # Acts as both a marker and connection insurance.
+    tb.send_event(value=1, name="experiment_start")
+    tb.send_idle() # immediately return to baseline
+    
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1670,6 +1682,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Used for t_blank_delayer
         delay_time = random.uniform(0.5, 1.5)
         currentLoop.addData('delay_time', delay_time)
+        tb.send_event(*trigger_regulation_cue)
         t_emotion_regulation_cue.setText(technique)
         # store start times for emotionRegulationCue
         emotionRegulationCue.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -1849,6 +1862,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.tStop = globalClock.getTime(format='float')
         emotionRegulationCue.tStopRefresh = tThisFlipGlobal
         thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
+        # Run 'End Routine' code from code_delay_calculator
+        tb.send_idle()
         # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -1865,6 +1880,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         image_iasp.setImage(photo_filename)
         # Run 'Begin Routine' code from code_iasp_helper
         background_box.setAutoDraw(True)
+        
+        if currentLoop.name == "iasp_neutral_trials":
+            trigger_value, trigger_name = trigger_neutral_image
+        elif currentLoop.name == "iasp_practice_trials":
+            trigger_value, trigger_name = trigger_practice_image
+        elif currentLoop.name == "iasp_unpleasant_trials":
+            trigger_value, trigger_name = trigger_negative_image
+        else:
+            tb._log_error(f"Unknown loop '{currentLoop.name}' - no trigger assigned")
+            trigger_value, trigger_name = (32, "negative_image_placeholder")
         
         # store start times for iaspView
         iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -1939,10 +1964,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_iasp.setAutoDraw(False)
             # Run 'Each Frame' code from code_iasp_helper
             if image_iasp.status == STARTED:
-                tb.start(name="image", value=1)
-            if image_iasp.status == STOPPED:
-                tb.stop(name="image")
+                tb.send_event(trigger_value, trigger_name)
+            elif image_iasp.status == STOPPED:
+                tb.send_idle()
                 background_box.autoDraw = False
+            
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1987,7 +2013,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         # Run 'End Routine' code from code_iasp_helper
-        tb.stop(name="image")
+        tb.send_idle()
         background_box.setAutoDraw(False)
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if iaspView.maxDurationReached:
@@ -2444,6 +2470,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # Used for t_blank_delayer
         delay_time = random.uniform(0.5, 1.5)
         currentLoop.addData('delay_time', delay_time)
+        tb.send_event(*trigger_regulation_cue)
         t_emotion_regulation_cue.setText(technique)
         # store start times for emotionRegulationCue
         emotionRegulationCue.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -2623,6 +2650,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         emotionRegulationCue.tStop = globalClock.getTime(format='float')
         emotionRegulationCue.tStopRefresh = tThisFlipGlobal
         thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
+        # Run 'End Routine' code from code_delay_calculator
+        tb.send_idle()
         # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -2639,6 +2668,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         image_iasp.setImage(photo_filename)
         # Run 'Begin Routine' code from code_iasp_helper
         background_box.setAutoDraw(True)
+        
+        if currentLoop.name == "iasp_neutral_trials":
+            trigger_value, trigger_name = trigger_neutral_image
+        elif currentLoop.name == "iasp_practice_trials":
+            trigger_value, trigger_name = trigger_practice_image
+        elif currentLoop.name == "iasp_unpleasant_trials":
+            trigger_value, trigger_name = trigger_negative_image
+        else:
+            tb._log_error(f"Unknown loop '{currentLoop.name}' - no trigger assigned")
+            trigger_value, trigger_name = (32, "negative_image_placeholder")
         
         # store start times for iaspView
         iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -2713,10 +2752,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     image_iasp.setAutoDraw(False)
             # Run 'Each Frame' code from code_iasp_helper
             if image_iasp.status == STARTED:
-                tb.start(name="image", value=1)
-            if image_iasp.status == STOPPED:
-                tb.stop(name="image")
+                tb.send_event(trigger_value, trigger_name)
+            elif image_iasp.status == STOPPED:
+                tb.send_idle()
                 background_box.autoDraw = False
+            
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -2761,7 +2801,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         iaspView.tStopRefresh = tThisFlipGlobal
         thisExp.addData('iaspView.stopped', iaspView.tStop)
         # Run 'End Routine' code from code_iasp_helper
-        tb.stop(name="image")
+        tb.send_idle()
         background_box.setAutoDraw(False)
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
         if iaspView.maxDurationReached:
@@ -3238,6 +3278,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # Used for t_blank_delayer
             delay_time = random.uniform(0.5, 1.5)
             currentLoop.addData('delay_time', delay_time)
+            tb.send_event(*trigger_regulation_cue)
             t_emotion_regulation_cue.setText(technique)
             # store start times for emotionRegulationCue
             emotionRegulationCue.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -3417,6 +3458,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             emotionRegulationCue.tStop = globalClock.getTime(format='float')
             emotionRegulationCue.tStopRefresh = tThisFlipGlobal
             thisExp.addData('emotionRegulationCue.stopped', emotionRegulationCue.tStop)
+            # Run 'End Routine' code from code_delay_calculator
+            tb.send_idle()
             # the Routine "emotionRegulationCue" was not non-slip safe, so reset the non-slip timer
             routineTimer.reset()
             
@@ -3433,6 +3476,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             image_iasp.setImage(photo_filename)
             # Run 'Begin Routine' code from code_iasp_helper
             background_box.setAutoDraw(True)
+            
+            if currentLoop.name == "iasp_neutral_trials":
+                trigger_value, trigger_name = trigger_neutral_image
+            elif currentLoop.name == "iasp_practice_trials":
+                trigger_value, trigger_name = trigger_practice_image
+            elif currentLoop.name == "iasp_unpleasant_trials":
+                trigger_value, trigger_name = trigger_negative_image
+            else:
+                tb._log_error(f"Unknown loop '{currentLoop.name}' - no trigger assigned")
+                trigger_value, trigger_name = (32, "negative_image_placeholder")
             
             # store start times for iaspView
             iaspView.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -3507,10 +3560,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         image_iasp.setAutoDraw(False)
                 # Run 'Each Frame' code from code_iasp_helper
                 if image_iasp.status == STARTED:
-                    tb.start(name="image", value=1)
-                if image_iasp.status == STOPPED:
-                    tb.stop(name="image")
+                    tb.send_event(trigger_value, trigger_name)
+                elif image_iasp.status == STOPPED:
+                    tb.send_idle()
                     background_box.autoDraw = False
+                
                 
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -3555,7 +3609,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             iaspView.tStopRefresh = tThisFlipGlobal
             thisExp.addData('iaspView.stopped', iaspView.tStop)
             # Run 'End Routine' code from code_iasp_helper
-            tb.stop(name="image")
+            tb.send_idle()
             background_box.setAutoDraw(False)
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
             if iaspView.maxDurationReached:
@@ -3952,8 +4006,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
     # Run 'End Experiment' code from code_trigger_setup
+    # Close connection and send reset byte.
     tb.end_experiment()
-    status = tb.get_status()  # for summary logging if desired
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)
