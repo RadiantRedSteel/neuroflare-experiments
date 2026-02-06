@@ -101,21 +101,19 @@ class TriggerBoxManager:
                     else:
                         tb.send_idle()
                 # If pulse still active, do nothing else this frame
-                else:
-                    return  # Skip image logic entirely
+            else:
+                # 2. Image logic (only runs when no rating pulse is active)
+                if image_phoda.status == STARTED:
+                    tb.send_event(40, "image")
+                elif image_phoda.status == STOPPED:
+                    tb.send_idle()
 
-            # 2. Image logic (only runs when no rating pulse is active)
-            if image_phoda.status == STARTED:
-                tb.send_event(40, "image")
-            elif image_phoda.status == STOPPED:
-                tb.send_idle()
-
-            # 3. Rating click detection (starts a pulse)
-            if slider_phoda.getRating() is not None and not rating_pulse_sent:
-                tb.send_event(49, "rating_pulse")
-                rating_pulse_active = True
-                rating_pulse_sent = True
-                rating_timer.reset()
+                # 3. Rating click detection (starts a pulse)
+                if slider_phoda.getRating() is not None and not rating_pulse_sent:
+                    tb.send_event(49, "rating_pulse")
+                    rating_pulse_active = True
+                    rating_pulse_sent = True
+                    rating_timer.reset()
     
     3. MONITORING CONNECTION (optional):
        
