@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on February 06, 2026, at 05:10
+    on March 23, 2026, at 03:00
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -30,7 +30,6 @@ from numpy.random import random, randint, normal, shuffle, choice as randchoice
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-import psychopy.iohub as io
 from psychopy.hardware import keyboard
 
 # --- Setup global variables (available in all functions) ---
@@ -253,15 +252,7 @@ def setupDevices(expInfo, thisExp, win):
     """
     # --- Setup input devices ---
     ioConfig = {}
-    
-    # Setup iohub keyboard
-    ioConfig['Keyboard'] = dict(use_keymap='psychopy')
-    
-    # Setup iohub experiment
-    ioConfig['Experiment'] = dict(filename=thisExp.dataFileName)
-    
-    # Start ioHub server
-    ioServer = io.launchHubServer(window=win, **ioConfig)
+    ioSession = ioServer = eyetracker = None
     
     # store ioServer object in the device manager
     deviceManager.ioServer = ioServer
@@ -269,7 +260,7 @@ def setupDevices(expInfo, thisExp, win):
     # create a default keyboard (e.g. to check for escape)
     if deviceManager.getDevice('defaultKeyboard') is None:
         deviceManager.addDevice(
-            deviceClass='keyboard', deviceName='defaultKeyboard', backend='iohub'
+            deviceClass='keyboard', deviceName='defaultKeyboard', backend='ptb'
         )
     # return True if completed successfully
     return True
@@ -306,7 +297,7 @@ def pauseExperiment(thisExp, win=None, timers=[], currentRoutine=None):
         defaultKeyboard = deviceManager.addKeyboard(
             deviceClass='keyboard',
             deviceName='defaultKeyboard',
-            backend='ioHub',
+            backend='PsychToolbox',
         )
     # run a while loop while we wait to unpause
     while thisExp.status == PAUSED:
@@ -366,7 +357,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     defaultKeyboard = deviceManager.getDevice('defaultKeyboard')
     if defaultKeyboard is None:
         deviceManager.addDevice(
-            deviceClass='keyboard', deviceName='defaultKeyboard', backend='ioHub'
+            deviceClass='keyboard', deviceName='defaultKeyboard', backend='PsychToolbox'
         )
     eyetracker = deviceManager.getDevice('eyetracker')
     # make sure we're running in the directory for this experiment
@@ -1350,10 +1341,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # ------------------------------------------------------------
         if category == "open-eyes":
             instruction_text = open_eyes_text
-            fixation_text = fixation_closed_text
+            fixation_text = fixation_open_text
         elif category == "closed-eyes":
             instruction_text = closed_eyes_text
-            fixation_text = fixation_open_text
+            fixation_text = fixation_closed_text
         else:
             # Fallback message in case the condition file contains an
             # unexpected category. This helps catch typos or file issues.
