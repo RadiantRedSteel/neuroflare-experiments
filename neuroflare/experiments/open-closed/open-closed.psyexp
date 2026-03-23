@@ -53,7 +53,7 @@
     <Param val="Attempting to measure frame rate of screen, please wait..." valType="str" updates="None" name="frameRateMsg"/>
     <Param val="127.0.0.1" valType="str" updates="None" name="gpAddress"/>
     <Param val="4242" valType="num" updates="None" name="gpPort"/>
-    <Param val="ioHub" valType="str" updates="None" name="keyboardBackend"/>
+    <Param val="PsychToolbox" valType="str" updates="None" name="keyboardBackend"/>
     <Param val="debug" valType="code" updates="None" name="logging level"/>
     <Param val="True" valType="bool" updates="None" name="measureFrameRate"/>
     <Param val="['MIDDLE_BUTTON']" valType="list" updates="None" name="mgBlink"/>
@@ -484,7 +484,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
