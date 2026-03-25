@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on March 23, 2026, at 02:57
+    on March 25, 2026, at 04:23
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -442,10 +442,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     tb = TriggerBoxManager()
     tb.begin_experiment()
     
-    # Open/Closed Eyes 2x (20-29):
-    trigger_eyes_open = (20, "fixation_eyes_open")
-    trigger_eyes_closed = (21, "fixation_eyes_closed")
-    trigger_sound_played = (240, "sound_played")
+    # Setting up trigger variables
+    trigger_start_emg = (tb.TRIG["start_emg"], "start_emg")
+    trigger_stop_emg = (tb.TRIG["stop_emg"], "stop_emg")
+    trigger_open_eyes_start = (tb.TRIG["open_eyes_start"], "open_eyes_start")
+    trigger_open_eyes_stop = (tb.TRIG["open_eyes_end"], "open_eyes_end")
+    trigger_closed_eyes_start = (tb.TRIG["closed_eyes_start"], "closed_eyes_start")
+    trigger_closed_eyes_stop = (tb.TRIG["closed_eyes_end"], "closed_eyes_end")
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -628,6 +631,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_trigger_setup
+    # Clear out any residual triggers
+    tb.send_idle()
     # store start times for experimentSetup
     experimentSetup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     experimentSetup.tStart = globalClock.getTime(format='float')
@@ -700,10 +706,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
     # Run 'End Routine' code from code_trigger_setup
-    # Clear out any residual triggers
-    # Acts as both a marker and connection insurance.
-    tb.send_event(value=1, name="experiment_start")
-    tb.send_idle() # immediately return to baseline
+    # Start EMG Machine
+    tb.send_event(*trigger_start_emg)
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1581,9 +1585,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # Run 'Each Frame' code from code_fixation_helper
             if cross_fixation.status == STARTED:
                 if category == "open-eyes":
-                    tb.send_event(*trigger_eyes_open)
+                    tb.send_event(*trigger_open_eyes_start)
                 elif category == "closed-eyes":
-                    tb.send_event(*trigger_eyes_closed)
+                    tb.send_event(*trigger_closed_eyes_start)
                 else:
                     if not unknown_category_logged:
                         tb._log_error(f"Unknown category '{category}' - no trigger sent")
@@ -1664,7 +1668,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
         # Run 'End Routine' code from code_fixation_helper
-        tb.send_idle()
+        if category == "open-eyes":
+            tb.send_event(*trigger_open_eyes_stop)
+        elif category == "closed-eyes":
+            tb.send_event(*trigger_closed_eyes_stop)
+        else:
+            if not unknown_category_logged:
+                tb._log_error(f"Unknown category '{category}' - no trigger sent")
+                unknown_category_logged = True
+            tb.send_idle()
         # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -1679,9 +1691,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_fixation_finish_helper
         # Plays a sound created in code_sound_setup to let 
-        # the user know that the fixatio nroutine has ended
+        # the user know that the fixation routine has ended
         test_sound.play()
-        tb.send_event(*trigger_sound_played)
+        # tb.send_event(*trigger_sound_played)
         # store start times for fixationFinish
         fixationFinish.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         fixationFinish.tStart = globalClock.getTime(format='float')
