@@ -69,6 +69,15 @@ RATING_SPECS: Dict[str, Dict[str, Any]] = {
         'granularity': 1,
         'style': 'rating',
     },
+    # pain-regulation experiment specific
+    'pain_management': {
+        'message': 'How confident are you in managing your pain?',
+        'min_label': 'Not at\nall confident',
+        'max_label': 'Extremely\nconfident',
+        'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'granularity': 1,
+        'style': 'rating',
+    },
 
     # SAM
     'sam_valence': {
