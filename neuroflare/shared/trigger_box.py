@@ -18,6 +18,9 @@ class TriggerBoxManager:
     (0-255) without crashing when the COM port is missing. Designed to be instantiated 
     once in a "Begin Experiment" code component and called from per-routine code.
 
+    The ports of the TriggerBox activate like the bits in a byte. For example, if you
+    want to activate port 0 and port 6, you would send a value of 65 (1 for port 0, 64 for port 6).
+
     ===========================================================================
     USAGE IN PSYCHOPY BUILDER
     ===========================================================================
@@ -130,7 +133,6 @@ class TriggerBoxManager:
     ===========================================================================
     FEATURES
     ===========================================================================
-
     - Trigger values: 0-255 (8-bit); stick to a pattern for your experiment!
     - Custom names: Name each trigger however you like (e.g., "fixation", "stimulus") (for logging)
     - Single output: TriggerBox outputs one 8-bit value at a time; each send overwrites previous
@@ -138,62 +140,23 @@ class TriggerBoxManager:
     - Graceful degradation: Continues experiment if port is missing (logs warnings)
     - Reconnection: Attempts to reconnect every x seconds if disconnected
     - Deduplication: Tracks current trigger value; only sends first send_event() per frame
-
-    ===========================================================================
-    RECOMMENDED TRIGGER MAP (for consistency across tasks)
-    ===========================================================================
-    Global:
-        0     idle baseline (when nothing else is happening)
-        1     experiment start
-        255   experiment end (reset byte, sent at experiment end)
-
-    Open/Closed Eyes (10-19):
-        10    fixation duration for eyes open
-        11    fixation duration for eyes closed
-
-    Open/Closed Eyes 2x (20-29):
-        20    fixation duration for eyes open
-        21    fixation duration for eyes closed
-
-    Emotion Regulation (30-39):
-        30    neutral image duration
-        31    practice image duration
-        32    negative image duration
-        ...
-        38    regulation cue
-
-    PHODA (40-49):
-        40    image duration
-        ...
-        49    rating pulse
-
-    Pain Regulation (50-59):
-        50    stimulus duration
-        ...
-        59    rating pulse    
-    
-    State Measure (200-239):
-        200   placeholder 
-    
-    Audio (global):
-        240   sound played
     """
 
     def __init__(
         self,
-        *,
+        *,        
         preferred_ports = ("COM3", "COM4", "COM5"), # Add common defaults if needed
         description_hint: str = "TriggerBox", # Description hint to identify the device in Device Manager
         baudrate: int = 9600, # Standard baudrate, though our TriggerBox doesn't actually care
         idle_byte: int = 0x00, # Idle baseline byte
-        reset_byte: int = 0xFF, # Experiment end byte
+        # reset_byte: int = 0xFF, # Experiment end byte
         reconnect_interval_sec: float = 1.0, # seconds between reconnection attempts
     ):
         self.preferred_ports = list(preferred_ports)
         self.description_hint = description_hint
         self.baudrate = baudrate
         self.idle_byte = idle_byte
-        self.reset_byte = reset_byte
+        # self.reset_byte = reset_byte
         self.reconnect_interval_sec = reconnect_interval_sec
 
         self.serial_device = None
@@ -203,6 +166,30 @@ class TriggerBoxManager:
         self.last_trigger_value: Optional[int] = None
         self._last_reconnect_attempt: float = 0.0
 
+        # Global trigger map
+        # Note: TriggerBox utilizes 8 bits as output from the USB port.
+        # You must take into account which ports you wish to set as "HIGH" (1). 
+        # For example, if you want to fire both port 0 and port 6, 
+        # you would need to send a value of 65 (1 for port 0, 64 for port 6).
+        # Other values could work too, as long as both bits are set to 1 in the byte you send.
+        # Markers are determined by what the software receiving the triggers is set up to recognize.
+        self.TRIG = {
+            "open_eyes_start": 1,
+            "open_eyes_end": 2,
+            "closed_eyes_start": 3,
+            "closed_eyes_end": 4,
+            "audio_played": 5,
+            "image_neutral": 11,
+            "image_practice": 13,
+            "image_negative": 15,
+            "image_phoda": 17,
+            "rating_pulse": 19,
+            "stimulus_pain": 21,
+            "start_emg": 32, # port 5
+            "stop_emg": 64, # port 6
+            "digitimer_fire": 128, # port 7
+            # etc...
+        }
     # ------------------------------------------------------------------
     # Logging helpers (because PsychoPy logging doesn't like to update)
     # ------------------------------------------------------------------
@@ -235,6 +222,11 @@ class TriggerBoxManager:
                 self._log_warning("TriggerBoxManager: disconnected")
             self.last_connection_state = self.connected
     
+    # TODO: Implement thisExp data saving of triggers in the same 
+    # format as PsychoPy's data logging so it can be merged later.
+
+    # TODO: Log manager that allows user to use logging or printing on object creation
+
     # ------------------------------------------------------------------
     # Connection management
     # ------------------------------------------------------------------
@@ -243,8 +235,8 @@ class TriggerBoxManager:
         self._connect_if_needed(initial=True)
 
     def end_experiment(self) -> None:
-        """Placed at End Experiment to close connection and send reset byte."""
-        self._send_reset(name="experiment_end")
+        """Placed at End Experiment to close connection."""
+        self.send_idle(name="experiment_end")
         if self.serial_device:
             try:
                 self.serial_device.close()
@@ -305,7 +297,7 @@ class TriggerBoxManager:
                 pass
         # Open new connection
         self.serial_device = serial.Serial(port=port_name, baudrate=self.baudrate, timeout=0)
-
+    
     # ------------------------------------------------------------
     # Sending values
     # ------------------------------------------------------------
@@ -349,10 +341,23 @@ class TriggerBoxManager:
         """Send idle baseline (0)."""
         return self._send_value(self.idle_byte, name)
 
-    def _send_reset(self, name: Optional[str] = "reset") -> bool:
-        """Send reset byte (255), used in end_experiment."""
-        return self._send_value(self.reset_byte, name)
-    
+    # Reset byte could be bad in some contexts, so we may want to remove it for now until we have a clear use case.
+    # def _send_reset(self, name: Optional[str] = "reset") -> bool:
+    #     """Send reset byte (255), used in end_experiment."""
+    #     return self._send_value(self.reset_byte, name)
+
+
+    # TODO: Implement method(s) to send a trigger for a specific duration (e.g., for rating pulses),
+    # which would require tracking the time and automatically sending an idle after the duration has
+    # passed. This would likely involve storing the active pulse state and end time, and checking it
+    # in an update method that should be called each frame.
+    # It should work with PsychoPy's win.callOnFlip() to ensure precise timing with screen updates.
+    # It should also use the component system so it doesn't get cut off by the routine ending.
+    # Note: PsychoPy Builder needs a component that has no end time (such as a conditional stop), 
+    # otherwise our duration-based triggers will get cut off when the routine ends.
+    # This can be done in the builder by just creating an invisible text component that ends after
+    # another component ends. This keeps PsychoPy Builder from implementing a magic end number.
+
     # ------------------------------------------------------------
     # Status
     # ------------------------------------------------------------
