@@ -9,6 +9,8 @@ try:
 except Exception:  # pragma: no cover - environment dependent
     serial = None  # type: ignore
 
+# TODO: Simplify logic. Only the TriggerBox Extension can truly trigger external devices.
+
 class TriggerBoxManager:
     """
     Manage a Brain Products TriggerBox over a virtual serial port.
