@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on March 25, 2026, at 04:23
+This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
+    on April 01, 2026, at 04:47
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -38,7 +38,7 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2025.2.3'
+psychopyVersion = '2026.1.3'
 expName = 'open-closed-2x'  # from the Builder filename that created this script
 expVersion = '1.03'
 # a list of functions to run when the experiment ends (starts off blank)
@@ -136,6 +136,8 @@ def setupData(expInfo, dataDir=None):
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
+    # store pilot mode in data file
+    thisExp.addData('piloting', PILOTING, priority=priority.LOW)
     thisExp.setPriority('thisRow.t', priority.CRITICAL)
     thisExp.setPriority('expName', priority.LOW)
     # return experiment handler
@@ -439,6 +441,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # trigger management without crashing when the COM port is missing.
     # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
+    from neuroflare.shared.external_pulse_usb6363 import pulse_multiple_counters
+    
     tb = TriggerBoxManager()
     tb.begin_experiment()
     
@@ -449,6 +453,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     trigger_open_eyes_stop = (tb.TRIG["open_eyes_end"], "open_eyes_end")
     trigger_closed_eyes_start = (tb.TRIG["closed_eyes_start"], "closed_eyes_start")
     trigger_closed_eyes_stop = (tb.TRIG["closed_eyes_end"], "closed_eyes_end")
+    
+    # These two variables are assigned to open or closed during the instruction routine
+    current_trigger_start = (1, "default_start")
+    current_trigger_stop = (2, "default_stop")
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -707,7 +715,12 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.tStopRefresh = tThisFlipGlobal
     # Run 'End Routine' code from code_trigger_setup
     # Start EMG Machine
-    tb.send_event(*trigger_start_emg)
+    try:
+        pulse_multiple_counters([0,1])
+        logging.data("USB6363: EMG Start")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        logging.flush()
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1348,9 +1361,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if category == "open-eyes":
             instruction_text = open_eyes_text
             fixation_text = fixation_open_text
+            current_trigger_start = trigger_open_eyes_start
+            current_trigger_stop = trigger_open_eyes_stop
         elif category == "closed-eyes":
             instruction_text = closed_eyes_text
             fixation_text = fixation_closed_text
+            current_trigger_start = trigger_closed_eyes_start
+            current_trigger_stop = trigger_closed_eyes_stop
         else:
             # Fallback message in case the condition file contains an
             # unexpected category. This helps catch typos or file issues.
@@ -1512,8 +1529,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_fixation_helper
-        # One-shot flag
-        unknown_category_logged = False
+        trigger_status = NOT_STARTED
         t_fixation_closed.setText(fixation_text)
         # store start times for fixation
         fixation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
@@ -1583,18 +1599,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     cross_fixation.status = FINISHED
                     cross_fixation.setAutoDraw(False)
             # Run 'Each Frame' code from code_fixation_helper
-            if cross_fixation.status == STARTED:
-                if category == "open-eyes":
-                    tb.send_event(*trigger_open_eyes_start)
-                elif category == "closed-eyes":
-                    tb.send_event(*trigger_closed_eyes_start)
-                else:
-                    if not unknown_category_logged:
-                        tb._log_error(f"Unknown category '{category}' - no trigger sent")
-                        unknown_category_logged = True
-                    tb.send_idle()
-            elif cross_fixation.status == STOPPED:
-                tb.send_idle()
+            if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:
+                tb.send_event(*current_trigger_start)
+                trigger_status = STARTED
+                print("Sent: ", *current_trigger_start)
+            elif cross_fixation.status == STOPPED and trigger_status == STARTED:
+                tb.send_event(*current_trigger_stop)
+                trigger_status = STOPPED
+                print("Sent: ", *current_trigger_stop)
             
             # *t_fixation_closed* updates
             
@@ -1668,15 +1680,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
         # Run 'End Routine' code from code_fixation_helper
-        if category == "open-eyes":
-            tb.send_event(*trigger_open_eyes_stop)
-        elif category == "closed-eyes":
-            tb.send_event(*trigger_closed_eyes_stop)
-        else:
-            if not unknown_category_logged:
-                tb._log_error(f"Unknown category '{category}' - no trigger sent")
-                unknown_category_logged = True
-            tb.send_idle()
+        if cross_fixation.status == STOPPED and trigger_status == STARTED:
+            tb.send_event(*current_trigger_stop)
+            trigger_status = STOPPED
+            print("Sent: ", *current_trigger_stop)
         # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -2065,6 +2072,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     goodbye.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_goodbye
+    try:
+        pulse_multiple_counters([0, 2])
+        logging.data("USB6363: EMG Stop")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        logging.flush()
     # store start times for goodbye
     goodbye.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     goodbye.tStart = globalClock.getTime(format='float')
@@ -2218,6 +2232,10 @@ def endExperiment(thisExp, win=None):
     win : psychopy.visual.Window
         Window for this experiment.
     """
+    # stop any playback components
+    if thisExp.currentRoutine is not None:
+        for comp in thisExp.currentRoutine.getPlaybackComponents():
+            comp.stop()
     if win is not None:
         # remove autodraw from all current components
         win.clearAutoDraw()

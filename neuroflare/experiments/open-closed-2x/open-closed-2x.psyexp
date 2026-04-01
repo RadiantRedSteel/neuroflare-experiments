@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<PsychoPy2experiment encoding="utf-8" version="2025.2.3">
+<PsychoPy2experiment encoding="utf-8" version="2026.1.3">
   <Settings>
     <Param val="ptb" valType="str" updates="None" name="Audio lib"/>
     <Param val="" valType="str" updates="None" name="Completed URL"/>
@@ -68,7 +68,7 @@
     <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
     <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
     <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
-    <Param val="1" valType="code" updates="None" name="runMode"/>
+    <Param val="0" valType="code" updates="None" name="runMode"/>
     <Param val="False" valType="bool" updates="None" name="rush"/>
     <Param val="time" valType="str" updates="None" name="sortColumns"/>
     <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
@@ -132,7 +132,7 @@
       <CodeComponent name="code_trigger_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()&amp;#10;&amp;#10;# Setting up trigger variables&amp;#10;trigger_start_emg = (tb.TRIG[&quot;start_emg&quot;], &quot;start_emg&quot;)&amp;#10;trigger_stop_emg = (tb.TRIG[&quot;stop_emg&quot;], &quot;stop_emg&quot;)&amp;#10;trigger_open_eyes_start = (tb.TRIG[&quot;open_eyes_start&quot;], &quot;open_eyes_start&quot;)&amp;#10;trigger_open_eyes_stop = (tb.TRIG[&quot;open_eyes_end&quot;], &quot;open_eyes_end&quot;)&amp;#10;trigger_closed_eyes_start = (tb.TRIG[&quot;closed_eyes_start&quot;], &quot;closed_eyes_start&quot;)&amp;#10;trigger_closed_eyes_stop = (tb.TRIG[&quot;closed_eyes_end&quot;], &quot;closed_eyes_end&quot;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;from neuroflare.shared.external_pulse_usb6363 import pulse_multiple_counters&amp;#10;&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()&amp;#10;&amp;#10;# Setting up trigger variables&amp;#10;trigger_start_emg = (tb.TRIG[&quot;start_emg&quot;], &quot;start_emg&quot;)&amp;#10;trigger_stop_emg = (tb.TRIG[&quot;stop_emg&quot;], &quot;stop_emg&quot;)&amp;#10;trigger_open_eyes_start = (tb.TRIG[&quot;open_eyes_start&quot;], &quot;open_eyes_start&quot;)&amp;#10;trigger_open_eyes_stop = (tb.TRIG[&quot;open_eyes_end&quot;], &quot;open_eyes_end&quot;)&amp;#10;trigger_closed_eyes_start = (tb.TRIG[&quot;closed_eyes_start&quot;], &quot;closed_eyes_start&quot;)&amp;#10;trigger_closed_eyes_stop = (tb.TRIG[&quot;closed_eyes_end&quot;], &quot;closed_eyes_end&quot;)&amp;#10;&amp;#10;# These two variables are assigned to open or closed during the instruction routine&amp;#10;current_trigger_start = (1, &quot;default_start&quot;)&amp;#10;current_trigger_stop = (2, &quot;default_stop&quot;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="# Clear out any residual triggers&amp;#10;tb.send_idle()" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -142,7 +142,7 @@
         <Param val="# Close connection and send reset byte.&amp;#10;tb.end_experiment()" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# Start EMG Machine&amp;#10;tb.send_event(*trigger_start_emg)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# Start EMG Machine&amp;#10;try:&amp;#10;    pulse_multiple_counters([0,1])&amp;#10;    logging.data(&quot;USB6363: EMG Start&quot;)&amp;#10;except Exception as e:&amp;#10;    logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;    logging.flush()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_trigger_setup" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -484,7 +484,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;    current_trigger_start = trigger_open_eyes_start&amp;#10;    current_trigger_stop = trigger_open_eyes_stop&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;    current_trigger_start = trigger_closed_eyes_start&amp;#10;    current_trigger_stop = trigger_closed_eyes_stop&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
@@ -621,14 +621,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# One-shot flag&amp;#10;unknown_category_logged = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="trigger_status = NOT_STARTED" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="if cross_fixation.status == STARTED:&amp;#10;    if category == &quot;open-eyes&quot;:&amp;#10;        tb.send_event(*trigger_open_eyes_start)&amp;#10;    elif category == &quot;closed-eyes&quot;:&amp;#10;        tb.send_event(*trigger_closed_eyes_start)&amp;#10;    else:&amp;#10;        if not unknown_category_logged:&amp;#10;            tb._log_error(f&quot;Unknown category '{category}' - no trigger sent&quot;)&amp;#10;            unknown_category_logged = True&amp;#10;        tb.send_idle()&amp;#10;elif cross_fixation.status == STOPPED:&amp;#10;    tb.send_idle()" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    trigger_status = STARTED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;elif cross_fixation.status == STOPPED and trigger_status == STARTED:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    trigger_status = STOPPED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="if category == &quot;open-eyes&quot;:&amp;#10;    tb.send_event(*trigger_open_eyes_stop)&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    tb.send_event(*trigger_closed_eyes_stop)&amp;#10;else:&amp;#10;    if not unknown_category_logged:&amp;#10;        tb._log_error(f&quot;Unknown category '{category}' - no trigger sent&quot;)&amp;#10;        unknown_category_logged = True&amp;#10;    tb.send_idle()" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="if cross_fixation.status == STOPPED and trigger_status == STARTED:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    trigger_status = STOPPED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_fixation_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -785,6 +785,23 @@
         <Param val="" valType="code" updates="None" name="validator"/>
         <Param val="comp_wrap_width_header" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
+      <CodeComponent name="code_goodbye" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="try:&amp;#10;    pulse_multiple_counters([0, 2])&amp;#10;    logging.data(&quot;USB6363: EMG Stop&quot;)&amp;#10;except Exception as e:&amp;#10;    logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;    logging.flush()" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_goodbye" valType="code" updates="None" name="name"/>
+      </CodeComponent>
     </Routine>
   </Routines>
   <Flow>
