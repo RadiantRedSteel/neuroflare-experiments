@@ -1,8 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2025.2.3),
-    on March 23, 2026, at 02:57
+This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
+    on May 20, 2026, at 04:06
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -38,9 +38,9 @@ deviceManager = hardware.DeviceManager()
 # ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
-psychopyVersion = '2025.2.3'
+psychopyVersion = '2026.1.3'
 expName = 'open-closed'  # from the Builder filename that created this script
-expVersion = '1.03'
+expVersion = '1.04'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -63,7 +63,7 @@ or run the experiment with `--pilot` as an argument. To change what pilot
 PILOTING = core.setPilotModeFromArgs()
 # start off with values from experiment settings
 _fullScr = True
-_winSize = [2560, 1440]
+_winSize = (1024, 768)
 # if in pilot mode, apply overrides according to preferences
 if PILOTING:
     # force windowed mode
@@ -136,6 +136,8 @@ def setupData(expInfo, dataDir=None):
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
+    # store pilot mode in data file
+    thisExp.addData('piloting', PILOTING, priority=priority.LOW)
     thisExp.setPriority('thisRow.t', priority.CRITICAL)
     thisExp.setPriority('expName', priority.LOW)
     # return experiment handler
@@ -200,8 +202,8 @@ def setupWindow(expInfo=None, win=None):
         # if not given a window to setup, make one
         win = visual.Window(
             size=_winSize, fullscr=_fullScr, screen=0,
-            winType='pyglet', allowGUI=True, allowStencil=False,
-            monitor='testMonitor', color=(-0.5000, -0.5000, -0.5000), colorSpace='rgb',
+            winType='pyglet', allowGUI=False, allowStencil=False,
+            monitor='testMonitor', color=(-0.7490, -0.7490, -0.7490), colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
             units='height',
@@ -209,7 +211,7 @@ def setupWindow(expInfo=None, win=None):
         )
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = (-0.5000, -0.5000, -0.5000)
+        win.color = (-0.7490, -0.7490, -0.7490)
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
@@ -391,21 +393,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # =============== GLOBAL SCREEN GEOMETRY =====================
     # ============================================================
     # Centralized screen geometry so all routines share the same coordinate system
+    
     screen_width, screen_height = win.size
     aspect = screen_width / screen_height  # width / height
     
     # In 'height' units:
     # - Full screen height = 1.0
     # - Full screen width  = aspect
-    leftEdge = -aspect / 2
-    rightEdge = aspect / 2
-    topEdge = 0.5
-    bottomEdge = -0.5
     
     # Wrap width as a percentage of screen width
     aspect80 = aspect * 0.80 # 80% of screen width
-    aspect20 = aspect * 0.20  # 20% of screen width
-    comp_wrap_width_body = aspect80
+    aspect75 = aspect * 0.70 # 75% of screen width
+    comp_wrap_width_body = aspect75
     comp_wrap_width_header = aspect80
     comp_wrap_width_continue = aspect80 
     
@@ -438,14 +437,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # trigger management without crashing when the COM port is missing.
     # ------------------------------------------------------------
     from neuroflare.shared.trigger_box import TriggerBoxManager
+    from neuroflare.shared.external_pulse_usb6363 import pulse_multiple_counters
+    
     tb = TriggerBoxManager()
     tb.begin_experiment()
     
-    # Open/Closed Eyes (10-19):
-    trigger_eyes_open = (10, "fixation_eyes_open")
-    trigger_eyes_closed = (11, "fixation_eyes_closed")
-    trigger_sound_played = (240, "sound_played")
+    # Setting up trigger variables
+    trigger_start_emg = (tb.TRIG["start_emg"], "start_emg")
+    trigger_stop_emg = (tb.TRIG["stop_emg"], "stop_emg")
+    trigger_open_eyes_start = (tb.TRIG["open_eyes_start"], "open_eyes_start")
+    trigger_open_eyes_stop = (tb.TRIG["open_eyes_end"], "open_eyes_end")
+    trigger_closed_eyes_start = (tb.TRIG["closed_eyes_start"], "closed_eyes_start")
+    trigger_closed_eyes_stop = (tb.TRIG["closed_eyes_end"], "closed_eyes_end")
     
+    # These two variables are assigned to open or closed during the instruction routine
+    current_trigger_start = (1, "default_start")
+    current_trigger_stop = (2, "default_stop")
     # Run 'Begin Experiment' code from code_open_closed_setup
     # ------------------------------------------------------------
     # code_open_closed_setup
@@ -493,13 +500,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     t_welcome_continue = visual.TextStim(win=win, name='t_welcome_continue',
-        text='Press the SPACEBAR to continue',
+        text='Press LEFT CLICK to continue',
         font='Arial',
         units='height', pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_welcome = keyboard.Keyboard(deviceName='defaultKeyboard')
+    mouse_welcome = event.Mouse(win=win)
+    x, y = [None, None]
+    mouse_welcome.mouseClock = core.Clock()
     
     # --- Initialize components for Routine "testSound" ---
     t_test_sound = visual.TextStim(win=win, name='t_test_sound',
@@ -510,23 +519,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=0.0);
     t_test_sound_continue = visual.TextStim(win=win, name='t_test_sound_continue',
-        text='Press the SPACEBAR to continue',
+        text='Press LEFT CLICK to continue',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-2.0);
-    key_resp_test_sound = keyboard.Keyboard(deviceName='defaultKeyboard')
+    mouse_test_sound = event.Mouse(win=win)
+    x, y = [None, None]
+    mouse_test_sound.mouseClock = core.Clock()
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
-        text='Press the SPACEBAR to continue',
+        text=None,
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "instruction" ---
     t_instruction_body = visual.TextStim(win=win, name='t_instruction_body',
@@ -537,7 +547,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-1.0);
     t_instruction_continue = visual.TextStim(win=win, name='t_instruction_continue',
-        text='Press the SPACEBAR to begin',
+        text='(Researcher) Start the recording, then press SPACEBAR to begin',
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -547,8 +557,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "fixation" ---
     cross_fixation = visual.ShapeStim(
-        win=win, name='cross_fixation', vertices='cross',units='height', 
-        size=(0.2, 0.2),
+        win=win, name='cross_fixation', vertices=[[.5,.05],[.5,-.05],[.05,-.05],[.05,-.5],[-.05,-.5],[-.05,-.05],[-.5,-.05],[-.5,.05],[-.05,.05],[-.05,.5],[.05,.5],[.05,.05]],units='height', 
+        size=(0.15, 0.15),
         ori=0.0, pos=(0, 0), draggable=False, anchor='center',
         lineWidth=1.0,
         colorSpace='rgb', lineColor='white', fillColor='white',
@@ -556,29 +566,28 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_fixation_closed = visual.TextStim(win=win, name='t_fixation_closed',
         text='',
         font='Arial',
-        units='height', pos=(0.0, -0.4), draggable=False, height=0.03, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        units='height', pos=(0, 0), draggable=False, height=0.03, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=-2.0);
+        depth=-3.0);
     
     # --- Initialize components for Routine "fixationFinish" ---
     t_fixation_finish = visual.TextStim(win=win, name='t_fixation_finish',
         text='This round is complete.',
         font='Arial',
-        pos=(0, 0), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        pos=(0, 0), draggable=False, height=0.07, wrapWidth=0.8, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=0.0);
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
-        text='Press the SPACEBAR to continue',
+        text=None,
         font='Arial',
         pos=(0, -0.35), draggable=False, height=0.04, wrapWidth=comp_wrap_width_continue, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    key_resp_sm = keyboard.Keyboard(deviceName='defaultKeyboard')
     
     # --- Initialize components for Routine "goodbye" ---
     t_goodbye = visual.TextStim(win=win, name='t_goodbye',
@@ -628,6 +637,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_trigger_setup
+    # Clear out any residual triggers
+    tb.send_idle()
     # store start times for experimentSetup
     experimentSetup.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     experimentSetup.tStart = globalClock.getTime(format='float')
@@ -700,8 +712,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     experimentSetup.tStop = globalClock.getTime(format='float')
     experimentSetup.tStopRefresh = tThisFlipGlobal
     # Run 'End Routine' code from code_trigger_setup
-    tb.send_event(value=1, name="experiment_start")
-    tb.send_idle() # immediately return to baseline
+    ## Start EMG Machine
+    #try:
+    #    pulse_multiple_counters([0,1])
+    #    logging.data("USB6363: EMG Start")
+    #except Exception as e:
+    #    logging.error(f"Unexpected error: {e}")
+    #    logging.flush()
     thisExp.nextEntry()
     # the Routine "experimentSetup" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -709,7 +726,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # set up handler to look after randomisation of conditions etc
     intro_prompts = data.TrialHandler2(
         name='intro_prompts',
-        nReps=1.0, 
+        nReps=1, 
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
@@ -739,21 +756,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine welcome
         welcome = data.Routine(
             name='welcome',
-            components=[t_welcome_body, t_welcome_continue, key_resp_welcome],
+            components=[t_welcome_body, t_welcome_continue, mouse_welcome],
         )
         welcome.status = NOT_STARTED
         continueRoutine = True
         # update component parameters for each repeat
-        t_welcome_body.setText(Message)
-        # create starting attributes for key_resp_welcome
-        key_resp_welcome.keys = []
-        key_resp_welcome.rt = []
-        _key_resp_welcome_allKeys = []
+        t_welcome_body.setText(message)
+        # setup some python lists for storing info about the mouse_welcome
+        mouse_welcome.x = []
+        mouse_welcome.y = []
+        mouse_welcome.leftButton = []
+        mouse_welcome.midButton = []
+        mouse_welcome.rightButton = []
+        mouse_welcome.time = []
+        gotValidClick = False  # until a click is received
         # store start times for welcome
         welcome.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         welcome.tStart = globalClock.getTime(format='float')
         welcome.status = STARTED
-        thisExp.addData('welcome.started', welcome.tStart)
         welcome.maxDuration = None
         # keep track of which components have finished
         welcomeComponents = welcome.components
@@ -804,7 +824,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # *t_welcome_continue* updates
             
             # if t_welcome_continue is starting this frame...
-            if t_welcome_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            if t_welcome_continue.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
                 # keep track of start time/frame for later
                 t_welcome_continue.frameNStart = frameN  # exact frame index
                 t_welcome_continue.tStart = t  # local t and not account for scr refresh
@@ -818,32 +838,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if t_welcome_continue.status == STARTED:
                 # update params
                 pass
+            # *mouse_welcome* updates
             
-            # *key_resp_welcome* updates
-            waitOnFlip = False
-            
-            # if key_resp_welcome is starting this frame...
-            if key_resp_welcome.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # if mouse_welcome is starting this frame...
+            if mouse_welcome.status == NOT_STARTED and t >= 0.5-frameTolerance:
                 # keep track of start time/frame for later
-                key_resp_welcome.frameNStart = frameN  # exact frame index
-                key_resp_welcome.tStart = t  # local t and not account for scr refresh
-                key_resp_welcome.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_welcome, 'tStartRefresh')  # time at next scr refresh
+                mouse_welcome.frameNStart = frameN  # exact frame index
+                mouse_welcome.tStart = t  # local t and not account for scr refresh
+                mouse_welcome.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(mouse_welcome, 'tStartRefresh')  # time at next scr refresh
                 # update status
-                key_resp_welcome.status = STARTED
-                # keyboard checking is just starting
-                waitOnFlip = True
-                win.callOnFlip(key_resp_welcome.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_welcome.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            if key_resp_welcome.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_welcome.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_welcome_allKeys.extend(theseKeys)
-                if len(_key_resp_welcome_allKeys):
-                    key_resp_welcome.keys = _key_resp_welcome_allKeys[-1].name  # just the last key pressed
-                    key_resp_welcome.rt = _key_resp_welcome_allKeys[-1].rt
-                    key_resp_welcome.duration = _key_resp_welcome_allKeys[-1].duration
-                    # a response ends the routine
-                    continueRoutine = False
+                mouse_welcome.status = STARTED
+                mouse_welcome.mouseClock.reset()
+                prevButtonState = mouse_welcome.getPressed()  # if button is down already this ISN'T a new click
+            if mouse_welcome.status == STARTED:  # only update if started and not finished!
+                buttons = mouse_welcome.getPressed()
+                if buttons != prevButtonState:  # button state changed?
+                    prevButtonState = buttons
+                    if sum(buttons) > 0:  # state changed to a new click
+                        pass
+                        x, y = mouse_welcome.getPos()
+                        mouse_welcome.x.append(float(x))
+                        mouse_welcome.y.append(float(y))
+                        buttons = mouse_welcome.getPressed()
+                        mouse_welcome.leftButton.append(buttons[0])
+                        mouse_welcome.midButton.append(buttons[1])
+                        mouse_welcome.rightButton.append(buttons[2])
+                        mouse_welcome.time.append(mouse_welcome.mouseClock.getTime())
+                        
+                        continueRoutine = False  # end routine on response
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -886,7 +909,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # store stop times for welcome
         welcome.tStop = globalClock.getTime(format='float')
         welcome.tStopRefresh = tThisFlipGlobal
-        thisExp.addData('welcome.stopped', welcome.tStop)
+        # store data for intro_prompts (TrialHandler)
+        intro_prompts.addData('mouse_welcome.x', mouse_welcome.x)
+        intro_prompts.addData('mouse_welcome.y', mouse_welcome.y)
+        intro_prompts.addData('mouse_welcome.leftButton', mouse_welcome.leftButton)
+        intro_prompts.addData('mouse_welcome.midButton', mouse_welcome.midButton)
+        intro_prompts.addData('mouse_welcome.rightButton', mouse_welcome.rightButton)
+        intro_prompts.addData('mouse_welcome.time', mouse_welcome.time)
         # the Routine "welcome" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         # mark thisIntro_prompt as finished
@@ -902,7 +931,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             )
             # once done pausing, restore running status
             intro_prompts.status = STARTED
-    # completed 1.0 repeats of 'intro_prompts'
+    # completed 1 repeats of 'intro_prompts'
     intro_prompts.status = FINISHED
     
     
@@ -910,7 +939,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # create an object to store info about Routine testSound
     testSound = data.Routine(
         name='testSound',
-        components=[t_test_sound, t_test_sound_continue, key_resp_test_sound],
+        components=[t_test_sound, t_test_sound_continue, mouse_test_sound],
     )
     testSound.status = NOT_STARTED
     continueRoutine = True
@@ -921,15 +950,18 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     
     # If sound_tested is true, then the user can continue to the next routine
     sound_tested = False
-    # create starting attributes for key_resp_test_sound
-    key_resp_test_sound.keys = []
-    key_resp_test_sound.rt = []
-    _key_resp_test_sound_allKeys = []
+    # setup some python lists for storing info about the mouse_test_sound
+    mouse_test_sound.x = []
+    mouse_test_sound.y = []
+    mouse_test_sound.leftButton = []
+    mouse_test_sound.midButton = []
+    mouse_test_sound.rightButton = []
+    mouse_test_sound.time = []
+    gotValidClick = False  # until a click is received
     # store start times for testSound
     testSound.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     testSound.tStart = globalClock.getTime(format='float')
     testSound.status = STARTED
-    thisExp.addData('testSound.started', testSound.tStart)
     testSound.maxDuration = None
     # keep track of which components have finished
     testSoundComponents = testSound.components
@@ -998,32 +1030,35 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if t_test_sound_continue.status == STARTED:
             # update params
             pass
+        # *mouse_test_sound* updates
         
-        # *key_resp_test_sound* updates
-        waitOnFlip = False
-        
-        # if key_resp_test_sound is starting this frame...
-        if key_resp_test_sound.status == NOT_STARTED and sound_tested:
+        # if mouse_test_sound is starting this frame...
+        if mouse_test_sound.status == NOT_STARTED and sound_tested:
             # keep track of start time/frame for later
-            key_resp_test_sound.frameNStart = frameN  # exact frame index
-            key_resp_test_sound.tStart = t  # local t and not account for scr refresh
-            key_resp_test_sound.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(key_resp_test_sound, 'tStartRefresh')  # time at next scr refresh
+            mouse_test_sound.frameNStart = frameN  # exact frame index
+            mouse_test_sound.tStart = t  # local t and not account for scr refresh
+            mouse_test_sound.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(mouse_test_sound, 'tStartRefresh')  # time at next scr refresh
             # update status
-            key_resp_test_sound.status = STARTED
-            # keyboard checking is just starting
-            waitOnFlip = True
-            win.callOnFlip(key_resp_test_sound.clock.reset)  # t=0 on next screen flip
-            win.callOnFlip(key_resp_test_sound.clearEvents, eventType='keyboard')  # clear events on next screen flip
-        if key_resp_test_sound.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_test_sound.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-            _key_resp_test_sound_allKeys.extend(theseKeys)
-            if len(_key_resp_test_sound_allKeys):
-                key_resp_test_sound.keys = _key_resp_test_sound_allKeys[-1].name  # just the last key pressed
-                key_resp_test_sound.rt = _key_resp_test_sound_allKeys[-1].rt
-                key_resp_test_sound.duration = _key_resp_test_sound_allKeys[-1].duration
-                # a response ends the routine
-                continueRoutine = False
+            mouse_test_sound.status = STARTED
+            mouse_test_sound.mouseClock.reset()
+            prevButtonState = mouse_test_sound.getPressed()  # if button is down already this ISN'T a new click
+        if mouse_test_sound.status == STARTED:  # only update if started and not finished!
+            buttons = mouse_test_sound.getPressed()
+            if buttons != prevButtonState:  # button state changed?
+                prevButtonState = buttons
+                if sum(buttons) > 0:  # state changed to a new click
+                    pass
+                    x, y = mouse_test_sound.getPos()
+                    mouse_test_sound.x.append(float(x))
+                    mouse_test_sound.y.append(float(y))
+                    buttons = mouse_test_sound.getPressed()
+                    mouse_test_sound.leftButton.append(buttons[0])
+                    mouse_test_sound.midButton.append(buttons[1])
+                    mouse_test_sound.rightButton.append(buttons[2])
+                    mouse_test_sound.time.append(mouse_test_sound.mouseClock.getTime())
+                    
+                    continueRoutine = False  # end routine on response
         
         # check for quit (typically the Esc key)
         if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1066,7 +1101,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # store stop times for testSound
     testSound.tStop = globalClock.getTime(format='float')
     testSound.tStopRefresh = tThisFlipGlobal
-    thisExp.addData('testSound.stopped', testSound.tStop)
+    # store data for thisExp (ExperimentHandler)
+    thisExp.addData('mouse_test_sound.x', mouse_test_sound.x)
+    thisExp.addData('mouse_test_sound.y', mouse_test_sound.y)
+    thisExp.addData('mouse_test_sound.leftButton', mouse_test_sound.leftButton)
+    thisExp.addData('mouse_test_sound.midButton', mouse_test_sound.midButton)
+    thisExp.addData('mouse_test_sound.rightButton', mouse_test_sound.rightButton)
+    thisExp.addData('mouse_test_sound.time', mouse_test_sound.time)
     thisExp.nextEntry()
     # the Routine "testSound" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
@@ -1074,7 +1115,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # set up handler to look after randomisation of conditions etc
     state_measure_pretrial = data.TrialHandler2(
         name='state_measure_pretrial',
-        nReps=1.0, 
+        nReps=1, 
         method='sequential', 
         extraInfo=expInfo, 
         originPath=-1, 
@@ -1114,7 +1155,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine stateMeasure
         stateMeasure = data.Routine(
             name='stateMeasure',
-            components=[t_sm_continue, key_resp_sm],
+            components=[t_sm_continue],
         )
         stateMeasure.status = NOT_STARTED
         continueRoutine = True
@@ -1123,10 +1164,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # --- Create a fresh slider for this trial ---
         allowContinue = False
         sm.begin_routine_from_category(rating_category)
-        # create starting attributes for key_resp_sm
-        key_resp_sm.keys = []
-        key_resp_sm.rt = []
-        _key_resp_sm_allKeys = []
         # store start times for stateMeasure
         stateMeasure.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         stateMeasure.tStart = globalClock.getTime(format='float')
@@ -1162,8 +1199,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # update/draw components on each frame
             # Run 'Each Frame' code from code_sm_helper
             # If rated, allow spacebar to end the routine
+            # Check slider for response to end Routine
             if sm.has_rating():
                 allowContinue = True
+                continueRoutine = False
+            
             
             # *t_sm_continue* updates
             
@@ -1182,32 +1222,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if t_sm_continue.status == STARTED:
                 # update params
                 pass
-            
-            # *key_resp_sm* updates
-            waitOnFlip = False
-            
-            # if key_resp_sm is starting this frame...
-            if key_resp_sm.status == NOT_STARTED and allowContinue == True:
-                # keep track of start time/frame for later
-                key_resp_sm.frameNStart = frameN  # exact frame index
-                key_resp_sm.tStart = t  # local t and not account for scr refresh
-                key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                key_resp_sm.status = STARTED
-                # keyboard checking is just starting
-                waitOnFlip = True
-                win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            if key_resp_sm.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_sm_allKeys.extend(theseKeys)
-                if len(_key_resp_sm_allKeys):
-                    key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
-                    key_resp_sm.rt = _key_resp_sm_allKeys[-1].rt
-                    key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
-                    # a response ends the routine
-                    continueRoutine = False
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1271,7 +1285,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             state_measure_pretrial.status = STARTED
         thisExp.nextEntry()
         
-    # completed 1.0 repeats of 'state_measure_pretrial'
+    # completed 1 repeats of 'state_measure_pretrial'
     state_measure_pretrial.status = FINISHED
     
     if thisSession is not None:
@@ -1288,9 +1302,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
-    openclosed_trials = data.TrialHandler2(
-        name='openclosed_trials',
-        nReps=1.0, 
+    open_closed_trials = data.TrialHandler2(
+        name='open_closed_trials',
+        nReps=1, 
         method='random', 
         extraInfo=expInfo, 
         originPath=-1, 
@@ -1298,29 +1312,29 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         seed=None, 
         isTrials=True, 
     )
-    thisExp.addLoop(openclosed_trials)  # add the loop to the experiment
-    thisOpenclosed_trial = openclosed_trials.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-    if thisOpenclosed_trial != None:
-        for paramName in thisOpenclosed_trial:
-            globals()[paramName] = thisOpenclosed_trial[paramName]
+    thisExp.addLoop(open_closed_trials)  # add the loop to the experiment
+    thisOpen_closed_trial = open_closed_trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisOpen_closed_trial.rgb)
+    if thisOpen_closed_trial != None:
+        for paramName in thisOpen_closed_trial:
+            globals()[paramName] = thisOpen_closed_trial[paramName]
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     
-    for thisOpenclosed_trial in openclosed_trials:
-        openclosed_trials.status = STARTED
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = STARTED
-        currentLoop = openclosed_trials
+    for thisOpen_closed_trial in open_closed_trials:
+        open_closed_trials.status = STARTED
+        if hasattr(thisOpen_closed_trial, 'status'):
+            thisOpen_closed_trial.status = STARTED
+        currentLoop = open_closed_trials
         thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-        # abbreviate parameter names if possible (e.g. rgb = thisOpenclosed_trial.rgb)
-        if thisOpenclosed_trial != None:
-            for paramName in thisOpenclosed_trial:
-                globals()[paramName] = thisOpenclosed_trial[paramName]
+        # abbreviate parameter names if possible (e.g. rgb = thisOpen_closed_trial.rgb)
+        if thisOpen_closed_trial != None:
+            for paramName in thisOpen_closed_trial:
+                globals()[paramName] = thisOpen_closed_trial[paramName]
         
         # --- Prepare to start Routine "instruction" ---
         # create an object to store info about Routine instruction
@@ -1342,14 +1356,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if category == "open-eyes":
             instruction_text = open_eyes_text
             fixation_text = fixation_open_text
+            current_trigger_start = trigger_open_eyes_start
+            current_trigger_stop = trigger_open_eyes_stop
         elif category == "closed-eyes":
             instruction_text = closed_eyes_text
             fixation_text = fixation_closed_text
+            current_trigger_start = trigger_closed_eyes_start
+            current_trigger_stop = trigger_closed_eyes_stop
         else:
             # Fallback message in case the condition file contains an
             # unexpected category. This helps catch typos or file issues.
             instruction_text = "Unknown category. Please contact the experimenter."
             fixation_text = ""
+         
+        
         t_instruction_body.setText(instruction_text)
         # create starting attributes for key_resp_instruction
         key_resp_instruction.keys = []
@@ -1380,7 +1400,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpen_closed_trial, 'status') and thisOpen_closed_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1506,8 +1526,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_fixation_helper
-        # One-shot flag
-        unknown_category_logged = False
+        trigger_status = NOT_STARTED
+        if category == "closed-eyes":
+            cross_fixation.size = (0.0, 0.0)
+        
+        # Run 'Begin Routine' code from code_luminance_jitter
+        # Luminance jitter to subtly hold focus
+        # jitter parameters (normed rgb)
+        import math
+        jitter_amp = 0.05        # peak change in color (±)
+        jitter_period = 25     # seconds for a full sine cycle
+        start_time = None         # will be set on first frame
+        
+        cross_fixation.autoLog = False
         
         t_fixation_closed.setText(fixation_text)
         # store start times for fixation
@@ -1533,9 +1564,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # --- Run Routine "fixation" ---
         thisExp.currentRoutine = fixation
         fixation.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine:
+        while continueRoutine and routineTimer.getTime() < 300.0:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpen_closed_trial, 'status') and thisOpen_closed_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1578,19 +1609,33 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     cross_fixation.status = FINISHED
                     cross_fixation.setAutoDraw(False)
             # Run 'Each Frame' code from code_fixation_helper
-            if cross_fixation.status == STARTED:
-                if category == "open-eyes":
-                    tb.send_event(*trigger_eyes_open)
-                elif category == "closed-eyes":
-                    tb.send_event(*trigger_eyes_closed)
-                else:
-                    if not unknown_category_logged:
-                        tb._log_error(f"Unknown category '{category}' - no trigger sent")
-                        unknown_category_logged = True
-                    tb.send_idle()
-            elif cross_fixation.status == STOPPED:
-                tb.send_idle()
+            if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:
+                tb.send_event(*current_trigger_start)
+                trigger_status = STARTED
+                print("Sent: ", *current_trigger_start)
+                # Start EMG Machine
+                try:
+                    pulse_multiple_counters([0,1])
+                    logging.data("USB6363: EMG Start")
+                except Exception as e:
+                    logging.error(f"Unexpected error: {e}")
+                    logging.flush()
+            elif cross_fixation.status == STOPPED and trigger_status == STARTED:
+                tb.send_event(*current_trigger_stop)
+                trigger_status = STOPPED
+                print("Sent: ", *current_trigger_stop)
+            # Run 'Each Frame' code from code_luminance_jitter
+            if start_time is None:
+                start_time = t # t is Builder's time since routine onset
             
+            elapsed = t - start_time
+            delta = jitter_amp * math.sin(2 * math.pi * (elapsed / jitter_period))
+            
+            # base white 1.0; add delta and clamp
+            col_val = max(-1.0, min(1.0, 1.0 + delta))
+            col = (col_val, col_val, col_val)
+            
+            cross_fixation.setFillColor(col, colorSpace='rgb')
             
             # *t_fixation_closed* updates
             
@@ -1612,7 +1657,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             
             # if t_fixation_closed is stopping this frame...
             if t_fixation_closed.status == STARTED:
-                if bool(cross_fixation.status == STOPPED):
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > t_fixation_closed.tStartRefresh + 10-frameTolerance:
                     # keep track of stop time/frame for later
                     t_fixation_closed.tStop = t  # not accounting for scr refresh
                     t_fixation_closed.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1664,9 +1710,17 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixation.tStopRefresh = tThisFlipGlobal
         thisExp.addData('fixation.stopped', fixation.tStop)
         # Run 'End Routine' code from code_fixation_helper
-        tb.send_idle()
-        # the Routine "fixation" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
+        if cross_fixation.status == STOPPED and trigger_status == STARTED:
+            tb.send_event(*current_trigger_stop)
+            trigger_status = STOPPED
+            print("Sent: ", *current_trigger_stop)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if fixation.maxDurationReached:
+            routineTimer.addTime(-fixation.maxDuration)
+        elif fixation.forceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-300.000000)
         
         # --- Prepare to start Routine "fixationFinish" ---
         # create an object to store info about Routine fixationFinish
@@ -1679,9 +1733,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_fixation_finish_helper
         # Plays a sound created in code_sound_setup to let 
-        # the user know that the fixatio nroutine has ended
+        # the user know that the fixation routine has ended
         test_sound.play()
-        tb.send_event(*trigger_sound_played)
+        # tb.send_event(*trigger_sound_played)
         # store start times for fixationFinish
         fixationFinish.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         fixationFinish.tStart = globalClock.getTime(format='float')
@@ -1707,7 +1761,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         fixationFinish.forceEnded = routineForceEnded = not continueRoutine
         while continueRoutine and routineTimer.getTime() < 1.0:
             # if trial has changed, end Routine now
-            if hasattr(thisOpenclosed_trial, 'status') and thisOpenclosed_trial.status == STOPPING:
+            if hasattr(thisOpen_closed_trial, 'status') and thisOpen_closed_trial.status == STOPPING:
                 continueRoutine = False
             # get current time
             t = routineTimer.getTime()
@@ -1799,10 +1853,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             routineTimer.addTime(-1.000000)
         
         # set up handler to look after randomisation of conditions etc
-        state_measure_trials = data.TrialHandler2(
-            name='state_measure_trials',
-            nReps=1.0, 
-            method='sequential', 
+        state_measure_trial = data.TrialHandler2(
+            name='state_measure_trial',
+            nReps=1, 
+            method='random', 
             extraInfo=expInfo, 
             originPath=-1, 
             trialList=data.importConditions(
@@ -1813,8 +1867,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             seed=None, 
             isTrials=True, 
         )
-        thisExp.addLoop(state_measure_trials)  # add the loop to the experiment
-        thisState_measure_trial = state_measure_trials.trialList[0]  # so we can initialise stimuli with some values
+        thisExp.addLoop(state_measure_trial)  # add the loop to the experiment
+        thisState_measure_trial = state_measure_trial.trialList[0]  # so we can initialise stimuli with some values
         # abbreviate parameter names if possible (e.g. rgb = thisState_measure_trial.rgb)
         if thisState_measure_trial != None:
             for paramName in thisState_measure_trial:
@@ -1823,11 +1877,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
         
-        for thisState_measure_trial in state_measure_trials:
-            state_measure_trials.status = STARTED
+        for thisState_measure_trial in state_measure_trial:
+            state_measure_trial.status = STARTED
             if hasattr(thisState_measure_trial, 'status'):
                 thisState_measure_trial.status = STARTED
-            currentLoop = state_measure_trials
+            currentLoop = state_measure_trial
             thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
             if thisSession is not None:
                 # if running in a Session with a Liaison client, send data up to now
@@ -1841,7 +1895,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # create an object to store info about Routine stateMeasure
             stateMeasure = data.Routine(
                 name='stateMeasure',
-                components=[t_sm_continue, key_resp_sm],
+                components=[t_sm_continue],
             )
             stateMeasure.status = NOT_STARTED
             continueRoutine = True
@@ -1850,10 +1904,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # --- Create a fresh slider for this trial ---
             allowContinue = False
             sm.begin_routine_from_category(rating_category)
-            # create starting attributes for key_resp_sm
-            key_resp_sm.keys = []
-            key_resp_sm.rt = []
-            _key_resp_sm_allKeys = []
             # store start times for stateMeasure
             stateMeasure.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
             stateMeasure.tStart = globalClock.getTime(format='float')
@@ -1889,8 +1939,11 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # update/draw components on each frame
                 # Run 'Each Frame' code from code_sm_helper
                 # If rated, allow spacebar to end the routine
+                # Check slider for response to end Routine
                 if sm.has_rating():
                     allowContinue = True
+                    continueRoutine = False
+                
                 
                 # *t_sm_continue* updates
                 
@@ -1909,32 +1962,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if t_sm_continue.status == STARTED:
                     # update params
                     pass
-                
-                # *key_resp_sm* updates
-                waitOnFlip = False
-                
-                # if key_resp_sm is starting this frame...
-                if key_resp_sm.status == NOT_STARTED and allowContinue == True:
-                    # keep track of start time/frame for later
-                    key_resp_sm.frameNStart = frameN  # exact frame index
-                    key_resp_sm.tStart = t  # local t and not account for scr refresh
-                    key_resp_sm.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(key_resp_sm, 'tStartRefresh')  # time at next scr refresh
-                    # update status
-                    key_resp_sm.status = STARTED
-                    # keyboard checking is just starting
-                    waitOnFlip = True
-                    win.callOnFlip(key_resp_sm.clock.reset)  # t=0 on next screen flip
-                    win.callOnFlip(key_resp_sm.clearEvents, eventType='keyboard')  # clear events on next screen flip
-                if key_resp_sm.status == STARTED and not waitOnFlip:
-                    theseKeys = key_resp_sm.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                    _key_resp_sm_allKeys.extend(theseKeys)
-                    if len(_key_resp_sm_allKeys):
-                        key_resp_sm.keys = _key_resp_sm_allKeys[-1].name  # just the last key pressed
-                        key_resp_sm.rt = _key_resp_sm_allKeys[-1].rt
-                        key_resp_sm.duration = _key_resp_sm_allKeys[-1].duration
-                        # a response ends the routine
-                        continueRoutine = False
                 
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1987,7 +2014,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if hasattr(thisState_measure_trial, 'status'):
                 thisState_measure_trial.status = FINISHED
             # if awaiting a pause, pause now
-            if state_measure_trials.status == PAUSED:
+            if state_measure_trial.status == PAUSED:
                 thisExp.status = PAUSED
                 pauseExperiment(
                     thisExp=thisExp, 
@@ -1995,29 +2022,29 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     timers=[globalClock], 
                 )
                 # once done pausing, restore running status
-                state_measure_trials.status = STARTED
+                state_measure_trial.status = STARTED
             thisExp.nextEntry()
             
-        # completed 1.0 repeats of 'state_measure_trials'
-        state_measure_trials.status = FINISHED
+        # completed 1 repeats of 'state_measure_trial'
+        state_measure_trial.status = FINISHED
         
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
         # get names of stimulus parameters
-        if state_measure_trials.trialList in ([], [None], None):
+        if state_measure_trial.trialList in ([], [None], None):
             params = []
         else:
-            params = state_measure_trials.trialList[0].keys()
+            params = state_measure_trial.trialList[0].keys()
         # save data for this loop
-        state_measure_trials.saveAsExcel(filename + '.xlsx', sheetName='state_measure_trials',
+        state_measure_trial.saveAsExcel(filename + '.xlsx', sheetName='state_measure_trial',
             stimOut=params,
             dataOut=['n','all_mean','all_std', 'all_raw'])
-        # mark thisOpenclosed_trial as finished
-        if hasattr(thisOpenclosed_trial, 'status'):
-            thisOpenclosed_trial.status = FINISHED
+        # mark thisOpen_closed_trial as finished
+        if hasattr(thisOpen_closed_trial, 'status'):
+            thisOpen_closed_trial.status = FINISHED
         # if awaiting a pause, pause now
-        if openclosed_trials.status == PAUSED:
+        if open_closed_trials.status == PAUSED:
             thisExp.status = PAUSED
             pauseExperiment(
                 thisExp=thisExp, 
@@ -2025,22 +2052,22 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 timers=[globalClock], 
             )
             # once done pausing, restore running status
-            openclosed_trials.status = STARTED
+            open_closed_trials.status = STARTED
         thisExp.nextEntry()
         
-    # completed 1.0 repeats of 'openclosed_trials'
-    openclosed_trials.status = FINISHED
+    # completed 1 repeats of 'open_closed_trials'
+    open_closed_trials.status = FINISHED
     
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
     # get names of stimulus parameters
-    if openclosed_trials.trialList in ([], [None], None):
+    if open_closed_trials.trialList in ([], [None], None):
         params = []
     else:
-        params = openclosed_trials.trialList[0].keys()
+        params = open_closed_trials.trialList[0].keys()
     # save data for this loop
-    openclosed_trials.saveAsExcel(filename + '.xlsx', sheetName='openclosed_trials',
+    open_closed_trials.saveAsExcel(filename + '.xlsx', sheetName='open_closed_trials',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     
@@ -2053,6 +2080,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     goodbye.status = NOT_STARTED
     continueRoutine = True
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_goodbye
+    try:
+        pulse_multiple_counters([0, 2])
+        logging.data("USB6363: EMG Stop")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        logging.flush()
     # store start times for goodbye
     goodbye.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
     goodbye.tStart = globalClock.getTime(format='float')
@@ -2169,8 +2203,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         routineTimer.addTime(-4.000000)
     thisExp.nextEntry()
     # Run 'End Experiment' code from code_trigger_setup
+    # Close connection and send reset byte.
     tb.end_experiment()
-    status = tb.get_status()  # for summary logging if desired
     
     # mark experiment as finished
     endExperiment(thisExp, win=win)
@@ -2206,6 +2240,10 @@ def endExperiment(thisExp, win=None):
     win : psychopy.visual.Window
         Window for this experiment.
     """
+    # stop any playback components
+    if thisExp.currentRoutine is not None:
+        for comp in thisExp.currentRoutine.getPlaybackComponents():
+            comp.stop()
     if win is not None:
         # remove autodraw from all current components
         win.clearAutoDraw()
