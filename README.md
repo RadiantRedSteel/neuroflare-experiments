@@ -9,21 +9,19 @@ neuroflare-experiments/
 ├─ neuroflare/
 │   ├─ experiments/        # individual experiment folders
 │   │   ├─ open-closed/    # example experiment
-│   │   │   ├─ open_closed.psyexp
-│   │   │   └─ data/       # participant data outputs
+│   │   │   ├─ open-closed.psyexp
+│   │   │   ├─ open-closed_lastrun.py
+│   │   │   └─ readme.md
 │   │   └─ another-experiment/
 │   │
 │   ├─ shared/             # reusable assets
 │   │   ├─ loop-templates/ # trial loop condition tables
-│   │   ├─ pictures/       # SAM images, stimuli, etc.
-│   │   └─ stimuli/        # placeholder for audio/video stimuli
+│   │   └─ pictures/       # SAM images, stimuli, etc.
 │   │
-│   ├─ scripts/            # utility scripts (e.g., data organizer)
-│   ├─ drivers/            # parallel port DLLs or hardware drivers
-│   └─ config/             # global experiment settings (YAML/JSON)
+│   └─ scripts/            # utility scripts (e.g., data organizer)
 │
-├─ analysis/               # notebooks, statistical scripts, visualization
-├─ docs/                   # IRB protocols, experiment notes, contributor guide
+├─ data/                   # participant data outputs (not committed)
+├─ docs/                   # experiment notes
 └─ README.md
 ```
 
@@ -73,12 +71,11 @@ Location: `neuroflare/experiments/emotion-regulation/`
 
 - **Loop templates**: Reusable condition tables for trial structures  
 - **Pictures**: SAM images and other visual stimuli  
-- **Stimuli**: Placeholder for audio/video assets  
 - **Scripts**: Utilities for organizing data folders or batch processing outputs  
 
 ## Data Management
 
-- Each experiment writes participant data into its own `data/` folder  
+- Each experiment writes participant data into the `data/` folder  
 - Utility scripts in `neuroflare/scripts/` can be used to reorganize or archive data across experiments  
 - Use relative paths to reference shared assets (`../shared/pictures/...`) for reproducibility
 
