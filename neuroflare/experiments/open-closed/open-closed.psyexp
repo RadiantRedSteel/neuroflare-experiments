@@ -25,17 +25,17 @@
     <Param val="True" valType="bool" updates="None" name="Show mouse"/>
     <Param val="height" valType="str" updates="None" name="Units"/>
     <Param val="" valType="str" updates="None" name="Use version"/>
-    <Param val="(1024, 768)" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="(1920, 1080)" valType="list" updates="None" name="Window size (pixels)"/>
     <Param val="none" valType="str" updates="None" name="backgroundFit"/>
     <Param val="" valType="str" updates="None" name="backgroundImg"/>
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
     <Param val="float" valType="str" updates="None" name="clockFormat"/>
     <Param val="{'thisRow.t': 'priority.CRITICAL', 'expName': 'priority.LOW'}" valType="dict" updates="None" name="colPriority"/>
-    <Param val="$(-0.7647, -0.7647, -0.7647)" valType="color" updates="None" name="color"/>
+    <Param val="$(-0.7804, -0.7804, -0.7804)" valType="color" updates="None" name="color"/>
     <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
     <Param val="warning" valType="code" updates="None" name="consoleLoggingLevel"/>
     <Param val="open-closed" valType="str" updates="None" name="expName"/>
-    <Param val="1.05" valType="str" updates="None" name="expVersion"/>
+    <Param val="1.06" valType="str" updates="None" name="expVersion"/>
     <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
     <Param val="None" valType="str" updates="None" name="eyetracker"/>
     <Param val="" valType="code" updates="None" name="frameRate"/>
@@ -106,7 +106,7 @@
       <CodeComponent name="code_trigger_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;from neuroflare.shared.external_pulse_usb6363 import pulse_multiple_counters&amp;#10;&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()&amp;#10;&amp;#10;# Setting up trigger variables&amp;#10;trigger_start_emg = (tb.TRIG[&quot;start_emg&quot;], &quot;start_emg&quot;)&amp;#10;trigger_stop_emg = (tb.TRIG[&quot;stop_emg&quot;], &quot;stop_emg&quot;)&amp;#10;trigger_open_eyes_start = (tb.TRIG[&quot;open_eyes_start&quot;], &quot;open_eyes_start&quot;)&amp;#10;trigger_open_eyes_stop = (tb.TRIG[&quot;open_eyes_end&quot;], &quot;open_eyes_end&quot;)&amp;#10;trigger_closed_eyes_start = (tb.TRIG[&quot;closed_eyes_start&quot;], &quot;closed_eyes_start&quot;)&amp;#10;trigger_closed_eyes_stop = (tb.TRIG[&quot;closed_eyes_end&quot;], &quot;closed_eyes_end&quot;)&amp;#10;&amp;#10;# These two variables are assigned to open or closed during the instruction routine&amp;#10;current_trigger_start = (1, &quot;default_start&quot;)&amp;#10;current_trigger_stop = (2, &quot;default_stop&quot;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_trigger_setup&amp;#10;&amp;#10;# Manage a Brain Products TriggerBox over a virtual serial port.&amp;#10;# Provides connection discovery, reconnection, and high/low &amp;#10;# trigger management without crashing when the COM port is missing.&amp;#10;# ------------------------------------------------------------&amp;#10;from neuroflare.shared.trigger_box import TriggerBoxManager&amp;#10;from neuroflare.shared.external_pulse_usb6363 import pulse_multiple_counters&amp;#10;&amp;#10;tb = TriggerBoxManager()&amp;#10;tb.begin_experiment()&amp;#10;&amp;#10;# Setting up trigger variables&amp;#10;trigger_open_eyes_start = (tb.TRIG[&quot;open_eyes_start&quot;], &quot;open_eyes_start&quot;)&amp;#10;trigger_open_eyes_stop = (tb.TRIG[&quot;open_eyes_end&quot;], &quot;open_eyes_end&quot;)&amp;#10;trigger_closed_eyes_start = (tb.TRIG[&quot;closed_eyes_start&quot;], &quot;closed_eyes_start&quot;)&amp;#10;trigger_closed_eyes_stop = (tb.TRIG[&quot;closed_eyes_end&quot;], &quot;closed_eyes_end&quot;)&amp;#10;&amp;#10;# These two variables are assigned to open or closed during the instruction routine&amp;#10;current_trigger_start = (1, &quot;default_start&quot;)&amp;#10;current_trigger_stop = (2, &quot;default_stop&quot;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="# Clear out any residual triggers&amp;#10;tb.send_idle()" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -246,6 +246,50 @@
         <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
         <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
       </MouseComponent>
+      <CodeComponent name="code_connection_warning" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="warning_text = &quot;&quot;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="tb.send_idle()&amp;#10;if tb.get_status()[&quot;connected&quot;] is False:&amp;#10;    warning_text = &quot;No TriggerBox connection!&quot;&amp;#10;else:&amp;#10;    warning_text = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_connection_warning" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <TextComponent name="t_connection_warning" plugin="None">
+        <Param val="$(0.3961, -0.7333, -0.7333)" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_connection_warning" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.40)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="$warning_text" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
       <KeyboardComponent name="key_resp_welcome" plugin="None">
         <Param val="'space'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
@@ -495,17 +539,17 @@
       <CodeComponent name="code_instruction_helper" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="emg_trigger_status = NOT_STARTED" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;    current_trigger_start = trigger_open_eyes_start&amp;#10;    current_trigger_stop = trigger_open_eyes_stop&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;    current_trigger_start = trigger_closed_eyes_start&amp;#10;    current_trigger_stop = trigger_closed_eyes_stop&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;&amp;#10; &amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_instruction_helper&amp;#10;&amp;#10;# Select the appropriate instruction text based on the current&amp;#10;# trial's Category value. This keeps the logic centralized and&amp;#10;# avoids storing long text strings in the condition file.&amp;#10;# ------------------------------------------------------------&amp;#10;if category == &quot;open-eyes&quot;:&amp;#10;    instruction_text = open_eyes_text&amp;#10;    fixation_text = fixation_open_text&amp;#10;    current_trigger_start = trigger_open_eyes_start&amp;#10;    current_trigger_stop = trigger_open_eyes_stop&amp;#10;elif category == &quot;closed-eyes&quot;:&amp;#10;    instruction_text = closed_eyes_text&amp;#10;    fixation_text = fixation_closed_text&amp;#10;    current_trigger_start = trigger_closed_eyes_start&amp;#10;    current_trigger_stop = trigger_closed_eyes_stop&amp;#10;else:&amp;#10;    # Fallback message in case the condition file contains an&amp;#10;    # unexpected category. This helps catch typos or file issues.&amp;#10;    instruction_text = &quot;Unknown category. Please contact the experimenter.&quot;&amp;#10;    fixation_text = &quot;&quot;&amp;#10; &amp;#10;# Attempt to stop EMG&amp;#10;if emg_trigger_status == STARTED:&amp;#10;    try:&amp;#10;        pulse_multiple_counters([0, 2])&amp;#10;        logging.data(&quot;USB6363: EMG Stop&quot;)&amp;#10;        emg_trigger_status = STOPPED&amp;#10;    except Exception as e:&amp;#10;        logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;        logging.flush()" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# Start EMG Machine&amp;#10;try:&amp;#10;    pulse_multiple_counters([0,1])&amp;#10;    logging.data(&quot;USB6363: EMG Start&quot;)&amp;#10;    emg_trigger_status = STARTED&amp;#10;except Exception as e:&amp;#10;    logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;    logging.flush()" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_instruction_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -637,7 +681,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="trigger_status = NOT_STARTED&amp;#10;if category == &quot;closed-eyes&quot;:&amp;#10;    cross_fixation.size = (0.0, 0.0)&amp;#10;else:&amp;#10;    cross_fixation.size = (0.15, 0.15)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    trigger_status = STARTED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;    # Start EMG Machine&amp;#10;    try:&amp;#10;        pulse_multiple_counters([0,1])&amp;#10;        logging.data(&quot;USB6363: EMG Start&quot;)&amp;#10;    except Exception as e:&amp;#10;        logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;        logging.flush()&amp;#10;elif cross_fixation.status == STOPPED and trigger_status == STARTED:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    trigger_status = STOPPED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    trigger_status = STARTED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;elif cross_fixation.status == STOPPED and trigger_status == STARTED:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    trigger_status = STOPPED&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>

@@ -207,10 +207,11 @@ class StateMeasure:
             colorSpace='rgb',
             markerColor='Red',
             lineColor='White',
-            labelColor='LightGray',
+            labelColor='White',
             font='Noto Sans',
             name='sm_slider',
             autoLog=False,
+            
         )
 
         # Min/Max labels
@@ -360,18 +361,3 @@ class StateMeasure:
         self.autodraw_off()
 
         return {'rating': rating, 'rating_rt': rt}
-
-    # --- Optional debug/demo -------------------------------------------------
-    def demo_loop(self) -> Optional[float]:
-        """Run a simple AutoDraw demo until SPACE when rated; ESC to cancel.
-        Returns final rating or None.
-        """
-        from psychopy import event
-
-        while True:
-            keys = event.getKeys(['space', 'escape'])
-            if 'space' in keys and self.has_rating():
-                return self.get_rating()
-            if 'escape' in keys:
-                return None
-            self.win.flip()

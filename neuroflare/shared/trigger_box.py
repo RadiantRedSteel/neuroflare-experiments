@@ -9,7 +9,9 @@ try:
 except Exception:  # pragma: no cover - environment dependent
     serial = None  # type: ignore
 
-# TODO: Simplify logic. Only the TriggerBox Extension can truly trigger external devices.
+# Only the TriggerBox Extension can truly trigger external devices (with actiCHamp Plus mirror mode).
+# This is still useful for logging triggers in a consistent way, without crashing if the COM port is missing.
+# It also provides a single place to manage trigger values and names.
 
 class TriggerBoxManager:
     """
@@ -46,8 +48,7 @@ class TriggerBoxManager:
         
         Then, in "End Routine" of the same component, add:
 
-            tb.send_event(value=1, name="experiment_start")
-            tb.send_idle() # immediately return to baseline
+            tb.send_idle()
 
         This helps to clear out any residual triggers, and also acts as both a marker and connection insurance.
        
@@ -63,68 +64,48 @@ class TriggerBoxManager:
        
         You can create multiple trigger components with different names and values.
         Values range from 0-255 (8-bit). I recommended staying consistent.
-       
-        In "Each Frame":
-       
-            if cross_fixation.status == STARTED:
-                tb.send_event(value=10, name="fixation")
-            if cross_fixation.status == STOPPED:
-                tb.send_idle()
 
-        The trigger methods take note of previous successfully sent values.
-        Therefore, if you're worried about if that send_idle() never went through,
-        you can call it again without worry - put it in the end routine of other routines.
+        You are expected to handle repeated values in Builder logic. That means you
+        can call send_idle() in multiple end routines, or send the same trigger value
+        twice in a row, without this class suppressing it.
 
-        Because the TriggerBox can only output one value at a time, overlapping events
-        (e.g., image onset and rating clicks) require careful condition logic to avoid overwriting 
-        triggers or producing one-frame idle gaps.
+        A value of 0 is still meaningful as an idle/reset marker for your own logic,
+        even though BrainVision Recorder will not show it as a visible event.
 
-        For example, you might want to mark the duration of an image, but also flag when a rating happens.
-        With correct condition checks, you can meld them together. However, this could lead
-        to the rating trigger lasting one frame only, which may be too brief for your recording system.
+        In BrainVision Recorder, if you want to send a value of 1 twice,
+        you'll need to send 0 in between to reset the state.
 
-        If you need a trigger to last longer than one frame (e.g., PHODA rating clicks),
-        implement a short-duration pulse in your experiment logic using a timer. For example:
+        If you are sending different values, such as 1 and 2,
+        you can send them back to back without needing to reset to 0.
 
-        In "Begin Routine"
+        A common Builder-style pattern is to mirror component status with your own
+        trigger state variable:
 
-            from psychopy import core # if not already imported
-            rating_pulse_active = False
-            rating_pulse_sent = False
-            rating_timer = core.Clock()
+            # Begin Routine
+            trigger_status = NOT_STARTED
 
-        In "Each Frame"
+            # Each Frame
+            if cross_fixation.status == STARTED and trigger_status == NOT_STARTED:
+                tb.send_event(*current_trigger_start)
+                trigger_status = STARTED
 
-            # 1. Rating pulse takes priority
-            if rating_pulse_active:
-                # End pulse?
-                if rating_timer.getTime() > 1.0:
-                    rating_pulse_active = False
-                    # Immediately restore correct image state
-                    if image_phoda.status == STARTED:
-                        tb.send_event(40, "image")
-                    else:
-                        tb.send_idle()
-                # If pulse still active, do nothing else this frame
-            else:
-                # 2. Image logic (only runs when no rating pulse is active)
-                if image_phoda.status == STARTED:
-                    tb.send_event(40, "image")
-                elif image_phoda.status == STOPPED:
-                    tb.send_idle()
+            elif cross_fixation.status == STOPPED and trigger_status == STARTED:
+                tb.send_event(*current_trigger_stop)
+                trigger_status = STOPPED
 
-                # 3. Rating click detection (starts a pulse)
-                if slider_phoda.getRating() is not None and not rating_pulse_sent:
-                    tb.send_event(49, "rating_pulse")
-                    rating_pulse_active = True
-                    rating_pulse_sent = True
-                    rating_timer.reset()
+        This keeps the trigger flow aligned with PsychoPy Builder semantics:
+        STARTED means the event is active, STOPPED means the component has been told
+        to stop, and NOT_STARTED means it has not fired yet.
+
+        NOTE: Be careful on components that can force end the routine, as the each frame logic can be missed.
+        In those cases, you may want to place the trigger end logic in "End Routine" instead, and just check the component status there.
     
     3. MONITORING CONNECTION (optional):
        
         To display connection status in your UI:
        
-        In "Each Frame" of a code component:
+        In "Begin Routine" of a code component:
+            tb.send_idle() # This will attempt to connect and can be used to trigger the warning if it fails
             if tb.get_status()["connected"] is False:
                 warning_text = "No TriggerBox connection!"
             else:
@@ -140,14 +121,12 @@ class TriggerBoxManager:
     - Single output: TriggerBox outputs one 8-bit value at a time; each send overwrites previous
     - Auto-discovery: Scans for TriggerBox by description if preferred port fails
     - Graceful degradation: Continues experiment if port is missing (logs warnings)
-    - Reconnection: Attempts to reconnect every x seconds if disconnected
-    - Deduplication: Tracks current trigger value; only sends first send_event() per frame
     """
 
     def __init__(
         self,
         *,        
-        preferred_ports = ("COM3", "COM4", "COM5"), # Add common defaults if needed
+        preferred_ports = ("COM3"), # Add common defaults if needed
         description_hint: str = "TriggerBox", # Description hint to identify the device in Device Manager
         baudrate: int = 9600, # Standard baudrate, though our TriggerBox doesn't actually care
         idle_byte: int = 0x00, # Idle baseline byte
@@ -165,7 +144,6 @@ class TriggerBoxManager:
         self.port_in_use: Optional[str] = None
         self.connected: bool = False
         self.last_connection_state: bool = None # ensures first log fires
-        self.last_trigger_value: Optional[int] = None
         self._last_reconnect_attempt: float = 0.0
 
         # Global trigger map
@@ -180,16 +158,10 @@ class TriggerBoxManager:
             "open_eyes_end": 2,
             "closed_eyes_start": 3,
             "closed_eyes_end": 4,
-            "audio_played": 5,
-            "image_neutral": 11,
-            "image_practice": 13,
-            "image_negative": 15,
-            "image_phoda": 17,
-            "rating_pulse": 19,
-            "stimulus_pain": 21,
-            "start_emg": 32, # port 5
-            "stop_emg": 64, # port 6
-            "digitimer_fire": 128, # port 7
+            "phoda_image_view_start": 5,
+            "phoda_image_view_end": 6,
+            "phoda_image_rate_start": 7,
+            "phoda_image_rate_end": 8,
             # etc...
         }
     # ------------------------------------------------------------------
@@ -308,10 +280,6 @@ class TriggerBoxManager:
         if not (0 <= value <= 255):
             raise ValueError(f"Trigger value {value} is out of range (0-255).")
 
-        # Let's not overwork our computer if we don't have to!
-        if self.last_trigger_value == value:
-            return True
-        
         # Ensure connection (with throttled reconnect attempts)
         if not self.connected or not self.serial_device:
             self._connect_if_needed()
@@ -323,7 +291,6 @@ class TriggerBoxManager:
         # Send the byte
         try:
             self.serial_device.write(bytes([value]))
-            self.last_trigger_value = value # Stop any further sends of the same value until it changes
             label = f" ({name})" if name else ""
             self._log_data(f"TriggerBoxManager: sent {value}{label}")
             return True
@@ -348,18 +315,6 @@ class TriggerBoxManager:
     #     """Send reset byte (255), used in end_experiment."""
     #     return self._send_value(self.reset_byte, name)
 
-
-    # TODO: Implement method(s) to send a trigger for a specific duration (e.g., for rating pulses),
-    # which would require tracking the time and automatically sending an idle after the duration has
-    # passed. This would likely involve storing the active pulse state and end time, and checking it
-    # in an update method that should be called each frame.
-    # It should work with PsychoPy's win.callOnFlip() to ensure precise timing with screen updates.
-    # It should also use the component system so it doesn't get cut off by the routine ending.
-    # Note: PsychoPy Builder needs a component that has no end time (such as a conditional stop), 
-    # otherwise our duration-based triggers will get cut off when the routine ends.
-    # This can be done in the builder by just creating an invisible text component that ends after
-    # another component ends. This keeps PsychoPy Builder from implementing a magic end number.
-
     # ------------------------------------------------------------
     # Status
     # ------------------------------------------------------------
@@ -368,7 +323,6 @@ class TriggerBoxManager:
         return {
             "connected": self.connected, 
             "port": self.port_in_use,
-            "last_trigger_value": self.last_trigger_value,
         }
 
 __all__ = ["TriggerBoxManager"]

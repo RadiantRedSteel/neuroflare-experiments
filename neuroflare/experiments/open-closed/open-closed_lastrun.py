@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
-    on May 21, 2026, at 21:29
+    on May 31, 2026, at 21:19
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,7 +40,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2026.1.3'
 expName = 'open-closed'  # from the Builder filename that created this script
-expVersion = '1.05'
+expVersion = '1.06'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -63,7 +63,7 @@ or run the experiment with `--pilot` as an argument. To change what pilot
 PILOTING = core.setPilotModeFromArgs()
 # start off with values from experiment settings
 _fullScr = True
-_winSize = (1024, 768)
+_winSize = (1920, 1080)
 # if in pilot mode, apply overrides according to preferences
 if PILOTING:
     # force windowed mode
@@ -203,7 +203,7 @@ def setupWindow(expInfo=None, win=None):
         win = visual.Window(
             size=_winSize, fullscr=_fullScr, screen=0,
             winType='pyglet', allowGUI=True, allowStencil=False,
-            monitor='testMonitor', color=(-0.7647, -0.7647, -0.7647), colorSpace='rgb',
+            monitor='testMonitor', color=(-0.7804, -0.7804, -0.7804), colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
             units='height',
@@ -211,7 +211,7 @@ def setupWindow(expInfo=None, win=None):
         )
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = (-0.7647, -0.7647, -0.7647)
+        win.color = (-0.7804, -0.7804, -0.7804)
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
@@ -444,8 +444,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     tb.begin_experiment()
     
     # Setting up trigger variables
-    trigger_start_emg = (tb.TRIG["start_emg"], "start_emg")
-    trigger_stop_emg = (tb.TRIG["stop_emg"], "stop_emg")
     trigger_open_eyes_start = (tb.TRIG["open_eyes_start"], "open_eyes_start")
     trigger_open_eyes_stop = (tb.TRIG["open_eyes_end"], "open_eyes_end")
     trigger_closed_eyes_start = (tb.TRIG["closed_eyes_start"], "closed_eyes_start")
@@ -527,6 +525,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     mouse_welcome = event.Mouse(win=win)
     x, y = [None, None]
     mouse_welcome.mouseClock = core.Clock()
+    # Run 'Begin Experiment' code from code_connection_warning
+    warning_text = ""
+    
+    t_connection_warning = visual.TextStim(win=win, name='t_connection_warning',
+        text='',
+        font='Arial',
+        pos=(0, -0.40), draggable=False, height=0.04, wrapWidth=None, ori=0.0, 
+        color=(0.3961, -0.7333, -0.7333), colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-4.0);
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -538,6 +546,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         depth=-1.0);
     
     # --- Initialize components for Routine "instruction" ---
+    # Run 'Begin Experiment' code from code_instruction_helper
+    emg_trigger_status = NOT_STARTED
     t_instruction_body = visual.TextStim(win=win, name='t_instruction_body',
         text='',
         font='Arial',
@@ -911,7 +921,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # create an object to store info about Routine welcome
         welcome = data.Routine(
             name='welcome',
-            components=[t_welcome_body, t_welcome_continue, mouse_welcome],
+            components=[t_welcome_body, t_welcome_continue, mouse_welcome, t_connection_warning],
         )
         welcome.status = NOT_STARTED
         continueRoutine = True
@@ -919,6 +929,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         t_welcome_body.setText(message)
         # setup some python lists for storing info about the mouse_welcome
         gotValidClick = False  # until a click is received
+        # Run 'Begin Routine' code from code_connection_warning
+        tb.send_idle()
+        if tb.get_status()["connected"] is False:
+            warning_text = "No TriggerBox connection!"
+        else:
+            warning_text = ""
+        t_connection_warning.setText(warning_text)
         # store start times for welcome
         welcome.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
         welcome.tStart = globalClock.getTime(format='float')
@@ -1007,6 +1024,24 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     if sum(buttons) > 0:  # state changed to a new click
                         pass
                         continueRoutine = False  # end routine on response            
+            # *t_connection_warning* updates
+            
+            # if t_connection_warning is starting this frame...
+            if t_connection_warning.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                t_connection_warning.frameNStart = frameN  # exact frame index
+                t_connection_warning.tStart = t  # local t and not account for scr refresh
+                t_connection_warning.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(t_connection_warning, 'tStartRefresh')  # time at next scr refresh
+                # update status
+                t_connection_warning.status = STARTED
+                t_connection_warning.setAutoDraw(True)
+            
+            # if t_connection_warning is active this frame...
+            if t_connection_warning.status == STARTED:
+                # update params
+                pass
+            
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
@@ -1325,7 +1360,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             instruction_text = "Unknown category. Please contact the experimenter."
             fixation_text = ""
          
-        
+        # Attempt to stop EMG
+        if emg_trigger_status == STARTED:
+            try:
+                pulse_multiple_counters([0, 2])
+                logging.data("USB6363: EMG Stop")
+                emg_trigger_status = STOPPED
+            except Exception as e:
+                logging.error(f"Unexpected error: {e}")
+                logging.flush()
         t_instruction_body.setText(instruction_text)
         # create starting attributes for key_resp_instruction
         key_resp_instruction.keys = []
@@ -1467,6 +1510,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # store stop times for instruction
         instruction.tStop = globalClock.getTime(format='float')
         instruction.tStopRefresh = tThisFlipGlobal
+        # Run 'End Routine' code from code_instruction_helper
+        # Start EMG Machine
+        try:
+            pulse_multiple_counters([0,1])
+            logging.data("USB6363: EMG Start")
+            emg_trigger_status = STARTED
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+            logging.flush()
         # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -1572,13 +1624,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 tb.send_event(*current_trigger_start)
                 trigger_status = STARTED
                 print("Sent: ", *current_trigger_start)
-                # Start EMG Machine
-                try:
-                    pulse_multiple_counters([0,1])
-                    logging.data("USB6363: EMG Start")
-                except Exception as e:
-                    logging.error(f"Unexpected error: {e}")
-                    logging.flush()
             elif cross_fixation.status == STOPPED and trigger_status == STARTED:
                 tb.send_event(*current_trigger_stop)
                 trigger_status = STOPPED
