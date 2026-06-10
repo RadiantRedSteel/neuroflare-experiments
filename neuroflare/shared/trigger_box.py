@@ -154,14 +154,35 @@ class TriggerBoxManager:
         # Other values could work too, as long as both bits are set to 1 in the byte you send.
         # Markers are determined by what the software receiving the triggers is set up to recognize.
         self.TRIG = {
-            "open_eyes_start": 1,
-            "open_eyes_end": 2,
-            "closed_eyes_start": 3,
-            "closed_eyes_end": 4,
-            "phoda_image_view_start": 5,
-            "phoda_image_view_end": 6,
-            "phoda_image_rate_start": 7,
-            "phoda_image_rate_end": 8,
+            "open_eyes_start": 1,               #s1
+            "open_eyes_end": 2,                 #s2
+            "closed_eyes_start": 3,             #s3
+            "closed_eyes_end": 4,               #s4
+            "phoda_image_view_start": 5,        #s5
+            "phoda_image_view_end": 6,          #s6
+            "phoda_image_rate_start": 7,        #s7 
+            "phoda_image_rate_end": 8,          #s8
+            # Pain Regulation (general, not level specific)
+            "pain_reg_observe_start": 9,        #s9  start of the 10 seconds
+            "pain_reg_observe_end": 10,         #s10   end of the 10 seconds
+            "pain_reg_inhibit_start": 11,       #s11
+            "pain_reg_inhibit_end": 12,         #s12
+            "pain_reg_facilitate_start": 13,    #s13
+            "pain_reg_facilitate_end": 14,      #s14
+            # Pain Regulation Digitimer Pain Level 1
+            "pain_reg_l1_observe_start": 15,
+            "pain_reg_l1_observe_end": 16,
+            "pain_reg_l1_inhibit_start": 17,
+            "pain_reg_l1_inhibit_end": 18,
+            "pain_reg_l1_facilitate_start": 19,
+            "pain_reg_l1_facilitate_end": 20,
+            # Pain Regulation Digitimer Pain Level 4
+            "pain_reg_l4_observe_start": 21,
+            "pain_reg_l4_observe_end": 22,
+            "pain_reg_l4_inhibit_start": 23,
+            "pain_reg_l4_inhibit_end": 24,
+            "pain_reg_l4_facilitate_start": 25,
+            "pain_reg_l4_facilitate_end": 26,
             # etc...
         }
     # ------------------------------------------------------------------
