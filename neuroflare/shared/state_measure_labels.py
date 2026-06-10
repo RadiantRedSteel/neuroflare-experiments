@@ -70,8 +70,8 @@ RATING_SPECS: Dict[str, Dict[str, Any]] = {
         'style': 'rating',
     },
     # pain-regulation experiment specific
-    'pain_management': {
-        'message': 'How confident are you in managing your pain?',
+    'pain_regulation_confidence': {
+        'message': 'Rate how confident you were in performing the regulation task',
         'min_label': 'Not at\nall confident',
         'max_label': 'Extremely\nconfident',
         'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
