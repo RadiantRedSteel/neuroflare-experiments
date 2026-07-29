@@ -200,6 +200,7 @@ class StateMeasure:
             ticks=ticks,
             labels=ticks,
             granularity=granularity,
+            startValue=None,
             style=str(style).lower(),
             pos=geom['slider_pos'],
             size=geom['slider_size'],
@@ -339,9 +340,9 @@ class StateMeasure:
 
     def get_rt(self) -> Optional[float]:
         return self.slider.getRT() if self.slider else None
-
-    def end_routine(self, currentLoop: Optional[Any] = None) -> Dict[str, Any]:
-        """Collect rating/RT and optionally add data to Builder's currentLoop."""
+    
+    def collect_data(self, currentLoop: Optional[Any] = None) -> Dict[str, Any]:
+        """Collect rating/RT and add data to Builder's currentLoop."""
         rating = self.get_rating()
         rt = self.get_rt()
 
@@ -349,6 +350,7 @@ class StateMeasure:
             try:
                 currentLoop.addData('rating', rating)
                 currentLoop.addData('rating_rt', rt)
+                self._last_rating_value = rating  # Store last rating value for potential use in next trial
             except Exception:
                 logging.error("StateMeasure: failed to add data to currentLoop.")
 
@@ -357,7 +359,17 @@ class StateMeasure:
         except Exception:
             logging.error("StateMeasure: error logging rating.")
 
+        return {'rating': rating, 'rating_rt': rt}
+
+    def end_routine(self, currentLoop: Optional[Any] = None) -> Dict[str, Any]:
+        """Collect rating/RT and add data to Builder's currentLoop. Turn off AutoDraw for all relevant components."""
+        result = self.collect_data(currentLoop)
+
         # Turn off AutoDraw so next routines control their components cleanly
         self.autodraw_off()
 
-        return {'rating': rating, 'rating_rt': rt}
+        return result
+    
+    def setValue(self, value: Any) -> None:
+        """Programmatically set the slider value (e.g. for holding values)."""
+        self.slider.setValue(value)
