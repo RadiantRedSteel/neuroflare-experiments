@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
-    on June 10, 2026, at 03:29
+    on July 29, 2026, at 03:16
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -32,39 +32,6 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
-# Run 'Before Experiment' code from code_pain_reg_setup
-# ------------------------------------------------------------
-# code_pain_regulation_trials
-#
-# Creates a .csv file that randomizes the order of the three techniques, with
-# each technique repeating 5 times in a row (for a total of 15 trials).
-# ------------------------------------------------------------
-#import csv
-#import numpy as np
-#
-## Pain Regulation Techniques
-#techniques = ['Baseline', 'Inhibit', 'Facilitate']
-#
-#pain_regulation_file_name = 'pain_regulation_trials.csv'
-#
-#print(f"Original technique order:   {techniques}")
-#
-#np.random.Generator.shuffle(np.random.default_rng(), techniques)
-#
-#print(f"Randomized technique order: {techniques}")
-#
-#with open(pain_regulation_file_name, 'w', newline='') as f:
-#    writer = csv.writer(f)
-#    writer.writerow(['trial_number', 'technique'])
-#    
-#    trial_number = 1
-#    for technique in techniques:
-#        for _ in range(5):  # 5 trials per technique
-#            writer.writerow([trial_number, technique])
-#            trial_number += 1
-#
-#print(f"Saved randomized trial file: {pain_regulation_file_name}")
-#
 # --- Setup global variables (available in all functions) ---
 # create a device manager to handle hardware (keyboards, mice, mirophones, speakers, etc.)
 deviceManager = hardware.DeviceManager()
@@ -73,13 +40,12 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2026.1.3'
 expName = 'pain-regulation'  # from the Builder filename that created this script
-expVersion = ''
+expVersion = '0.6'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
 expInfo = {
     'participant': f"{randint(0, 999999):06.0f}",
-    'session': '001',
     'date|hid': data.getDateStr(),
     'expName|hid': expName,
     'expVersion|hid': expVersion,
@@ -441,7 +407,13 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     comp_wrap_width_header = aspect80
     comp_wrap_width_continue = aspect80 
     
-    
+    # Log and print custom data level logs
+    def log_and_print(message):
+        logging.data(message)
+        try:
+            print(f"{globalClock.getTime():.4f} \tDATA \t{message}")
+        except:
+            print(f"DATA \t{message}")
     # Run 'Begin Experiment' code from code_state_measure_setup
     # ------------------------------------------------------------
     # code_state_measure_setup
@@ -496,10 +468,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Includes instruction variables.
     # ------------------------------------------------------------
     
-    base_instruction = "In this task, you will read a brief script and form the mental images it describes.\n\nYour role is simply to engage with the imagery as instructed.\n\nYou will complete this imagery task and a confidence rating five times before moving on."
-    observe_instruction = "(Observe)\nBring to mind the area of your body where you typically feel pain, and imagine its appearance as it is, without trying to alter or influence it."
-    facilitate_instruction = "(Facilitate)\nBring to mind the area of your body where you typically feel pain, and imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying."
-    inhibit_instruction = "(Inhibit)\nBring to mind the area of your body where you typically feel pain, and imagine it recovering or settling, as if the sensations in that area are easing."
+    observe_instruction = "(Observe)\nBring to mind the area of your body where you typically feel pain. Imagine its appearance exactly as it is, without trying to alter or influence it."
+    facilitate_instruction = "(Facilitate)\nBring to mind the area of your body where you typically feel pain. Imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying."
+    inhibit_instruction = "(Inhibit)\nBring to mind the area of your body where you typically feel pain. Imagine it recovering or settling, as if the sensations in that area are easing."
     
     
     # --- Initialize components for Routine "welcome" ---
@@ -563,10 +534,19 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_regulation_task = visual.TextStim(win=win, name='t_regulation_task',
         text='',
         font='Arial',
-        units='height', pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        units='height', pos=(0, -0.35), draggable=False, height=0.05, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
-        depth=0.0);
+        depth=-1.0);
+    
+    # --- Initialize components for Routine "transition" ---
+    cross_fixation_transition = visual.ShapeStim(
+        win=win, name='cross_fixation_transition', vertices=[[.5,.05],[.5,-.05],[.05,-.05],[.05,-.5],[-.05,-.5],[-.05,-.05],[-.5,-.05],[-.5,.05],[-.05,.05],[-.05,.5],[.05,.5],[.05,.05]],units='height', 
+        size=(0.15, 0.15),
+        ori=0.0, pos=(0, 0), draggable=False, anchor='center',
+        lineWidth=0.0,
+        colorSpace='rgb', lineColor='white', fillColor='white',
+        opacity=None, depth=0.0, interpolate=True)
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -576,8 +556,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
-    
-    # --- Initialize components for Routine "delayTimer" ---
     
     # --- Initialize components for Routine "stateMeasure" ---
     t_sm_continue = visual.TextStim(win=win, name='t_sm_continue',
@@ -591,6 +569,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "delay" ---
     # Run 'Begin Experiment' code from code_delay
     # Skip the delay fixation on the final trial.
+    fixation_duration = 60
     skip_fixation_counter = 0
     skip_fixation_target = 2
     cross_fixation_delay = visual.ShapeStim(
@@ -1128,15 +1107,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
-    # get names of stimulus parameters
-    if state_measure_pretrial.trialList in ([], [None], None):
-        params = []
-    else:
-        params = state_measure_pretrial.trialList[0].keys()
-    # save data for this loop
-    state_measure_pretrial.saveAsText(filename + '_state_measure_pretrial.csv', delim=',',
-        stimOut=params,
-        dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
     technique_trial = data.TrialHandler2(
@@ -1190,6 +1160,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # trial's Category value. This keeps the logic centralized and
         # avoids storing long text strings in the condition file.
         # ------------------------------------------------------------
+        technique_text = technique.capitalize()
         
         if technique == "observe":
             instruction_text = observe_instruction
@@ -1358,13 +1329,14 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.tStopRefresh = tThisFlipGlobal
         # Run 'End Routine' code from code_instruction_helper
         # Start EMG Machine
-        try:
-            pulse_multiple_counters([0,1])
-            logging.data("USB6363: EMG Start")
-            emg_trigger_status = STARTED
-        except Exception as e:
-            logging.error(f"Unexpected error: {e}")
-            logging.flush()
+        if emg_trigger_status == NOT_STARTED:
+            try:
+                pulse_multiple_counters([0,1])
+                log_and_print("USB6363: EMG Start")
+                emg_trigger_status = STARTED
+            except Exception as e:
+                logging.error(f"Unexpected error: {e}")
+                logging.flush()
         # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -1397,25 +1369,226 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 for paramName in thisRegulation_block:
                     globals()[paramName] = thisRegulation_block[paramName]
             
-            # --- Prepare to start Routine "regulation" ---
-            # create an object to store info about Routine regulation
-            regulation = data.Routine(
-                name='regulation',
-                components=[t_regulation_task],
+            # set up handler to look after randomisation of conditions etc
+            seconds = data.TrialHandler2(
+                name='seconds',
+                nReps=1, 
+                method='sequential', 
+                extraInfo=expInfo, 
+                originPath=-1, 
+                trialList=data.importConditions('pain-regulation_loop_seconds.csv'), 
+                seed=None, 
+                isTrials=True, 
             )
-            regulation.status = NOT_STARTED
+            thisExp.addLoop(seconds)  # add the loop to the experiment
+            thisSecond = seconds.trialList[0]  # so we can initialise stimuli with some values
+            # abbreviate parameter names if possible (e.g. rgb = thisSecond.rgb)
+            if thisSecond != None:
+                for paramName in thisSecond:
+                    globals()[paramName] = thisSecond[paramName]
+            if thisSession is not None:
+                # if running in a Session with a Liaison client, send data up to now
+                thisSession.sendExperimentData()
+            
+            for thisSecond in seconds:
+                seconds.status = STARTED
+                if hasattr(thisSecond, 'status'):
+                    thisSecond.status = STARTED
+                currentLoop = seconds
+                thisExp.timestampOnFlip(win, 'thisRow.t', format=globalClock.format)
+                if thisSession is not None:
+                    # if running in a Session with a Liaison client, send data up to now
+                    thisSession.sendExperimentData()
+                # abbreviate parameter names if possible (e.g. rgb = thisSecond.rgb)
+                if thisSecond != None:
+                    for paramName in thisSecond:
+                        globals()[paramName] = thisSecond[paramName]
+                
+                # --- Prepare to start Routine "regulation" ---
+                # create an object to store info about Routine regulation
+                regulation = data.Routine(
+                    name='regulation',
+                    components=[t_regulation_task],
+                )
+                regulation.status = NOT_STARTED
+                continueRoutine = True
+                # update component parameters for each repeat
+                # Run 'Begin Routine' code from code_regulation_helper
+                # Mark the start of the 16 seconds.
+                if regulation_seconds == 0:
+                    sm.begin_routine_from_category("pain_regulation") # Create slider
+                    tb.send_event(*current_trigger_start)
+                    print("Sent: ", *current_trigger_start)
+                
+                t_regulation_task.setText(technique_text)
+                # store start times for regulation
+                regulation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+                regulation.tStart = globalClock.getTime(format='float')
+                regulation.status = STARTED
+                thisExp.addData('regulation.started', regulation.tStart)
+                regulation.maxDuration = 1
+                # keep track of which components have finished
+                regulationComponents = regulation.components
+                for thisComponent in regulation.components:
+                    thisComponent.tStart = None
+                    thisComponent.tStop = None
+                    thisComponent.tStartRefresh = None
+                    thisComponent.tStopRefresh = None
+                    if hasattr(thisComponent, 'status'):
+                        thisComponent.status = NOT_STARTED
+                # reset timers
+                t = 0
+                _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+                frameN = -1
+                
+                # --- Run Routine "regulation" ---
+                thisExp.currentRoutine = regulation
+                regulation.forceEnded = routineForceEnded = not continueRoutine
+                while continueRoutine and routineTimer.getTime() < 1.0:
+                    # if trial has changed, end Routine now
+                    if hasattr(thisSecond, 'status') and thisSecond.status == STOPPING:
+                        continueRoutine = False
+                    # get current time
+                    t = routineTimer.getTime()
+                    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+                    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+                    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+                    # update/draw components on each frame
+                    # is it time to end the Routine? (based on local clock)
+                    if tThisFlip > regulation.maxDuration-frameTolerance:
+                        regulation.maxDurationReached = True
+                        continueRoutine = False
+                    
+                    # *t_regulation_task* updates
+                    
+                    # if t_regulation_task is starting this frame...
+                    if t_regulation_task.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                        # keep track of start time/frame for later
+                        t_regulation_task.frameNStart = frameN  # exact frame index
+                        t_regulation_task.tStart = t  # local t and not account for scr refresh
+                        t_regulation_task.tStartRefresh = tThisFlipGlobal  # on global time
+                        win.timeOnFlip(t_regulation_task, 'tStartRefresh')  # time at next scr refresh
+                        # update status
+                        t_regulation_task.status = STARTED
+                        t_regulation_task.setAutoDraw(True)
+                    
+                    # if t_regulation_task is active this frame...
+                    if t_regulation_task.status == STARTED:
+                        # update params
+                        pass
+                    
+                    # if t_regulation_task is stopping this frame...
+                    if t_regulation_task.status == STARTED:
+                        # is it time to stop? (based on global clock, using actual start)
+                        if tThisFlipGlobal > t_regulation_task.tStartRefresh + 1-frameTolerance:
+                            # keep track of stop time/frame for later
+                            t_regulation_task.tStop = t  # not accounting for scr refresh
+                            t_regulation_task.tStopRefresh = tThisFlipGlobal  # on global time
+                            t_regulation_task.frameNStop = frameN  # exact frame index
+                            # update status
+                            t_regulation_task.status = FINISHED
+                            t_regulation_task.setAutoDraw(False)
+                    
+                    # check for quit (typically the Esc key)
+                    if defaultKeyboard.getKeys(keyList=["escape"]):
+                        thisExp.status = FINISHED
+                    if thisExp.status == FINISHED or endExpNow:
+                        endExperiment(thisExp, win=win)
+                        return
+                    # pause experiment here if requested
+                    if thisExp.status == PAUSED:
+                        pauseExperiment(
+                            thisExp=thisExp, 
+                            win=win, 
+                            timers=[routineTimer, globalClock], 
+                            currentRoutine=regulation,
+                        )
+                        # skip the frame we paused on
+                        continue
+                    
+                    # has a Component requested the Routine to end?
+                    if not continueRoutine:
+                        regulation.forceEnded = routineForceEnded = True
+                    # has the Routine been forcibly ended?
+                    if regulation.forceEnded or routineForceEnded:
+                        break
+                    # has every Component finished?
+                    continueRoutine = False
+                    for thisComponent in regulation.components:
+                        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                            continueRoutine = True
+                            break  # at least one component has not yet finished
+                    
+                    # refresh the screen
+                    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                        win.flip()
+                
+                # --- Ending Routine "regulation" ---
+                for thisComponent in regulation.components:
+                    if hasattr(thisComponent, "setAutoDraw"):
+                        thisComponent.setAutoDraw(False)
+                # store stop times for regulation
+                regulation.tStop = globalClock.getTime(format='float')
+                regulation.tStopRefresh = tThisFlipGlobal
+                thisExp.addData('regulation.stopped', regulation.tStop)
+                # Run 'End Routine' code from code_regulation_helper
+                # Log rating and rt
+                #sm.end_routine(currentLoop)
+                sm.collect_data(currentLoop)
+                
+                # Mark the end of the 16 seconds.
+                if regulation_seconds == 15:
+                    tb.send_event(*current_trigger_stop)
+                    print("Sent: ", *current_trigger_stop)
+                    sm.autodraw_off()
+                
+                
+                # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+                if regulation.maxDurationReached:
+                    routineTimer.addTime(-regulation.maxDuration)
+                elif regulation.forceEnded:
+                    routineTimer.reset()
+                else:
+                    routineTimer.addTime(-1.000000)
+                # mark thisSecond as finished
+                if hasattr(thisSecond, 'status'):
+                    thisSecond.status = FINISHED
+                # if awaiting a pause, pause now
+                if seconds.status == PAUSED:
+                    thisExp.status = PAUSED
+                    pauseExperiment(
+                        thisExp=thisExp, 
+                        win=win, 
+                        timers=[globalClock], 
+                    )
+                    # once done pausing, restore running status
+                    seconds.status = STARTED
+                thisExp.nextEntry()
+                
+            # completed 1 repeats of 'seconds'
+            seconds.status = FINISHED
+            
+            if thisSession is not None:
+                # if running in a Session with a Liaison client, send data up to now
+                thisSession.sendExperimentData()
+            
+            # --- Prepare to start Routine "transition" ---
+            # create an object to store info about Routine transition
+            transition = data.Routine(
+                name='transition',
+                components=[cross_fixation_transition],
+            )
+            transition.status = NOT_STARTED
             continueRoutine = True
             # update component parameters for each repeat
-            t_regulation_task.setText(technique)
-            # store start times for regulation
-            regulation.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-            regulation.tStart = globalClock.getTime(format='float')
-            regulation.status = STARTED
-            thisExp.addData('regulation.started', regulation.tStart)
-            regulation.maxDuration = 10
+            # store start times for transition
+            transition.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+            transition.tStart = globalClock.getTime(format='float')
+            transition.status = STARTED
+            transition.maxDuration = None
             # keep track of which components have finished
-            regulationComponents = regulation.components
-            for thisComponent in regulation.components:
+            transitionComponents = transition.components
+            for thisComponent in transition.components:
                 thisComponent.tStart = None
                 thisComponent.tStop = None
                 thisComponent.tStartRefresh = None
@@ -1427,10 +1600,10 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             _timeToFirstFrame = win.getFutureFlipTime(clock="now")
             frameN = -1
             
-            # --- Run Routine "regulation" ---
-            thisExp.currentRoutine = regulation
-            regulation.forceEnded = routineForceEnded = not continueRoutine
-            while continueRoutine and routineTimer.getTime() < 10.0:
+            # --- Run Routine "transition" ---
+            thisExp.currentRoutine = transition
+            transition.forceEnded = routineForceEnded = not continueRoutine
+            while continueRoutine and routineTimer.getTime() < 0.5:
                 # if trial has changed, end Routine now
                 if hasattr(thisRegulation_block, 'status') and thisRegulation_block.status == STOPPING:
                     continueRoutine = False
@@ -1440,40 +1613,36 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 tThisFlipGlobal = win.getFutureFlipTime(clock=None)
                 frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                 # update/draw components on each frame
-                # is it time to end the Routine? (based on local clock)
-                if tThisFlip > regulation.maxDuration-frameTolerance:
-                    regulation.maxDurationReached = True
-                    continueRoutine = False
                 
-                # *t_regulation_task* updates
+                # *cross_fixation_transition* updates
                 
-                # if t_regulation_task is starting this frame...
-                if t_regulation_task.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # if cross_fixation_transition is starting this frame...
+                if cross_fixation_transition.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
                     # keep track of start time/frame for later
-                    t_regulation_task.frameNStart = frameN  # exact frame index
-                    t_regulation_task.tStart = t  # local t and not account for scr refresh
-                    t_regulation_task.tStartRefresh = tThisFlipGlobal  # on global time
-                    win.timeOnFlip(t_regulation_task, 'tStartRefresh')  # time at next scr refresh
+                    cross_fixation_transition.frameNStart = frameN  # exact frame index
+                    cross_fixation_transition.tStart = t  # local t and not account for scr refresh
+                    cross_fixation_transition.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(cross_fixation_transition, 'tStartRefresh')  # time at next scr refresh
                     # update status
-                    t_regulation_task.status = STARTED
-                    t_regulation_task.setAutoDraw(True)
+                    cross_fixation_transition.status = STARTED
+                    cross_fixation_transition.setAutoDraw(True)
                 
-                # if t_regulation_task is active this frame...
-                if t_regulation_task.status == STARTED:
+                # if cross_fixation_transition is active this frame...
+                if cross_fixation_transition.status == STARTED:
                     # update params
                     pass
                 
-                # if t_regulation_task is stopping this frame...
-                if t_regulation_task.status == STARTED:
+                # if cross_fixation_transition is stopping this frame...
+                if cross_fixation_transition.status == STARTED:
                     # is it time to stop? (based on global clock, using actual start)
-                    if tThisFlipGlobal > t_regulation_task.tStartRefresh + 10-frameTolerance:
+                    if tThisFlipGlobal > cross_fixation_transition.tStartRefresh + 0.5-frameTolerance:
                         # keep track of stop time/frame for later
-                        t_regulation_task.tStop = t  # not accounting for scr refresh
-                        t_regulation_task.tStopRefresh = tThisFlipGlobal  # on global time
-                        t_regulation_task.frameNStop = frameN  # exact frame index
+                        cross_fixation_transition.tStop = t  # not accounting for scr refresh
+                        cross_fixation_transition.tStopRefresh = tThisFlipGlobal  # on global time
+                        cross_fixation_transition.frameNStop = frameN  # exact frame index
                         # update status
-                        t_regulation_task.status = FINISHED
-                        t_regulation_task.setAutoDraw(False)
+                        cross_fixation_transition.status = FINISHED
+                        cross_fixation_transition.setAutoDraw(False)
                 
                 # check for quit (typically the Esc key)
                 if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1487,20 +1656,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                         thisExp=thisExp, 
                         win=win, 
                         timers=[routineTimer, globalClock], 
-                        currentRoutine=regulation,
+                        currentRoutine=transition,
                     )
                     # skip the frame we paused on
                     continue
                 
                 # has a Component requested the Routine to end?
                 if not continueRoutine:
-                    regulation.forceEnded = routineForceEnded = True
+                    transition.forceEnded = routineForceEnded = True
                 # has the Routine been forcibly ended?
-                if regulation.forceEnded or routineForceEnded:
+                if transition.forceEnded or routineForceEnded:
                     break
                 # has every Component finished?
                 continueRoutine = False
-                for thisComponent in regulation.components:
+                for thisComponent in transition.components:
                     if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                         continueRoutine = True
                         break  # at least one component has not yet finished
@@ -1509,21 +1678,20 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                     win.flip()
             
-            # --- Ending Routine "regulation" ---
-            for thisComponent in regulation.components:
+            # --- Ending Routine "transition" ---
+            for thisComponent in transition.components:
                 if hasattr(thisComponent, "setAutoDraw"):
                     thisComponent.setAutoDraw(False)
-            # store stop times for regulation
-            regulation.tStop = globalClock.getTime(format='float')
-            regulation.tStopRefresh = tThisFlipGlobal
-            thisExp.addData('regulation.stopped', regulation.tStop)
+            # store stop times for transition
+            transition.tStop = globalClock.getTime(format='float')
+            transition.tStopRefresh = tThisFlipGlobal
             # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-            if regulation.maxDurationReached:
-                routineTimer.addTime(-regulation.maxDuration)
-            elif regulation.forceEnded:
+            if transition.maxDurationReached:
+                routineTimer.addTime(-transition.maxDuration)
+            elif transition.forceEnded:
                 routineTimer.reset()
             else:
-                routineTimer.addTime(-10.000000)
+                routineTimer.addTime(-0.500000)
             
             # set up handler to look after randomisation of conditions etc
             state_measure_regulation = data.TrialHandler2(
@@ -1702,15 +1870,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if thisSession is not None:
                 # if running in a Session with a Liaison client, send data up to now
                 thisSession.sendExperimentData()
-            # get names of stimulus parameters
-            if state_measure_regulation.trialList in ([], [None], None):
-                params = []
-            else:
-                params = state_measure_regulation.trialList[0].keys()
-            # save data for this loop
-            state_measure_regulation.saveAsText(filename + '_state_measure_regulation.csv', delim=',',
-                stimOut=params,
-                dataOut=['n','all_mean','all_std', 'all_raw'])
             # mark thisRegulation_block as finished
             if hasattr(thisRegulation_block, 'status'):
                 thisRegulation_block.status = FINISHED
@@ -1727,106 +1886,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         # completed 1 repeats of 'regulation_block'
         regulation_block.status = FINISHED
         
-        
-        # --- Prepare to start Routine "delayTimer" ---
-        # create an object to store info about Routine delayTimer
-        delayTimer = data.Routine(
-            name='delayTimer',
-            components=[],
-        )
-        delayTimer.status = NOT_STARTED
-        continueRoutine = True
-        # update component parameters for each repeat
-        # Run 'Begin Routine' code from code_delay_timer
-        # code_delay_timer
-        #
-        # Create a timestamp in this routine to determine how long the cross fixation
-        # in the delay routine should last. The maximum amount of time the fixation
-        # should last is 30 seconds. It is assumed that the state measure following 
-        # will take at most 5 seconds.
-        #
-        # Example: If 10 seconds have passed starting from now to the delay routine,
-        # then the cross fixation should only last 25 seconds. If only 3 seconds have
-        # passed, the fixation duration should remain at 30 seconds.
-        
-        delay_time = globalClock.getTime(format='float')
-        print("Delay Clock Start Time:", delay_time)
-        # store start times for delayTimer
-        delayTimer.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-        delayTimer.tStart = globalClock.getTime(format='float')
-        delayTimer.status = STARTED
-        delayTimer.maxDuration = None
-        # keep track of which components have finished
-        delayTimerComponents = delayTimer.components
-        for thisComponent in delayTimer.components:
-            thisComponent.tStart = None
-            thisComponent.tStop = None
-            thisComponent.tStartRefresh = None
-            thisComponent.tStopRefresh = None
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        # reset timers
-        t = 0
-        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-        frameN = -1
-        
-        # --- Run Routine "delayTimer" ---
-        thisExp.currentRoutine = delayTimer
-        delayTimer.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine:
-            # if trial has changed, end Routine now
-            if hasattr(thisTechnique_trial, 'status') and thisTechnique_trial.status == STOPPING:
-                continueRoutine = False
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
-            if thisExp.status == FINISHED or endExpNow:
-                endExperiment(thisExp, win=win)
-                return
-            # pause experiment here if requested
-            if thisExp.status == PAUSED:
-                pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer, globalClock], 
-                    currentRoutine=delayTimer,
-                )
-                # skip the frame we paused on
-                continue
-            
-            # has a Component requested the Routine to end?
-            if not continueRoutine:
-                delayTimer.forceEnded = routineForceEnded = True
-            # has the Routine been forcibly ended?
-            if delayTimer.forceEnded or routineForceEnded:
-                break
-            # has every Component finished?
-            continueRoutine = False
-            for thisComponent in delayTimer.components:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "delayTimer" ---
-        for thisComponent in delayTimer.components:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        # store stop times for delayTimer
-        delayTimer.tStop = globalClock.getTime(format='float')
-        delayTimer.tStopRefresh = tThisFlipGlobal
-        # the Routine "delayTimer" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
         
         # set up handler to look after randomisation of conditions etc
         state_measure_pain = data.TrialHandler2(
@@ -2005,15 +2064,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-        # get names of stimulus parameters
-        if state_measure_pain.trialList in ([], [None], None):
-            params = []
-        else:
-            params = state_measure_pain.trialList[0].keys()
-        # save data for this loop
-        state_measure_pain.saveAsText(filename + '_state_measure_pain.csv', delim=',',
-            stimOut=params,
-            dataOut=['n','all_mean','all_std', 'all_raw'])
         
         # --- Prepare to start Routine "delay" ---
         # create an object to store info about Routine delay
@@ -2025,13 +2075,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         continueRoutine = True
         # update component parameters for each repeat
         # Run 'Begin Routine' code from code_delay
-        # code_delay
-        if skip_fixation_counter < skip_fixation_target:
-            elapsed = (globalClock.getTime(format='float')) - delay_time
-            print("Elapsed time:", elapsed)
-            fixation_duration = max(0.0, 30.0 - max(0.0, elapsed - 5.0))
-            print("Fixation duration:", fixation_duration)
-        else:
+        if skip_fixation_counter >= skip_fixation_target:
             fixation_duration = 0
         
         skip_fixation_counter += 1
@@ -2162,15 +2206,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
-    # get names of stimulus parameters
-    if technique_trial.trialList in ([], [None], None):
-        params = []
-    else:
-        params = technique_trial.trialList[0].keys()
-    # save data for this loop
-    technique_trial.saveAsText(filename + '_technique_trial.csv', delim=',',
-        stimOut=params,
-        dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # set up handler to look after randomisation of conditions etc
     state_measure_end = data.TrialHandler2(
@@ -2181,7 +2216,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         originPath=-1, 
         trialList=data.importConditions(
         '../../shared/loop-templates/loopStateMeasure.csv', 
-        selection='[0, 1, 3, 4, 5, 6]'
+        selection='[0, 1, 2, 3, 4, 5, 6]'
     )
     , 
         seed=None, 
@@ -2349,15 +2384,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     if thisSession is not None:
         # if running in a Session with a Liaison client, send data up to now
         thisSession.sendExperimentData()
-    # get names of stimulus parameters
-    if state_measure_end.trialList in ([], [None], None):
-        params = []
-    else:
-        params = state_measure_end.trialList[0].keys()
-    # save data for this loop
-    state_measure_end.saveAsText(filename + '_state_measure_end.csv', delim=',',
-        stimOut=params,
-        dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # --- Prepare to start Routine "goodbye" ---
     # create an object to store info about Routine goodbye

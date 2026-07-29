@@ -78,7 +78,23 @@ RATING_SPECS: Dict[str, Dict[str, Any]] = {
         'granularity': 1,
         'style': 'rating',
     },
-
+    'pain_regulation': {
+        'message': 'Change your rating the moment pain alters: Rate your current pain level',
+        'min_label': 'No pain',
+        'max_label': 'Worst possible\npain',
+        'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'granularity': 1,
+        'style': 'rating',
+    },
+    'pain_regulation_arm': {
+        'message': 'Change your rating the moment pain alters: Rate the pain level on your arm',
+        'min_label': 'No pain',
+        'max_label': 'Worst possible\npain',
+        'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'granularity': 1,
+        'style': 'rating',
+    },
+    
     # SAM
     'sam_valence': {
         'message': 'Rate how pleasant or unpleasant you feel',
