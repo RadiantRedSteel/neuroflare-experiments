@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
-    on May 31, 2026, at 21:08
+    on June 12, 2026, at 03:18
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1416,16 +1416,16 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             # unexpected category. This helps catch typos or file issues.
             instruction_text = "Unknown mode. Please contact the experimenter."
         
-        # Attempt to stop EMG.
-        if emg_trigger_status == STARTED:
-            try:
-                pulse_multiple_counters([0, 2])
-                logging.data("USB6363: EMG Stop")
-                emg_trigger_status = STOPPED
-            except Exception as e:
-                logging.error(f"Unexpected error: {e}")
-                logging.flush()
-            
+        ## Attempt to stop EMG.
+        #if emg_trigger_status == STARTED:
+        #    try:
+        #        pulse_multiple_counters([0, 2])
+        #        logging.data("USB6363: EMG Stop")
+        #        emg_trigger_status = STOPPED
+        #    except Exception as e:
+        #        logging.error(f"Unexpected error: {e}")
+        #        logging.flush()
+        #    
         t_instruction_body.setText(instruction_text)
         # create starting attributes for key_resp_instruction
         key_resp_instruction.keys = []
@@ -1568,15 +1568,15 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
         instruction.tStop = globalClock.getTime(format='float')
         instruction.tStopRefresh = tThisFlipGlobal
         # Run 'End Routine' code from code_instruction_helper
-        # Start EMG Machine
-        try:
-            pulse_multiple_counters([0,1])
-            logging.data("USB6363: EMG Start")
-            emg_trigger_status = STARTED
-        except Exception as e:
-            logging.error(f"Unexpected error: {e}")
-            logging.flush()
-        
+        ## Start EMG Machine
+        #try:
+        #    pulse_multiple_counters([0,1])
+        #    logging.data("USB6363: EMG Start")
+        #    emg_trigger_status = STARTED
+        #except Exception as e:
+        #    logging.error(f"Unexpected error: {e}")
+        #    logging.flush()
+        #
         # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         

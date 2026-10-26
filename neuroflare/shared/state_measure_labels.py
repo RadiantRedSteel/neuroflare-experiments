@@ -79,7 +79,7 @@ RATING_SPECS: Dict[str, Dict[str, Any]] = {
         'style': 'rating',
     },
     'pain_regulation': {
-        'message': 'Change your rating the moment pain alters: Rate your current pain level',
+        'message': 'Rate your current pain level. Adjust your rating whenever the pain changes',
         'min_label': 'No pain',
         'max_label': 'Worst possible\npain',
         'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -87,7 +87,7 @@ RATING_SPECS: Dict[str, Dict[str, Any]] = {
         'style': 'rating',
     },
     'pain_regulation_arm': {
-        'message': 'Change your rating the moment pain alters: Rate the pain level on your arm',
+        'message': 'Rate the pain level on your arm. Adjust your rating whenever the pain changes',
         'min_label': 'No pain',
         'max_label': 'Worst possible\npain',
         'tick_values': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
