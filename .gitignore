@@ -170,3 +170,4 @@ cython_debug/
 .vscode/settings.json
 /neuroflare/scripts/tests
 *.7z
+/neuroflare/experiments/digitimer-test
