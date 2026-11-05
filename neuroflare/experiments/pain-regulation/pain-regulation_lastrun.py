@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2026.1.3),
-    on July 29, 2026, at 03:16
+    on November 04, 2026, at 22:26
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,7 +40,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 # store info about the experiment session
 psychopyVersion = '2026.1.3'
 expName = 'pain-regulation'  # from the Builder filename that created this script
-expVersion = '0.6'
+expVersion = '0.65'
 # a list of functions to run when the experiment ends (starts off blank)
 runAtExit = []
 # information about this experiment
@@ -62,7 +62,7 @@ or run the experiment with `--pilot` as an argument. To change what pilot
 PILOTING = core.setPilotModeFromArgs()
 # start off with values from experiment settings
 _fullScr = True
-_winSize = (1024, 768)
+_winSize = (1920, 1080)
 # if in pilot mode, apply overrides according to preferences
 if PILOTING:
     # force windowed mode
@@ -200,7 +200,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=_winSize, fullscr=_fullScr, screen=0,
+            size=_winSize, fullscr=_fullScr, screen=1,
             winType='pyglet', allowGUI=True, allowStencil=False,
             monitor='testMonitor', color=(-0.7804, -0.7804, -0.7804), colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -468,9 +468,9 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     # Includes instruction variables.
     # ------------------------------------------------------------
     
-    observe_instruction = "(Observe)\nBring to mind the area of your body where you typically feel pain. Imagine its appearance exactly as it is, without trying to alter or influence it."
-    facilitate_instruction = "(Facilitate)\nBring to mind the area of your body where you typically feel pain. Imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying."
-    inhibit_instruction = "(Inhibit)\nBring to mind the area of your body where you typically feel pain. Imagine it recovering or settling, as if the sensations in that area are easing."
+    observe_instruction = "(Observe)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine its appearance exactly as it is, without trying to alter or influence it.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed."
+    facilitate_instruction = "(Facilitate)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed."
+    inhibit_instruction = "(Inhibit)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine it recovering or settling, as if the sensations in that area are easing.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed."
     
     
     # --- Initialize components for Routine "welcome" ---
@@ -517,7 +517,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
     t_instruction_body = visual.TextStim(win=win, name='t_instruction_body',
         text='',
         font='Arial',
-        units='height', pos=(0.0, 0.05), draggable=False, height=0.07, wrapWidth=comp_wrap_width_body, ori=0.0, 
+        units='height', pos=(0.0, 0.05), draggable=False, height=0.05, wrapWidth=comp_wrap_width_body, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
@@ -1143,203 +1143,6 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             for paramName in thisTechnique_trial:
                 globals()[paramName] = thisTechnique_trial[paramName]
         
-        # --- Prepare to start Routine "instruction" ---
-        # create an object to store info about Routine instruction
-        instruction = data.Routine(
-            name='instruction',
-            components=[t_instruction_body, t_instruction_continue, key_resp_instruction],
-        )
-        instruction.status = NOT_STARTED
-        continueRoutine = True
-        # update component parameters for each repeat
-        # Run 'Begin Routine' code from code_instruction_helper
-        # ------------------------------------------------------------
-        # code_instruction_helper
-        
-        # Select the appropriate instruction text based on the current
-        # trial's Category value. This keeps the logic centralized and
-        # avoids storing long text strings in the condition file.
-        # ------------------------------------------------------------
-        technique_text = technique.capitalize()
-        
-        if technique == "observe":
-            instruction_text = observe_instruction
-            current_trigger_start = trigger_pain_reg_observe_start
-            current_trigger_stop = trigger_pain_reg_observe_end
-        elif technique == "facilitate":
-            instruction_text = facilitate_instruction
-            current_trigger_start = trigger_pain_reg_facilitate_start
-            current_trigger_stop = trigger_pain_reg_facilitate_end
-        elif technique == "inhibit":
-            instruction_text = inhibit_instruction
-            current_trigger_start = trigger_pain_reg_inhibit_start
-            current_trigger_stop = trigger_pain_reg_inhibit_end
-        else:
-            instruction_text = "Unknown category. Please contact the experimenter."
-         
-        # Attempt to stop EMG
-        #if emg_trigger_status == STARTED:
-        #    try:
-        #        pulse_multiple_counters([0, 2])
-        #        logging.data("USB6363: EMG Stop")
-        #        emg_trigger_status = STOPPED
-        #    except Exception as e:
-        #        logging.error(f"Unexpected error: {e}")
-        #        logging.flush()
-        t_instruction_body.setText(instruction_text)
-        # create starting attributes for key_resp_instruction
-        key_resp_instruction.keys = []
-        key_resp_instruction.rt = []
-        _key_resp_instruction_allKeys = []
-        # store start times for instruction
-        instruction.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
-        instruction.tStart = globalClock.getTime(format='float')
-        instruction.status = STARTED
-        instruction.maxDuration = None
-        # keep track of which components have finished
-        instructionComponents = instruction.components
-        for thisComponent in instruction.components:
-            thisComponent.tStart = None
-            thisComponent.tStop = None
-            thisComponent.tStartRefresh = None
-            thisComponent.tStopRefresh = None
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        # reset timers
-        t = 0
-        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-        frameN = -1
-        
-        # --- Run Routine "instruction" ---
-        thisExp.currentRoutine = instruction
-        instruction.forceEnded = routineForceEnded = not continueRoutine
-        while continueRoutine:
-            # if trial has changed, end Routine now
-            if hasattr(thisTechnique_trial, 'status') and thisTechnique_trial.status == STOPPING:
-                continueRoutine = False
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            
-            # *t_instruction_body* updates
-            
-            # if t_instruction_body is starting this frame...
-            if t_instruction_body.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_instruction_body.frameNStart = frameN  # exact frame index
-                t_instruction_body.tStart = t  # local t and not account for scr refresh
-                t_instruction_body.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_instruction_body, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_instruction_body.status = STARTED
-                t_instruction_body.setAutoDraw(True)
-            
-            # if t_instruction_body is active this frame...
-            if t_instruction_body.status == STARTED:
-                # update params
-                pass
-            
-            # *t_instruction_continue* updates
-            
-            # if t_instruction_continue is starting this frame...
-            if t_instruction_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                t_instruction_continue.frameNStart = frameN  # exact frame index
-                t_instruction_continue.tStart = t  # local t and not account for scr refresh
-                t_instruction_continue.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(t_instruction_continue, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                t_instruction_continue.status = STARTED
-                t_instruction_continue.setAutoDraw(True)
-            
-            # if t_instruction_continue is active this frame...
-            if t_instruction_continue.status == STARTED:
-                # update params
-                pass
-            
-            # *key_resp_instruction* updates
-            waitOnFlip = False
-            
-            # if key_resp_instruction is starting this frame...
-            if key_resp_instruction.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                key_resp_instruction.frameNStart = frameN  # exact frame index
-                key_resp_instruction.tStart = t  # local t and not account for scr refresh
-                key_resp_instruction.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_instruction, 'tStartRefresh')  # time at next scr refresh
-                # update status
-                key_resp_instruction.status = STARTED
-                # keyboard checking is just starting
-                waitOnFlip = True
-                win.callOnFlip(key_resp_instruction.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_instruction.clearEvents, eventType='keyboard')  # clear events on next screen flip
-            if key_resp_instruction.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_instruction.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_instruction_allKeys.extend(theseKeys)
-                if len(_key_resp_instruction_allKeys):
-                    key_resp_instruction.keys = _key_resp_instruction_allKeys[-1].name  # just the last key pressed
-                    key_resp_instruction.rt = _key_resp_instruction_allKeys[-1].rt
-                    key_resp_instruction.duration = _key_resp_instruction_allKeys[-1].duration
-                    # a response ends the routine
-                    continueRoutine = False
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
-            if thisExp.status == FINISHED or endExpNow:
-                endExperiment(thisExp, win=win)
-                return
-            # pause experiment here if requested
-            if thisExp.status == PAUSED:
-                pauseExperiment(
-                    thisExp=thisExp, 
-                    win=win, 
-                    timers=[routineTimer, globalClock], 
-                    currentRoutine=instruction,
-                )
-                # skip the frame we paused on
-                continue
-            
-            # has a Component requested the Routine to end?
-            if not continueRoutine:
-                instruction.forceEnded = routineForceEnded = True
-            # has the Routine been forcibly ended?
-            if instruction.forceEnded or routineForceEnded:
-                break
-            # has every Component finished?
-            continueRoutine = False
-            for thisComponent in instruction.components:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "instruction" ---
-        for thisComponent in instruction.components:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        # store stop times for instruction
-        instruction.tStop = globalClock.getTime(format='float')
-        instruction.tStopRefresh = tThisFlipGlobal
-        # Run 'End Routine' code from code_instruction_helper
-        # Start EMG Machine
-        if emg_trigger_status == NOT_STARTED:
-            try:
-                pulse_multiple_counters([0,1])
-                log_and_print("USB6363: EMG Start")
-                emg_trigger_status = STARTED
-            except Exception as e:
-                logging.error(f"Unexpected error: {e}")
-                logging.flush()
-        # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
-        
         # set up handler to look after randomisation of conditions etc
         regulation_block = data.TrialHandler2(
             name='regulation_block',
@@ -1368,6 +1171,203 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
             if thisRegulation_block != None:
                 for paramName in thisRegulation_block:
                     globals()[paramName] = thisRegulation_block[paramName]
+            
+            # --- Prepare to start Routine "instruction" ---
+            # create an object to store info about Routine instruction
+            instruction = data.Routine(
+                name='instruction',
+                components=[t_instruction_body, t_instruction_continue, key_resp_instruction],
+            )
+            instruction.status = NOT_STARTED
+            continueRoutine = True
+            # update component parameters for each repeat
+            # Run 'Begin Routine' code from code_instruction_helper
+            # ------------------------------------------------------------
+            # code_instruction_helper
+            
+            # Select the appropriate instruction text based on the current
+            # trial's Category value. This keeps the logic centralized and
+            # avoids storing long text strings in the condition file.
+            # ------------------------------------------------------------
+            technique_text = technique.capitalize()
+            
+            if technique == "observe":
+                instruction_text = observe_instruction
+                current_trigger_start = trigger_pain_reg_observe_start
+                current_trigger_stop = trigger_pain_reg_observe_end
+            elif technique == "facilitate":
+                instruction_text = facilitate_instruction
+                current_trigger_start = trigger_pain_reg_facilitate_start
+                current_trigger_stop = trigger_pain_reg_facilitate_end
+            elif technique == "inhibit":
+                instruction_text = inhibit_instruction
+                current_trigger_start = trigger_pain_reg_inhibit_start
+                current_trigger_stop = trigger_pain_reg_inhibit_end
+            else:
+                instruction_text = "Unknown category. Please contact the experimenter."
+             
+            # Attempt to stop EMG
+            #if emg_trigger_status == STARTED:
+            #    try:
+            #        pulse_multiple_counters([0, 2])
+            #        logging.data("USB6363: EMG Stop")
+            #        emg_trigger_status = STOPPED
+            #    except Exception as e:
+            #        logging.error(f"Unexpected error: {e}")
+            #        logging.flush()
+            t_instruction_body.setText(instruction_text)
+            # create starting attributes for key_resp_instruction
+            key_resp_instruction.keys = []
+            key_resp_instruction.rt = []
+            _key_resp_instruction_allKeys = []
+            # store start times for instruction
+            instruction.tStartRefresh = win.getFutureFlipTime(clock=globalClock)
+            instruction.tStart = globalClock.getTime(format='float')
+            instruction.status = STARTED
+            instruction.maxDuration = None
+            # keep track of which components have finished
+            instructionComponents = instruction.components
+            for thisComponent in instruction.components:
+                thisComponent.tStart = None
+                thisComponent.tStop = None
+                thisComponent.tStartRefresh = None
+                thisComponent.tStopRefresh = None
+                if hasattr(thisComponent, 'status'):
+                    thisComponent.status = NOT_STARTED
+            # reset timers
+            t = 0
+            _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+            frameN = -1
+            
+            # --- Run Routine "instruction" ---
+            thisExp.currentRoutine = instruction
+            instruction.forceEnded = routineForceEnded = not continueRoutine
+            while continueRoutine:
+                # if trial has changed, end Routine now
+                if hasattr(thisRegulation_block, 'status') and thisRegulation_block.status == STOPPING:
+                    continueRoutine = False
+                # get current time
+                t = routineTimer.getTime()
+                tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+                tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+                # update/draw components on each frame
+                
+                # *t_instruction_body* updates
+                
+                # if t_instruction_body is starting this frame...
+                if t_instruction_body.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    # keep track of start time/frame for later
+                    t_instruction_body.frameNStart = frameN  # exact frame index
+                    t_instruction_body.tStart = t  # local t and not account for scr refresh
+                    t_instruction_body.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(t_instruction_body, 'tStartRefresh')  # time at next scr refresh
+                    # update status
+                    t_instruction_body.status = STARTED
+                    t_instruction_body.setAutoDraw(True)
+                
+                # if t_instruction_body is active this frame...
+                if t_instruction_body.status == STARTED:
+                    # update params
+                    pass
+                
+                # *t_instruction_continue* updates
+                
+                # if t_instruction_continue is starting this frame...
+                if t_instruction_continue.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    # keep track of start time/frame for later
+                    t_instruction_continue.frameNStart = frameN  # exact frame index
+                    t_instruction_continue.tStart = t  # local t and not account for scr refresh
+                    t_instruction_continue.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(t_instruction_continue, 'tStartRefresh')  # time at next scr refresh
+                    # update status
+                    t_instruction_continue.status = STARTED
+                    t_instruction_continue.setAutoDraw(True)
+                
+                # if t_instruction_continue is active this frame...
+                if t_instruction_continue.status == STARTED:
+                    # update params
+                    pass
+                
+                # *key_resp_instruction* updates
+                waitOnFlip = False
+                
+                # if key_resp_instruction is starting this frame...
+                if key_resp_instruction.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                    # keep track of start time/frame for later
+                    key_resp_instruction.frameNStart = frameN  # exact frame index
+                    key_resp_instruction.tStart = t  # local t and not account for scr refresh
+                    key_resp_instruction.tStartRefresh = tThisFlipGlobal  # on global time
+                    win.timeOnFlip(key_resp_instruction, 'tStartRefresh')  # time at next scr refresh
+                    # update status
+                    key_resp_instruction.status = STARTED
+                    # keyboard checking is just starting
+                    waitOnFlip = True
+                    win.callOnFlip(key_resp_instruction.clock.reset)  # t=0 on next screen flip
+                    win.callOnFlip(key_resp_instruction.clearEvents, eventType='keyboard')  # clear events on next screen flip
+                if key_resp_instruction.status == STARTED and not waitOnFlip:
+                    theseKeys = key_resp_instruction.getKeys(keyList=['space'], ignoreKeys=["escape"], waitRelease=False)
+                    _key_resp_instruction_allKeys.extend(theseKeys)
+                    if len(_key_resp_instruction_allKeys):
+                        key_resp_instruction.keys = _key_resp_instruction_allKeys[-1].name  # just the last key pressed
+                        key_resp_instruction.rt = _key_resp_instruction_allKeys[-1].rt
+                        key_resp_instruction.duration = _key_resp_instruction_allKeys[-1].duration
+                        # a response ends the routine
+                        continueRoutine = False
+                
+                # check for quit (typically the Esc key)
+                if defaultKeyboard.getKeys(keyList=["escape"]):
+                    thisExp.status = FINISHED
+                if thisExp.status == FINISHED or endExpNow:
+                    endExperiment(thisExp, win=win)
+                    return
+                # pause experiment here if requested
+                if thisExp.status == PAUSED:
+                    pauseExperiment(
+                        thisExp=thisExp, 
+                        win=win, 
+                        timers=[routineTimer, globalClock], 
+                        currentRoutine=instruction,
+                    )
+                    # skip the frame we paused on
+                    continue
+                
+                # has a Component requested the Routine to end?
+                if not continueRoutine:
+                    instruction.forceEnded = routineForceEnded = True
+                # has the Routine been forcibly ended?
+                if instruction.forceEnded or routineForceEnded:
+                    break
+                # has every Component finished?
+                continueRoutine = False
+                for thisComponent in instruction.components:
+                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                        continueRoutine = True
+                        break  # at least one component has not yet finished
+                
+                # refresh the screen
+                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                    win.flip()
+            
+            # --- Ending Routine "instruction" ---
+            for thisComponent in instruction.components:
+                if hasattr(thisComponent, "setAutoDraw"):
+                    thisComponent.setAutoDraw(False)
+            # store stop times for instruction
+            instruction.tStop = globalClock.getTime(format='float')
+            instruction.tStopRefresh = tThisFlipGlobal
+            # Run 'End Routine' code from code_instruction_helper
+            # Start EMG Machine
+            if emg_trigger_status == NOT_STARTED:
+                try:
+                    pulse_multiple_counters([0,1])
+                    log_and_print("USB6363: EMG Start")
+                    emg_trigger_status = STARTED
+                except Exception as e:
+                    logging.error(f"Unexpected error: {e}")
+                    logging.flush()
+            # the Routine "instruction" was not non-slip safe, so reset the non-slip timer
+            routineTimer.reset()
             
             # set up handler to look after randomisation of conditions etc
             seconds = data.TrialHandler2(
@@ -1414,7 +1414,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 continueRoutine = True
                 # update component parameters for each repeat
                 # Run 'Begin Routine' code from code_regulation_helper
-                # Mark the start of the 16 seconds.
+                # Mark the start of the 20 seconds.
                 if regulation_seconds == 0:
                     sm.begin_routine_from_category("pain_regulation") # Create slider
                     tb.send_event(*current_trigger_start)
@@ -1426,7 +1426,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 regulation.tStart = globalClock.getTime(format='float')
                 regulation.status = STARTED
                 thisExp.addData('regulation.started', regulation.tStart)
-                regulation.maxDuration = 1
+                regulation.maxDuration = 0.5
                 # keep track of which components have finished
                 regulationComponents = regulation.components
                 for thisComponent in regulation.components:
@@ -1444,7 +1444,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 # --- Run Routine "regulation" ---
                 thisExp.currentRoutine = regulation
                 regulation.forceEnded = routineForceEnded = not continueRoutine
-                while continueRoutine and routineTimer.getTime() < 1.0:
+                while continueRoutine and routineTimer.getTime() < 0.5:
                     # if trial has changed, end Routine now
                     if hasattr(thisSecond, 'status') and thisSecond.status == STOPPING:
                         continueRoutine = False
@@ -1480,7 +1480,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                     # if t_regulation_task is stopping this frame...
                     if t_regulation_task.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
-                        if tThisFlipGlobal > t_regulation_task.tStartRefresh + 1-frameTolerance:
+                        if tThisFlipGlobal > t_regulation_task.tStartRefresh + 0.5-frameTolerance:
                             # keep track of stop time/frame for later
                             t_regulation_task.tStop = t  # not accounting for scr refresh
                             t_regulation_task.tStopRefresh = tThisFlipGlobal  # on global time
@@ -1536,8 +1536,8 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 #sm.end_routine(currentLoop)
                 sm.collect_data(currentLoop)
                 
-                # Mark the end of the 16 seconds.
-                if regulation_seconds == 15:
+                # Mark the end of the 20 seconds.
+                if regulation_seconds == 19.5:
                     tb.send_event(*current_trigger_stop)
                     print("Sent: ", *current_trigger_stop)
                     sm.autodraw_off()
@@ -1549,7 +1549,7 @@ def run(expInfo, thisExp, win, globalClock=None, thisSession=None):
                 elif regulation.forceEnded:
                     routineTimer.reset()
                 else:
-                    routineTimer.addTime(-1.000000)
+                    routineTimer.addTime(-0.500000)
                 # mark thisSecond as finished
                 if hasattr(thisSecond, 'status'):
                     thisSecond.status = FINISHED
