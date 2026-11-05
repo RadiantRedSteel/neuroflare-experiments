@@ -41,6 +41,14 @@ A two‑block experiment presenting daily‑activity photographs from the OpenPH
 
 Location: `neuroflare/experiments/phoda/`
 
+### Pain-Regulation
+
+Location: `neuroflare/experiments/pain-regulation/`
+
+### Pain-Regulation-Digitimer
+
+Location: `neuroflare/experiments/pain-regulation-digitimer/`
+
 ### Emotion‑Regulation (archived)
 
 A full experimental task involving neutral and unpleasant images, block‑wise emotion‑regulation strategies, randomized trial slicing, and multiple state‑measure routines.
