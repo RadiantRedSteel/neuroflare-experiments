@@ -25,7 +25,7 @@
     <Param val="True" valType="bool" updates="None" name="Show mouse"/>
     <Param val="height" valType="str" updates="None" name="Units"/>
     <Param val="" valType="str" updates="None" name="Use version"/>
-    <Param val="(1024, 768)" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="(1920, 1080)" valType="list" updates="None" name="Window size (pixels)"/>
     <Param val="none" valType="str" updates="None" name="backgroundFit"/>
     <Param val="" valType="str" updates="None" name="backgroundImg"/>
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
@@ -35,7 +35,7 @@
     <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
     <Param val="warning" valType="code" updates="None" name="consoleLoggingLevel"/>
     <Param val="pain-regulation-digitimer" valType="str" updates="None" name="expName"/>
-    <Param val="0.7" valType="str" updates="None" name="expVersion"/>
+    <Param val="0.8" valType="str" updates="None" name="expVersion"/>
     <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
     <Param val="None" valType="str" updates="None" name="eyetracker"/>
     <Param val="" valType="code" updates="None" name="frameRate"/>
@@ -123,7 +123,7 @@
       <CodeComponent name="code_pain_reg_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_pain_regulation_trials&amp;#10;#&amp;#10;# Includes instruction variables.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;instruction_bodies = {&amp;#10;    &quot;observe&quot;: &quot;Bring to mind the area on your arm where the experimental pain will be delivered. Imagine its sensations exactly as they are, without trying to alter or influence it.&quot;,&amp;#10;    &quot;facilitate&quot;: &quot;Bring to mind the area on your arm where the experimental pain will be delivered. Imagine the sensations in that area becoming more irritated or distressed, as if the stimulation is intensifying.&quot;,&amp;#10;    &quot;inhibit&quot;: &quot;Bring to mind the area on your arm where the experimental pain will be delivered. Imagine the sensations in that area settling or easing, as if the stimulation is diminishing.&quot;,&amp;#10;}&amp;#10;&amp;#10;def make_instruction(technique, level):&amp;#10;    label = f&quot;({technique.capitalize()}, Level {level})&quot;&amp;#10;    body = instruction_bodies[technique]&amp;#10;    return f&quot;{label}\n{body}&quot;&amp;#10;&amp;#10;observe_instruction_l1 = make_instruction(&quot;observe&quot;, 1)&amp;#10;observe_instruction_l4 = make_instruction(&quot;observe&quot;, 4)&amp;#10;&amp;#10;facilitate_instruction_l1 = make_instruction(&quot;facilitate&quot;, 1)&amp;#10;facilitate_instruction_l4 = make_instruction(&quot;facilitate&quot;, 4)&amp;#10;&amp;#10;inhibit_instruction_l1 = make_instruction(&quot;inhibit&quot;, 1)&amp;#10;inhibit_instruction_l4 = make_instruction(&quot;inhibit&quot;, 4)&amp;#10;&amp;#10;practice_decider = 0&amp;#10;&amp;#10;if expInfo['include_practice'] == '1':&amp;#10;    practice_decider = 1&amp;#10;    print(&quot;Practice trial enabled!&quot;)&amp;#10;else:&amp;#10;    practice_decider = 0&amp;#10;    print(&quot;Practice trial disabled!&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_pain_regulation_trials&amp;#10;#&amp;#10;# Includes instruction variables.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;instruction_bodies = {&amp;#10;    &quot;observe&quot;: &quot;During this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area on your arm where the experimental pain will be delivered. Imagine its sensations exactly as they are, without trying to alter or influence it.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;,&amp;#10;    &quot;facilitate&quot;: &quot;During this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area on your arm where the experimental pain will be delivered. Imagine the sensations in that area becoming more irritated or distressed, as if the stimulation is intensifying.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;,&amp;#10;    &quot;inhibit&quot;: &quot;During this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area on your arm where the experimental pain will be delivered. Imagine the sensations in that area settling or easing, as if the stimulation is diminishing.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;,&amp;#10;}&amp;#10;&amp;#10;def make_instruction(technique, level):&amp;#10;    label = f&quot;({technique.capitalize()}, Level {level})&quot;&amp;#10;    body = instruction_bodies[technique]&amp;#10;    return f&quot;{label}\n{body}&quot;&amp;#10;&amp;#10;observe_instruction_l1 = make_instruction(&quot;observe&quot;, 1)&amp;#10;observe_instruction_l4 = make_instruction(&quot;observe&quot;, 4)&amp;#10;&amp;#10;facilitate_instruction_l1 = make_instruction(&quot;facilitate&quot;, 1)&amp;#10;facilitate_instruction_l4 = make_instruction(&quot;facilitate&quot;, 4)&amp;#10;&amp;#10;inhibit_instruction_l1 = make_instruction(&quot;inhibit&quot;, 1)&amp;#10;inhibit_instruction_l4 = make_instruction(&quot;inhibit&quot;, 4)&amp;#10;&amp;#10;# Skip practice section based on starting settings&amp;#10;practice_decider = 0&amp;#10;&amp;#10;if expInfo['include_practice'] == '1':&amp;#10;    practice_decider = 1&amp;#10;    print(&quot;Practice trial enabled!&quot;)&amp;#10;else:&amp;#10;    practice_decider = 0&amp;#10;    print(&quot;Practice trial disabled!&quot;)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -347,7 +347,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
         <Param val="practiceIntro" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
@@ -428,6 +428,115 @@
         <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
       </MouseComponent>
     </Routine>
+    <Routine name="practiceExit">
+      <RoutineSettingsComponent name="practiceExit" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="5" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
+        <Param val="practiceExit" valType="code" updates="None" name="name"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="code_practice_exit_helper" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="# if practice was disabled&amp;#10;if practice_decider != 1:&amp;#10;    continueRoutine = False # skip&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code_practice_exit_helper" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <TextComponent name="t_practice_exit_body" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="5" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_practice_exit_body" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="This marks the end of the practice section.&amp;#10;The main trials will begin shortly." valType="str" updates="constant" name="text"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <TextComponent name="t_practice_exit_continue" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="False" valType="code" updates="constant" name="draggable"/>
+        <Param val="5" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Arial" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="t_practice_exit_continue" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Press LEFT CLICK to continue" valType="str" updates="constant" name="text"/>
+        <Param val="height" valType="str" updates="None" name="units"/>
+        <Param val="" valType="code" updates="None" name="validator"/>
+        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <MouseComponent name="mouse_practice_exit" plugin="None">
+        <Param val="" valType="list" updates="constant" name="clickable"/>
+        <Param val="" valType="list" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="4.8" valType="code" updates="None" name="durationEstim"/>
+        <Param val="any click" valType="str" updates="constant" name="forceEndRoutineOnPress"/>
+        <Param val="mouse_practice_exit" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="newClicksOnly"/>
+        <Param val="never" valType="str" updates="None" name="saveMouseState"/>
+        <Param val="" valType="list" updates="set every repeat" name="saveParamsClickable"/>
+        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.2" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
+      </MouseComponent>
+    </Routine>
     <Routine name="instruction">
       <RoutineSettingsComponent name="instruction" plugin="None">
         <Param val="none" valType="str" updates="None" name="backgroundFit"/>
@@ -472,7 +581,7 @@
         <Param val="None" valType="str" updates="constant" name="flip"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
         <Param val="t_instruction_body" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
@@ -559,60 +668,16 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="[screen_width, screen_height] = psychoJS.window.size;&amp;#10;aspect = (screen_width / screen_height);&amp;#10;leftEdge = ((- aspect) / 2);&amp;#10;rightEdge = (aspect / 2);&amp;#10;topEdge = 0.5;&amp;#10;bottomEdge = (- 0.5);&amp;#10;sam_aspect = (2200 / 264);&amp;#10;sam_height = 0.2;&amp;#10;sam_width = (sam_height * sam_aspect);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# Mark the start of the 20 seconds.&amp;#10;# The .csv works off based on the starting second count&amp;#10;# and assumes each loop lasts for 0.5 seconds&amp;#10;if regulation_seconds == 0:&amp;#10;    sm.begin_routine_from_category(&quot;pain_regulation_arm&quot;) # Create slider&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    #print(globalClock.getTime(format='str'))&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;&amp;#10;print(&quot;Second:&quot;, regulation_seconds)&amp;#10;&amp;#10;# Pulse Digitimer at 2 Hz starting at second 5, for a 20 total pulses in 10 seconds&amp;#10;if regulation_seconds &gt;= 5 and regulation_seconds &lt; 15:&amp;#10;    try:&amp;#10;        pulse_multiple_counters([0, 3])&amp;#10;        zap_counter += 1&amp;#10;        log_and_print(f&quot;USB6363: Digitimer Pulse {zap_counter}&quot;)&amp;#10;    except Exception as e:&amp;#10;        zap_counter += 1&amp;#10;        #log_and_print(f&quot;TEST: Digitimer Pulse {zap_counter}&quot;)&amp;#10;        #logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;&amp;#10;zap_text = &quot;Pulse: &quot; + str(zap_counter)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# Mark the start of the 20 seconds.&amp;#10;# The .csv works off based on the starting second count&amp;#10;# and assumes each loop lasts for 0.5 seconds&amp;#10;if regulation_seconds == 0:&amp;#10;    sm.begin_routine_from_category(&quot;pain_regulation_arm&quot;) # Create slider&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    #print(globalClock.getTime(format='str'))&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;&amp;#10;#print(&quot;Second:&quot;, regulation_seconds)&amp;#10;&amp;#10;# Pulse Digitimer at 2 Hz starting at second 5, for a 20 total pulses in 10 seconds&amp;#10;if regulation_seconds &gt;= 5 and regulation_seconds &lt; 15:&amp;#10;    try:&amp;#10;        pulse_multiple_counters([4, 3])&amp;#10;        zap_counter += 1&amp;#10;        log_and_print(f&quot;USB6363: Digitimer Pulse {zap_counter}&quot;)&amp;#10;    except Exception as e:&amp;#10;        #zap_counter += 1&amp;#10;        #log_and_print(f&quot;TEST: Digitimer Pulse {zap_counter}&quot;)&amp;#10;        logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;&amp;#10;zap_text = &quot;Pulse: &quot; + str(zap_counter)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# Log rating and rt&amp;#10;#sm.end_routine(currentLoop)&amp;#10;sm.collect_data(currentLoop) # Keeps the slider around and collects rating&amp;#10;&amp;#10;# Mark the end of the 20 seconds.&amp;#10;if regulation_seconds == 19.5:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    print(&quot;Second:&quot;, regulation_seconds + 0.5)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)&amp;#10;    sm.autodraw_off()&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# Log rating and rt&amp;#10;#sm.end_routine(currentLoop)&amp;#10;sm.collect_data(currentLoop) # Keeps the slider around and collects rating&amp;#10;&amp;#10;# Mark the end of the 20 seconds.&amp;#10;if regulation_seconds == 19.5:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    #print(&quot;Second:&quot;, regulation_seconds + 0.5)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)&amp;#10;    sm.autodraw_off()&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_regulation_helper" valType="code" updates="None" name="name"/>
-      </CodeComponent>
-      <TextComponent name="t_halfway_trigger" plugin="None">
-        <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="True" valType="bool" updates="None" name="disabled"/>
-        <Param val="False" valType="code" updates="constant" name="draggable"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="None" valType="str" updates="constant" name="flip"/>
-        <Param val="Arial" valType="str" updates="constant" name="font"/>
-        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_halfway_trigger" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="constant" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.5" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="0.1" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="" valType="str" updates="constant" name="text"/>
-        <Param val="from exp settings" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
-      </TextComponent>
-      <CodeComponent name="code_halfway_trigger" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="halfway_trigger_status = NOT_STARTED" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="# Pulse Digitimer after one second has passed, for 10 total pulses in 10 seconds&amp;#10;if regulation_seconds &gt; 0 and regulation_seconds &lt; 11:&amp;#10;    if t_halfway_trigger.status == STARTED and halfway_trigger_status == NOT_STARTED:&amp;#10;        try:&amp;#10;            pulse_multiple_counters([0, 3])&amp;#10;            zap_counter += 1&amp;#10;            log_and_print(f&quot;USB6363: Digitimer Pulse {zap_counter}&quot;)&amp;#10;        except Exception as e:&amp;#10;            #logging.error(f&quot;Unexpected error: {e}&quot;)&amp;#10;            zap_counter += 1&amp;#10;            log_and_print(f&quot;USB6363: Digitimer Pulse {zap_counter}&quot;)&amp;#10;        halfway_trigger_status = FINISHED&amp;#10;        zap_text = &quot;Pulse: &quot; + str(zap_counter)" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="True" valType="bool" updates="None" name="disabled"/>
-        <Param val="code_halfway_trigger" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <TextComponent name="t_regulation_task" plugin="None">
         <Param val="white" valType="color" updates="constant" name="color"/>
@@ -877,104 +942,12 @@
         <Param val="code_goodbye" valType="code" updates="None" name="name"/>
       </CodeComponent>
     </Routine>
-    <Routine name="practiceExit">
-      <RoutineSettingsComponent name="practiceExit" plugin="None">
-        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
-        <Param val="" valType="str" updates="None" name="backgroundImg"/>
-        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
-        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
-        <Param val="" valType="str" updates="constant" name="desc"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
-        <Param val="practiceExit" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
-      </RoutineSettingsComponent>
-      <TextComponent name="t_practice_exit_body" plugin="None">
-        <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="False" valType="code" updates="constant" name="draggable"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="None" valType="str" updates="constant" name="flip"/>
-        <Param val="Arial" valType="str" updates="constant" name="font"/>
-        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_practice_exit_body" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="constant" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0.0, 0.05)" valType="list" updates="constant" name="pos"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.0" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="This marks the end of the practice. The main trials will begin shortly." valType="str" updates="constant" name="text"/>
-        <Param val="height" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="comp_wrap_width_body" valType="num" updates="constant" name="wrapWidth"/>
-      </TextComponent>
-      <TextComponent name="t_practice_exit_continue" plugin="None">
-        <Param val="white" valType="color" updates="constant" name="color"/>
-        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
-        <Param val="1" valType="num" updates="constant" name="contrast"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="False" valType="code" updates="constant" name="draggable"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="None" valType="str" updates="constant" name="flip"/>
-        <Param val="Arial" valType="str" updates="constant" name="font"/>
-        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
-        <Param val="t_practice_exit_continue" valType="code" updates="None" name="name"/>
-        <Param val="" valType="num" updates="constant" name="opacity"/>
-        <Param val="0" valType="num" updates="constant" name="ori"/>
-        <Param val="(0, -0.35)" valType="list" updates="constant" name="pos"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="Press LEFT CLICK to continue" valType="str" updates="constant" name="text"/>
-        <Param val="height" valType="str" updates="None" name="units"/>
-        <Param val="" valType="code" updates="None" name="validator"/>
-        <Param val="comp_wrap_width_continue" valType="num" updates="constant" name="wrapWidth"/>
-      </TextComponent>
-      <MouseComponent name="mouse_practice_exit" plugin="None">
-        <Param val="" valType="list" updates="constant" name="clickable"/>
-        <Param val="" valType="list" updates="constant" name="correctAns"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="" valType="code" updates="None" name="durationEstim"/>
-        <Param val="any click" valType="str" updates="constant" name="forceEndRoutineOnPress"/>
-        <Param val="mouse_practice_exit" valType="code" updates="None" name="name"/>
-        <Param val="True" valType="bool" updates="constant" name="newClicksOnly"/>
-        <Param val="never" valType="str" updates="None" name="saveMouseState"/>
-        <Param val="" valType="list" updates="set every repeat" name="saveParamsClickable"/>
-        <Param val="False" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="" valType="code" updates="None" name="startEstim"/>
-        <Param val="time (s)" valType="str" updates="None" name="startType"/>
-        <Param val="0.2" valType="code" updates="None" name="startVal"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="" valType="code" updates="constant" name="stopVal"/>
-        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
-        <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
-      </MouseComponent>
-    </Routine>
   </Routines>
   <Flow>
     <Routine name="experimentSetup"/>
     <LoopInitiator loopType="TrialHandler" name="intro_prompts">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
-      <Param name="conditions" updates="None" val="[OrderedDict([('message', 'Welcome to the Pain Regulation Digitimer Task!')]), OrderedDict([('message', 'Please relax and remain still during the experiment while we record your brain activity.')]), OrderedDict([('message', 'In this task, you will perform three pain regulation techniques: observe, facilitate, and inhibit. Each technique will be completed at two stimulation levels (Level 1 and Level 4).\n\nBefore each trial, an on screen instruction will explain how to perform the technique.')]), OrderedDict([('message', 'During each regulation period, you will rate the experimental pain delivered to your arm on a scale from 0 (no pain) to 10 (worst possible pain).\n\nYou may adjust your rating at any time if the sensation changes.')]), OrderedDict([('message', 'Each technique will be completed five times, followed by a confidence rating where you indicate how well you feel you performed the technique.\n\nThere will be a 60 second break between each technique block.')]), OrderedDict([('message', 'The state measure will begin on the following screen.\n\nPlease let us know if you have any remaining questions.')])]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('message', 'Welcome to the Pain Regulation Digitimer Task!')]), OrderedDict([('message', 'Please relax and remain still during the experiment while we record your brain activity.')]), OrderedDict([('message', 'In this task, you will perform three pain regulation techniques: observe, facilitate, and inhibit. Each technique will be completed at two stimulation levels (Level 1 and Level 4).')]), OrderedDict([('message', 'During each regulation period, you will rate the experimental pain delivered to your arm on a scale from 0 (no pain) to 10 (worst possible pain).\n\nPlease rate your immediate pain and change the rating when your pain alters.')]), OrderedDict([('message', 'Each technique will be completed five times, followed by a confidence rating where you indicate how well you feel you performed the technique.\n\nThere will be a 60 second break between each block.')]), OrderedDict([('message', 'The state measure will begin on the following screen.\n\nPlease let us know if you have any remaining questions.')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="pain-regulation_loop_intro.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
       <Param name="isTrials" updates="None" val="False" valType="bool"/>
@@ -1011,7 +984,7 @@
     </LoopInitiator>
     <Routine name="practiceIntro"/>
     <LoopInitiator loopType="TrialHandler" name="practice_technique_trial">
-      <Param name="Selected rows" updates="None" val="0" valType="code"/>
+      <Param name="Selected rows" updates="None" val="0" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('technique', 'observe')]), OrderedDict([('technique', 'inhibit')]), OrderedDict([('technique', 'facilitate')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="pain-regulation_loop_techniques.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
@@ -1022,7 +995,7 @@
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
     <LoopInitiator loopType="TrialHandler" name="practice_regulation_block">
-      <Param name="Selected rows" updates="None" val="0, 1" valType="code"/>
+      <Param name="Selected rows" updates="None" val="0, 1" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('regulation_trial_num', np.int64(1))]), OrderedDict([('regulation_trial_num', np.int64(2))]), OrderedDict([('regulation_trial_num', np.int64(3))]), OrderedDict([('regulation_trial_num', np.int64(4))]), OrderedDict([('regulation_trial_num', np.int64(5))])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="pain-regulation_loop_block.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
@@ -1048,7 +1021,7 @@
     <LoopTerminator name="practice_seconds"/>
     <Routine name="transition"/>
     <LoopInitiator loopType="TrialHandler" name="practice_state_measure_regulation">
-      <Param name="Selected rows" updates="None" val="8" valType="code"/>
+      <Param name="Selected rows" updates="None" val="8" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('rating_category', 'fatigue')]), OrderedDict([('rating_category', 'sleepiness')]), OrderedDict([('rating_category', 'pain')]), OrderedDict([('rating_category', 'pain_unpleasantness')]), OrderedDict([('rating_category', 'sam_valence')]), OrderedDict([('rating_category', 'sam_arousal')]), OrderedDict([('rating_category', 'sam_dominance')]), OrderedDict([('rating_category', 'emotion_regulation')]), OrderedDict([('rating_category', 'pain_regulation_confidence')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
@@ -1062,7 +1035,7 @@
     <LoopTerminator name="practice_state_measure_regulation"/>
     <LoopTerminator name="practice_regulation_block"/>
     <LoopInitiator loopType="TrialHandler" name="practice_state_measure_pain">
-      <Param name="Selected rows" updates="None" val="2" valType="code"/>
+      <Param name="Selected rows" updates="None" val="2" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('rating_category', 'fatigue')]), OrderedDict([('rating_category', 'sleepiness')]), OrderedDict([('rating_category', 'pain')]), OrderedDict([('rating_category', 'pain_unpleasantness')]), OrderedDict([('rating_category', 'sam_valence')]), OrderedDict([('rating_category', 'sam_arousal')]), OrderedDict([('rating_category', 'sam_dominance')]), OrderedDict([('rating_category', 'emotion_regulation')]), OrderedDict([('rating_category', 'pain_regulation_confidence')])]" valType="str"/>
       <Param name="conditionsFile" updates="None" val="../../shared/loop-templates/loopStateMeasure.csv" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="code"/>
@@ -1075,8 +1048,8 @@
     <Routine name="stateMeasure"/>
     <LoopTerminator name="practice_state_measure_pain"/>
     <LoopTerminator name="practice_technique_trial"/>
-    <Routine name="practiceExit"/>
     <LoopTerminator name="practice_pain_level_trial"/>
+    <Routine name="practiceExit"/>
     <Routine name="transition"/>
     <LoopInitiator loopType="TrialHandler" name="pain_level_trial">
       <Param name="Selected rows" updates="None" val="" valType="str"/>

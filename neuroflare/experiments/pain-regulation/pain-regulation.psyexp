@@ -20,12 +20,12 @@
     <Param val="True" valType="bool" updates="None" name="Save log file"/>
     <Param val="True" valType="bool" updates="None" name="Save psydat file"/>
     <Param val="True" valType="bool" updates="None" name="Save wide csv file"/>
-    <Param val="1" valType="num" updates="None" name="Screen"/>
+    <Param val="2" valType="num" updates="None" name="Screen"/>
     <Param val="True" valType="bool" updates="None" name="Show info dlg"/>
     <Param val="True" valType="bool" updates="None" name="Show mouse"/>
     <Param val="height" valType="str" updates="None" name="Units"/>
     <Param val="" valType="str" updates="None" name="Use version"/>
-    <Param val="(1024, 768)" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="(1920, 1080)" valType="list" updates="None" name="Window size (pixels)"/>
     <Param val="none" valType="str" updates="None" name="backgroundFit"/>
     <Param val="" valType="str" updates="None" name="backgroundImg"/>
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
@@ -35,7 +35,7 @@
     <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
     <Param val="warning" valType="code" updates="None" name="consoleLoggingLevel"/>
     <Param val="pain-regulation" valType="str" updates="None" name="expName"/>
-    <Param val="0.6" valType="str" updates="None" name="expVersion"/>
+    <Param val="0.65" valType="str" updates="None" name="expVersion"/>
     <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
     <Param val="None" valType="str" updates="None" name="eyetracker"/>
     <Param val="" valType="code" updates="None" name="frameRate"/>
@@ -123,7 +123,7 @@
       <CodeComponent name="code_pain_reg_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_pain_regulation_trials&amp;#10;#&amp;#10;# Includes instruction variables.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;observe_instruction = &quot;(Observe)\nBring to mind the area of your body where you typically feel pain. Imagine its appearance exactly as it is, without trying to alter or influence it.&quot;&amp;#10;facilitate_instruction = &quot;(Facilitate)\nBring to mind the area of your body where you typically feel pain. Imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying.&quot;&amp;#10;inhibit_instruction = &quot;(Inhibit)\nBring to mind the area of your body where you typically feel pain. Imagine it recovering or settling, as if the sensations in that area are easing.&quot;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_pain_regulation_trials&amp;#10;#&amp;#10;# Includes instruction variables.&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;observe_instruction = &quot;(Observe)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine its appearance exactly as it is, without trying to alter or influence it.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;&amp;#10;facilitate_instruction = &quot;(Facilitate)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine it becoming more irritated or distressed, as if the sensations in that area are intensifying.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;&amp;#10;inhibit_instruction = &quot;(Inhibit)\nDuring this exercise, you'll start by rating your current pain level on the scale that follows. Then, bring to mind the area of your body where you typically feel pain. Imagine it recovering or settling, as if the sensations in that area are easing.\n\nYour rating on the pain scale is recorded throughout the trial. If your pain level alters, change your pain rating. Continue to change your rating as needed.&quot;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
@@ -380,7 +380,7 @@
         <Param val="None" valType="str" updates="constant" name="flip"/>
         <Param val="Arial" valType="str" updates="constant" name="font"/>
         <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
-        <Param val="0.07" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
         <Param val="t_instruction_body" valType="code" updates="None" name="name"/>
         <Param val="" valType="num" updates="constant" name="opacity"/>
         <Param val="0" valType="num" updates="constant" name="ori"/>
@@ -452,13 +452,13 @@
         <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
         <Param val="" valType="str" updates="constant" name="desc"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="1" valType="code" updates="None" name="durationEstim"/>
+        <Param val="0.5" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="code" updates="None" name="forceNonSlip"/>
         <Param val="regulation" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="0.5" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <CodeComponent name="code_regulation_helper" plugin="None">
@@ -467,14 +467,14 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="[screen_width, screen_height] = psychoJS.window.size;&amp;#10;aspect = (screen_width / screen_height);&amp;#10;leftEdge = ((- aspect) / 2);&amp;#10;rightEdge = (aspect / 2);&amp;#10;topEdge = 0.5;&amp;#10;bottomEdge = (- 0.5);&amp;#10;sam_aspect = (2200 / 264);&amp;#10;sam_height = 0.2;&amp;#10;sam_width = (sam_height * sam_aspect);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# Mark the start of the 16 seconds.&amp;#10;if regulation_seconds == 0:&amp;#10;    sm.begin_routine_from_category(&quot;pain_regulation&quot;) # Create slider&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# Mark the start of the 20 seconds.&amp;#10;if regulation_seconds == 0:&amp;#10;    sm.begin_routine_from_category(&quot;pain_regulation&quot;) # Create slider&amp;#10;    tb.send_event(*current_trigger_start)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_start)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# Log rating and rt&amp;#10;#sm.end_routine(currentLoop)&amp;#10;sm.collect_data(currentLoop)&amp;#10;&amp;#10;# Mark the end of the 16 seconds.&amp;#10;if regulation_seconds == 15:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)&amp;#10;    sm.autodraw_off()&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# Log rating and rt&amp;#10;#sm.end_routine(currentLoop)&amp;#10;sm.collect_data(currentLoop)&amp;#10;&amp;#10;# Mark the end of the 20 seconds.&amp;#10;if regulation_seconds == 19.5:&amp;#10;    tb.send_event(*current_trigger_stop)&amp;#10;    print(&quot;Sent: &quot;, *current_trigger_stop)&amp;#10;    sm.autodraw_off()&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="code_regulation_helper" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -498,7 +498,7 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0.0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="0.5" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
         <Param val="$technique_text" valType="str" updates="set every repeat" name="text"/>
         <Param val="height" valType="str" updates="None" name="units"/>
@@ -754,7 +754,6 @@
       <Param name="name" updates="None" val="technique_trial" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
-    <Routine name="instruction"/>
     <LoopInitiator loopType="TrialHandler" name="regulation_block">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('regulation_trial_num', np.int64(1))]), OrderedDict([('regulation_trial_num', np.int64(2))]), OrderedDict([('regulation_trial_num', np.int64(3))]), OrderedDict([('regulation_trial_num', np.int64(4))]), OrderedDict([('regulation_trial_num', np.int64(5))])]" valType="str"/>
@@ -766,6 +765,7 @@
       <Param name="name" updates="None" val="regulation_block" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
+    <Routine name="instruction"/>
     <LoopInitiator loopType="TrialHandler" name="seconds">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="[OrderedDict([('regulation_seconds', np.int64(1))]), OrderedDict([('regulation_seconds', np.int64(2))]), OrderedDict([('regulation_seconds', np.int64(3))]), OrderedDict([('regulation_seconds', np.int64(4))]), OrderedDict([('regulation_seconds', np.int64(5))]), OrderedDict([('regulation_seconds', np.int64(6))]), OrderedDict([('regulation_seconds', np.int64(7))]), OrderedDict([('regulation_seconds', np.int64(8))]), OrderedDict([('regulation_seconds', np.int64(9))]), OrderedDict([('regulation_seconds', np.int64(10))]), OrderedDict([('regulation_seconds', np.int64(11))]), OrderedDict([('regulation_seconds', np.int64(12))]), OrderedDict([('regulation_seconds', np.int64(13))]), OrderedDict([('regulation_seconds', np.int64(14))]), OrderedDict([('regulation_seconds', np.int64(15))]), OrderedDict([('regulation_seconds', np.int64(16))])]" valType="str"/>

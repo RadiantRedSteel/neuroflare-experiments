@@ -7,7 +7,7 @@
     <Param val="u'../../../data/%s_%s_%s' % (expInfo['date'], expName, expInfo['participant'])" valType="code" updates="None" name="Data filename"/>
     <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
     <Param val="Thank you for your patience." valType="str" updates="None" name="End Message"/>
-    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '001'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '01'}" valType="code" updates="None" name="Experiment info"/>
     <Param val="True" valType="bool" updates="None" name="Force stereo"/>
     <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
     <Param val="" valType="str" updates="None" name="HTML path"/>
@@ -140,7 +140,7 @@
       <CodeComponent name="code_sound_setup" plugin="None">
         <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="# ------------------------------------------------------------&amp;#10;# code_sound_setup&amp;#10;# Create a sound that will be played after the fixation routine&amp;#10;# Also used during testing to ensure sound backend is working&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;test_sound = sound.Sound(&amp;#10;    value=330,&amp;#10;    volume=1.0,&amp;#10;    secs=1.0,&amp;#10;    hamming=True,&amp;#10;    stereo=True,&amp;#10;    autoLog=False,&amp;#10;    name='test_sound'&amp;#10;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="# ------------------------------------------------------------&amp;#10;# code_sound_setup&amp;#10;# Create a sound that will be played after the fixation routine&amp;#10;# Also used during testing to ensure sound backend is working&amp;#10;# ------------------------------------------------------------&amp;#10;&amp;#10;test_sound = sound.Sound(&amp;#10;    value=330,&amp;#10;    volume=1.0,&amp;#10;    secs=1.0,&amp;#10;    hamming=True, # stops clicking from sudden onset&amp;#10;    stereo=True,&amp;#10;    autoLog=False,&amp;#10;    name='test_sound'&amp;#10;)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>

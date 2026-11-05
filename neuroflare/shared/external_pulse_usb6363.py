@@ -10,10 +10,11 @@ def pulse_multiple_counters(ctr_indices, duration_seconds=0.01):
         duration_seconds (float): Duration of the pulse in seconds.
     """
     # Mapping of counter index to its default/desired PFI terminal on USB-6363 BNC
-    # CTR 0 -> PFI 0 (TriggerBox)
+    # CTR 0 -> PFI 0 (TriggerBox EMG)
     # CTR 1 -> PFI 1 (EMG Start)
     # CTR 2 -> PFI 2 (EMG Stop)
     # CTR 3 -> PFI 3 (Digitimer)
+    # CTR 4 -> PFI 4 (TriggerBox Digitimer)
     # Note: On USB-6363 BNC, PFI 0..7 are available on the BNC connectors.
 
     with nidaqmx.Task() as task:
